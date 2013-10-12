@@ -1,7 +1,7 @@
 package taytom258;
 
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
-import taytom258.lib.util.LogHelper;
 import taytom258.window.Window;
 
 

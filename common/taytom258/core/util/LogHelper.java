@@ -1,4 +1,4 @@
-package taytom258.lib.util;
+package taytom258.core.util;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ public class LogHelper {
 		public static void init(){
 			logger.setUseParentHandlers(false);
 			logger.addHandler(handler);
-			if(Reference.BUILD_NUMBER.equals("@BUILD@")){
+			if(Reference.BUILD_NUMBER.equals("@BUILD_NUMBER@")){
 				log(Level.WARNING, Strings.DEVELOP_WARN);
 			}
 		}

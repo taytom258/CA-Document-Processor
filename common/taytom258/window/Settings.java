@@ -10,8 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
-import taytom258.lib.util.LogHelper;
+import taytom258.core.util.LogHelper;
 import taytom258.window.core.SettingsCore;
 
 public class Settings extends SettingsCore{
@@ -24,6 +25,7 @@ public class Settings extends SettingsCore{
 	public static void appear() {
 		LogHelper.info("Settings Window");
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Settings window = new Settings();
@@ -60,6 +62,7 @@ public class Settings extends SettingsCore{
 		
 		JButton btnNewButton_1 = new JButton("Cancel");
 		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmSettings.dispose();
 			}
@@ -67,7 +70,7 @@ public class Settings extends SettingsCore{
 		btnNewButton_1.setBounds(543, 459, 73, 26);
 		layeredPane.add(btnNewButton_1);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		layeredPane.setLayer(tabbedPane, -1);
 		tabbedPane.setBounds(12, 12, 604, 435);
 		layeredPane.add(tabbedPane);

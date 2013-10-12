@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import taytom258.lib.util.LogHelper;
+import taytom258.core.util.LogHelper;
 import taytom258.window.core.TextCore;
 
 public class Text extends TextCore{
@@ -25,6 +25,7 @@ public class Text extends TextCore{
 	public static void appear() {
 		LogHelper.info("Text Window");
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Text window = new Text();
@@ -72,6 +73,7 @@ public class Text extends TextCore{
 		textArea.setBounds(12, 23, 530, 358);
 		panel.add(textArea);
 		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmEnterTso.dispose();
 			}
