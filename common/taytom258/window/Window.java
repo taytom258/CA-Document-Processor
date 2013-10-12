@@ -13,9 +13,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
-import taytom258.lib.util.LogHelper;
 import taytom258.window.core.WindowCore;
 
 public class Window extends WindowCore {
@@ -28,6 +29,7 @@ public class Window extends WindowCore {
 	public static void appear() {
 		LogHelper.info("Main Window");
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Window window = new Window();
@@ -58,7 +60,7 @@ public class Window extends WindowCore {
 		JLayeredPane layeredPane = new JLayeredPane();
 		frmTsoHelper.getContentPane().add(layeredPane, BorderLayout.CENTER);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane.setBounds(10, 11, 302, 416);
 		layeredPane.add(tabbedPane);
 		
@@ -74,7 +76,7 @@ public class Window extends WindowCore {
 		tabbedPane.addTab("Tab 3", null, panel_3, null);
 		panel_3.setLayout(null);
 		
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane_1 = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_1.setBounds(322, 11, 299, 416);
 		layeredPane.add(tabbedPane_1);
 		
@@ -92,6 +94,7 @@ public class Window extends WindowCore {
 		
 		JButton btnEnterTso = new JButton("Enter TSO");
 		btnEnterTso.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Text.appear();
 			}
@@ -101,6 +104,7 @@ public class Window extends WindowCore {
 		
 		JButton btnSettings = new JButton("Settings");
 		btnSettings.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Settings.appear();
 			}
@@ -114,6 +118,7 @@ public class Window extends WindowCore {
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.info("Closing Program");
 				frmTsoHelper.dispose();
