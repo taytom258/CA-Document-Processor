@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<project name="TSO Helper" default="build">
+
+	<!-- Public property files -->
+	<property file="build.properties" prefix="build" />
+	<property file="environment.properties" prefix="environment" />
+	
+	<!-- Private property files -->
+	<property file="private.properties" prefix="private" />
+	
+	<!-- Targets -->
+	<target name="increment_build_number">
+		<propertyfile file="build.properties">
+			<entry key="build_number" type="int" operation="+" default="1" />
+		</propertyfile>
+	</target>
+	
+	<target name="replace_tokens">
+		<replace dir="${environment.source_location}/common" token="@VERSION@" value="${build.app_version}" />
+		<replace dir="${environment.source_location}/common" token="@FINGERPRINT@" value="${private.fingerprint_signature}" />
+		<replace dir="${environment.source_location}/common" token="@BUILD_NUMBER@" value="${build.build_number}" />
+	</target>
+	
+	<target name="prep">
+		<mkdir dir="${environment.base_location}/temp" />
+	</target>
+	
+	<target name="compile">
+		<javac sourcepath="" srcdir="${environment.source_location}/common" includeantruntime = "false"
+			destdir="${environment.base_location}/temp" >
+		<include name="**/*.java"/>
+		</javac>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${environment.base_location}/temp" />
+	</target>
+	
+	<target name="sign_jar">
+		<signjar jar="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar" keystore="${private.keystore_location}" alias="${private.keystore_user_alias}" storepass="${private.keystore_user_password}" />
+	</target>
+	
+	<!-- Build Targets -->
+	
+	<target name="build">
+		<!-- Prep for the build -->
+		<antcall target="clean" />
+		<antcall target="increment_build_number" />
+		<antcall target="prep" />
+		
+		<!-- Build the jar -->
+		<antcall target="compile" />
+		<mkdir dir="${environment.build_location}/${build.app_name}/${build.app_version}" />
+		<jar destfile="${environment.build_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar">
+			<fileset dir="${environment.base_location}/temp" />
+			<fileset dir="${environment.source_location}/resources" />		
+		</jar>
+		
+		<!-- Clean up the source now that we are done -->
+		<antcall target="clean" />
+	</target>
+	
+	<target name="release">
+		<!-- Prep for the build -->
+		<antcall target="clean" />
+		<antcall target="increment_build_number" />
+		<antcall target="prep" />
+		<antcall target="replace_tokens" />
+
+		<!-- Build the jar -->
+		<antcall target="compile" />
+		<mkdir dir="${environment.release_location}/${build.app_name}/${build.app_version}" />
+		<jar destfile="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar">
+			<fileset dir="${environment.base_location}/temp" />
+			<fileset dir="${environment.source_location}/resources" />		
+		</jar>
+
+		<!-- Sign the finished jar -->
+		<antcall target="sign_jar" />
+
+		<!-- Clean up the MCP source now that we are done -->
+		<!--<antcall target="clean" />-->
+	</target>
+</project>
+		
+		
+		
+		
+		
