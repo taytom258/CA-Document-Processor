@@ -48,6 +48,38 @@ public class WindowCore extends Window{
 		
 		//Collect Other Tab(s)
 		
+		if (Window.tglbtnCHF.isSelected()){
+			Collection.start = true;
+			Collection.chfState = true;
+			
+			if (Window.chckbxSams.isSelected()){
+				Collection.sams = true;
+			}else{
+				Collection.sams = false;
+			}
+			
+			if (Window.chckbxAnalog.isSelected()){
+				Collection.analog = true;
+			}else{
+				Collection.analog = false;
+			}
+			
+			if (Window.chckbxPassthrough.isSelected()){
+				Collection.passthrough = true;
+			}else{
+				Collection.passthrough = false;
+			}
+			
+			
+		}else if (Window.textField_3.getText() != null){
+			Collection.change = true;
+		}else if (Window.textField_4.getText() != null){
+			Collection.disco = true;
+		}else{
+			Collection.start = false;
+			Collection.change = false;
+			Collection.disco = false;
+		}
 	}
 	
 }

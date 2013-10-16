@@ -28,15 +28,21 @@ import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
+import taytom258.tso.start.FolderTree;
 import taytom258.window.core.ProgressBarCore;
 import taytom258.window.core.WindowCore;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Font;
+
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Window {
 
@@ -47,6 +53,13 @@ public class Window {
 	public static JRadioButton rdbtnAndrews;
 	public static JCheckBox chckbxLogical;
 	public static JCheckBox chckbxComReport;
+	
+	public static JToggleButton tglbtnCHF;
+	public static JCheckBox chckbxSams;
+	public static JCheckBox chckbxAnalog;
+	public static JCheckBox chckbxPassthrough;
+	public static JTree tree;
+	
 	
 	private JFrame frmTsoHelper;
 	public static JTextField textField;
@@ -211,31 +224,32 @@ public class Window {
 		tabbedPane.addTab("Start", null, panel_2, null);
 		panel_2.setLayout(null);
 		
-		JCheckBox chckbxSams = new JCheckBox("Sams?");
+		chckbxSams = new JCheckBox("Sams?");
 		chckbxSams.setBounds(8, 66, 65, 24);
 		panel_2.add(chckbxSams);
 		
-		JCheckBox chckbxDigital = new JCheckBox("Analog?");
-		chckbxDigital.setBounds(8, 94, 71, 24);
-		panel_2.add(chckbxDigital);
+		chckbxAnalog = new JCheckBox("Analog?");
+		chckbxAnalog.setBounds(8, 94, 71, 24);
+		panel_2.add(chckbxAnalog);
 		
-		JCheckBox chckbxPassthrough = new JCheckBox("Passthrough?");
+		chckbxPassthrough = new JCheckBox("Passthrough?");
 		chckbxPassthrough.setBounds(8, 122, 105, 24);
 		panel_2.add(chckbxPassthrough);
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Folder Preview", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_8.setBounds(161, 49, 124, 327);
+		panel_8.setBounds(121, 49, 164, 327);
 		panel_2.add(panel_8);
 		panel_8.setLayout(null);
 		
-		JTree tree = new JTree();
-		tree.setBounds(5, 18, 114, 304);
+		FolderTree.defaultInit();
+		tree = new JTree(FolderTree.model);
+		tree.setBounds(12, 18, 140, 304);
 		panel_8.add(tree);
 		
-		JToggleButton tglbtnNewToggleButton = new JToggleButton("CHF Creation Active");
-		tglbtnNewToggleButton.setBounds(81, 12, 145, 26);
-		panel_2.add(tglbtnNewToggleButton);
+		tglbtnCHF = new JToggleButton("CHF Creation Active");
+		tglbtnCHF.setBounds(81, 12, 145, 26);
+		panel_2.add(tglbtnCHF);
 		
 		JButton btnPreview = new JButton("Preview");
 		btnPreview.setBounds(8, 154, 98, 26);
@@ -254,6 +268,11 @@ public class Window {
 		lblNewLabel_2.setBounds(12, 14, 114, 16);
 		panel_3.add(lblNewLabel_2);
 		
+		JLabel lblNyi = new JLabel("NYI");
+		lblNyi.setFont(new Font("Dialog", Font.BOLD, 24));
+		lblNyi.setBounds(138, 158, 39, 32);
+		panel_3.add(lblNyi);
+		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab("Disco", null, panel_6, null);
 		panel_6.setLayout(null);
@@ -266,6 +285,11 @@ public class Window {
 		textField_4.setBounds(171, 12, 114, 20);
 		textField_4.setColumns(10);
 		panel_6.add(textField_4);
+		
+		JLabel label_1 = new JLabel("NYI");
+		label_1.setFont(new Font("Dialog", Font.BOLD, 24));
+		label_1.setBounds(142, 153, 39, 32);
+		panel_6.add(label_1);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_1.setBounds(322, 11, 299, 416);
@@ -337,5 +361,4 @@ public class Window {
 		lblTsoHelperV.setBounds(378, 466, 92, 16);
 		layeredPane.add(lblTsoHelperV);
 	}
-
 }
