@@ -76,7 +76,7 @@ public class Settings extends SettingsCore{
 		layeredPane.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Tab 1", null, panel, null);
+		tabbedPane.addTab("File", null, panel, null);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
@@ -88,7 +88,7 @@ public class Settings extends SettingsCore{
 		panel_2.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Tab 4", null, panel_3, null);
+		tabbedPane.addTab("Other", null, panel_3, null);
 		panel_3.setLayout(null);
 	}
 }

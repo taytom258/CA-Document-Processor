@@ -14,14 +14,12 @@ public class LogHandler extends Handler {
 
 	@Override
 	public void close() throws SecurityException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void flush() {
 		
-
 	}
 
 	@Override

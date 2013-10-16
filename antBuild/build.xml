@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="TSO Helper" default="build">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="TSO Helper" default="build">
 	
 	<tstamp prefix="time" />
 
@@ -30,7 +30,7 @@
 	</target>
 	
 	<target name="compile">
-		<javac sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
+		<javac compiler="javac1.7" nowarn="on" encoding="UTF-8" sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
 			destdir="${environment.base_location}/temp/compile" >
 		<include name="**/*.java"/>
 		</javac>
@@ -38,6 +38,7 @@
 	
 	<target name="clean">
 		<delete dir="${environment.base_location}/temp" />
+		<delete dir="${environment.source_location}/antBuild/lib" />
 		<delete file="MANIFEST.MF" quiet="true" />
 	</target>
 	
@@ -69,6 +70,23 @@
 			</manifest>
 		</target>
 	
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+		<ivy:retrieve />
+	</target>
+	
+	<target name="unjar">
+		<unzip dest="${environment.base_location}/temp/common">
+		    <patternset>
+		        <include name="**/*.java"/>
+		    </patternset>
+		    <fileset dir="${environment.source_location}/antBuild/lib">
+		        <include name="**/*.jar"/>
+		    </fileset>
+		</unzip>
+	 </target>
+	
+	
+	
 	<!-- Build Targets -->
 	
 	<target name="build">
@@ -77,6 +95,8 @@
 		<antcall target="increment_build_number" />
 		<antcall target="prep" />
 		<antcall target="create_manifest_build" />
+		<!--<antcall target="resolve" />
+		<antcall target="unjar" />-->
 		
 		<!-- Build the jar -->
 		<antcall target="compile" />
@@ -98,6 +118,8 @@
 		<antcall target="prep" />
 		<antcall target="replace_tokens" />
 		<antcall target="create_manifest_release" />
+		<!--<antcall target="resolve" />
+		<antcall target="unjar" />-->
 
 		<!-- Build the jar -->
 		<antcall target="compile" />

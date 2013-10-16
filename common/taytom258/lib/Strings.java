@@ -8,5 +8,7 @@ public final class Strings {
 	public static final String CHANGE = "Change";
 	public static final String START = "Start";
 	public static final String DISCO = "Disco";
+	public static final String ANDREWS_CMO = "ANDWSAFB";
+	public static final String DATE_FORMAT = "ddmmmyyyy";
 	
 }
