@@ -70,11 +70,6 @@ public class WindowCore extends Window{
 				Collection.passthrough = false;
 			}
 			
-			
-		}else if (Window.textField_3.getText() != null){
-			Collection.change = true;
-		}else if (Window.textField_4.getText() != null){
-			Collection.disco = true;
 		}else{
 			Collection.start = false;
 			Collection.change = false;
