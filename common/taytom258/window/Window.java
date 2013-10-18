@@ -68,29 +68,26 @@ public class Window {
 	
 	
 	private JFrame frmTsoHelper;
-	public static JTextField textField;
-	public static JTextField textField_1;
-	public static JTextField textField_2;
-	public static JTextField textField_5;
-	public static JTextArea textArea;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textDSN;
-	private JTextField txtCommercial;
-	private JTextField txtFullCcsd;
-	private JTextField txtAction;
-	private JTextField txtChfLink;
-	private JTextField txtCmo;
-	private JTextField txtCmoDsn;
-	private JTextField txtCmoComm;
-	private JTextField txtTsoNamed;
-	private JTextField txtCcsdlast;
-	private JTextField txtTsp;
-	private JTextField txtRate;
-	private JTextField txtPupose;
-	private JTextField txtServiceavai;
-	private JTextField txtCcsd;
-	private JTextField txtChfLink_1;
+	protected static JTextField textField, textField_1, textField_2, textField_5;
+	protected static JTextArea textArea;
+	protected static JTextField textField_6;
+	protected static JTextField textField_7;
+	protected static JTextField textDSN;
+	protected static JTextField txtCommercial;
+	protected static JTextField txtFullCcsd;
+	protected static JTextField txtAction;
+	protected static JTextField txtChfLink;
+	protected static JTextField txtCmo;
+	protected static JTextField txtCmoDsn;
+	protected static JTextField txtCmoComm;
+	protected static JTextField txtTsoNamed;
+	protected static JTextField txtCcsdlast;
+	protected static JTextField txtTsp;
+	public static JTextField txtRate;
+	public static JTextField txtPupose;
+	public static JTextField txtServiceavai;
+	public static JTextField txtCcsd;
+	public static JTextField txtChfLink_1;
 	
 	/**
 	 * Launch the application.
@@ -451,6 +448,8 @@ public class Window {
 		panel_4.setLayout(null);
 		
 		txtTsoNamed = new JTextField();
+		txtTsoNamed.setBackground(Color.WHITE);
+		txtTsoNamed.setEditable(false);
 		txtTsoNamed.setBounds(168, 11, 114, 20);
 		panel_4.add(txtTsoNamed);
 		txtTsoNamed.setColumns(10);
@@ -464,6 +463,8 @@ public class Window {
 		panel_4.add(lblChfCreated);
 		
 		txtChfLink_1 = new JTextField();
+		txtChfLink_1.setEditable(false);
+		txtChfLink_1.setBackground(Color.WHITE);
 		txtChfLink_1.setBounds(168, 39, 114, 20);
 		panel_4.add(txtChfLink_1);
 		txtChfLink_1.setColumns(10);
@@ -545,31 +546,43 @@ public class Window {
 		panel_5.add(lblFullCcsd_2);
 		
 		txtCcsdlast = new JTextField();
+		txtCcsdlast.setEditable(false);
+		txtCcsdlast.setBackground(Color.WHITE);
 		txtCcsdlast.setBounds(168, 10, 114, 20);
 		panel_5.add(txtCcsdlast);
 		txtCcsdlast.setColumns(10);
 		
 		txtTsp = new JTextField();
+		txtTsp.setEditable(false);
+		txtTsp.setBackground(Color.WHITE);
 		txtTsp.setBounds(168, 38, 114, 20);
 		panel_5.add(txtTsp);
 		txtTsp.setColumns(10);
 		
 		txtRate = new JTextField();
+		txtRate.setEditable(false);
+		txtRate.setBackground(Color.WHITE);
 		txtRate.setBounds(168, 66, 114, 20);
 		panel_5.add(txtRate);
 		txtRate.setColumns(10);
 		
 		txtPupose = new JTextField();
+		txtPupose.setEditable(false);
+		txtPupose.setBackground(Color.WHITE);
 		txtPupose.setBounds(168, 94, 114, 20);
 		panel_5.add(txtPupose);
 		txtPupose.setColumns(10);
 		
 		txtServiceavai = new JTextField();
+		txtServiceavai.setEditable(false);
+		txtServiceavai.setBackground(Color.WHITE);
 		txtServiceavai.setBounds(168, 122, 114, 20);
 		panel_5.add(txtServiceavai);
 		txtServiceavai.setColumns(10);
 		
 		txtCcsd = new JTextField();
+		txtCcsd.setEditable(false);
+		txtCcsd.setBackground(Color.WHITE);
 		txtCcsd.setBounds(168, 150, 114, 20);
 		panel_5.add(txtCcsd);
 		txtCcsd.setColumns(10);

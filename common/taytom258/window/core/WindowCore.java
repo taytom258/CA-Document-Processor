@@ -28,6 +28,7 @@ public class WindowCore extends Window{
 			Collection.cmo = Strings.ANDREWS_CMO;
 		}else{
 			Collection.cmo = textField_2.getText();
+			Collection.dsn = textDSN.getText();
 		}
 		
 		if (chckbxLogical.isSelected()){
