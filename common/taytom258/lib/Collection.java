@@ -1,39 +1,26 @@
 package taytom258.lib;
 
-import java.nio.CharBuffer;
-
-import javax.swing.tree.TreeModel;
-
 import taytom258.core.util.LogHelper;
+
 
 public class Collection{
 
-	public static boolean change = false;
-	public static boolean start = false;
-	public static boolean disco = false;
+	public static boolean start, change, disco;
 	
-	public static String subject;
-	public static String ccsd;
-	public static String svcDate_Day, svcDate_Month, svcDate_Year, svcDate_MonthInt;
-	public static String cmo, dsn, comm;
-	public static boolean logical;
-	public static boolean comReport;
-	public static String comments;
-	
-	public static boolean chfState, sams, analog, passthrough;
-	
+	//General Tab
+	public static String tsoSubject, fullCcsd, svcDate, cmo, otherCmoDsn, otherCmoComm, extraComments;
+	public static boolean logical, comReportRequired;
 	
 	public static void debugGeneral(){
-		CharBuffer group = CharBuffer.allocate(2);
-		group.append("/");
-		group.append(" ");
+		LogHelper.debug(tsoSubject);
+		LogHelper.debug(fullCcsd);
+		LogHelper.debug(svcDate);
+		LogHelper.debug(cmo);
+//		LogHelper.debug(otherCmoDsn);
+//		LogHelper.debug(otherCmoComm);
+		LogHelper.debug(extraComments);
 		
-		LogHelper.debug("TSO Subject: " + subject);
-		LogHelper.debug("Full CCSD: " + ccsd);
-		LogHelper.debug("Service Date: ");
-		LogHelper.debug("CMO: " + cmo);
-		LogHelper.debug("Logical: " + logical);
-		LogHelper.debug("Completion Report?: " + comReport);
-		LogHelper.debug("Comments: " + comments);
+		LogHelper.debug(logical);
+		LogHelper.debug(comReportRequired);
 	}
 }
