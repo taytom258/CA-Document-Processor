@@ -2,6 +2,7 @@ package taytom258.window;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,10 +32,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import taytom258.core.util.Debug;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
+import taytom258.show.ShowFacit;
+import taytom258.show.ShowTracker;
 import taytom258.window.core.ProgressBarCore;
 import taytom258.window.core.WindowCore;
 
@@ -52,17 +56,60 @@ public class Window {
 	private static JCheckBox chckbxComReport;
 	private static JCheckBox chckbxLogical;
 	private static JTextArea textAreaExtraComments;
-	private JCheckBox chckbxStart1539;
-	private JCheckBox chckbxStartSams;
-	private JCheckBox chckbxStartAnalog;
-	private JCheckBox chckbxStartPassthrough;
-	private JToggleButton tglbtnStartCHF;
+	private static JCheckBox chckbxStart1539;
+	private static JCheckBox chckbxStartSams;
+	private static JCheckBox chckbxStartAnalog;
+	private static JCheckBox chckbxStartPassthrough;
+	private static JToggleButton tglbtnStartCHF;
 	private static JTextField textFieldStartDataRate;
-	private JTextField textFieldStartServiceAvailability;
-	private JComboBox<?> comboBoxStartTsp;
-	private JTextField textFieldStartTsr;
-	private JTextField textFieldStartReportDate;
-	private JTextArea textAreaStartTsoStatement;
+	private static JTextField textFieldStartServiceAvailability;
+	private static JComboBox<?> comboBoxStartTsp;
+	private static JTextField textFieldStartTsr;
+	private static JTextField textFieldStartReportDate;
+	private static JTextArea textAreaStartTsoStatement;
+	private static JCheckBox chckbxChange1539;
+	private static JCheckBox chckbxChangeSams;
+	private static JCheckBox chckbxChangeAnalog;
+	private static JCheckBox chckbxChangePassthrough;
+	private static JTextField textFieldChangeTsrNumber;
+	private static JTextField textFieldChangeReportDate;
+	private static JTextArea textAreaChangeTsoStatement;
+	private static JToggleButton tglbtnChangeCHF;
+	private static JCheckBox chckbxDisco1539;
+	private static JCheckBox chckbxDiscoSams;
+	private static JCheckBox chckbxDiscoAnalog;
+	private static JCheckBox chckbxDiscoPassthrough;
+	private static JToggleButton tglBtnDiscoCHF;
+	private static JTextField textFieldDiscoTsrNumber;
+	private static JTextField textFieldDiscoReportDate;
+	private static JTextArea textAreaDiscoTsoStatement;
+	private static JTextField textFieldShowAction;
+	private static JTextField textFieldShowTsoName;
+	private static JTextField textFieldShowRootFolder;
+	private static JTextField textFieldShowFacitFullCcsd;
+	private static JTextField textFieldShowTsp;
+	private static JTextField textFieldShowPurpose;
+	private static JTextField textFieldShowRate;
+	private static JTextField textFieldShowServiceAvailable;
+	private static JTextField textFieldShowCcsd;
+	private static JTextField textFieldShowServiceDate;
+	private static JTextField textFieldShowTsoSubject;
+	private static JTextField textFieldShowAction_1;
+	private static JTextField textFieldShowTsoNumber;
+	private static JTextField textFieldShowTsrNumber;
+	private static JTextField textFieldShowServiceDate_1;
+	private static JTextField textFieldShowCcsd_1;
+	private static JTextField textFieldShowReportDate;
+	private static JTextField textFieldShowTrackerFullCcsd;
+	private static JTextField textFieldShowChfLink;
+	private static JTextField textFieldShowCmo;
+	private static JTextField textFieldShowCmoDsn;
+	private static JTextField textFieldShowCmoComm;
+	private static JTextPane textAreaShowComment;
+	private static JCheckBox chckbxAncs;
+	private static JTextArea textAreaShowTsoStatement;
+	private static JCheckBox chckbxCompletionReportRequired;
+	private static JTextArea textAreaShowTsoStatement_1;
 
 	/**
 	 * Launch the application.
@@ -75,6 +122,7 @@ public class Window {
 				try {
 					Window window = new Window();
 					window.frmTsoHelper.setVisible(true);
+					Debug.init();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -108,6 +156,7 @@ public class Window {
 		
 		final JPanel panelGeneral = new JPanel();
 		tabbedPane.addTab("General", null, panelGeneral, null);
+		tabbedPane.setEnabledAt(0, true);
 		panelGeneral.setLayout(null);
 		
 		textFieldTsoSubject = new JTextField();
@@ -217,7 +266,7 @@ public class Window {
 		
 		JPanel panelExtraComments = new JPanel();
 		panelExtraComments.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Extra Comments", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelExtraComments.setBounds(12, 268, 283, 113);
+		panelExtraComments.setBounds(8, 266, 283, 113);
 		panelGeneral.add(panelExtraComments);
 		panelExtraComments.setLayout(null);
 		
@@ -259,8 +308,13 @@ public class Window {
 		lblOtherCmoComm.setBounds(109, 205, 31, 14);
 		panelGeneral.add(lblOtherCmoComm);
 		
+		chckbxAncs = new JCheckBox("ANCS?");
+		chckbxAncs.setBounds(12, 208, 64, 24);
+		panelGeneral.add(chckbxAncs);
+		
 		JPanel panelStart = new JPanel();
 		tabbedPane.addTab("Start", null, panelStart, null);
+		tabbedPane.setEnabledAt(1, true);
 		panelStart.setLayout(null);
 		
 		chckbxStartSams = new JCheckBox("Sams?");
@@ -321,8 +375,22 @@ public class Window {
 		
 		textFieldStartReportDate = new JTextField();
 		textFieldStartReportDate.setBounds(171, 236, 114, 20);
+		textFieldStartReportDate.setText(Strings.DATE_FORMAT);
 		panelStart.add(textFieldStartReportDate);
 		textFieldStartReportDate.setColumns(10);
+		textFieldStartReportDate.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				textFieldStartReportDate.setText("");
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldStartReportDate.getText().equals("")){
+					textFieldStartReportDate.setText(Strings.DATE_FORMAT);
+				}
+			}
+		});
 		
 		JPanel panelStartTsoStatement = new JPanel();
 		panelStartTsoStatement.setLayout(null);
@@ -344,20 +412,21 @@ public class Window {
 		JPanel panelChange = new JPanel();
 		panelChange.setLayout(null);
 		tabbedPane.addTab("Change", null, panelChange, null);
+		tabbedPane.setEnabledAt(2, true);
 		
-		JCheckBox checkBoxChangeSams = new JCheckBox("Sams?");
-		checkBoxChangeSams.setBounds(8, 33, 65, 24);
-		panelChange.add(checkBoxChangeSams);
+		chckbxChangeSams = new JCheckBox("Sams?");
+		chckbxChangeSams.setBounds(8, 33, 65, 24);
+		panelChange.add(chckbxChangeSams);
 		
-		JCheckBox checkBoxChangeAnalog = new JCheckBox("Analog?");
-		checkBoxChangeAnalog.setBounds(8, 61, 71, 24);
-		panelChange.add(checkBoxChangeAnalog);
+		chckbxChangeAnalog = new JCheckBox("Analog?");
+		chckbxChangeAnalog.setBounds(8, 61, 71, 24);
+		panelChange.add(chckbxChangeAnalog);
 		
-		JCheckBox checkBoxChangePassthrough = new JCheckBox("Passthrough?");
-		checkBoxChangePassthrough.setBounds(8, 89, 105, 24);
-		panelChange.add(checkBoxChangePassthrough);
+		chckbxChangePassthrough = new JCheckBox("Passthrough?");
+		chckbxChangePassthrough.setBounds(8, 89, 105, 24);
+		panelChange.add(chckbxChangePassthrough);
 		
-		JToggleButton tglbtnChangeCHF = new JToggleButton("CHF Modification Active");
+		tglbtnChangeCHF = new JToggleButton("CHF Modification Active");
 		tglbtnChangeCHF.setBounds(119, 47, 166, 26);
 		panelChange.add(tglbtnChangeCHF);
 		
@@ -369,15 +438,29 @@ public class Window {
 		labelChangeReportNumber.setBounds(12, 238, 67, 16);
 		panelChange.add(labelChangeReportNumber);
 		
-		JTextField textFieldChangeTsrNumber = new JTextField();
+		textFieldChangeTsrNumber = new JTextField();
 		textFieldChangeTsrNumber.setColumns(10);
 		textFieldChangeTsrNumber.setBounds(171, 204, 114, 20);
 		panelChange.add(textFieldChangeTsrNumber);
 		
-		JTextField textFieldChangeReportDate = new JTextField();
+		textFieldChangeReportDate = new JTextField();
 		textFieldChangeReportDate.setColumns(10);
+		textFieldChangeReportDate.setText(Strings.DATE_FORMAT);
 		textFieldChangeReportDate.setBounds(171, 236, 114, 20);
 		panelChange.add(textFieldChangeReportDate);
+		textFieldChangeReportDate.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				textFieldChangeReportDate.setText("");
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldChangeReportDate.getText().equals("")){
+					textFieldChangeReportDate.setText(Strings.DATE_FORMAT);
+				}
+			}
+		});
 		
 		JPanel panelChangeTsoStatement = new JPanel();
 		panelChangeTsoStatement.setLayout(null);
@@ -385,34 +468,35 @@ public class Window {
 		panelChangeTsoStatement.setBounds(8, 266, 283, 113);
 		panelChange.add(panelChangeTsoStatement);
 		
-		JTextArea textAreaChangeTsoStatement = new JTextArea();
+		textAreaChangeTsoStatement = new JTextArea();
 		textAreaChangeTsoStatement.setWrapStyleWord(true);
 		textAreaChangeTsoStatement.setToolTipText("Enter Extra Comments Here");
 		textAreaChangeTsoStatement.setLineWrap(true);
 		textAreaChangeTsoStatement.setBounds(12, 23, 259, 78);
 		panelChangeTsoStatement.add(textAreaChangeTsoStatement);
 		
-		JCheckBox checkBoxChange1539 = new JCheckBox("1539 Circuit?");
-		checkBoxChange1539.setBounds(8, 8, 112, 24);
-		panelChange.add(checkBoxChange1539);
+		chckbxChange1539 = new JCheckBox("1539 Circuit?");
+		chckbxChange1539.setBounds(8, 8, 112, 24);
+		panelChange.add(chckbxChange1539);
 		
 		JPanel panelDisco = new JPanel();
 		panelDisco.setLayout(null);
 		tabbedPane.addTab("Disco", null, panelDisco, null);
+		tabbedPane.setEnabledAt(3, true);
 		
-		JCheckBox checkBoxDiscoSams = new JCheckBox("Sams?");
-		checkBoxDiscoSams.setBounds(8, 33, 65, 24);
-		panelDisco.add(checkBoxDiscoSams);
+		chckbxDiscoSams = new JCheckBox("Sams?");
+		chckbxDiscoSams.setBounds(8, 33, 65, 24);
+		panelDisco.add(chckbxDiscoSams);
 		
-		JCheckBox checkBoxDiscoAnalog = new JCheckBox("Analog?");
-		checkBoxDiscoAnalog.setBounds(8, 61, 71, 24);
-		panelDisco.add(checkBoxDiscoAnalog);
+		chckbxDiscoAnalog = new JCheckBox("Analog?");
+		chckbxDiscoAnalog.setBounds(8, 61, 71, 24);
+		panelDisco.add(chckbxDiscoAnalog);
 		
-		JCheckBox checkBoxDiscoPassthrough = new JCheckBox("Passthrough?");
-		checkBoxDiscoPassthrough.setBounds(8, 89, 105, 24);
-		panelDisco.add(checkBoxDiscoPassthrough);
+		chckbxDiscoPassthrough = new JCheckBox("Passthrough?");
+		chckbxDiscoPassthrough.setBounds(8, 89, 105, 24);
+		panelDisco.add(chckbxDiscoPassthrough);
 		
-		JToggleButton tglBtnDiscoCHF = new JToggleButton("CHF Modification Active");
+		tglBtnDiscoCHF = new JToggleButton("CHF Modification Active");
 		tglBtnDiscoCHF.setBounds(119, 47, 166, 26);
 		panelDisco.add(tglBtnDiscoCHF);
 		
@@ -424,15 +508,29 @@ public class Window {
 		labelDiscoReportDate.setBounds(12, 238, 67, 16);
 		panelDisco.add(labelDiscoReportDate);
 		
-		JTextField  textFieldDiscoTsrNumber = new JTextField();
+		textFieldDiscoTsrNumber = new JTextField();
 		textFieldDiscoTsrNumber.setColumns(10);
 		textFieldDiscoTsrNumber.setBounds(171, 204, 114, 20);
 		panelDisco.add(textFieldDiscoTsrNumber);
 		
-		JTextField textFieldDiscoReportDate = new JTextField();
+		textFieldDiscoReportDate = new JTextField();
 		textFieldDiscoReportDate.setColumns(10);
+		textFieldDiscoReportDate.setText(Strings.DATE_FORMAT);
 		textFieldDiscoReportDate.setBounds(171, 236, 114, 20);
 		panelDisco.add(textFieldDiscoReportDate);
+		textFieldDiscoReportDate.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				textFieldDiscoReportDate.setText("");
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldDiscoReportDate.getText().equals("")){
+					textFieldDiscoReportDate.setText(Strings.DATE_FORMAT);
+				}
+			}
+		});
 		
 		JPanel panelDiscoTsoStatement = new JPanel();
 		panelDiscoTsoStatement.setLayout(null);
@@ -440,143 +538,135 @@ public class Window {
 		panelDiscoTsoStatement.setBounds(8, 266, 283, 113);
 		panelDisco.add(panelDiscoTsoStatement);
 		
-		JTextArea textAreaDiscoTsoStatement = new JTextArea();
+		textAreaDiscoTsoStatement = new JTextArea();
 		textAreaDiscoTsoStatement.setWrapStyleWord(true);
 		textAreaDiscoTsoStatement.setToolTipText("Enter Extra Comments Here");
 		textAreaDiscoTsoStatement.setLineWrap(true);
 		textAreaDiscoTsoStatement.setBounds(12, 23, 259, 78);
 		panelDiscoTsoStatement.add(textAreaDiscoTsoStatement);
 		
-		JCheckBox checkBoxDisco1539 = new JCheckBox("1539 Circuit?");
-		checkBoxDisco1539.setBounds(8, 8, 112, 24);
-		panelDisco.add(checkBoxDisco1539);
+		chckbxDisco1539 = new JCheckBox("1539 Circuit?");
+		chckbxDisco1539.setBounds(8, 8, 112, 24);
+		panelDisco.add(chckbxDisco1539);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_1.setBounds(322, 11, 299, 416);
 		layeredPane.add(tabbedPane_1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		tabbedPane_1.addTab("Tracker", null, panel_1, null);
-		panel_1.setLayout(null);
+		JPanel panelTracker = new JPanel();
+		panelTracker.setBackground(Color.WHITE);
+		tabbedPane_1.addTab("Tracker", null, panelTracker, null);
+		tabbedPane_1.setEnabledAt(0, true);
+		panelTracker.setLayout(null);
 		
 		JLabel lblFullCcsd_1 = new JLabel("Full CCSD");
-		lblFullCcsd_1.setBounds(12, 12, 55, 16);
-		panel_1.add(lblFullCcsd_1);
-		
-		JLabel lblAction = new JLabel("Action");
-		lblAction.setBounds(12, 40, 55, 16);
-		panel_1.add(lblAction);
+		lblFullCcsd_1.setBounds(12, 46, 55, 16);
+		panelTracker.add(lblFullCcsd_1);
 		
 		JLabel lblChfLink = new JLabel("CHF Link");
-		lblChfLink.setBounds(12, 68, 55, 16);
-		panel_1.add(lblChfLink);
+		lblChfLink.setBounds(12, 78, 55, 16);
+		panelTracker.add(lblChfLink);
 		
 		JLabel lblCmo = new JLabel("CMO");
-		lblCmo.setBounds(12, 96, 55, 16);
-		panel_1.add(lblCmo);
+		lblCmo.setBounds(12, 108, 27, 16);
+		panelTracker.add(lblCmo);
 		
-		JTextField txtFullCcsd = new JTextField();
-		txtFullCcsd.setEditable(false);
-		txtFullCcsd.setForeground(Color.BLACK);
-		txtFullCcsd.setBackground(Color.WHITE);
-		txtFullCcsd.setBounds(168, 10, 114, 20);
-		panel_1.add(txtFullCcsd);
-		txtFullCcsd.setColumns(10);
+		textFieldShowTrackerFullCcsd = new JTextField();
+		textFieldShowTrackerFullCcsd.setEditable(false);
+		textFieldShowTrackerFullCcsd.setForeground(Color.BLACK);
+		textFieldShowTrackerFullCcsd.setBackground(Color.WHITE);
+		textFieldShowTrackerFullCcsd.setBounds(173, 44, 114, 20);
+		panelTracker.add(textFieldShowTrackerFullCcsd);
+		textFieldShowTrackerFullCcsd.setColumns(10);
 		
-		JTextField txtAction = new JTextField();
-		txtAction.setEditable(false);
-		txtAction.setForeground(Color.BLACK);
-		txtAction.setBackground(Color.WHITE);
-		txtAction.setBounds(168, 38, 114, 20);
-		panel_1.add(txtAction);
-		txtAction.setColumns(10);
+		textFieldShowChfLink = new JTextField();
+		textFieldShowChfLink.setEditable(false);
+		textFieldShowChfLink.setForeground(Color.BLACK);
+		textFieldShowChfLink.setBackground(Color.WHITE);
+		textFieldShowChfLink.setBounds(173, 76, 114, 20);
+		panelTracker.add(textFieldShowChfLink);
+		textFieldShowChfLink.setColumns(10);
 		
-		JTextField txtChfLink = new JTextField();
-		txtChfLink.setEditable(false);
-		txtChfLink.setForeground(Color.BLACK);
-		txtChfLink.setBackground(Color.WHITE);
-		txtChfLink.setBounds(168, 66, 114, 20);
-		panel_1.add(txtChfLink);
-		txtChfLink.setColumns(10);
-		
-		JTextField txtCmo = new JTextField();
-		txtCmo.setEditable(false);
-		txtCmo.setForeground(Color.BLACK);
-		txtCmo.setBackground(Color.WHITE);
-		txtCmo.setBounds(168, 94, 114, 20);
-		panel_1.add(txtCmo);
-		txtCmo.setColumns(10);
+		textFieldShowCmo = new JTextField();
+		textFieldShowCmo.setEditable(false);
+		textFieldShowCmo.setForeground(Color.BLACK);
+		textFieldShowCmo.setBackground(Color.WHITE);
+		textFieldShowCmo.setBounds(173, 106, 114, 20);
+		panelTracker.add(textFieldShowCmo);
+		textFieldShowCmo.setColumns(10);
 		
 		JLabel lblCmoDsn = new JLabel("CMO DSN");
-		lblCmoDsn.setBounds(12, 124, 55, 16);
-		panel_1.add(lblCmoDsn);
+		lblCmoDsn.setBounds(12, 140, 55, 16);
+		panelTracker.add(lblCmoDsn);
 		
 		JLabel lblCmoComm = new JLabel("CMO Comm");
-		lblCmoComm.setBounds(12, 152, 67, 16);
-		panel_1.add(lblCmoComm);
+		lblCmoComm.setBounds(12, 172, 67, 16);
+		panelTracker.add(lblCmoComm);
 		
-		JTextField txtCmoDsn = new JTextField();
-		txtCmoDsn.setEditable(false);
-		txtCmoDsn.setForeground(Color.BLACK);
-		txtCmoDsn.setBackground(Color.WHITE);
-		txtCmoDsn.setBounds(168, 122, 114, 20);
-		panel_1.add(txtCmoDsn);
-		txtCmoDsn.setColumns(10);
+		textFieldShowCmoDsn = new JTextField();
+		textFieldShowCmoDsn.setEditable(false);
+		textFieldShowCmoDsn.setForeground(Color.BLACK);
+		textFieldShowCmoDsn.setBackground(Color.WHITE);
+		textFieldShowCmoDsn.setBounds(173, 138, 114, 20);
+		panelTracker.add(textFieldShowCmoDsn);
+		textFieldShowCmoDsn.setColumns(10);
 		
-		JTextField txtCmoComm = new JTextField();
-		txtCmoComm.setEditable(false);
-		txtCmoComm.setForeground(Color.BLACK);
-		txtCmoComm.setBackground(Color.WHITE);
-		txtCmoComm.setBounds(168, 150, 114, 20);
-		panel_1.add(txtCmoComm);
-		txtCmoComm.setColumns(10);
+		textFieldShowCmoComm = new JTextField();
+		textFieldShowCmoComm.setEditable(false);
+		textFieldShowCmoComm.setForeground(Color.BLACK);
+		textFieldShowCmoComm.setBackground(Color.WHITE);
+		textFieldShowCmoComm.setBounds(173, 170, 114, 20);
+		panelTracker.add(textFieldShowCmoComm);
+		textFieldShowCmoComm.setColumns(10);
 		
-		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(Color.WHITE);
-		panel_8.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192), 1, true), "Comment", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_8.setBounds(7, 234, 280, 147);
-		panel_1.add(panel_8);
-		panel_8.setLayout(null);
+		JPanel panelComment = new JPanel();
+		panelComment.setBackground(Color.WHITE);
+		panelComment.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192), 1, true), "Comment", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelComment.setBounds(7, 234, 280, 147);
+		panelTracker.add(panelComment);
+		panelComment.setLayout(null);
 		
-		JTextPane txtpnComment = new JTextPane();
-		txtpnComment.setEditable(false);
-		txtpnComment.setBackground(Color.WHITE);
-		txtpnComment.setBounds(5, 18, 270, 124);
-		panel_8.add(txtpnComment);
+		textAreaShowComment = new JTextPane();
+		textAreaShowComment.setEditable(false);
+		textAreaShowComment.setBackground(Color.WHITE);
+		textAreaShowComment.setBounds(12, 22, 256, 113);
+		panelComment.add(textAreaShowComment);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.WHITE);
-		tabbedPane_1.addTab("CHF", null, panel_4, null);
-		panel_4.setLayout(null);
+		JLabel lblAction = new JLabel("Action");
+		lblAction.setBounds(12, 14, 36, 16);
+		panelTracker.add(lblAction);
 		
-		JTextField txtTsoNamed = new JTextField();
-		txtTsoNamed.setBackground(Color.WHITE);
-		txtTsoNamed.setEditable(false);
-		txtTsoNamed.setBounds(168, 11, 114, 20);
-		panel_4.add(txtTsoNamed);
-		txtTsoNamed.setColumns(10);
+		textFieldShowAction = new JTextField();
+		textFieldShowAction.setForeground(Color.BLACK);
+		textFieldShowAction.setEditable(false);
+		textFieldShowAction.setColumns(10);
+		textFieldShowAction.setBackground(Color.WHITE);
+		textFieldShowAction.setBounds(173, 12, 114, 20);
+		panelTracker.add(textFieldShowAction);
 		
-		JLabel lblTsoNamed = new JLabel("TSO Named");
-		lblTsoNamed.setBounds(12, 13, 67, 16);
-		panel_4.add(lblTsoNamed);
+		JLabel lblServiceDate_1 = new JLabel("Service Date");
+		lblServiceDate_1.setBounds(12, 202, 72, 16);
+		panelTracker.add(lblServiceDate_1);
 		
-		JLabel lblChfCreated = new JLabel("CHF Created");
-		lblChfCreated.setBounds(12, 41, 70, 16);
-		panel_4.add(lblChfCreated);
+		textFieldShowServiceDate = new JTextField();
+		textFieldShowServiceDate.setForeground(Color.BLACK);
+		textFieldShowServiceDate.setEditable(false);
+		textFieldShowServiceDate.setColumns(10);
+		textFieldShowServiceDate.setBackground(Color.WHITE);
+		textFieldShowServiceDate.setBounds(173, 200, 114, 20);
+		panelTracker.add(textFieldShowServiceDate);
 		
-		JTextField txtChfLink_1 = new JTextField();
-		txtChfLink_1.setEditable(false);
-		txtChfLink_1.setBackground(Color.WHITE);
-		txtChfLink_1.setBounds(168, 39, 114, 20);
-		panel_4.add(txtChfLink_1);
-		txtChfLink_1.setColumns(10);
+		JPanel panelChf = new JPanel();
+		panelChf.setBackground(Color.WHITE);
+		tabbedPane_1.addTab("CHF", null, panelChf, null);
+		tabbedPane_1.setEnabledAt(1, true);
+		panelChf.setLayout(null);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(Color.WHITE);
 		panel_9.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Root", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_9.setBounds(44, 180, 199, 95);
-		panel_4.add(panel_9);
+		panelChf.add(panel_9);
 		panel_9.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("New label");
@@ -617,78 +707,245 @@ public class Window {
 		
 		JButton btnNewButton = new JButton("Create");
 		btnNewButton.setBounds(44, 314, 199, 48);
-		panel_4.add(btnNewButton);
+		panelChf.add(btnNewButton);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		tabbedPane_1.addTab("Facit", null, panel_5, null);
-		panel_5.setLayout(null);
+		JCheckBox chckbxShowFolderExists = new JCheckBox("Root Folder Exists");
+		chckbxShowFolderExists.setEnabled(false);
+		chckbxShowFolderExists.setBackground(Color.WHITE);
+		chckbxShowFolderExists.setBounds(81, 283, 127, 24);
+		panelChf.add(chckbxShowFolderExists);
 		
-		JLabel lblCcsdlastFour = new JLabel("CCSD (last four)");
-		lblCcsdlastFour.setBounds(12, 12, 90, 16);
-		panel_5.add(lblCcsdlastFour);
+		JLabel lblTsoName = new JLabel("TSO Name");
+		lblTsoName.setBounds(12, 14, 60, 16);
+		panelChf.add(lblTsoName);
 		
-		JLabel lblRate = new JLabel("Rate");
-		lblRate.setBounds(12, 68, 26, 16);
-		panel_5.add(lblRate);
+		JLabel lblRootFolderName = new JLabel("Root Folder Name");
+		lblRootFolderName.setBounds(12, 50, 100, 16);
+		panelChf.add(lblRootFolderName);
 		
-		JLabel lblNewLabel_4 = new JLabel("TSP");
-		lblNewLabel_4.setBounds(12, 40, 55, 16);
-		panel_5.add(lblNewLabel_4);
+		textFieldShowTsoName = new JTextField();
+		textFieldShowTsoName.setForeground(Color.BLACK);
+		textFieldShowTsoName.setEditable(false);
+		textFieldShowTsoName.setColumns(10);
+		textFieldShowTsoName.setBackground(Color.WHITE);
+		textFieldShowTsoName.setBounds(168, 12, 114, 20);
+		panelChf.add(textFieldShowTsoName);
+		
+		textFieldShowRootFolder = new JTextField();
+		textFieldShowRootFolder.setForeground(Color.BLACK);
+		textFieldShowRootFolder.setEditable(false);
+		textFieldShowRootFolder.setColumns(10);
+		textFieldShowRootFolder.setBackground(Color.WHITE);
+		textFieldShowRootFolder.setBounds(168, 48, 114, 20);
+		panelChf.add(textFieldShowRootFolder);
+		
+		JPanel panelFacit = new JPanel();
+		panelFacit.setLayout(null);
+		panelFacit.setBackground(Color.WHITE);
+		tabbedPane_1.addTab("Facit", null, panelFacit, null);
+		tabbedPane_1.setEnabledAt(2, true);
+		
+		JLabel lblShowFullCcsd = new JLabel("Full CCSD");
+		lblShowFullCcsd.setBounds(12, 168, 55, 16);
+		panelFacit.add(lblShowFullCcsd);
+		
+		JLabel labelTsp = new JLabel("TSP");
+		labelTsp.setBounds(12, 44, 55, 16);
+		panelFacit.add(labelTsp);
 		
 		JLabel lblPurpose = new JLabel("Purpose");
-		lblPurpose.setBounds(12, 96, 55, 16);
-		panel_5.add(lblPurpose);
+		lblPurpose.setBounds(12, 74, 48, 16);
+		panelFacit.add(lblPurpose);
 		
-		JLabel lblServiceAvaliability = new JLabel("Service Avaliability");
-		lblServiceAvaliability.setBounds(12, 124, 106, 16);
-		panel_5.add(lblServiceAvaliability);
+		textFieldShowFacitFullCcsd = new JTextField();
+		textFieldShowFacitFullCcsd.setForeground(Color.BLACK);
+		textFieldShowFacitFullCcsd.setEditable(false);
+		textFieldShowFacitFullCcsd.setColumns(10);
+		textFieldShowFacitFullCcsd.setBackground(Color.WHITE);
+		textFieldShowFacitFullCcsd.setBounds(173, 166, 114, 20);
+		panelFacit.add(textFieldShowFacitFullCcsd);
 		
-		JLabel lblFullCcsd_2 = new JLabel("Full CCSD");
-		lblFullCcsd_2.setBounds(12, 152, 106, 16);
-		panel_5.add(lblFullCcsd_2);
+		textFieldShowTsp = new JTextField();
+		textFieldShowTsp.setForeground(Color.BLACK);
+		textFieldShowTsp.setEditable(false);
+		textFieldShowTsp.setColumns(10);
+		textFieldShowTsp.setBackground(Color.WHITE);
+		textFieldShowTsp.setBounds(173, 42, 114, 20);
+		panelFacit.add(textFieldShowTsp);
 		
-		JTextField txtCcsdlast = new JTextField();
-		txtCcsdlast.setEditable(false);
-		txtCcsdlast.setBackground(Color.WHITE);
-		txtCcsdlast.setBounds(168, 10, 114, 20);
-		panel_5.add(txtCcsdlast);
-		txtCcsdlast.setColumns(10);
+		textFieldShowPurpose = new JTextField();
+		textFieldShowPurpose.setForeground(Color.BLACK);
+		textFieldShowPurpose.setEditable(false);
+		textFieldShowPurpose.setColumns(10);
+		textFieldShowPurpose.setBackground(Color.WHITE);
+		textFieldShowPurpose.setBounds(173, 72, 114, 20);
+		panelFacit.add(textFieldShowPurpose);
 		
-		JTextField txtTsp = new JTextField();
-		txtTsp.setEditable(false);
-		txtTsp.setBackground(Color.WHITE);
-		txtTsp.setBounds(168, 38, 114, 20);
-		panel_5.add(txtTsp);
-		txtTsp.setColumns(10);
+		JLabel lblRate = new JLabel("Rate");
+		lblRate.setBounds(12, 106, 26, 16);
+		panelFacit.add(lblRate);
 		
-		JTextField txtRate = new JTextField();
-		txtRate.setEditable(false);
-		txtRate.setBackground(Color.WHITE);
-		txtRate.setBounds(168, 66, 114, 20);
-		panel_5.add(txtRate);
-		txtRate.setColumns(10);
+		JLabel lblServiceAvailiability = new JLabel("Service Availiability");
+		lblServiceAvailiability.setBounds(12, 138, 109, 16);
+		panelFacit.add(lblServiceAvailiability);
 		
-		JTextField txtPupose = new JTextField();
-		txtPupose.setEditable(false);
-		txtPupose.setBackground(Color.WHITE);
-		txtPupose.setBounds(168, 94, 114, 20);
-		panel_5.add(txtPupose);
-		txtPupose.setColumns(10);
+		textFieldShowRate = new JTextField();
+		textFieldShowRate.setForeground(Color.BLACK);
+		textFieldShowRate.setEditable(false);
+		textFieldShowRate.setColumns(10);
+		textFieldShowRate.setBackground(Color.WHITE);
+		textFieldShowRate.setBounds(173, 104, 114, 20);
+		panelFacit.add(textFieldShowRate);
 		
-		JTextField txtServiceavai = new JTextField();
-		txtServiceavai.setEditable(false);
-		txtServiceavai.setBackground(Color.WHITE);
-		txtServiceavai.setBounds(168, 122, 114, 20);
-		panel_5.add(txtServiceavai);
-		txtServiceavai.setColumns(10);
+		textFieldShowServiceAvailable = new JTextField();
+		textFieldShowServiceAvailable.setForeground(Color.BLACK);
+		textFieldShowServiceAvailable.setEditable(false);
+		textFieldShowServiceAvailable.setColumns(10);
+		textFieldShowServiceAvailable.setBackground(Color.WHITE);
+		textFieldShowServiceAvailable.setBounds(173, 136, 114, 20);
+		panelFacit.add(textFieldShowServiceAvailable);
 		
-		JTextField txtCcsd = new JTextField();
-		txtCcsd.setEditable(false);
-		txtCcsd.setBackground(Color.WHITE);
-		txtCcsd.setBounds(168, 150, 114, 20);
-		panel_5.add(txtCcsd);
-		txtCcsd.setColumns(10);
+		JLabel lblCcsd = new JLabel("CCSD");
+		lblCcsd.setBounds(12, 14, 36, 16);
+		panelFacit.add(lblCcsd);
+		
+		textFieldShowCcsd = new JTextField();
+		textFieldShowCcsd.setForeground(Color.BLACK);
+		textFieldShowCcsd.setEditable(false);
+		textFieldShowCcsd.setColumns(10);
+		textFieldShowCcsd.setBackground(Color.WHITE);
+		textFieldShowCcsd.setBounds(173, 12, 114, 20);
+		panelFacit.add(textFieldShowCcsd);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setLayout(null);
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(8, 266, 283, 113);
+		panelFacit.add(panel_1);
+		
+		textAreaShowTsoStatement = new JTextArea();
+		textAreaShowTsoStatement.setEditable(false);
+		textAreaShowTsoStatement.setWrapStyleWord(true);
+		textAreaShowTsoStatement.setToolTipText("Enter Extra Comments Here");
+		textAreaShowTsoStatement.setLineWrap(true);
+		textAreaShowTsoStatement.setBounds(12, 23, 259, 78);
+		panel_1.add(textAreaShowTsoStatement);
+		
+		JButton btnTsoText = new JButton("TSO Text");
+		btnTsoText.setBounds(94, 214, 98, 26);
+		panelFacit.add(btnTsoText);
+		
+		JPanel panelFacit_2 = new JPanel();
+		panelFacit_2.setLayout(null);
+		panelFacit_2.setBackground(Color.WHITE);
+		tabbedPane_1.addTab("Facit", null, panelFacit_2, null);
+		tabbedPane_1.setEnabledAt(3, true);
+		
+		JLabel lblTsoSubject_1 = new JLabel("TSO Subject");
+		lblTsoSubject_1.setBounds(12, 168, 70, 16);
+		panelFacit_2.add(lblTsoSubject_1);
+		
+		JLabel lblAction_1 = new JLabel("Action");
+		lblAction_1.setBounds(12, 44, 55, 16);
+		panelFacit_2.add(lblAction_1);
+		
+		JLabel lblTsoNumber = new JLabel("TSO Number");
+		lblTsoNumber.setBounds(12, 74, 72, 16);
+		panelFacit_2.add(lblTsoNumber);
+		
+		textFieldShowTsoSubject = new JTextField();
+		textFieldShowTsoSubject.setForeground(Color.BLACK);
+		textFieldShowTsoSubject.setEditable(false);
+		textFieldShowTsoSubject.setColumns(10);
+		textFieldShowTsoSubject.setBackground(Color.WHITE);
+		textFieldShowTsoSubject.setBounds(173, 166, 114, 20);
+		panelFacit_2.add(textFieldShowTsoSubject);
+		
+		textFieldShowAction_1 = new JTextField();
+		textFieldShowAction_1.setForeground(Color.BLACK);
+		textFieldShowAction_1.setEditable(false);
+		textFieldShowAction_1.setColumns(10);
+		textFieldShowAction_1.setBackground(Color.WHITE);
+		textFieldShowAction_1.setBounds(173, 42, 114, 20);
+		panelFacit_2.add(textFieldShowAction_1);
+		
+		textFieldShowTsoNumber = new JTextField();
+		textFieldShowTsoNumber.setForeground(Color.BLACK);
+		textFieldShowTsoNumber.setEditable(false);
+		textFieldShowTsoNumber.setColumns(10);
+		textFieldShowTsoNumber.setBackground(Color.WHITE);
+		textFieldShowTsoNumber.setBounds(173, 72, 114, 20);
+		panelFacit_2.add(textFieldShowTsoNumber);
+		
+		JLabel lblTsrNumber = new JLabel("TSR Number");
+		lblTsrNumber.setBounds(12, 106, 71, 16);
+		panelFacit_2.add(lblTsrNumber);
+		
+		JLabel lblServiceDate_2 = new JLabel("Service Date");
+		lblServiceDate_2.setBounds(12, 138, 109, 16);
+		panelFacit_2.add(lblServiceDate_2);
+		
+		textFieldShowTsrNumber = new JTextField();
+		textFieldShowTsrNumber.setForeground(Color.BLACK);
+		textFieldShowTsrNumber.setEditable(false);
+		textFieldShowTsrNumber.setColumns(10);
+		textFieldShowTsrNumber.setBackground(Color.WHITE);
+		textFieldShowTsrNumber.setBounds(173, 104, 114, 20);
+		panelFacit_2.add(textFieldShowTsrNumber);
+		
+		textFieldShowServiceDate_1 = new JTextField();
+		textFieldShowServiceDate_1.setForeground(Color.BLACK);
+		textFieldShowServiceDate_1.setEditable(false);
+		textFieldShowServiceDate_1.setColumns(10);
+		textFieldShowServiceDate_1.setBackground(Color.WHITE);
+		textFieldShowServiceDate_1.setBounds(173, 136, 114, 20);
+		panelFacit_2.add(textFieldShowServiceDate_1);
+		
+		JLabel label_5 = new JLabel("CCSD");
+		label_5.setBounds(12, 14, 36, 16);
+		panelFacit_2.add(label_5);
+		
+		textFieldShowCcsd_1 = new JTextField();
+		textFieldShowCcsd_1.setForeground(Color.BLACK);
+		textFieldShowCcsd_1.setEditable(false);
+		textFieldShowCcsd_1.setColumns(10);
+		textFieldShowCcsd_1.setBackground(Color.WHITE);
+		textFieldShowCcsd_1.setBounds(173, 12, 114, 20);
+		panelFacit_2.add(textFieldShowCcsd_1);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBackground(Color.WHITE);
+		panel_3.setBounds(8, 266, 283, 113);
+		panelFacit_2.add(panel_3);
+		
+		textAreaShowTsoStatement_1 = new JTextArea();
+		textAreaShowTsoStatement_1.setWrapStyleWord(true);
+		textAreaShowTsoStatement_1.setToolTipText("Enter Extra Comments Here");
+		textAreaShowTsoStatement_1.setLineWrap(true);
+		textAreaShowTsoStatement_1.setEditable(false);
+		textAreaShowTsoStatement_1.setBounds(12, 23, 259, 78);
+		panel_3.add(textAreaShowTsoStatement_1);
+		
+		JLabel lblReportDate = new JLabel("Report Date");
+		lblReportDate.setBounds(12, 198, 67, 16);
+		panelFacit_2.add(lblReportDate);
+		
+		textFieldShowReportDate = new JTextField();
+		textFieldShowReportDate.setForeground(Color.BLACK);
+		textFieldShowReportDate.setEditable(false);
+		textFieldShowReportDate.setColumns(10);
+		textFieldShowReportDate.setBackground(Color.WHITE);
+		textFieldShowReportDate.setBounds(173, 196, 114, 20);
+		panelFacit_2.add(textFieldShowReportDate);
+		
+		chckbxCompletionReportRequired = new JCheckBox("Completion Report Required");
+		chckbxCompletionReportRequired.setEnabled(false);
+		chckbxCompletionReportRequired.setBackground(Color.WHITE);
+		chckbxCompletionReportRequired.setBounds(55, 234, 184, 24);
+		panelFacit_2.add(chckbxCompletionReportRequired);
 		
 		JButton btnEnterTso = new JButton("Enter TSO");
 		btnEnterTso.addActionListener(new ActionListener() {
@@ -713,8 +970,13 @@ public class Window {
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				frmTsoHelper.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				WindowCore.collect();
+				ShowTracker.show();
+				ShowFacit.show();
+				frmTsoHelper.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				Collection.debugGeneral();
+				Collection.debugTabs();
 			}
 		});
 		btnRun.setBounds(202, 463, 56, 26);
@@ -775,37 +1037,160 @@ public class Window {
 	public static JTextArea getTextAreaExtraComments() {
 		return textAreaExtraComments;
 	}
-	public JCheckBox getChckbxStart1539() {
+	public static JCheckBox getChckbxStart1539() {
 		return chckbxStart1539;
 	}
-	public JCheckBox getChckbxStartSams() {
+	public static JCheckBox getChckbxStartSams() {
 		return chckbxStartSams;
 	}
-	public JCheckBox getChckbxStartAnalog() {
+	public static JCheckBox getChckbxStartAnalog() {
 		return chckbxStartAnalog;
 	}
-	public JCheckBox getChckbxStartPassthrough() {
+	public static JCheckBox getChckbxStartPassthrough() {
 		return chckbxStartPassthrough;
 	}
-	public JToggleButton getTglbtnStartCHF() {
+	public static JToggleButton getTglbtnStartCHF() {
 		return tglbtnStartCHF;
 	}
 	public static JTextField getTextFieldStartDataRate() {
 		return textFieldStartDataRate;
 	}
-	public JTextField getTextFieldStartServiceAvailability() {
+	public static JTextField getTextFieldStartServiceAvailability() {
 		return textFieldStartServiceAvailability;
 	}
-	public JComboBox getComboBoxStartTsp() {
+	public static JComboBox getComboBoxStartTsp() {
 		return comboBoxStartTsp;
 	}
-	public JTextField getTextFieldStartTsr() {
+	public static JTextField getTextFieldStartTsr() {
 		return textFieldStartTsr;
 	}
-	public JTextField getTextFieldStartReportDate() {
+	public static JTextField getTextFieldStartReportDate() {
 		return textFieldStartReportDate;
 	}
-	public JTextArea getTextAreaStartTsoStatement() {
+	public static JTextArea getTextAreaStartTsoStatement() {
 		return textAreaStartTsoStatement;
+	}
+	public static JCheckBox getChckbxChange1539() {
+		return chckbxChange1539;
+	}
+	public static JCheckBox getChckbxChangeSams() {
+		return chckbxChangeSams;
+	}
+	public static JCheckBox getChckbxChangeAnalog() {
+		return chckbxChangeAnalog;
+	}
+	public static JCheckBox getChckbxChangePassthrough() {
+		return chckbxChangePassthrough;
+	}
+	public static JTextField getTextFieldChangeTsrNumber() {
+		return textFieldChangeTsrNumber;
+	}
+	public static JTextField getTextFieldChangeReportDate() {
+		return textFieldChangeReportDate;
+	}
+	public static JTextArea getTextAreaChangeTsoStatement() {
+		return textAreaChangeTsoStatement;
+	}
+	public static JToggleButton getTglbtnChangeCHF() {
+		return tglbtnChangeCHF;
+	}
+	public static JCheckBox getChckbxDisco1539() {
+		return chckbxDisco1539;
+	}
+	public static JCheckBox getChckbxDiscoSams() {
+		return chckbxDiscoSams;
+	}
+	public static JCheckBox getChckbxDiscoAnalog() {
+		return chckbxDiscoAnalog;
+	}
+	public static JCheckBox getChckbxDiscoPassthrough() {
+		return chckbxDiscoPassthrough;
+	}
+	public static JToggleButton getTglBtnDiscoCHF() {
+		return tglBtnDiscoCHF;
+	}
+	public static JTextField getTextFieldDiscoTsrNumber() {
+		return textFieldDiscoTsrNumber;
+	}
+	public static JTextField getTextFieldDiscoReportDate() {
+		return textFieldDiscoReportDate;
+	}
+	public static JTextArea getTextAreaDiscoTsoStatement() {
+		return textAreaDiscoTsoStatement;
+	}
+	public static JTextField getTextFieldShowAction() {
+		return textFieldShowAction;
+	}
+	public static JTextField getTextFieldShowTrackerFullCcsd() {
+		return textFieldShowTrackerFullCcsd;
+	}
+	public static JTextField getTextFieldShowChfLink() {
+		return textFieldShowChfLink;
+	}
+	public static JTextField getTextFieldShowCmo() {
+		return textFieldShowCmo;
+	}
+	public static JTextField getTextFieldShowCmoDsn() {
+		return textFieldShowCmoDsn;
+	}
+	public static JTextField getTextFieldShowCmoComm() {
+		return textFieldShowCmoComm;
+	}
+	public static JTextField getTextFieldShowServiceDate() {
+		return textFieldShowServiceDate;
+	}
+	public static JTextPane getTextAreaShowComment() {
+		return textAreaShowComment;
+	}
+	public static JCheckBox getChckbxAncs() {
+		return chckbxAncs;
+	}
+	public static JTextField getTextFieldShowCcsd() {
+		return textFieldShowCcsd;
+	}
+	public static JTextField getTextFieldShowTsp() {
+		return textFieldShowTsp;
+	}
+	public static JTextField getTextFieldShowPurpose() {
+		return textFieldShowPurpose;
+	}
+	public static JTextField getTextFieldShowRate() {
+		return textFieldShowRate;
+	}
+	public static JTextField getTextFieldShowServiceAvailable() {
+		return textFieldShowServiceAvailable;
+	}
+	public static JTextField getTextFieldShowFacitFullCcsd() {
+		return textFieldShowFacitFullCcsd;
+	}
+	public static JTextArea getTextAreaShowTsoStatement() {
+		return textAreaShowTsoStatement;
+	}
+	public static JTextField getTextFieldShowCcsd_1() {
+		return textFieldShowCcsd_1;
+	}
+	public static JTextField getTextFieldShowAction_1() {
+		return textFieldShowAction_1;
+	}
+	public static JTextField getTextFieldShowTsoNumber() {
+		return textFieldShowTsoNumber;
+	}
+	public static JTextField getTextFieldShowTsrNumber() {
+		return textFieldShowTsrNumber;
+	}
+	public static JTextField getTextFieldShowServiceDate_1() {
+		return textFieldShowServiceDate_1;
+	}
+	public static JTextField getTextFieldShowTsoSubject() {
+		return textFieldShowTsoSubject;
+	}
+	public static JTextField getTextFieldShowReportDate() {
+		return textFieldShowReportDate;
+	}
+	public static JCheckBox getChckbxCompletionReportRequired() {
+		return chckbxCompletionReportRequired;
+	}
+	public static JTextArea getTextAreaShowTsoStatement_1() {
+		return textAreaShowTsoStatement_1;
 	}
 }

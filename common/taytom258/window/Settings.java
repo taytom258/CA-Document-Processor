@@ -14,10 +14,16 @@ import javax.swing.SwingConstants;
 
 import taytom258.core.util.LogHelper;
 import taytom258.window.core.SettingsCore;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JToggleButton;
 
 public class Settings extends SettingsCore{
 
 	private JFrame frmSettings;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -79,16 +85,47 @@ public class Settings extends SettingsCore{
 		tabbedPane.addTab("File", null, panel, null);
 		panel.setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Tab 2", null, panel_1, null);
-		panel_1.setLayout(null);
+		textField = new JTextField();
+		textField.setBounds(277, 12, 310, 20);
+		panel.add(textField);
+		textField.setColumns(10);
 		
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Tab 3", null, panel_2, null);
-		panel_2.setLayout(null);
+		JLabel lblChfLocation = new JLabel("CHF Location");
+		lblChfLocation.setBounds(12, 14, 74, 16);
+		panel.add(lblChfLocation);
+		
+		JLabel lblTestLocation = new JLabel("CHF Test Location");
+		lblTestLocation.setBounds(12, 46, 102, 16);
+		panel.add(lblTestLocation);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(277, 44, 310, 20);
+		panel.add(textField_1);
+		
+		JLabel lblOtherConfigLocation = new JLabel("Other Config Location");
+		lblOtherConfigLocation.setBounds(12, 78, 123, 16);
+		panel.add(lblOtherConfigLocation);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(277, 76, 310, 20);
+		panel.add(textField_2);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Other", null, panel_3, null);
 		panel_3.setLayout(null);
+		
+		JToggleButton tglbtnDebugMode = new JToggleButton("Debug Mode");
+		tglbtnDebugMode.setBounds(12, 12, 104, 26);
+		panel_3.add(tglbtnDebugMode);
+		
+		JToggleButton tglbtnUserStoredConfig = new JToggleButton("User Stored Config");
+		tglbtnUserStoredConfig.setBounds(446, 12, 141, 26);
+		panel_3.add(tglbtnUserStoredConfig);
+		
+		JToggleButton tglbtnUseChf = new JToggleButton("Use CHF");
+		tglbtnUseChf.setBounds(446, 50, 141, 26);
+		panel_3.add(tglbtnUseChf);
 	}
 }

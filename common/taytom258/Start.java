@@ -1,6 +1,8 @@
 package taytom258;
 
+import taytom258.config.Config;
 import taytom258.core.security.FingerprintCheck;
+import taytom258.core.util.Debug;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
 import taytom258.window.Window;
@@ -31,6 +33,7 @@ public class Start {
 		/*
 		 * Load
 		 */
+		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	Window.appear();
