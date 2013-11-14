@@ -29,5 +29,7 @@ public class Reference {
 	public static final String APPLICATION_VERSION = "@VERSION@";
 	public static final String BUILD_NUMBER = "@BUILD_NUMBER@";
 	public static final String FINGERPRINT = "@FINGERPRINT@";
+	public static final String AUTHOR = "taytom258";
+	public static final String USER_HOME = System.getProperty("user.home").concat("\\"+AUTHOR);
 	
 }

@@ -93,11 +93,10 @@ public class WindowCore extends Window{
 		}
 		
 		
-		
-		
-		
-		
-		
+			
+	}
+	
+	public static void CHF(){
 		
 	}
 	

@@ -30,7 +30,7 @@
 	</target>
 	
 	<target name="compile">
-		<javac compiler="javac1.7" nowarn="on" encoding="UTF-8" sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
+		<javac fork="yes" executable="C:\Program Files\Java\jdk1.6.0_45\bin\javac.exe" nowarn="on" encoding="UTF-8" sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
 			destdir="${environment.base_location}/temp/compile" >
 		<include name="**/*.java"/>
 		</javac>

@@ -11,6 +11,7 @@ public class Config {
 	public static final String CHF_TEST = "";
 	public static final String CONFIG_PATH = "";
 	
+	//Default Config
 	public static final boolean CONFIG_USER = true;
 	public static final boolean USE_CHF = false;
 	

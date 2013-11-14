@@ -37,6 +37,7 @@ import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
+import taytom258.show.ShowCHF;
 import taytom258.show.ShowFacit;
 import taytom258.show.ShowTracker;
 import taytom258.window.core.ProgressBarCore;
@@ -63,7 +64,7 @@ public class Window {
 	private static JToggleButton tglbtnStartCHF;
 	private static JTextField textFieldStartDataRate;
 	private static JTextField textFieldStartServiceAvailability;
-	private static JComboBox<?> comboBoxStartTsp;
+	private static JComboBox comboBoxStartTsp;
 	private static JTextField textFieldStartTsr;
 	private static JTextField textFieldStartReportDate;
 	private static JTextArea textAreaStartTsoStatement;
@@ -110,6 +111,17 @@ public class Window {
 	private static JTextArea textAreaShowTsoStatement;
 	private static JCheckBox chckbxCompletionReportRequired;
 	private static JTextArea textAreaShowTsoStatement_1;
+	private static JCheckBox chckbxShowFolderExists;
+	private static JPanel panelRootFolder;
+	private static JLabel lblDiagrams;
+	private static JLabel lblMiscellaneous;
+	private static JLabel lblReports;
+	private static JLabel lblTso;
+	private static JLabel lblTsr;
+	private static JLabel lblSam;
+	private static JLabel lblUserLetters;
+	private static JLabel lblTnA;
+	private static JLabel lblQcInfo;
 
 	/**
 	 * Launch the application.
@@ -662,54 +674,63 @@ public class Window {
 		tabbedPane_1.setEnabledAt(1, true);
 		panelChf.setLayout(null);
 		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(Color.WHITE);
-		panel_9.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Root", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_9.setBounds(44, 180, 199, 95);
-		panelChf.add(panel_9);
-		panel_9.setLayout(null);
+		panelRootFolder = new JPanel();
+		panelRootFolder.setBackground(Color.WHITE);
+		panelRootFolder.setBounds(12, 167, 270, 108);
+		panelChf.add(panelRootFolder);
+		panelRootFolder.setLayout(null);
+		panelRootFolder.setVisible(false);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(5, 74, 55, 16);
-		panel_9.add(lblNewLabel_2);
+		lblUserLetters = new JLabel("User Letters");
+		lblUserLetters.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserLetters.setBounds(12, 80, 71, 16);
+		panelRootFolder.add(lblUserLetters);
 		
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		lblNewLabel_5.setBounds(5, 46, 55, 16);
-		panel_9.add(lblNewLabel_5);
+		lblTso = new JLabel("TSOs");
+		lblTso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTso.setBounds(12, 52, 31, 16);
+		panelRootFolder.add(lblTso);
 		
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		lblNewLabel_6.setBounds(5, 18, 55, 16);
-		panel_9.add(lblNewLabel_6);
+		lblDiagrams = new JLabel("Diagrams");
+		lblDiagrams.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDiagrams.setBounds(12, 24, 55, 16);
+		panelRootFolder.add(lblDiagrams);
 		
-		JLabel lblNewLabel_7 = new JLabel("New label");
-		lblNewLabel_7.setBounds(72, 74, 55, 16);
-		panel_9.add(lblNewLabel_7);
+		lblTnA = new JLabel("T&A");
+		lblTnA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTnA.setBounds(122, 80, 24, 16);
+		panelRootFolder.add(lblTnA);
 		
-		JLabel lblNewLabel_8 = new JLabel("New label");
-		lblNewLabel_8.setBounds(72, 46, 55, 16);
-		panel_9.add(lblNewLabel_8);
+		lblTsr = new JLabel("TSRs");
+		lblTsr.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTsr.setBounds(120, 52, 30, 16);
+		panelRootFolder.add(lblTsr);
 		
-		JLabel lblNewLabel_9 = new JLabel("New label");
-		lblNewLabel_9.setBounds(72, 18, 55, 16);
-		panel_9.add(lblNewLabel_9);
+		lblMiscellaneous = new JLabel("Miscellaneous");
+		lblMiscellaneous.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMiscellaneous.setBounds(98, 24, 82, 16);
+		panelRootFolder.add(lblMiscellaneous);
 		
-		JLabel lblNewLabel_10 = new JLabel("New label");
-		lblNewLabel_10.setBounds(139, 74, 55, 16);
-		panel_9.add(lblNewLabel_10);
+		lblQcInfo = new JLabel("QC Info");
+		lblQcInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQcInfo.setBounds(215, 80, 41, 16);
+		panelRootFolder.add(lblQcInfo);
 		
-		JLabel lblNewLabel_11 = new JLabel("New label");
-		lblNewLabel_11.setBounds(139, 46, 55, 16);
-		panel_9.add(lblNewLabel_11);
+		lblSam = new JLabel("SAMs");
+		lblSam.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSam.setBounds(223, 52, 33, 16);
+		panelRootFolder.add(lblSam);
 		
-		JLabel lblNewLabel_12 = new JLabel("New label");
-		lblNewLabel_12.setBounds(139, 18, 55, 16);
-		panel_9.add(lblNewLabel_12);
+		lblReports = new JLabel("Reports");
+		lblReports.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReports.setBounds(213, 24, 45, 16);
+		panelRootFolder.add(lblReports);
 		
 		JButton btnNewButton = new JButton("Create");
 		btnNewButton.setBounds(44, 314, 199, 48);
 		panelChf.add(btnNewButton);
 		
-		JCheckBox chckbxShowFolderExists = new JCheckBox("Root Folder Exists");
+		chckbxShowFolderExists = new JCheckBox("Root Folder Exists");
 		chckbxShowFolderExists.setEnabled(false);
 		chckbxShowFolderExists.setBackground(Color.WHITE);
 		chckbxShowFolderExists.setBounds(81, 283, 127, 24);
@@ -973,6 +994,7 @@ public class Window {
 				frmTsoHelper.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				WindowCore.collect();
 				ShowTracker.show();
+				ShowCHF.show();
 				ShowFacit.show();
 				frmTsoHelper.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				Collection.debugGeneral();
@@ -1192,5 +1214,44 @@ public class Window {
 	}
 	public static JTextArea getTextAreaShowTsoStatement_1() {
 		return textAreaShowTsoStatement_1;
+	}
+	public static JTextField getTextFieldShowTsoName() {
+		return textFieldShowTsoName;
+	}
+	public static JTextField getTextFieldShowRootFolder() {
+		return textFieldShowRootFolder;
+	}
+	public static JCheckBox getChckbxShowFolderExists() {
+		return chckbxShowFolderExists;
+	}
+	public static JPanel getPanelRootFolder() {
+		return panelRootFolder;
+	}
+	public static JLabel getLblDiagrams() {
+		return lblDiagrams;
+	}
+	public static JLabel getLblMiscellaneous() {
+		return lblMiscellaneous;
+	}
+	public static JLabel getLblReports() {
+		return lblReports;
+	}
+	public static JLabel getLblTso() {
+		return lblTso;
+	}
+	public static JLabel getLblTsr() {
+		return lblTsr;
+	}
+	public static JLabel getLblSam() {
+		return lblSam;
+	}
+	public static JLabel getLblUserLetters() {
+		return lblUserLetters;
+	}
+	public static JLabel getLblTnA() {
+		return lblTnA;
+	}
+	public static JLabel getLblQcInfo() {
+		return lblQcInfo;
 	}
 }
