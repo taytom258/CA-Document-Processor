@@ -1,5 +1,7 @@
 package taytom258.tso;
 
-public class TSOStart {
+import taytom258.window.Window2;
+
+public class TSOStart extends Window2{
 
 }

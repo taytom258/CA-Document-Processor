@@ -31,20 +31,24 @@ import taytom258.window.core.WindowCore;
 public class Window2 {
 
 	protected JFrame frmTsoHelper;
-	protected JTextField textField_TsoSubject;
-	protected JTextField textField_FullCcsd;
-	protected JTextField textField_ServiceDate;
+	protected static JTextField textField_TsoSubject;
+	protected static JTextField textField_FullCcsd;
+	protected static JTextField textField_ServiceDate;
 	protected static JTextField textField_CmoName;
 	protected static JTextField textField_Dsn;
 	protected static JTextField textField_Comm;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPopupMenu popup = WindowCore.createPopup();
-	private JRadioButton radioButton_Other;
-	private JRadioButton radioButton_Andrews;
-	private JCheckBox checkBox_Ancs;
-	private JCheckBox checkBox_Logical;
-	private JCheckBox checkBox_Crr;
-	private JTextArea textArea_Comments;
+	private static JRadioButton radioButton_Other;
+	private static JRadioButton radioButton_Andrews;
+	private static JCheckBox checkBox_Ancs;
+	private static JCheckBox checkBox_Logical;
+	private static JCheckBox checkBox_Crr;
+	private static JTextArea textArea_Comments;
+	protected static JPanel panel_Start = new JPanel();
+	protected static JPanel panel_Change = new JPanel();
+	protected static JPanel panel_Disco = new JPanel();
+	private static JTabbedPane tabbedPane;
 	
 	/**
 	 * Launch the application.
@@ -99,6 +103,11 @@ public class Window2 {
 		frmTsoHelper.getContentPane().add(button_Settings);
 		
 		JButton button_Run = new JButton("Run");
+		button_Run.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WindowCore.collect();
+			}
+		});
 		button_Run.setBounds(202, 460, 56, 26);
 		frmTsoHelper.getContentPane().add(button_Run);
 		
@@ -122,7 +131,7 @@ public class Window2 {
 		frmTsoHelper.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		panel.add(tabbedPane);
 		
 		JPanel panel_general = new JPanel();
@@ -313,9 +322,6 @@ public class Window2 {
 		checkBox_Ancs.setBounds(12, 178, 64, 24);
 		panel_general.add(checkBox_Ancs);
 		
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_2, null);
-		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		panel.add(tabbedPane_1);
 		
@@ -328,22 +334,25 @@ public class Window2 {
 		JPanel panel_5 = new JPanel();
 		tabbedPane_1.addTab("New tab", null, panel_5, null);
 	}
-	protected JRadioButton getRadioButton_Other() {
+	protected static JRadioButton getRadioButton_Other() {
 		return radioButton_Other;
 	}
-	protected JRadioButton getRadioButton_Andrews() {
+	protected static JRadioButton getRadioButton_Andrews() {
 		return radioButton_Andrews;
 	}
-	protected JCheckBox getCheckBox_Ancs() {
+	protected static JCheckBox getCheckBox_Ancs() {
 		return checkBox_Ancs;
 	}
-	protected JCheckBox getCheckBox_Logical() {
+	protected static JCheckBox getCheckBox_Logical() {
 		return checkBox_Logical;
 	}
-	protected JCheckBox getCheckBox_Crr() {
+	protected static JCheckBox getCheckBox_Crr() {
 		return checkBox_Crr;
 	}
-	protected JTextArea getTextArea_Comments() {
+	protected static JTextArea getTextArea_Comments() {
 		return textArea_Comments;
+	}
+	protected static JTabbedPane getTabbedPane() {
+		return tabbedPane;
 	}
 }

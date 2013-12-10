@@ -52,33 +52,43 @@ public class WindowCore extends Window2{
 
         return popup;
 	}
-	
-	public class collect extends Window2{
 		
-		public collect(){
-			genCollect();
-			
+	public static void collect(){
+		determine(genCollect());
+		
+		
+	}
+	
+	private static String genCollect(){
+		Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
+		Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
+		Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
+		
+		if(getRadioButton_Other().isSelected()){
+			Collection.cmo = textField_CmoName.getText().toUpperCase();
+			Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
+			Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
+		}else if(getRadioButton_Andrews().isSelected()){
+			Collection.cmo = Strings.ANDREWS_CMO;
 		}
-		public void genCollect(){
-			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
-			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
-			Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
+		
+		Collection.ancs = getCheckBox_Ancs().isSelected();
+		Collection.logical = getCheckBox_Logical().isSelected();
+		Collection.comReportRequired = getCheckBox_Crr().isSelected();
+		
+		Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
+		return textField_TsoSubject.getText().toUpperCase();
+	}
+	
+	private static void determine(String subject){
+		String[] str1 = subject.split("-");
+		if(str1[1].equals("01")){
 			
-			if(getRadioButton_Other().isSelected()){
-				Collection.cmo = textField_CmoName.getText().toUpperCase();
-				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
-				Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
-			}else if(getRadioButton_Andrews().isSelected()){
-				Collection.cmo = Strings.ANDREWS_CMO;
-			}
+		}else if(str1[1].equals("99")){
 			
-			Collection.ancs = getCheckBox_Ancs().isSelected();
-			Collection.logical = getCheckBox_Logical().isSelected();
-			Collection.comReportRequired = getCheckBox_Crr().isSelected();
+		}else{
 			
-			Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
-			
-			if(Collection.tsoSubject.c
 		}
 	}
 }
+
