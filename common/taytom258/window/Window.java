@@ -42,6 +42,8 @@ import taytom258.show.ShowFacit;
 import taytom258.show.ShowTracker;
 import taytom258.window.core.ProgressBarCore;
 import taytom258.window.core.WindowCore;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class Window {
 	
@@ -325,6 +327,7 @@ public class Window {
 		panelGeneral.add(chckbxAncs);
 		
 		JPanel panelStart = new JPanel();
+		panelStart.setVisible(false);
 		tabbedPane.addTab("Start", null, panelStart, null);
 		tabbedPane.setEnabledAt(1, true);
 		panelStart.setLayout(null);
@@ -422,6 +425,7 @@ public class Window {
 		panelStart.add(chckbxStart1539);
 		
 		JPanel panelChange = new JPanel();
+		panelChange.setVisible(false);
 		panelChange.setLayout(null);
 		tabbedPane.addTab("Change", null, panelChange, null);
 		tabbedPane.setEnabledAt(2, true);
@@ -492,6 +496,7 @@ public class Window {
 		panelChange.add(chckbxChange1539);
 		
 		JPanel panelDisco = new JPanel();
+		panelDisco.setVisible(false);
 		panelDisco.setLayout(null);
 		tabbedPane.addTab("Disco", null, panelDisco, null);
 		tabbedPane.setEnabledAt(3, true);

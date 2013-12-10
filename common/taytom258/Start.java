@@ -1,11 +1,11 @@
 package taytom258;
 
-import taytom258.config.Config;
+import java.io.IOException;
+
 import taytom258.core.security.FingerprintCheck;
-import taytom258.core.util.Debug;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
-import taytom258.window.Window;
+import taytom258.window.Window2;
 
 
 
@@ -13,10 +13,10 @@ public class Start {
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		Testing.regEx();
 		
 		
 		/*
@@ -30,17 +30,13 @@ public class Start {
 		if (FingerprintCheck.selfIntegrityChecking()){
 			LogHelper.debug("Jar Verifed");
 		}else{
-			LogHelper.debug("Jar Not Verified");
+			LogHelper.warning("Jar Not Verified");
 		}
 		
 		/*
 		 * Load
 		 */
 		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	Window.appear();
-            }
-		});
+		Window2.appear();
 	}
 }

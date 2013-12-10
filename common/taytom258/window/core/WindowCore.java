@@ -1,103 +1,84 @@
 package taytom258.window.core;
 
-import taytom258.core.util.LogHelper;
+import java.awt.Color;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.text.DefaultEditorKit;
+
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.window.Window;
+import taytom258.window.Window2;
 
 
-public class WindowCore extends Window{
+public class WindowCore extends Window2{
 
-	public static void collect(){
-				
-		//General Tab
-		
-		Collection.tsoSubject = getTextFieldTsoSubject().getText().trim();
-		Collection.fullCcsd = getTextFieldFullCcsd().getText().trim();
-		Collection.svcDate = getTextFieldServiceDate().getText().trim();
-		
-		if (getRdbtnOther().isSelected()){
-			Collection.cmo = getTextFieldOtherCmoName().getText().trim();
-			Collection.otherCmoDsn = getTextFieldOtherCmoDsn().getText().trim();
-			Collection.otherCmoComm = getTextFieldOtherCmoComm().getText().trim();
-		}else if(getRdbtnAndrews().isSelected()){
-			Collection.cmo = Strings.ANDREWS_CMO;
+	public static void enableCmoFields(boolean boo){
+		if (boo){
+			textField_CmoName.setEnabled(true);
+			textField_CmoName.setBackground(Color.WHITE);
+			textField_Dsn.setEnabled(true);
+			textField_Dsn.setBackground(Color.WHITE);
+			textField_Comm.setEnabled(true);
+			textField_Comm.setBackground(Color.WHITE);
 		}else{
-			LogHelper.severe("Unable to set CMO");
+			textField_CmoName.setEnabled(false);
+			textField_CmoName.setBackground(Color.LIGHT_GRAY);
+			textField_CmoName.setText("");
+			textField_Dsn.setEnabled(false);
+			textField_Dsn.setBackground(Color.LIGHT_GRAY);
+			textField_Dsn.setText("");
+			textField_Comm.setEnabled(false);
+			textField_Comm.setBackground(Color.LIGHT_GRAY);
+			textField_Comm.setText("");
 		}
-		
-		Collection.logical = getChckbxLogical().isSelected();
-		Collection.comReportRequired = getChckbxComReport().isSelected();
-		Collection.ancs = getChckbxAncs().isSelected();
-		
-		Collection.extraComments = getTextAreaExtraComments().getText().trim();
-		
-		//Start Tab
-		
-		if(getTextFieldStartDataRate().getText() != null && !(getTextFieldStartDataRate().getText().equals(""))){
-			Collection.start = true;
-			
-			Collection.startIs1539 = getChckbxStart1539().isSelected();
-			Collection.startHasSams = getChckbxStartSams().isSelected();
-			Collection.startIsAnalog = getChckbxStartAnalog().isSelected();
-			Collection.startIsPassthrough = getChckbxStartPassthrough().isSelected();
-			Collection.startChf = getTglbtnStartCHF().isSelected();
-			
-			Collection.dataRate = getTextFieldStartDataRate().getText().trim();
-			Collection.serviceAvailible = getTextFieldStartServiceAvailability().getText().trim();
-			Collection.tsp = getComboBoxStartTsp().getSelectedItem().toString().trim();
-			Collection.startTsrNumber = getTextFieldStartTsr().getText().trim();
-			Collection.startReportDate = getTextFieldStartReportDate().getText().trim();
-			
-			Collection.startTsoStatement = getTextAreaStartTsoStatement().getText().trim().replaceAll("\\s+", " ");
-		}else{
-			Collection.start = false;
-		}
-		
-		//Change Tab
-		
-		if(getTextFieldChangeTsrNumber() != null && !(getTextFieldChangeTsrNumber().getText().equals(""))){
-			Collection.change = true;
-			
-			Collection.changeIs1539 = getChckbxChange1539().isSelected();
-			Collection.changeHasSams = getChckbxChangeSams().isSelected();
-			Collection.changeIsAnalog = getChckbxChangeAnalog().isSelected();
-			Collection.changeIsPassthrough = getChckbxChangePassthrough().isSelected();
-			Collection.changeChf = getTglbtnChangeCHF().isSelected();
-			
-			Collection.changeTsrNumber = getTextFieldChangeTsrNumber().getText().trim();
-			Collection.changeReportDate = getTextFieldChangeReportDate().getText().trim();
-			
-			Collection.changeTsoStatement = getTextAreaChangeTsoStatement().getText().trim();
-		}else{
-			Collection.change = false;
-		}
-		
-		//Disco Tab
-		
-		if(getTextFieldDiscoTsrNumber() != null && !(getTextFieldDiscoTsrNumber().getText().equals(""))){
-			Collection.disco = true;
-			
-			Collection.discoIs1539 = getChckbxDisco1539().isSelected();
-			Collection.discoHasSams = getChckbxDiscoSams().isSelected();
-			Collection.discoIsAnalog = getChckbxDiscoAnalog().isSelected();
-			Collection.discoIsPassthrough = getChckbxDiscoPassthrough().isSelected();
-			Collection.discoChf = getTglBtnDiscoCHF().isSelected();
-			
-			Collection.discoTsrNumber = getTextFieldDiscoTsrNumber().getText().trim();
-			Collection.discoReportDate = getTextFieldDiscoReportDate().getText().trim();
-			
-			Collection.discoTsoStatement = getTextAreaDiscoTsoStatement().getText().trim();		
-		}else{
-			Collection.disco = false;
-		}
-		
-		
-			
 	}
 	
-	public static void CHF(){
-		
+	public static JPopupMenu createPopup() {
+        JMenuItem menuItem = null;
+        JPopupMenu popup = new JPopupMenu();
+
+        menuItem = new JMenuItem(new DefaultEditorKit.CutAction());
+        menuItem.setText("Cut");
+        popup.add(menuItem);
+
+        menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
+        menuItem.setText("Copy");
+        popup.add(menuItem);
+
+        menuItem = new JMenuItem(new DefaultEditorKit.PasteAction());
+        menuItem.setText("Paste");
+        popup.add(menuItem);
+
+        return popup;
 	}
 	
+	public class collect extends Window2{
+		
+		public collect(){
+			genCollect();
+			
+		}
+		public void genCollect(){
+			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
+			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
+			Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
+			
+			if(getRadioButton_Other().isSelected()){
+				Collection.cmo = textField_CmoName.getText().toUpperCase();
+				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
+				Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
+			}else if(getRadioButton_Andrews().isSelected()){
+				Collection.cmo = Strings.ANDREWS_CMO;
+			}
+			
+			Collection.ancs = getCheckBox_Ancs().isSelected();
+			Collection.logical = getCheckBox_Logical().isSelected();
+			Collection.comReportRequired = getCheckBox_Crr().isSelected();
+			
+			Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
+			
+			if(Collection.tsoSubject.c
+		}
+	}
 }
