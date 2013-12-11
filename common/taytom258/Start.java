@@ -1,7 +1,5 @@
 package taytom258;
 
-import java.io.IOException;
-
 import taytom258.core.security.FingerprintCheck;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
@@ -13,9 +11,8 @@ public class Start {
 
 	/**
 	 * @param args
-	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		
 		
 		

@@ -1,8 +1,10 @@
 package taytom258.window.core;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.text.DefaultEditorKit;
 
@@ -52,43 +54,71 @@ public class WindowCore extends Window2{
 
         return popup;
 	}
-		
-	public static void collect(){
-		determine(genCollect());
-		
-		
+	
+	public static void cardSwap(String name){
+		CardLayout cl = (CardLayout) getPanel_Action().getLayout();
+		cl.show(getPanel_Action(), name);
 	}
 	
-	private static String genCollect(){
-		Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
-		Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
-		Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
+	public static class collect extends Window2{
 		
-		if(getRadioButton_Other().isSelected()){
-			Collection.cmo = textField_CmoName.getText().toUpperCase();
-			Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
-			Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
-		}else if(getRadioButton_Andrews().isSelected()){
-			Collection.cmo = Strings.ANDREWS_CMO;
+		public collect(){
+			genCollect();
+			
 		}
 		
-		Collection.ancs = getCheckBox_Ancs().isSelected();
-		Collection.logical = getCheckBox_Logical().isSelected();
-		Collection.comReportRequired = getCheckBox_Crr().isSelected();
+		private static void reset(){
+			String[] str1 = {"Action", "Start", "Change", "Disco"};
+			cardSwap("Blank");
+			
+			for(String element : str1){
+				if(getTabbedPane().indexOfTab(element) != -1){
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab(element), "Action");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Action"), false);
+					getTabbedPane().validate();
+				}
+			}
+		}
 		
-		Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
-		return textField_TsoSubject.getText().toUpperCase();
-	}
-	
-	private static void determine(String subject){
-		String[] str1 = subject.split("-");
-		if(str1[1].equals("01")){
+		public static void genCollect(){
+			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
+			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
+			Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
 			
-		}else if(str1[1].equals("99")){
+			if(getRadioButton_Other().isSelected()){
+				Collection.cmo = textField_CmoName.getText().toUpperCase();
+				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
+				Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
+			}else if(getRadioButton_Andrews().isSelected()){
+				Collection.cmo = Strings.ANDREWS_CMO;
+			}
 			
-		}else{
+			Collection.ancs = getCheckBox_Ancs().isSelected();
+			Collection.logical = getCheckBox_Logical().isSelected();
+			Collection.comReportRequired = getCheckBox_Crr().isSelected();
 			
+			Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
+			
+			String[] str1 = Collection.tsoSubject.split("-");
+			if(str1.length > 1){
+				String str2 = str1[1];
+			
+				reset();
+				getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Action"), true);
+				if(str2.equals("01")){
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Start");
+					cardSwap("panel_Start");
+				}else if(str2.equals("99")){
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Disco");
+					cardSwap("panel_Disco");
+				}else{
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Change");
+					cardSwap("panel_Change");
+				}
+					getTabbedPane().validate();
+			}else{
+				reset();
+			}
 		}
 	}
 }
-

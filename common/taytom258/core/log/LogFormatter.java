@@ -13,7 +13,8 @@ public class LogFormatter extends Formatter {
 	public String format(LogRecord record) {
 		StringBuffer text = new StringBuffer();
 		
-		text.append(record.getLevel().getName());
+		text.append(DateUtils.now());
+		text.append(" "+record.getLevel().getName());
 		text.append(": ");
 		text.append(formatMessage(record));
 		return text.toString();
