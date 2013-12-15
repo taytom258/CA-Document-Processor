@@ -4,16 +4,17 @@ import java.awt.CardLayout;
 import java.awt.Color;
 
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.text.DefaultEditorKit;
 
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.window.Window2;
+import taytom258.tso.TSOChange;
+import taytom258.tso.TSOStart;
+import taytom258.window.Window;
 
 
-public class WindowCore extends Window2{
+public class WindowCore extends Window{
 
 	public static void enableCmoFields(boolean boo){
 		if (boo){
@@ -51,6 +52,11 @@ public class WindowCore extends Window2{
         menuItem = new JMenuItem(new DefaultEditorKit.PasteAction());
         menuItem.setText("Paste");
         popup.add(menuItem);
+        
+		new DefaultEditorKit();
+		menuItem = new JMenuItem(DefaultEditorKit.selectAllAction);
+		menuItem.setText("Select All");
+		popup.add(menuItem);
 
         return popup;
 	}
@@ -60,16 +66,21 @@ public class WindowCore extends Window2{
 		cl.show(getPanel_Action(), name);
 	}
 	
-	public static class collect extends Window2{
+	public static class collect extends Window{
 		
-		public collect(){
+		public static void init(){
 			genCollect();
+			TSOStart.collect();
+			TSOChange.collect();
 			
 		}
 		
 		private static void reset(){
 			String[] str1 = {"Action", "Start", "Change", "Disco"};
 			cardSwap("Blank");
+			Collection.start = false;
+			Collection.change = false;
+			Collection.disco = false;
 			
 			for(String element : str1){
 				if(getTabbedPane().indexOfTab(element) != -1){
@@ -80,7 +91,7 @@ public class WindowCore extends Window2{
 			}
 		}
 		
-		public static void genCollect(){
+		private static void genCollect(){
 			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
 			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
 			Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
@@ -108,17 +119,21 @@ public class WindowCore extends Window2{
 				if(str2.equals("01")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Start");
 					cardSwap("panel_Start");
+					Collection.start = true;
 				}else if(str2.equals("99")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Disco");
 					cardSwap("panel_Disco");
+					Collection.disco = true;
 				}else{
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Change");
 					cardSwap("panel_Change");
+					Collection.change = true;
 				}
 					getTabbedPane().validate();
 			}else{
 				reset();
 			}
 		}
+
 	}
 }

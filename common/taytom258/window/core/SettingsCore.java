@@ -15,8 +15,6 @@ public class SettingsCore {
 		useChf();
 		
 		ConfigHandler.createRootDir();
-		ConfigHandler.write(Config.chfPath+"\n"+Config.chfTest+"\n"+Config.configPath+"\n"+Config.debug+"\n"+Config.configUser+"\n"+
-				Config.useChf+"\n");
 	}
 	
 	private static void chfPath(){

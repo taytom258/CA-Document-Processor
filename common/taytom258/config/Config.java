@@ -3,6 +3,7 @@ package taytom258.config;
 public class Config {
 
 	public static boolean debug = true;
+	public static boolean autoSelection = false;
 	
 	public static String chfPath, chfTest, configPath;
 	public static boolean configUser, useChf;

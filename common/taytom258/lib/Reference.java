@@ -30,7 +30,6 @@ public class Reference {
 	public static final String BUILD_NUMBER = "@BUILD_NUMBER@";
 	public static final String FINGERPRINT = "@FINGERPRINT@";
 	public static final String AUTHOR = "taytom258";
-	public static final String USER_HOME = System.getProperty("user.home").concat("\\"+AUTHOR);
 	public static final String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
 	
 }

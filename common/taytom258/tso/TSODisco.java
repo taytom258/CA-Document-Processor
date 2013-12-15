@@ -13,13 +13,13 @@ import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import taytom258.window.Window2;
+import taytom258.window.Window;
 
 public class TSODisco {
 	
 	public static void buildPanel(){
 		
-		JPanel action = Window2.getPanel_Action();
+		JPanel action = Window.getPanel_Action();
 		
 		JPanel panel_Disco = new JPanel();
 		panel_Disco.setLayout(null);
@@ -65,7 +65,7 @@ public class TSODisco {
 					textField_Tsr.selectAll();
 				}else if(e.isPopupTrigger()){
 					e.getComponent().requestFocus();
-					Window2.popup.show(e.getComponent(), e.getX(), e.getY());
+					Window.popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		});
@@ -82,7 +82,7 @@ public class TSODisco {
 					textField_RptDate.selectAll();
 				}else if(e.isPopupTrigger()){
 					e.getComponent().requestFocus();
-					Window2.popup.show(e.getComponent(), e.getX(), e.getY());
+					Window.popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		});
@@ -107,7 +107,7 @@ public class TSODisco {
 					textArea.selectAll();
 				}else if(e.isPopupTrigger()){
 					e.getComponent().requestFocus();
-					Window2.popup.show(e.getComponent(), e.getX(), e.getY());
+					Window.popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		});	
