@@ -33,10 +33,15 @@ import javax.swing.border.TitledBorder;
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
+import taytom258.show.ShowCHF;
+import taytom258.show.ShowTracker;
 import taytom258.tso.TSOChange;
 import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
+
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
 public class Window {
 
@@ -57,15 +62,15 @@ public class Window {
 	private static JTextArea textArea_Comments;
 	private static JTabbedPane tabbedPane;
 	private static JPanel panel_Action;
-	private JTextField textField_TrackerFullCcsd;
-	private JTextField textField_TrackerChfLink;
-	private JTextField textField_TrackerCmo;
-	private JTextField textField_TrackerCmoDsn;
-	private JTextField textField_TrackerCmoComm;
-	private JTextField textField_TrackerAction;
-	private JTextField textField_TrackerSvcDate;
-	private JTextField textField_ChfTsoName;
-	private JTextField textField_ChfChfLink;
+	private static JTextField textField_TrackerFullCcsd;
+	private static JTextField textField_TrackerChfLink;
+	private static JTextField textField_TrackerCmo;
+	private static JTextField textField_TrackerCmoDsn;
+	private static JTextField textField_TrackerCmoComm;
+	private static JTextField textField_TrackerAction;
+	private static JTextField textField_TrackerSvcDate;
+	private static JTextField textField_ChfTsoName;
+	private static JTextField textField_ChfChfLink;
 	private JTextField textField_FacitCcsd;
 	private JTextField textField_FacitTsp;
 	private JTextField textField_FacitPurpose;
@@ -78,6 +83,10 @@ public class Window {
 	private JTextField textField_FacitSvcDate;
 	private JTextField textField_FacitTsoSubject;
 	private JTextField textField_FacitReportDate;
+	private static JTextPane textPane_TrackerComment;
+	private static JRadioButton rdbtn_ChfRoot;
+	private static JTextPane textPane_ChfCurrent;
+	private static JTextPane textPane_ChfCreating;
 	
 	/**
 	 * Launch the application.
@@ -135,6 +144,8 @@ public class Window {
 		button_Run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WindowCore.collect.init();
+				ShowTracker.show();
+				ShowCHF.show();
 			}
 		});
 		button_Run.setBounds(202, 460, 56, 26);
@@ -168,6 +179,11 @@ public class Window {
 		tabbedPane.addTab("General", null, panel_general, null);
 		
 		textField_TsoSubject = new JTextField();
+		textField_TsoSubject.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent arg0) {
+					WindowCore.collect.getAction();
+			}
+		});
 		textField_TsoSubject.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -455,7 +471,7 @@ public class Window {
 		panel_TrackerComment.setBounds(12, 234, 280, 147);
 		panel_Tracker.add(panel_TrackerComment);
 		
-		JTextPane textPane_TrackerComment = new JTextPane();
+		textPane_TrackerComment = new JTextPane();
 		textPane_TrackerComment.setEditable(false);
 		textPane_TrackerComment.setBackground(Color.WHITE);
 		textPane_TrackerComment.setBounds(12, 22, 256, 113);
@@ -524,7 +540,7 @@ public class Window {
 		panel_Chf.add(panel_ChfCreating);
 		panel_ChfCreating.setLayout(null);
 		
-		JTextPane textPane_ChfCreating = new JTextPane();
+		textPane_ChfCreating = new JTextPane();
 		textPane_ChfCreating.setEditable(false);
 		textPane_ChfCreating.setBounds(12, 22, 109, 190);
 		panel_ChfCreating.add(textPane_ChfCreating);
@@ -536,12 +552,12 @@ public class Window {
 		panel_Chf.add(panel_ChfCurrent);
 		panel_ChfCurrent.setLayout(null);
 		
-		JTextPane textPane_ChfCurrent = new JTextPane();
+		textPane_ChfCurrent = new JTextPane();
 		textPane_ChfCurrent.setEditable(false);
 		textPane_ChfCurrent.setBounds(12, 22, 109, 190);
 		panel_ChfCurrent.add(textPane_ChfCurrent);
 		
-		JRadioButton rdbtn_ChfRoot = new JRadioButton("Root Exists");
+		rdbtn_ChfRoot = new JRadioButton("Root Exists");
 		rdbtn_ChfRoot.setEnabled(false);
 		rdbtn_ChfRoot.setBackground(Color.WHITE);
 		rdbtn_ChfRoot.setHorizontalAlignment(SwingConstants.CENTER);
@@ -735,5 +751,44 @@ public class Window {
 	}
 	protected static JTabbedPane getTabbedPane() {
 		return tabbedPane;
+	}
+	protected static JTextField getTextField_TrackerAction() {
+		return textField_TrackerAction;
+	}
+	protected static JTextField getTextField_TrackerFullCcsd() {
+		return textField_TrackerFullCcsd;
+	}
+	protected static JTextField getTextField_TrackerChfLink() {
+		return textField_TrackerChfLink;
+	}
+	protected static JTextField getTextField_TrackerCmo() {
+		return textField_TrackerCmo;
+	}
+	protected static JTextField getTextField_TrackerCmoDsn() {
+		return textField_TrackerCmoDsn;
+	}
+	protected static JTextField getTextField_TrackerCmoComm() {
+		return textField_TrackerCmoComm;
+	}
+	protected static JTextField getTextField_TrackerSvcDate() {
+		return textField_TrackerSvcDate;
+	}
+	protected static JTextPane getTextPane_TrackerComment() {
+		return textPane_TrackerComment;
+	}
+	protected static JTextField getTextField_ChfTsoName() {
+		return textField_ChfTsoName;
+	}
+	protected static JTextField getTextField_ChfChfLink() {
+		return textField_ChfChfLink;
+	}
+	protected static JRadioButton getRdbtn_ChfRoot() {
+		return rdbtn_ChfRoot;
+	}
+	protected static JTextPane getTextPane_ChfCurrent() {
+		return textPane_ChfCurrent;
+	}
+	protected static JTextPane getTextPane_ChfCreating() {
+		return textPane_ChfCreating;
 	}
 }

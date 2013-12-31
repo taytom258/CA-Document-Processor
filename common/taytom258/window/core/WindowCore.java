@@ -10,6 +10,7 @@ import javax.swing.text.DefaultEditorKit;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.tso.TSOChange;
+import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
 import taytom258.window.Window;
 
@@ -72,6 +73,7 @@ public class WindowCore extends Window{
 			genCollect();
 			TSOStart.collect();
 			TSOChange.collect();
+			TSODisco.collect();
 			
 		}
 		
@@ -92,14 +94,14 @@ public class WindowCore extends Window{
 		}
 		
 		private static void genCollect(){
-			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase();
-			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase();
-			Collection.svcDate = textField_ServiceDate.getText().toUpperCase();
+			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase().trim();
+			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase().trim();
+			Collection.svcDate = textField_ServiceDate.getText().toUpperCase().trim();
 			
 			if(getRadioButton_Other().isSelected()){
-				Collection.cmo = textField_CmoName.getText().toUpperCase();
-				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase();
-				Collection.otherCmoComm = textField_Comm.getText().toUpperCase();
+				Collection.cmo = textField_CmoName.getText().toUpperCase().trim();
+				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase().trim();
+				Collection.otherCmoComm = textField_Comm.getText().toUpperCase().trim();
 			}else if(getRadioButton_Andrews().isSelected()){
 				Collection.cmo = Strings.ANDREWS_CMO;
 			}
@@ -108,9 +110,13 @@ public class WindowCore extends Window{
 			Collection.logical = getCheckBox_Logical().isSelected();
 			Collection.comReportRequired = getCheckBox_Crr().isSelected();
 			
-			Collection.extraComments = getTextArea_Comments().getText().toUpperCase();
+			Collection.extraComments = getTextArea_Comments().getText().toUpperCase().trim();
 			
-			String[] str1 = Collection.tsoSubject.split("-");
+		}
+
+		public static void getAction(){
+			
+			String[] str1 = textField_TsoSubject.getText().toUpperCase().split("-");
 			if(str1.length > 1){
 				String str2 = str1[1];
 			
@@ -134,6 +140,6 @@ public class WindowCore extends Window{
 				reset();
 			}
 		}
-
+		
 	}
 }

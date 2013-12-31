@@ -6,7 +6,7 @@ import taytom258.lib.Strings;
 import taytom258.window.Window;
 
 
-public class ShowTracker {
+public class ShowTracker extends Window{
 
 	public static void show(){
 		action();
@@ -19,16 +19,16 @@ public class ShowTracker {
 	
 	private static void action(){
 		if(Collection.start){
-			Window.getTextFieldShowAction().setText(Strings.START);
+			getTextField_TrackerAction().setText(Strings.START);
 		}else if(Collection.change){
-			Window.getTextFieldShowAction().setText(Strings.CHANGE);
+			getTextField_TrackerAction().setText(Strings.CHANGE);
 		}else if(Collection.disco){
-			Window.getTextFieldShowAction().setText(Strings.DISCO);
+			getTextField_TrackerAction().setText(Strings.DISCO);
 		}
 	}
 	
 	private static void fullCcsd(){
-		Window.getTextFieldShowTrackerFullCcsd().setText(Collection.fullCcsd.toUpperCase());
+		getTextField_TrackerFullCcsd().setText(Collection.fullCcsd);
 	}
 	
 	private static void chfLink(){
@@ -36,25 +36,30 @@ public class ShowTracker {
 	}
 	
 	private static void cmo(){
-		if(Window.getRdbtnOther().isSelected()){
-			Window.getTextFieldShowCmo().setText(Collection.cmo);
-			Window.getTextFieldShowCmoDsn().setText(Collection.otherCmoDsn);
-			Window.getTextFieldShowCmoComm().setText(Collection.otherCmoComm);
-		}else if(Window.getRdbtnAndrews().isSelected()){
-			Window.getTextFieldShowCmo().setText(Collection.cmo);
-			Window.getTextFieldShowCmoDsn().setText("");
-			Window.getTextFieldShowCmoComm().setText("");
+		if(getRadioButton_Other().isSelected()){
+			getTextField_TrackerCmo().setText(Collection.cmo);
+			getTextField_TrackerCmoDsn().setText(Collection.otherCmoDsn);
+			getTextField_TrackerCmoComm().setText(Collection.otherCmoComm);
+		}else if(getRadioButton_Andrews().isSelected()){
+			getTextField_TrackerCmo().setText(Strings.ANDREWS_CMO);
+			getTextField_TrackerCmoDsn().setText("");
+			getTextField_TrackerCmoComm().setText("");
 		}
 	}
 	
 	private static void serviceDate(){
 		String format = Collection.svcDate.toUpperCase();
-		String[] month = format.split("\\d");
-		String[] number = format.split("\\D");
 		
-		String date = number[0] + " " + month[2] + " " + number[3];
+		String day = format.substring(0, 2);
 		
-		Window.getTextFieldShowServiceDate().setText(date);
+		String[] temp = format.split("\\s");
+		String month = temp[1];
+		
+		String year = temp[2];
+		
+		String date = day + " " + month + " " + year;
+		
+		getTextField_TrackerSvcDate().setText(date);
 	}
 	
 	private static void comment(){
@@ -105,6 +110,6 @@ public class ShowTracker {
 		tso = tso.trim();
 		
 		
-		Window.getTextAreaShowComment().setText(tso.toUpperCase() + " " + location + " " + complete + " " + extra);
+		getTextPane_TrackerComment().setText(tso.toUpperCase() + " " + location + " " + complete + " " + extra);
 	}
 }

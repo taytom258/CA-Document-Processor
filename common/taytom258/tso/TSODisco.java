@@ -13,47 +13,53 @@ import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import taytom258.lib.Collection;
 import taytom258.window.Window;
 
 public class TSODisco {
+	
+	public static JPanel panel_Disco = new JPanel();
+	public static JCheckBox checkBox_Sams = new JCheckBox("Sams?");
+	public static JCheckBox checkBox_Analog = new JCheckBox("Analog?");
+	public static JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
+	public static JCheckBox checkBox_1539 = new JCheckBox("1539 Circuit?");
+	public static JToggleButton toggleButton_Chf = new JToggleButton("CHF Creation Active");
+	public static JLabel label_Tsr = new JLabel("TSR Number");
+	public static JLabel label_RptDate = new JLabel("Report Date");
+	public static final JTextField textField_Tsr = new JTextField();
+	public static final JTextField textField_RptDate = new JTextField();
+	public static JPanel panel_TsoState = new JPanel();
+	public static final JTextArea textArea = new JTextArea();
+	
 	
 	public static void buildPanel(){
 		
 		JPanel action = Window.getPanel_Action();
 		
-		JPanel panel_Disco = new JPanel();
 		panel_Disco.setLayout(null);
 		action.add(panel_Disco, "panel_Disco");
 		
-		JCheckBox checkBox_Sams = new JCheckBox("Sams?");
 		checkBox_Sams.setBounds(8, 33, 65, 24);
 		panel_Disco.add(checkBox_Sams);
 		
-		JCheckBox checkBox_Analog = new JCheckBox("Analog?");
 		checkBox_Analog.setBounds(8, 61, 71, 24);
 		panel_Disco.add(checkBox_Analog);
 		
-		JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
 		checkBox_Pass.setBounds(8, 89, 105, 24);
 		panel_Disco.add(checkBox_Pass);
 		
-		JCheckBox checkBox_1539 = new JCheckBox("1539 Circuit?");
 		checkBox_1539.setBounds(8, 8, 112, 24);
 		panel_Disco.add(checkBox_1539);
 		
-		JToggleButton toggleButton_Chf = new JToggleButton("CHF Creation Active");
 		toggleButton_Chf.setBounds(140, 47, 145, 26);
 		panel_Disco.add(toggleButton_Chf);
 		
-		JLabel label_Tsr = new JLabel("TSR Number");
 		label_Tsr.setBounds(12, 222, 71, 16);
 		panel_Disco.add(label_Tsr);
 		
-		JLabel label_RptDate = new JLabel("Report Date");
 		label_RptDate.setBounds(12, 252, 67, 16);
 		panel_Disco.add(label_RptDate);
 		
-		final JTextField textField_Tsr = new JTextField();
 		textField_Tsr.setColumns(10);
 		textField_Tsr.setBounds(171, 220, 114, 20);
 		panel_Disco.add(textField_Tsr);
@@ -70,7 +76,6 @@ public class TSODisco {
 			}
 		});
 		
-		final JTextField textField_RptDate = new JTextField();
 		textField_RptDate.setColumns(10);
 		textField_RptDate.setBounds(171, 250, 114, 20);
 		panel_Disco.add(textField_RptDate);
@@ -87,13 +92,11 @@ public class TSODisco {
 			}
 		});
 		
-		JPanel panel_TsoState = new JPanel();
 		panel_TsoState.setLayout(null);
 		panel_TsoState.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_TsoState.setBounds(8, 282, 283, 113);
 		panel_Disco.add(panel_TsoState);
 		
-		final JTextArea textArea = new JTextArea();
 		textArea.setWrapStyleWord(true);
 		textArea.setToolTipText("Enter Extra Comments Here");
 		textArea.setLineWrap(true);
@@ -112,4 +115,20 @@ public class TSODisco {
 			}
 		});	
 	}
+
+	public static void collect(){
+		
+		Collection.discoIs1539 = checkBox_1539.isSelected();
+		Collection.discoHasSams = checkBox_Sams.isSelected();
+		Collection.discoIsAnalog = checkBox_Analog.isSelected();
+		Collection.discoIsPassthrough = checkBox_Pass.isSelected();
+		
+		Collection.discoChf = toggleButton_Chf.isSelected();
+		
+		Collection.discoTsrNumber = textField_Tsr.getText().toUpperCase();
+		Collection.discoReportDate = textField_RptDate.getText().toUpperCase();
+		Collection.discoTsoStatement = textArea.getText().toUpperCase();
+		
+	}
+
 }
