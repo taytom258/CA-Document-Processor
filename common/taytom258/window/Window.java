@@ -71,22 +71,24 @@ public class Window {
 	private static JTextField textField_TrackerSvcDate;
 	private static JTextField textField_ChfTsoName;
 	private static JTextField textField_ChfChfLink;
-	private JTextField textField_FacitCcsd;
-	private JTextField textField_FacitTsp;
-	private JTextField textField_FacitPurpose;
-	private JTextField textField_FacitRate;
-	private JTextField textField_FacitSvcAvailable;
-	private JTextField textField_FacitFullCcsd;
-	private JTextField textField_FacitAction;
-	private JTextField textField_FacitTsoNum;
-	private JTextField textField_FacitTsrNum;
-	private JTextField textField_FacitSvcDate;
-	private JTextField textField_FacitTsoSubject;
-	private JTextField textField_FacitReportDate;
+	private static JTextField textField_FacitCcsd;
+	private static JTextField textField_FacitTsp;
+	private static JTextField textField_FacitPurpose;
+	private static JTextField textField_FacitRate;
+	private static JTextField textField_FacitSvcAvailable;
+	private static JTextField textField_FacitFullCcsd;
+	private static JTextField textField_FacitAction;
+	private static JTextField textField_FacitTsoNum;
+	private static JTextField textField_FacitTsrNum;
+	private static JTextField textField_FacitSvcDate;
+	private static JTextField textField_FacitTsoSubject;
+	private static JTextField textField_FacitReportDate;
 	private static JTextPane textPane_TrackerComment;
 	private static JRadioButton rdbtn_ChfRoot;
 	private static JTextPane textPane_ChfCurrent;
 	private static JTextPane textPane_ChfCreating;
+	private static JTextArea textArea_FacitTsoState;
+	private static JCheckBox chckbx_FacitCrr;
 	
 	/**
 	 * Launch the application.
@@ -634,7 +636,7 @@ public class Window {
 		panel_1.add(panel_FacitTsoState);
 		panel_FacitTsoState.setLayout(null);
 		
-		JTextArea textArea_FacitTsoState = new JTextArea();
+		textArea_FacitTsoState = new JTextArea();
 		textArea_FacitTsoState.setBounds(5, 21, 273, 100);
 		panel_FacitTsoState.add(textArea_FacitTsoState);
 		
@@ -722,7 +724,7 @@ public class Window {
 		panel_1.add(textField_FacitReportDate);
 		textField_FacitReportDate.setColumns(10);
 		
-		JCheckBox chckbx_FacitCrr = new JCheckBox("Completion Report Required");
+		chckbx_FacitCrr = new JCheckBox("Completion Report Required");
 		chckbx_FacitCrr.setEnabled(false);
 		chckbx_FacitCrr.setBackground(Color.WHITE);
 		chckbx_FacitCrr.setBounds(58, 349, 184, 24);
@@ -790,5 +792,47 @@ public class Window {
 	}
 	protected static JTextPane getTextPane_ChfCreating() {
 		return textPane_ChfCreating;
+	}
+	protected static JTextArea getTextArea_FacitTsoState() {
+		return textArea_FacitTsoState;
+	}
+	protected static JTextField getTextField_FacitCcsd() {
+		return textField_FacitCcsd;
+	}
+	protected static JTextField getTextField_FacitTsp() {
+		return textField_FacitTsp;
+	}
+	protected static JTextField getTextField_FacitPurpose() {
+		return textField_FacitPurpose;
+	}
+	protected static JTextField getTextField_FacitRate() {
+		return textField_FacitRate;
+	}
+	protected static JTextField getTextField_FacitSvcAvailable() {
+		return textField_FacitSvcAvailable;
+	}
+	protected static JTextField getTextField_FacitFullCcsd() {
+		return textField_FacitFullCcsd;
+	}
+	protected static JTextField getTextField_FacitAction() {
+		return textField_FacitAction;
+	}
+	protected static JTextField getTextField_FacitTsoNum() {
+		return textField_FacitTsoNum;
+	}
+	protected static JTextField getTextField_FacitTsrNum() {
+		return textField_FacitTsrNum;
+	}
+	protected static JTextField getTextField_FacitSvcDate() {
+		return textField_FacitSvcDate;
+	}
+	protected static JTextField getTextField_FacitTsoSubject() {
+		return textField_FacitTsoSubject;
+	}
+	protected static JTextField getTextField_FacitReportDate() {
+		return textField_FacitReportDate;
+	}
+	protected static JCheckBox getChckbx_FacitCrr() {
+		return chckbx_FacitCrr;
 	}
 }

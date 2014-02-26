@@ -1,5 +1,9 @@
 package taytom258.lib;
 
+
+import java.util.Arrays;
+import java.util.List;
+
 public final class Strings {
 
 	public static final String DEVELOP_WARN = "You are using a development version of this program. Weird things may happen!";
@@ -17,6 +21,6 @@ public final class Strings {
 	public static final String DISCO = "Disco";
 	public static final String ANDREWS_CMO = "ANDWSAFB";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
-	public static final String[] FOLDERS = {"Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters"};
+	public static final List<String> FOLDERS = Arrays.asList("Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters");
 	
 }

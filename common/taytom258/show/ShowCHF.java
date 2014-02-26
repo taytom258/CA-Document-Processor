@@ -11,12 +11,18 @@ import taytom258.window.Window;
 
 public class ShowCHF extends Window{
 
-	
+	private static String currentText = "";
+	private static String creatingText = "";
 	
 	
 	public static void show(){
 		tsoName();
 		rootFolder();
+		if(Config.useChf && Config.chfPath != ""){
+			folder(Config.chfPath);
+		}else if(!Config.useChf && Config.chfTest != ""){
+			folder(Config.chfTest);
+		}
 	}
 	
 	private static void tsoName(){
@@ -37,16 +43,16 @@ public class ShowCHF extends Window{
 		getTextField_ChfChfLink().setText(folder);
 		
 		if(Config.useChf){
-			folderExist = new File(Config.CHF_PATH+"/"+folder);
+			folderExist = new File(Config.CHF_PATH+"\\"+folder);
 		}else{
-			folderExist = new File(Config.CHF_TEST+"/"+folder);
+			folderExist = new File(Config.CHF_TEST+"\\"+folder);
 		}
 		
 		if(folderExist.exists()){
 			getRdbtn_ChfRoot().setSelected(true);
 		}else{
 			try {
-				DirHandler.createDir(folder, Config.CHF_PATH);
+				DirHandler.createDir(folder, "bin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -54,16 +60,27 @@ public class ShowCHF extends Window{
 		
 	}
 	
-	private static void folderCurrent(String path){
-		
-		String text = null;
+	private static void folder(String path){
 		
 		for(String element : Strings.FOLDERS){
-			File folder = new File(path + "/" + element);
+			File folder = new File(path + "\\" + element);
 			if(folder.exists()){
-				text = text.concat(element);
-				text = text.concat("\n");
-			}
+				currentText = currentText.concat(element);
+				currentText = currentText.concat("\n");
+				getTextPane_ChfCurrent().setText(currentText);
+			}else if(!folder.exists() && check(element)){
+				creatingText = creatingText.concat(element);
+				creatingText = creatingText.concat("\n");
+				getTextPane_ChfCreating().setText(creatingText);
+	}
+	
+	private static boolean check(String folder){
+		if(Collection.start){
+			if(Collection.startHasSams && ){return true;}
+			else if(Collection.startIsAnalog && folder.equals(Strings.FOLDERS[2])){return true;}
+			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
+			else if(Collection.startIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
 		}
+		return false;
 	}
 }
