@@ -11,8 +11,7 @@ import taytom258.window.Window;
 
 public class ShowCHF extends Window{
 
-	private static String currentText = "";
-	private static String creatingText = "";
+	private static String currentText, creatingText;
 	
 	
 	public static void show(){
@@ -62,6 +61,9 @@ public class ShowCHF extends Window{
 	
 	private static void folder(String path){
 		
+		currentText = "";
+		creatingText = "";
+		
 		for(String element : Strings.FOLDERS){
 			File folder = new File(path + "\\" + element);
 			if(folder.exists()){
@@ -72,15 +74,34 @@ public class ShowCHF extends Window{
 				creatingText = creatingText.concat(element);
 				creatingText = creatingText.concat("\n");
 				getTextPane_ChfCreating().setText(creatingText);
+			}
+		}
 	}
 	
 	private static boolean check(String folder){
 		if(Collection.start){
-			if(Collection.startHasSams && ){return true;}
+			if(Collection.startHasSams && folder.equals(Strings.FOLDERS[4])){return true;}
 			else if(Collection.startIsAnalog && folder.equals(Strings.FOLDERS[2])){return true;}
 			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
-			else if(Collection.startIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
+			else if(!Collection.startIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
 		}
+		if(Collection.change){
+			if(Collection.changeHasSams && folder.equals(Strings.FOLDERS[4])){return true;}
+			else if(Collection.changeIsAnalog && folder.equals(Strings.FOLDERS[2])){return true;}
+			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
+			else if(!Collection.changeIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
+		}
+		if(Collection.disco){
+			if(Collection.discoHasSams && folder.equals(Strings.FOLDERS[4])){return true;}
+			else if(Collection.discoIsAnalog && folder.equals(Strings.FOLDERS[2])){return true;}
+			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
+			else if(!Collection.discoIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
+		}
+		if(folder.equals(Strings.FOLDERS[0])){return true;}
+		else if(folder.equals(Strings.FOLDERS[1])){return true;}
+		else if(folder.equals(Strings.FOLDERS[3])){return true;}
+		else if(folder.equals(Strings.FOLDERS[6])){return true;}
+		else if(folder.equals(Strings.FOLDERS[7])){return true;}
 		return false;
 	}
 }

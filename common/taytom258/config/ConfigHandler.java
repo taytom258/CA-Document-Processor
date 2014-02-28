@@ -1,15 +1,25 @@
 package taytom258.config;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 
 import taytom258.core.DirHandler;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
+import taytom258.lib.Strings;
 
 public class ConfigHandler {
 	
-	public static String createRootDir(){
+	private static Properties prop = new Properties();
+	private static OutputStream output = null;
+	private static InputStream input = null;
+	
+	public static void init(){
 		String temp = System.getProperty("user.home").concat("\\"+Reference.AUTHOR);
 		File dir = new File(temp);
 		
@@ -24,6 +34,14 @@ public class ConfigHandler {
 		}else{
 			LogHelper.debug("Root directory exists");
 		}
-		return temp;
+	}
+	
+	private static void creatDefaultConfig(String path){
+		try {
+			output = new FileOutputStream(path+"\\"+Strings.CONFIG_NAME);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

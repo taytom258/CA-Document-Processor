@@ -14,7 +14,7 @@ public class SettingsCore {
 		userConfig();
 		useChf();
 		
-		ConfigHandler.createRootDir();
+		ConfigHandler.save();
 	}
 	
 	private static void chfPath(){
