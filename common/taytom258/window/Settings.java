@@ -20,15 +20,14 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
-public class Settings extends SettingsCore{
+public class Settings{
 
 	private JFrame frmSettings;
 	private static JTextField textFieldchfPath;
 	private static JTextField textFieldchfTest;
-	private static JTextField textFieldconfigLoc;
 	private static JToggleButton tglbtnDebugMode;
-	private static JToggleButton tglbtnUserStoredConfig;
 	private static JToggleButton tglbtnUseChf;
+	private static JToggleButton tglbtnAutoSelection;
 
 	/**
 	 * Launch the application.
@@ -93,14 +92,14 @@ public class Settings extends SettingsCore{
 		layeredPane.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("File", null, panel, null);
+		tabbedPane.addTab("Settings", null, panel, null);
 		panel.setLayout(null);
 		
 		textFieldchfPath = new JTextField();
 		textFieldchfPath.setBounds(277, 12, 310, 20);
 		panel.add(textFieldchfPath);
 		textFieldchfPath.setColumns(10);
-		textFieldchfPath.setText(Config.CHF_PATH);
+		textFieldchfPath.setText(Config.chfPath);
 		
 		JLabel lblChfLocation = new JLabel("CHF Location");
 		lblChfLocation.setBounds(12, 14, 74, 16);
@@ -114,52 +113,36 @@ public class Settings extends SettingsCore{
 		textFieldchfTest.setColumns(10);
 		textFieldchfTest.setBounds(277, 44, 310, 20);
 		panel.add(textFieldchfTest);
-		textFieldchfTest.setText(Config.CHF_TEST);
-		
-		JLabel lblOtherConfigLocation = new JLabel("Other Config Location");
-		lblOtherConfigLocation.setBounds(12, 78, 123, 16);
-		panel.add(lblOtherConfigLocation);
-		
-		textFieldconfigLoc = new JTextField();
-		textFieldconfigLoc.setColumns(10);
-		textFieldconfigLoc.setBounds(277, 76, 310, 20);
-		panel.add(textFieldconfigLoc);
-		textFieldconfigLoc.setText(Config.CONFIG_PATH);
-		
-		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Other", null, panel_3, null);
-		panel_3.setLayout(null);
+		textFieldchfTest.setText(Config.chfTest);
 		
 		tglbtnDebugMode = new JToggleButton("Debug Mode");
-		tglbtnDebugMode.setBounds(12, 12, 104, 26);
-		panel_3.add(tglbtnDebugMode);
-		
-		tglbtnUserStoredConfig = new JToggleButton("User Stored Config");
-		tglbtnUserStoredConfig.setBounds(446, 12, 141, 26);
-		panel_3.add(tglbtnUserStoredConfig);
-		tglbtnUserStoredConfig.setSelected(Config.CONFIG_USER);
+		tglbtnDebugMode.setSelected(Config.debug);
+		tglbtnDebugMode.setBounds(12, 369, 104, 26);
+		panel.add(tglbtnDebugMode);
 		
 		tglbtnUseChf = new JToggleButton("Use CHF");
-		tglbtnUseChf.setBounds(446, 50, 141, 26);
-		panel_3.add(tglbtnUseChf);
-		tglbtnUseChf.setSelected(Config.USE_CHF);
+		tglbtnUseChf.setSelected(Config.useChf);
+		tglbtnUseChf.setBounds(128, 369, 104, 26);
+		panel.add(tglbtnUseChf);
+		
+		tglbtnAutoSelection = new JToggleButton("Auto Selection");
+		tglbtnAutoSelection.setSelected(Config.autoSelection);
+		tglbtnAutoSelection.setBounds(244, 369, 116, 26);
+		panel.add(tglbtnAutoSelection);
 	}
-	public static JTextField getTextFieldchfPath() {
+	protected static JTextField getTextFieldchfPath() {
 		return textFieldchfPath;
 	}
-	public static JTextField getTextFieldchfTest() {
+	protected static JTextField getTextFieldchfTest() {
 		return textFieldchfTest;
 	}
-	public static JTextField getTextFieldconfigLoc() {
-		return textFieldconfigLoc;
-	}
-	public static JToggleButton getTglbtnDebugMode() {
+	protected static JToggleButton getTglbtnDebugMode() {
 		return tglbtnDebugMode;
 	}
-	public static JToggleButton getTglbtnUserStoredConfig() {
-		return tglbtnUserStoredConfig;
-	}
-	public static JToggleButton getTglbtnUseChf() {
+	protected static JToggleButton getTglbtnUseChf() {
 		return tglbtnUseChf;
+	}
+	protected static JToggleButton getTglbtnAutoSelection() {
+		return tglbtnAutoSelection;
 	}
 }
