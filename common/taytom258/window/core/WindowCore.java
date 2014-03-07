@@ -96,6 +96,13 @@ public class WindowCore extends Window{
 		private static void genCollect(){
 			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase().trim();
 			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase().trim();
+			
+				String text1, text2;
+				text1 = Collection.fullCcsd.replace(" ", "").substring(0, 4);
+				text2 = Collection.fullCcsd.replace(" ", "").substring(4);
+				
+				Collection.chfRootFolder = text2+" ("+text1+")";
+			
 			Collection.svcDate = textField_ServiceDate.getText().toUpperCase().trim();
 			
 			if(getRadioButton_Other().isSelected()){

@@ -1,5 +1,6 @@
 package taytom258.show;
 
+import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
@@ -32,7 +33,11 @@ public class ShowTracker extends Window{
 	}
 	
 	private static void chfLink(){
-		
+		if(Config.useChf){
+			getTextField_TrackerChfLink().setText(Config.chfPath + "\\" + Collection.chfRootFolder);
+		}else{
+			getTextField_TrackerChfLink().setText(Config.chfTest + "\\" + Collection.chfRootFolder);
+		}
 	}
 	
 	private static void cmo(){

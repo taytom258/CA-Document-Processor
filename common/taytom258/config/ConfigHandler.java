@@ -15,11 +15,11 @@ import taytom258.lib.Strings;
 
 public class ConfigHandler{
 	
-	private static Properties prop = new Properties();
-	private static File dir = new File(Config.CONFIG_PATH);
 	private static File file = new File(Config.CONFIG_PATH+"\\"+Strings.CONFIG_NAME);
 	
 	public static void init(){
+		File dir = new File(Config.CONFIG_PATH);
+		
 		if(!dir.exists()){
 			try {
 				DirHandler.createUserDir(Reference.AUTHOR);
@@ -31,20 +31,22 @@ public class ConfigHandler{
 		}else{
 			LogHelper.debug("Root directory exists");
 		}
-		try{
+		if(file.exists()){
 			load();
-		}catch(IOException e){
+		}else if(!file.exists()){
 			LogHelper.warning("Config not found: creating default config (This is normal on a first start)");
 			createDefaults();
 		}
 		LogHelper.debug("Config handler initilized");
 	}
 	
-	private static void load() throws IOException{
+	private static void load(){
 		
-		InputStream is = new FileInputStream(file);
+		Properties prop = new Properties();
+		InputStream is = null;
 		
 		try {
+			is = new FileInputStream(file);
 			prop.load(is);
 			
 			Config.chfPath = prop.getProperty(Config.CONFIG_NAMES[0]);
@@ -59,17 +61,16 @@ public class ConfigHandler{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw e;
 		}
 	}
 
 	public static void save(){
 		
-//		LogHelper.debug(file.getAbsolutePath());
-//		file.delete();
+		Properties prop = new Properties();
+		OutputStream os = null;
 		
 		try {
-			OutputStream os = new FileOutputStream(file);
+			os = new FileOutputStream(file);
 			
 			prop.setProperty(Config.CONFIG_NAMES[0], Config.chfPath);
 			prop.setProperty(Config.CONFIG_NAMES[1], Config.chfTest);
@@ -87,8 +88,6 @@ public class ConfigHandler{
 	}
 	
 	private static void createDefaults(){
-		
-//		file.delete();
 		
 		Config.chfPath = Config.CHF_PATH;
 		Config.chfTest = Config.CHF_TEST;

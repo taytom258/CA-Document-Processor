@@ -89,6 +89,8 @@ public class Window {
 	private static JTextPane textPane_ChfCreating;
 	private static JTextArea textArea_FacitTsoState;
 	private static JCheckBox chckbx_FacitCrr;
+	private static JRadioButton rdbtn_ChfRootCreated;
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 	/**
 	 * Launch the application.
@@ -513,9 +515,9 @@ public class Window {
 		label_ChfTsoName.setBounds(12, 12, 60, 16);
 		panel_Chf.add(label_ChfTsoName);
 		
-		JLabel label_ChfChfLink = new JLabel("CHF Link");
-		label_ChfChfLink.setBounds(12, 40, 49, 16);
-		panel_Chf.add(label_ChfChfLink);
+		JLabel lblChfRoot = new JLabel("CHF Root");
+		lblChfRoot.setBounds(12, 40, 51, 16);
+		panel_Chf.add(lblChfRoot);
 		
 		textField_ChfTsoName = new JTextField();
 		textField_ChfTsoName.setBackground(Color.WHITE);
@@ -531,13 +533,9 @@ public class Window {
 		panel_Chf.add(textField_ChfChfLink);
 		textField_ChfChfLink.setColumns(10);
 		
-		JButton button_ChfCreate = new JButton("Create");
-		button_ChfCreate.setBounds(102, 125, 111, 26);
-		panel_Chf.add(button_ChfCreate);
-		
 		JPanel panel_ChfCreating = new JPanel();
 		panel_ChfCreating.setBackground(Color.WHITE);
-		panel_ChfCreating.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Creating", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_ChfCreating.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Created", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panel_ChfCreating.setBounds(175, 164, 133, 224);
 		panel_Chf.add(panel_ChfCreating);
 		panel_ChfCreating.setLayout(null);
@@ -560,11 +558,20 @@ public class Window {
 		panel_ChfCurrent.add(textPane_ChfCurrent);
 		
 		rdbtn_ChfRoot = new JRadioButton("Root Exists");
+		buttonGroup_1.add(rdbtn_ChfRoot);
 		rdbtn_ChfRoot.setEnabled(false);
 		rdbtn_ChfRoot.setBackground(Color.WHITE);
 		rdbtn_ChfRoot.setHorizontalAlignment(SwingConstants.CENTER);
-		rdbtn_ChfRoot.setBounds(113, 93, 89, 24);
+		rdbtn_ChfRoot.setBounds(27, 132, 89, 24);
 		panel_Chf.add(rdbtn_ChfRoot);
+		
+		rdbtn_ChfRootCreated = new JRadioButton("Root Created");
+		buttonGroup_1.add(rdbtn_ChfRootCreated);
+		rdbtn_ChfRootCreated.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtn_ChfRootCreated.setEnabled(false);
+		rdbtn_ChfRootCreated.setBackground(Color.WHITE);
+		rdbtn_ChfRootCreated.setBounds(199, 132, 99, 24);
+		panel_Chf.add(rdbtn_ChfRootCreated);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -834,5 +841,8 @@ public class Window {
 	}
 	protected static JCheckBox getChckbx_FacitCrr() {
 		return chckbx_FacitCrr;
+	}
+	protected static JRadioButton getRdbtn_ChfRootCreated() {
+		return rdbtn_ChfRootCreated;
 	}
 }

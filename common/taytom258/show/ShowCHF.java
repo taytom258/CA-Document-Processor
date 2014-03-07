@@ -2,6 +2,7 @@ package taytom258.show;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import taytom258.config.Config;
 import taytom258.core.DirHandler;
@@ -12,6 +13,7 @@ import taytom258.window.Window;
 public class ShowCHF extends Window{
 
 	private static String currentText, creatingText;
+	private static ArrayList<String> create = new ArrayList<String>();
 	
 	
 	public static void show(){
@@ -32,26 +34,26 @@ public class ShowCHF extends Window{
 	}
 	
 	private static void rootFolder(){
-		String text1, text2;
-		File folderExist;
-		text1 = Collection.fullCcsd.toUpperCase().replace(" ", "").substring(0, 4);
-		text2 = Collection.fullCcsd.toUpperCase().replace(" ", "").substring(4);
+		File folderExist = null;
 		
-		String folder = text2+" ("+text1+")";
-		
-		getTextField_ChfChfLink().setText(folder);
+		getTextField_ChfChfLink().setText(Collection.chfRootFolder);
 		
 		if(Config.useChf){
-			folderExist = new File(Config.CHF_PATH+"\\"+folder);
+			folderExist = new File(Config.chfPath + "\\" + Collection.chfRootFolder);
 		}else{
-			folderExist = new File(Config.CHF_TEST+"\\"+folder);
+			folderExist = new File(Config.chfTest + "\\" + Collection.chfRootFolder);
 		}
 		
 		if(folderExist.exists()){
 			getRdbtn_ChfRoot().setSelected(true);
 		}else{
 			try {
-				DirHandler.createDir(folder, "bin");
+				if(Config.useChf){
+					DirHandler.createDir(Collection.chfRootFolder, Config.chfPath);
+				}else{
+					DirHandler.createDir(Collection.chfRootFolder, Config.chfTest);
+				}
+				getRdbtn_ChfRootCreated().setSelected(true);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -60,6 +62,8 @@ public class ShowCHF extends Window{
 	}
 	
 	private static void folder(String path){
+		
+		create.clear();
 		
 		currentText = "";
 		creatingText = "";
@@ -74,8 +78,10 @@ public class ShowCHF extends Window{
 				creatingText = creatingText.concat(element);
 				creatingText = creatingText.concat("\n");
 				getTextPane_ChfCreating().setText(creatingText);
+				create.add(element);
 			}
 		}
+		createFolder();
 	}
 	
 	private static boolean check(String folder){
@@ -103,5 +109,27 @@ public class ShowCHF extends Window{
 		else if(folder.equals(Strings.FOLDERS[6])){return true;}
 		else if(folder.equals(Strings.FOLDERS[7])){return true;}
 		return false;
+	}
+	
+	
+//	TODO Fix folder creation
+	public static void createFolder(){
+		
+		if(Config.useChf)
+			for(String s : create){
+				try {
+					DirHandler.createDir(s, Collection.chfRootFolder);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}else{
+			for(String s : create){
+				try {
+					DirHandler.createDir(s, Collection.chfRootFolder);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

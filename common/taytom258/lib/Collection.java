@@ -7,7 +7,7 @@ public class Collection{
 	public static boolean start, change, disco = false;
 	
 	//General Tab
-	public static String tsoSubject, fullCcsd, svcDate, cmo, otherCmoDsn, otherCmoComm, extraComments;
+	public static String tsoSubject, fullCcsd, svcDate, cmo, otherCmoDsn, otherCmoComm, extraComments, chfRootFolder;
 	public static boolean logical, comReportRequired, ancs;
 	
 	//Start Tab

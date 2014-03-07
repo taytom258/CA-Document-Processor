@@ -18,5 +18,5 @@ public class Config {
 	
 	public static final boolean USE_CHF = false;
 	public static final boolean AUTO_SELECTION = false;
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 }
