@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -23,7 +22,6 @@ public class TSODisco {
 	public static JCheckBox checkBox_Analog = new JCheckBox("Analog?");
 	public static JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
 	public static JCheckBox checkBox_1539 = new JCheckBox("1539 Circuit?");
-	public static JToggleButton toggleButton_Chf = new JToggleButton("CHF Creation Active");
 	public static JLabel label_Tsr = new JLabel("TSR Number");
 	public static JLabel label_RptDate = new JLabel("Report Date");
 	public static final JTextField textField_Tsr = new JTextField();
@@ -50,9 +48,6 @@ public class TSODisco {
 		
 		checkBox_1539.setBounds(8, 8, 112, 24);
 		panel_Disco.add(checkBox_1539);
-		
-		toggleButton_Chf.setBounds(140, 47, 145, 26);
-		panel_Disco.add(toggleButton_Chf);
 		
 		label_Tsr.setBounds(12, 222, 71, 16);
 		panel_Disco.add(label_Tsr);
@@ -122,8 +117,6 @@ public class TSODisco {
 		Collection.discoHasSams = checkBox_Sams.isSelected();
 		Collection.discoIsAnalog = checkBox_Analog.isSelected();
 		Collection.discoIsPassthrough = checkBox_Pass.isSelected();
-		
-		Collection.discoChf = toggleButton_Chf.isSelected();
 		
 		Collection.discoTsrNumber = textField_Tsr.getText().toUpperCase();
 		Collection.discoReportDate = textField_RptDate.getText().toUpperCase();

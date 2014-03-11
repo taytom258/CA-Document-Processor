@@ -3,22 +3,19 @@ package taytom258.window.core;
 import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
 import taytom258.window.Settings;
+import taytom258.window.Window;
 
 public class SettingsCore extends Settings{
 
 	public static void save(){
-		chfPath();
-		chfTest();
+		lines();
 		buttons();
 		
 		ConfigHandler.save();
 	}
 	
-	private static void chfPath(){
+	private static void lines(){
 		Config.chfPath = Settings.getTextFieldchfPath().getText().trim();
-	}
-	
-	private static void chfTest(){
 		Config.chfTest = Settings.getTextFieldchfTest().getText().trim();
 	}
 	

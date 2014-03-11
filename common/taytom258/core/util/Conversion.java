@@ -1,8 +1,9 @@
 package taytom258.core.util;
 
+
 public class Conversion {
 
-	public static String Month_StringtoInt(String month){
+	public static String MMM_StringtoInt(String month){
 		
 		String x = "0";
 		
@@ -32,6 +33,22 @@ public class Conversion {
 			x = "12";
 		}
 		return x;
+	}
+	
+	public static String dateConvert(String format){
+		
+		format.toUpperCase().trim();
+		
+		String day = format.substring(0, 2);
+		
+		String[] temp = format.split("\\s");
+		String month = temp[1];
+		
+		String year = temp[2];
+		
+		String date = day + " " + month + " " + year;
+		
+		return date;
 	}
 	
 }

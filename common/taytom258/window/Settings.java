@@ -122,12 +122,12 @@ public class Settings{
 		
 		tglbtnUseChf = new JToggleButton("Use CHF");
 		tglbtnUseChf.setSelected(Config.useChf);
-		tglbtnUseChf.setBounds(128, 369, 104, 26);
+		tglbtnUseChf.setBounds(12, 331, 104, 26);
 		panel.add(tglbtnUseChf);
 		
 		tglbtnAutoSelection = new JToggleButton("Auto Selection");
 		tglbtnAutoSelection.setSelected(Config.autoSelection);
-		tglbtnAutoSelection.setBounds(244, 369, 116, 26);
+		tglbtnAutoSelection.setBounds(128, 369, 116, 26);
 		panel.add(tglbtnAutoSelection);
 	}
 	protected static JTextField getTextFieldchfPath() {

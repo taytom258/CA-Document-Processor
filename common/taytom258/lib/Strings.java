@@ -7,6 +7,7 @@ public final class Strings {
 	public static final String DEVELOP_WARN = "You are using a development version of this program. Weird things may happen!";
 	public static final String CONFIG_NAME = "config.properties";
 	public static final String CHF_FOLDER = "CHF Default";
+	public static final String DISCO_PEND = "(Disco Pending)";
 	
 	public static final String PHYSICAL_FACILITY = "Circuit is physical in facility.";
 	public static final String PHYSICAL_ANCS = "Circuit is physical in ANCS.";

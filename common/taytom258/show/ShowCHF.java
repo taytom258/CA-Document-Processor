@@ -18,7 +18,10 @@ public class ShowCHF extends Window{
 	
 	public static void show(){
 		tsoName();
-		rootFolder();
+		list();
+	}
+	
+	private static void list(){
 		if(Config.useChf && Config.chfPath != ""){
 			folder(Config.chfPath);
 		}else if(!Config.useChf && Config.chfTest != ""){
@@ -30,13 +33,18 @@ public class ShowCHF extends Window{
 		String text = Collection.tsoSubject.toUpperCase();
 		text = text.replace("/", "");
 		
-		getTextField_ChfTsoName().setText(text);
+		getTextField_ChfTsoName().setText(text+".txt");
 	}
 	
 	private static void rootFolder(){
 		File folderExist = null;
 		
-		getTextField_ChfChfLink().setText(Collection.chfRootFolder);
+		if(Collection.disco){
+			getTextField_ChfChfLink().setText(Collection.chfRootFolder + " " + Strings.DISCO_PEND);
+		}else{
+			getTextField_ChfChfLink().setText(Collection.chfRootFolder);
+		}
+		
 		
 		if(Config.useChf){
 			folderExist = new File(Config.chfPath + "\\" + Collection.chfRootFolder);
@@ -44,8 +52,13 @@ public class ShowCHF extends Window{
 			folderExist = new File(Config.chfTest + "\\" + Collection.chfRootFolder);
 		}
 		
-		if(folderExist.exists()){
+		File discoPend = new File(folderExist.toString() + " " + Strings.DISCO_PEND);
+		
+		if(folderExist.exists() && folderExist.isDirectory()){
 			getRdbtn_ChfRoot().setSelected(true);
+			if(Collection.disco){
+				folderExist.renameTo(discoPend);
+			}
 		}else{
 			try {
 				if(Config.useChf){
@@ -54,6 +67,9 @@ public class ShowCHF extends Window{
 					DirHandler.createDir(Collection.chfRootFolder, Config.chfTest);
 				}
 				getRdbtn_ChfRootCreated().setSelected(true);
+				if(Collection.disco){
+					folderExist.renameTo(discoPend);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -66,11 +82,13 @@ public class ShowCHF extends Window{
 		create.clear();
 		
 		currentText = "";
+		getTextPane_ChfCurrent().setText("");
 		creatingText = "";
+		getTextPane_ChfCreating().setText("");
 		
 		for(String element : Strings.FOLDERS){
-			File folder = new File(path + "\\" + element);
-			if(folder.exists()){
+			File folder = new File(path + "\\" + Collection.chfRootFolder + "\\" + element);
+			if(folder.exists() && folder.isDirectory()){
 				currentText = currentText.concat(element);
 				currentText = currentText.concat("\n");
 				getTextPane_ChfCurrent().setText(currentText);
@@ -81,7 +99,7 @@ public class ShowCHF extends Window{
 				create.add(element);
 			}
 		}
-		createFolder();
+		createFolders();
 	}
 	
 	private static boolean check(String folder){
@@ -111,21 +129,21 @@ public class ShowCHF extends Window{
 		return false;
 	}
 	
-	
-//	TODO Fix folder creation
-	public static void createFolder(){
+	private static void createFolders(){
+		//TODO duplicate folder fix
+		rootFolder();
 		
 		if(Config.useChf)
 			for(String s : create){
 				try {
-					DirHandler.createDir(s, Collection.chfRootFolder);
+					DirHandler.createDir(s, Config.chfPath+"\\"+Collection.chfRootFolder);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}else{
 			for(String s : create){
 				try {
-					DirHandler.createDir(s, Collection.chfRootFolder);
+					DirHandler.createDir(s, Config.chfTest+"\\"+Collection.chfRootFolder);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

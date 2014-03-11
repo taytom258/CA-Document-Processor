@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -23,7 +22,6 @@ public class TSOChange {
 	private static JCheckBox checkBox_Analog = new JCheckBox("Analog?");
 	private static JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
 	private static JCheckBox checkBox_1539 = new JCheckBox("1539 Circuit?");
-	private static JToggleButton toggleButton_Chf = new JToggleButton("CHF Creation Active");
 	private static JLabel label_Tsr = new JLabel("TSR Number");
 	private static JLabel label_RptDate = new JLabel("Report Date");
 	private static final JTextField textField_Tsr = new JTextField();
@@ -51,9 +49,6 @@ public class TSOChange {
 		
 		checkBox_1539.setBounds(8, 8, 112, 24);
 		panel_Change.add(checkBox_1539);
-		
-		toggleButton_Chf.setBounds(140, 47, 145, 26);
-		panel_Change.add(toggleButton_Chf);
 		
 		label_Tsr.setBounds(12, 222, 71, 16);
 		panel_Change.add(label_Tsr);
@@ -123,8 +118,6 @@ public class TSOChange {
 		Collection.changeHasSams = checkBox_Sams.isSelected();
 		Collection.changeIsAnalog = checkBox_Analog.isSelected();
 		Collection.changeIsPassthrough = checkBox_Pass.isSelected();
-		
-		Collection.changeChf = toggleButton_Chf.isSelected();
 		
 		Collection.changeTsrNumber = textField_Tsr.getText().toUpperCase();
 		Collection.changeReportDate = textField_RptDate.getText().toUpperCase();

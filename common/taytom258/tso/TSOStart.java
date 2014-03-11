@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -25,7 +24,6 @@ public class TSOStart {
 	private static JCheckBox checkBox_Analog = new JCheckBox("Analog?");
 	private static JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
 	private static JCheckBox checkBox_1539 = new JCheckBox("1539 Circuit?");
-	private static JToggleButton toggleButton_Chf = new JToggleButton("CHF Creation Active");
 	private static final JTextField textField_DataRate = new JTextField();
 	private static JLabel label_DataRate = new JLabel("Data Rate");
 	private static final JTextField textField_SvcAvail = new JTextField();
@@ -58,9 +56,6 @@ public class TSOStart {
 		
 		checkBox_Pass.setBounds(8, 89, 105, 24);
 		panel_Start.add(checkBox_Pass);
-		
-		toggleButton_Chf.setBounds(140, 47, 145, 26);
-		panel_Start.add(toggleButton_Chf);
 		
 		textField_DataRate.setColumns(10);
 		textField_DataRate.setBounds(171, 125, 114, 20);
@@ -182,8 +177,6 @@ public class TSOStart {
 		Collection.startHasSams = checkBox_Sams.isSelected();
 		Collection.startIsAnalog = checkBox_Analog.isSelected();
 		Collection.startIsPassthrough = checkBox_Pass.isSelected();
-		
-		Collection.startChf = toggleButton_Chf.isSelected();
 		
 		Collection.dataRate = textField_DataRate.getText().toUpperCase();
 		Collection.serviceAvailible = textField_SvcAvail.getText().toUpperCase();

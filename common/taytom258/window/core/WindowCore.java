@@ -101,7 +101,7 @@ public class WindowCore extends Window{
 				text1 = Collection.fullCcsd.replace(" ", "").substring(0, 4);
 				text2 = Collection.fullCcsd.replace(" ", "").substring(4);
 				
-				Collection.chfRootFolder = text2+" ("+text1+")";
+					Collection.chfRootFolder = text2 + " (" + text1 + ")";
 			
 			Collection.svcDate = textField_ServiceDate.getText().toUpperCase().trim();
 			
