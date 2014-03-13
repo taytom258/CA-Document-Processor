@@ -58,7 +58,9 @@ public class ShowTracker extends Window{
 	}
 	
 	private static void serviceDate(){
-		getTextField_TrackerSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
+		if(!getTextField_TrackerSvcDate().getText().equals("")){
+			getTextField_TrackerSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
+		}
 	}
 	
 	private static void comment(){

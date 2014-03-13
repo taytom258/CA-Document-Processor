@@ -18,25 +18,22 @@ public class ShowCHF extends Window{
 	
 	public static void show(){
 		tsoName();
-		list();
+		list(rootFolder());
 	}
 	
-	private static void list(){
-		if(Config.useChf && Config.chfPath != ""){
-			folder(Config.chfPath);
-		}else if(!Config.useChf && Config.chfTest != ""){
-			folder(Config.chfTest);
-		}
+	private static void list(File path){
+		folder(path.toString());
 	}
 	
 	private static void tsoName(){
 		String text = Collection.tsoSubject.toUpperCase();
 		text = text.replace("/", "");
+		text = text.replace(" ", "");
 		
-		getTextField_ChfTsoName().setText(text+".txt");
+		getTextField_ChfTsoName().setText(text + ".txt");
 	}
 	
-	private static void rootFolder(){
+	private static File rootFolder(){
 		File folderExist = null;
 		
 		if(Collection.disco){
@@ -54,10 +51,11 @@ public class ShowCHF extends Window{
 		
 		File discoPend = new File(folderExist.toString() + " " + Strings.DISCO_PEND);
 		
-		if(folderExist.exists() && folderExist.isDirectory()){
+		if((folderExist.exists() || discoPend.exists()) && (folderExist.isDirectory() || discoPend.isDirectory())){
 			getRdbtn_ChfRoot().setSelected(true);
 			if(Collection.disco){
 				folderExist.renameTo(discoPend);
+				folderExist = discoPend;
 			}
 		}else{
 			try {
@@ -69,11 +67,13 @@ public class ShowCHF extends Window{
 				getRdbtn_ChfRootCreated().setSelected(true);
 				if(Collection.disco){
 					folderExist.renameTo(discoPend);
+					folderExist = discoPend;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		return folderExist;
 		
 	}
 	
@@ -87,7 +87,7 @@ public class ShowCHF extends Window{
 		getTextPane_ChfCreating().setText("");
 		
 		for(String element : Strings.FOLDERS){
-			File folder = new File(path + "\\" + Collection.chfRootFolder + "\\" + element);
+			File folder = new File(path + "\\" + element);
 			if(folder.exists() && folder.isDirectory()){
 				currentText = currentText.concat(element);
 				currentText = currentText.concat("\n");
@@ -99,7 +99,7 @@ public class ShowCHF extends Window{
 				create.add(element);
 			}
 		}
-		createFolders();
+		createFolders(path);
 	}
 	
 	private static boolean check(String folder){
@@ -129,21 +129,19 @@ public class ShowCHF extends Window{
 		return false;
 	}
 	
-	private static void createFolders(){
-		//TODO duplicate folder fix
-		rootFolder();
+	private static void createFolders(String path){
 		
 		if(Config.useChf)
 			for(String s : create){
 				try {
-					DirHandler.createDir(s, Config.chfPath+"\\"+Collection.chfRootFolder);
+					DirHandler.createDir(s, path);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}else{
 			for(String s : create){
 				try {
-					DirHandler.createDir(s, Config.chfTest+"\\"+Collection.chfRootFolder);
+					DirHandler.createDir(s, path);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

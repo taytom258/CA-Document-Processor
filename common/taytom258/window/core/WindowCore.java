@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.text.DefaultEditorKit;
 
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.tso.TSOChange;
@@ -94,6 +95,7 @@ public class WindowCore extends Window{
 		}
 		
 		private static void genCollect(){
+				
 			Collection.tsoSubject = textField_TsoSubject.getText().toUpperCase().trim();
 			Collection.fullCcsd = textField_FullCcsd.getText().toUpperCase().trim();
 			
@@ -118,7 +120,6 @@ public class WindowCore extends Window{
 			Collection.comReportRequired = getCheckBox_Crr().isSelected();
 			
 			Collection.extraComments = getTextArea_Comments().getText().toUpperCase().trim();
-			
 		}
 
 		public static void getAction(){
@@ -129,24 +130,27 @@ public class WindowCore extends Window{
 			
 				reset();
 				getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Action"), true);
-				if(str2.equals("01")){
+				if(str2.length() < 3 && str2.equals("01")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Start");
 					cardSwap("panel_Start");
 					Collection.start = true;
-				}else if(str2.equals("99")){
+				}else if(str2.length() < 3 && str2.equals("99")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Disco");
 					cardSwap("panel_Disco");
 					Collection.disco = true;
-				}else{
+				}else if(str2.length() < 3){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Change");
 					cardSwap("panel_Change");
 					Collection.change = true;
+				}else if(str2.length() == 3 && str2.matches(".*[a-yA-Y].*")){
+					LogHelper.debug("Amend");
+				}else if(str2.length() == 3 && str2.matches(".*[zZ].*")){
+					LogHelper.debug("Cancel");
 				}
 					getTabbedPane().validate();
 			}else{
 				reset();
 			}
 		}
-		
 	}
 }

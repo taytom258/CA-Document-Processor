@@ -4,7 +4,7 @@ package taytom258.lib;
 
 public class Collection{
 
-	public static boolean start, change, disco = false;
+	public static boolean start, change, disco, amend, cancel = false;
 	
 	//General Tab
 	public static String tsoSubject, fullCcsd, svcDate, cmo, otherCmoDsn, otherCmoComm, extraComments, chfRootFolder;

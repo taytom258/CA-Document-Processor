@@ -90,8 +90,10 @@ public class ShowFacit extends Window{
 		}
 	}
 	
-	private static void svcDate(){		
-		Window.getTextField_FacitSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
+	private static void svcDate(){
+		if(!Window.getTextField_FacitSvcDate().getText().equals("")){
+			Window.getTextField_FacitSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
+		}
 	}
 	
 	private static void tsoSubject(){
@@ -99,14 +101,16 @@ public class ShowFacit extends Window{
 	}
 	
 	private static void reportDate(){
-		if(Collection.start){
-			Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.startReportDate));
-		}else if(Collection.change){
-			Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.changeReportDate));
-		}else if(Collection.disco){
-			Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.discoReportDate));
-		}else{
-			Window.getTextField_FacitReportDate().setText("");
+		if(!Window.getTextField_FacitReportDate().getText().equals("")){
+			if(Collection.start){
+				Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.startReportDate));
+			}else if(Collection.change){
+				Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.changeReportDate));
+			}else if(Collection.disco){
+				Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.discoReportDate));
+			}else{
+				Window.getTextField_FacitReportDate().setText("");
+			}
 		}
 	}
 	

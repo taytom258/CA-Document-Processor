@@ -29,7 +29,7 @@ public class TSOChange {
 	private static JPanel panel_TsoState = new JPanel();
 	private static final JTextArea textArea = new JTextArea();
 	
-	
+	//TODO Create Amend & Cancel Panels
 	
 	public static void buildPanel(){
 		
