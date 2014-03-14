@@ -1,6 +1,7 @@
 package taytom258.core;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -26,7 +27,7 @@ public class WriteHandler {
     }
     //End code copied from stack overflow
     
-    public static void fileWriter(String line, String path){
+    public static boolean fileWriter(String line, String path){
     	String[] array = line.split("\\n");
     	for (int i=0; i<array.length; i++){
     		boolean notLastLine = true;
@@ -38,7 +39,27 @@ public class WriteHandler {
     			textWriter(path, array[i], notLastLine);
     		}catch(Exception e){
     			System.out.println("Could not print file to location");
+    			return false;
     		}
     	}
+		return true;
+	}
+    
+    public static boolean fileWriter(String line, File path){
+    	String[] array = line.split("\\n");
+    	for (int i=0; i<array.length; i++){
+    		boolean notLastLine = true;
+    		if(i==array.length-1){
+    			notLastLine = false;
+    		}
+    		try {
+    			textClear(path.toString());
+    			textWriter(path.toString(), array[i], notLastLine);
+    		}catch(Exception e){
+    			System.out.println("Could not print file to location");
+    			return false;
+    		}
+    	}
+    	return true;
 	}
 }

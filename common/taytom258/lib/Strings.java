@@ -21,6 +21,8 @@ public final class Strings {
 	public static final String CHANGE = "Change";
 	public static final String START = "Start";
 	public static final String DISCO = "Disco";
+	public static final String AMEND = "Amend";
+	public static final String CANCEL = "Cancel";
 	public static final String ANDREWS_CMO = "ANDWSAFB";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
 	public static final String[] FOLDERS = {"Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters"};

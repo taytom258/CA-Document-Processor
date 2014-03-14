@@ -20,8 +20,8 @@ public class Start {
 		/*
 		 *Initialization
 		 */
-		
 		LogHelper.init();
+		
 		LogHelper.debug("Initialize Log Helper");
 		LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
 		

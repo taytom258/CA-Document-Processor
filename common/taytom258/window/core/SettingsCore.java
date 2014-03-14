@@ -3,7 +3,6 @@ package taytom258.window.core;
 import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
 import taytom258.window.Settings;
-import taytom258.window.Window;
 
 public class SettingsCore extends Settings{
 

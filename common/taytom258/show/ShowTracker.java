@@ -17,6 +17,7 @@ public class ShowTracker extends Window{
 		cmo();
 		serviceDate();
 		comment();
+		LogHelper.info("Access Tracker Tab Complete");
 	}
 	
 	private static void action(){
@@ -26,6 +27,10 @@ public class ShowTracker extends Window{
 			getTextField_TrackerAction().setText(Strings.CHANGE);
 		}else if(Collection.disco){
 			getTextField_TrackerAction().setText(Strings.DISCO);
+		}else if(Collection.amend){
+			Window.getTextField_FacitAction().setText(Strings.AMEND);
+		}else if(Collection.cancel){
+			Window.getTextField_FacitAction().setText(Strings.CANCEL);
 		}
 	}
 	
@@ -58,7 +63,7 @@ public class ShowTracker extends Window{
 	}
 	
 	private static void serviceDate(){
-		if(!getTextField_TrackerSvcDate().getText().equals("")){
+		if(!Collection.svcDate.equals("")){
 			getTextField_TrackerSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
 		}
 	}
@@ -68,7 +73,6 @@ public class ShowTracker extends Window{
 		String location = null;
 		String complete = null;
 		String extra = null;
-		String tso = null;
 		
 		if(!Collection.logical && !Collection.ancs){
 			location = Strings.PHYSICAL_FACILITY;
@@ -90,16 +94,6 @@ public class ShowTracker extends Window{
 			LogHelper.severe("Unable to set comment format");
 		}
 		
-		if(Collection.start){
-			tso = Collection.startTsoStatement;
-		}else if(Collection.change){
-			tso = Collection.changeTsoStatement;
-		}else if(Collection.disco){
-			tso = Collection.discoTsoStatement;
-		}else{
-			tso = "";
-		}
-		
 		if(Collection.extraComments != null && !(Collection.extraComments.equals(""))){
 			extra = Collection.extraComments;
 		}else{
@@ -108,9 +102,8 @@ public class ShowTracker extends Window{
 		
 		location = location.trim();
 		complete = complete.trim();
-		tso = tso.trim();
 		
 		
-		getTextPane_TrackerComment().setText(tso.toUpperCase() + " " + location + " " + complete + " " + extra);
+		getTextPane_TrackerComment().setText(location + " " + complete + " " + extra);
 	}
 }

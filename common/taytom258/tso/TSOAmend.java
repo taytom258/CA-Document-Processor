@@ -17,9 +17,9 @@ import taytom258.config.Config;
 import taytom258.lib.Collection;
 import taytom258.window.Window;
 
-public class TSOStart {
+public class TSOAmend {
 	
-	private static JPanel panel_Start = new JPanel();
+	private static JPanel panel_Amend = new JPanel();
 	private static JCheckBox checkBox_Sams = new JCheckBox("Sams?");
 	private static JCheckBox checkBox_Analog = new JCheckBox("Analog?");
 	private static JCheckBox checkBox_Pass = new JCheckBox("Passthrough?");
@@ -44,22 +44,22 @@ public class TSOStart {
 		
 		JPanel action = Window.getPanel_Action();
 		
-		panel_Start.setLayout(null);
-		action.add(panel_Start, "panel_Start");
+		panel_Amend.setLayout(null);
+		action.add(panel_Amend, "panel_Amend");
 		
 		checkBox_Sams.setBounds(8, 33, 65, 24);
-		panel_Start.add(checkBox_Sams);
+		panel_Amend.add(checkBox_Sams);
 		
 		checkBox_Analog.setBounds(8, 61, 71, 24);
-		panel_Start.add(checkBox_Analog);
+		panel_Amend.add(checkBox_Analog);
 		
 		
 		checkBox_Pass.setBounds(8, 89, 105, 24);
-		panel_Start.add(checkBox_Pass);
+		panel_Amend.add(checkBox_Pass);
 		
 		textField_DataRate.setColumns(10);
 		textField_DataRate.setBounds(171, 125, 114, 20);
-		panel_Start.add(textField_DataRate);
+		panel_Amend.add(textField_DataRate);
 		textField_DataRate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -74,11 +74,11 @@ public class TSOStart {
 		});
 		
 		label_DataRate.setBounds(12, 127, 55, 16);
-		panel_Start.add(label_DataRate);
+		panel_Amend.add(label_DataRate);
 		
 		textField_SvcAvail.setColumns(10);
 		textField_SvcAvail.setBounds(171, 157, 114, 20);
-		panel_Start.add(textField_SvcAvail);
+		panel_Amend.add(textField_SvcAvail);
 		textField_SvcAvail.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -93,27 +93,27 @@ public class TSOStart {
 		});
 		
 		label_SvcAvail.setBounds(12, 159, 106, 16);
-		panel_Start.add(label_SvcAvail);
+		panel_Amend.add(label_SvcAvail);
 		
 		label_Tsp.setBounds(12, 189, 23, 16);
-		panel_Start.add(label_Tsp);
+		panel_Amend.add(label_Tsp);
 		
 		comboBox_Tsp.setBounds(171, 185, 114, 25);
 		String[] list = {"TSP 1", "TSP 2", "TSP 3", "TSP 4", "TSP 5", "NA"};
 		for(String element : list){
 			comboBox_Tsp.addItem(element);
 		}
-		panel_Start.add(comboBox_Tsp);
+		panel_Amend.add(comboBox_Tsp);
 		
 		label_TsrNum.setBounds(12, 222, 71, 16);
-		panel_Start.add(label_TsrNum);
+		panel_Amend.add(label_TsrNum);
 		
 		label_RptDate.setBounds(12, 252, 67, 16);
-		panel_Start.add(label_RptDate);
+		panel_Amend.add(label_RptDate);
 		
 		textField_Tsr.setColumns(10);
 		textField_Tsr.setBounds(171, 220, 114, 20);
-		panel_Start.add(textField_Tsr);
+		panel_Amend.add(textField_Tsr);
 		textField_Tsr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -129,7 +129,7 @@ public class TSOStart {
 		
 		textField_RptDate.setColumns(10);
 		textField_RptDate.setBounds(171, 250, 114, 20);
-		panel_Start.add(textField_RptDate);
+		panel_Amend.add(textField_RptDate);
 		textField_RptDate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -146,7 +146,7 @@ public class TSOStart {
 		panel_TsoState.setLayout(null);
 		panel_TsoState.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_TsoState.setBounds(8, 282, 283, 113);
-		panel_Start.add(panel_TsoState);
+		panel_Amend.add(panel_TsoState);
 		
 		textArea_TsoState.setWrapStyleWord(true);
 		textArea_TsoState.setToolTipText("Enter Extra Comments Here");
@@ -167,25 +167,23 @@ public class TSOStart {
 		});
 		
 		checkBox_1539.setBounds(8, 8, 112, 24);
-		panel_Start.add(checkBox_1539);
+		panel_Amend.add(checkBox_1539);
 		
 	}
-
+	
 	public static void collect(){
 		
-		Collection.startIs1539 = checkBox_1539.isSelected();
-		Collection.startHasSams = checkBox_Sams.isSelected();
-		Collection.startIsAnalog = checkBox_Analog.isSelected();
-		Collection.startIsPassthrough = checkBox_Pass.isSelected();
+		Collection.amendIs1539 = checkBox_1539.isSelected();
+		Collection.amendHasSams = checkBox_Sams.isSelected();
+		Collection.amendIsAnalog = checkBox_Analog.isSelected();
+		Collection.amendIsPassthrough = checkBox_Pass.isSelected();
 		
 		Collection.dataRate = textField_DataRate.getText().toUpperCase();
 		Collection.serviceAvailible = textField_SvcAvail.getText().toUpperCase();
 		Collection.tsp = comboBox_Tsp.getSelectedItem().toString().toUpperCase();
-		Collection.startTsrNumber = textField_Tsr.getText().toUpperCase();
-		Collection.startReportDate = textField_RptDate.getText().toUpperCase();
+		Collection.amendTsrNumber = textField_Tsr.getText().toUpperCase();
+		Collection.amendReportDate = textField_RptDate.getText().toUpperCase();
 		
-		Collection.startTsoStatement = textArea_TsoState.getText().toUpperCase().trim().replaceAll("[\\t\\r\\v\\f\\s\\n]", " ").replaceAll("\\s{2,}", " ");
+		Collection.amendTsoStatement = textArea_TsoState.getText().toUpperCase().trim().replaceAll("[\\t\\r\\v\\f\\s\\n]", " ").replaceAll("\\s{2,}", " ");
 	}
-
-
 }

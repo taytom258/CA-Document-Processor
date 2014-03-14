@@ -68,4 +68,9 @@ public class LogHelper {
 
 			log(Level.FINEST, object.toString());
 		}
+		
+		public static void io(Object object){
+			
+			log(Level.INFO, "[IO] " + object.toString());
+		}
 	}

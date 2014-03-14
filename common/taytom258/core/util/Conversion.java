@@ -46,7 +46,9 @@ public class Conversion {
 		
 		String year = temp[2];
 		
-		String date = day + " " + month + " " + year;
+		String time = format.substring(2, 7);
+		
+		String date = day + " " + month + " " + year + " " + time;
 		
 		return date;
 	}

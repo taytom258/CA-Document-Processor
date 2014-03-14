@@ -120,7 +120,7 @@ public class TSODisco {
 		
 		Collection.discoTsrNumber = textField_Tsr.getText().toUpperCase();
 		Collection.discoReportDate = textField_RptDate.getText().toUpperCase();
-		Collection.discoTsoStatement = textArea.getText().toUpperCase();
+		Collection.discoTsoStatement = textArea.getText().toUpperCase().trim().replaceAll("[\\t\\r\\v\\f\\s\\n]", " ").replaceAll("\\s{2,}", " ");
 		
 	}
 

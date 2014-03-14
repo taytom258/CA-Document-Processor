@@ -2,6 +2,5 @@
     <info organisation="org.apache" module="hello-ivy"/>
     <dependencies>
 		<!--<dependency org="commons-lang" name="commons-lang" rev="2.0"/>-->
-		<dependency org="commons-io" name="commons-io" rev="2.4"/>
     </dependencies>
 </ivy-module>

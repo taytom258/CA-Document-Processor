@@ -1,6 +1,6 @@
 package taytom258.window;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,16 +8,18 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.ScrollPaneConstants;
 
 import taytom258.core.util.LogHelper;
+import taytom258.lib.Collection;
 import taytom258.window.core.TextCore;
 
-public class Text extends TextCore{
+public class Text{
 
-	private JFrame frmEnterTso;
+	public static JFrame frmEnterTso;
+	private static JTextArea text;
 
 	/**
 	 * Launch the application.
@@ -54,29 +56,52 @@ public class Text extends TextCore{
 		frmEnterTso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEnterTso.getContentPane().setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Cancel");
-		btnNewButton_1.setBounds(493, 431, 73, 26);
-		frmEnterTso.getContentPane().add(btnNewButton_1);
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(493, 431, 73, 26);
+		frmEnterTso.getContentPane().add(btnCancel);
 		
-		JButton btnNewButton = new JButton("Accept");
-		btnNewButton.setBounds(12, 431, 74, 26);
-		frmEnterTso.getContentPane().add(btnNewButton);
+		JButton btnAccept = new JButton("Accept");
+		btnAccept.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TextCore.save();
+				frmEnterTso.dispose();
+			}
+		});
+		btnAccept.setBounds(12, 431, 74, 26);
+		frmEnterTso.getContentPane().add(btnAccept);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Enter TSO", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(12, 12, 554, 393);
+		panel.setBounds(12, 11, 556, 406);
 		frmEnterTso.getContentPane().add(panel);
-		panel.setLayout(null);
+		panel.setLayout(new BorderLayout(0, 0));
+		text = new JTextArea(); 
+		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
+		text.setText(Collection.tsoText);
+		JScrollPane scroll = new JScrollPane(text);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panel.add(scroll, BorderLayout.CENTER); 
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setToolTipText("Enter TSO Here");
-		textArea.setBounds(12, 23, 530, 358);
-		panel.add(textArea);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				text.setText("");
+			}
+		});
+		btnClear.setBounds(250, 431, 64, 26);
+		frmEnterTso.getContentPane().add(btnClear);
+		
+		
+		
+		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmEnterTso.dispose();
 			}
 		});
+	}
+	protected static JTextArea getText() {
+		return text;
 	}
 }

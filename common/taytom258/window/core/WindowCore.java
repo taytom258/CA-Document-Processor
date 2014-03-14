@@ -7,7 +7,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.text.DefaultEditorKit;
 
-import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.tso.TSOChange;
@@ -79,11 +78,13 @@ public class WindowCore extends Window{
 		}
 		
 		private static void reset(){
-			String[] str1 = {"Action", "Start", "Change", "Disco"};
+			String[] str1 = {"Action", "Start", "Change", "Disco", "Amend", "Cancel"};
 			cardSwap("Blank");
 			Collection.start = false;
 			Collection.change = false;
 			Collection.disco = false;
+			Collection.amend = false;
+			Collection.cancel = false;
 			
 			for(String element : str1){
 				if(getTabbedPane().indexOfTab(element) != -1){
@@ -129,23 +130,31 @@ public class WindowCore extends Window{
 				String str2 = str1[1];
 			
 				reset();
-				getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Action"), true);
 				if(str2.length() < 3 && str2.equals("01")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Start");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Start"), true);
 					cardSwap("panel_Start");
 					Collection.start = true;
 				}else if(str2.length() < 3 && str2.equals("99")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Disco");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Disco"), true);
 					cardSwap("panel_Disco");
 					Collection.disco = true;
-				}else if(str2.length() < 3){
+				}else if(str2.length() < 3 && str2.length() > 1){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Change");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Change"), true);
 					cardSwap("panel_Change");
 					Collection.change = true;
 				}else if(str2.length() == 3 && str2.matches(".*[a-yA-Y].*")){
-					LogHelper.debug("Amend");
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Amend");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Amend"), true);
+					cardSwap("panel_Amend");
+					Collection.amend = true;
 				}else if(str2.length() == 3 && str2.matches(".*[zZ].*")){
-					LogHelper.debug("Cancel");
+					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Cancel");
+					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Cancel"), true);
+					cardSwap("panel_Cancel");
+					Collection.cancel = true;
 				}
 					getTabbedPane().validate();
 			}else{

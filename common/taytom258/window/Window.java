@@ -37,6 +37,7 @@ import taytom258.lib.Strings;
 import taytom258.show.ShowCHF;
 import taytom258.show.ShowFacit;
 import taytom258.show.ShowTracker;
+import taytom258.tso.TSOAmend;
 import taytom258.tso.TSOChange;
 import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
@@ -132,7 +133,7 @@ public class Window {
 		JButton button_EnterTso = new JButton("Enter TSO");
 		button_EnterTso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Text.appear();
+				Text.appear();
 			}
 		});
 		button_EnterTso.setBounds(10, 460, 91, 26);
@@ -411,6 +412,7 @@ public class Window {
 		TSOStart.buildPanel();
 		TSOChange.buildPanel();
 		TSODisco.buildPanel();
+		TSOAmend.buildPanel();
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		panel.add(tabbedPane_1);
@@ -550,6 +552,8 @@ public class Window {
 		panel_FacitTsoState.setLayout(null);
 		
 		textArea_FacitTsoState = new JTextArea();
+		textArea_FacitTsoState.setWrapStyleWord(true);
+		textArea_FacitTsoState.setLineWrap(true);
 		textArea_FacitTsoState.setEditable(false);
 		textArea_FacitTsoState.setBounds(5, 21, 273, 100);
 		panel_FacitTsoState.add(textArea_FacitTsoState);

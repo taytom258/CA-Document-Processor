@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import taytom258.config.Config;
 import taytom258.core.DirHandler;
+import taytom258.core.WriteHandler;
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.window.Window;
@@ -18,17 +20,18 @@ public class ShowCHF extends Window{
 	
 	public static void show(){
 		tsoName();
-		list(rootFolder());
+		IOOperations(rootFolder());
+		LogHelper.info("CHF Tab Complete");
 	}
 	
-	private static void list(File path){
+	private static void IOOperations(File path){
 		folder(path.toString());
+		createTso(path.toString());
 	}
 	
 	private static void tsoName(){
 		String text = Collection.tsoSubject.toUpperCase();
 		text = text.replace("/", "");
-		text = text.replace(" ", "");
 		
 		getTextField_ChfTsoName().setText(text + ".txt");
 	}
@@ -61,8 +64,10 @@ public class ShowCHF extends Window{
 			try {
 				if(Config.useChf){
 					DirHandler.createDir(Collection.chfRootFolder, Config.chfPath);
+					LogHelper.io("Created Root in: " + Config.chfPath);
 				}else{
 					DirHandler.createDir(Collection.chfRootFolder, Config.chfTest);
+					LogHelper.io("Created Root in: " + Config.chfTest);
 				}
 				getRdbtn_ChfRootCreated().setSelected(true);
 				if(Collection.disco){
@@ -121,6 +126,12 @@ public class ShowCHF extends Window{
 			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
 			else if(!Collection.discoIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
 		}
+		if(Collection.amend){
+			if(Collection.amendHasSams && folder.equals(Strings.FOLDERS[4])){return true;}
+			else if(Collection.amendIsAnalog && folder.equals(Strings.FOLDERS[2])){return true;}
+			else if(Collection.cmo.equals(Strings.ANDREWS_CMO) && folder.equals(Strings.FOLDERS[5])){return true;}
+			else if(!Collection.amendIsPassthrough && folder.equals(Strings.FOLDERS[8])){return true;}
+		}
 		if(folder.equals(Strings.FOLDERS[0])){return true;}
 		else if(folder.equals(Strings.FOLDERS[1])){return true;}
 		else if(folder.equals(Strings.FOLDERS[3])){return true;}
@@ -131,21 +142,30 @@ public class ShowCHF extends Window{
 	
 	private static void createFolders(String path){
 		
-		if(Config.useChf)
-			for(String s : create){
-				try {
-					DirHandler.createDir(s, path);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}else{
-			for(String s : create){
-				try {
-					DirHandler.createDir(s, path);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		for(String s : create){
+			try {
+				DirHandler.createDir(s, path);
+				LogHelper.io("Created " + s +  " in: " + path);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+		}
+	}
+	
+	private static void createTso(String path){
+		
+		String text = Collection.tsoSubject.toUpperCase();
+		text = text.replace("/", "");
+		text = text + ".txt";
+		
+		File file = new File(path + "\\" + Strings.FOLDERS[6] + "\\" + text);
+		
+		if(!file.exists()){
+			if(WriteHandler.fileWriter(Collection.tsoText, file)){
+				LogHelper.io("Created file " + text + " in " + path + "\\" + Strings.FOLDERS[6]);
+			}
+		}else{
+			LogHelper.info("TSO File Already Exists");
 		}
 	}
 }
