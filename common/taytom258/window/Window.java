@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -29,22 +28,24 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
+import taytom258.show.ShowAccessTracker;
 import taytom258.show.ShowCHF;
 import taytom258.show.ShowFacit;
-import taytom258.show.ShowTracker;
 import taytom258.tso.TSOAmend;
+import taytom258.tso.TSOCancel;
 import taytom258.tso.TSOChange;
 import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
 
-import javax.swing.event.CaretListener;
-import javax.swing.event.CaretEvent;
+//TODO Fix all tooltips
 
 public class Window {
 
@@ -136,7 +137,7 @@ public class Window {
 				Text.appear();
 			}
 		});
-		button_EnterTso.setBounds(10, 460, 91, 26);
+		button_EnterTso.setBounds(10, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_EnterTso);
 		
 		JButton button_Settings = new JButton("Settings");
@@ -145,7 +146,7 @@ public class Window {
 				Settings.appear();
 			}
 		});
-		button_Settings.setBounds(427, 460, 91, 26);
+		button_Settings.setBounds(427, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Settings);
 		
 		JButton button_Run = new JButton("Run");
@@ -160,13 +161,13 @@ public class Window {
 						
 				}else{
 					WindowCore.collect.init();
-					ShowTracker.show();
+					ShowAccessTracker.show();
 					ShowCHF.show();
 					ShowFacit.show();
 				}
 			}
 		});
-		button_Run.setBounds(113, 460, 91, 26);
+		button_Run.setBounds(113, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Run);
 		
 		JButton button_Exit = new JButton("Exit");
@@ -176,13 +177,8 @@ public class Window {
 				System.exit(0);
 			}
 		});
-		button_Exit.setBounds(530, 460, 91, 26);
+		button_Exit.setBounds(530, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Exit);
-		
-		JProgressBar progressBar = new JProgressBar(0, 1000);
-		progressBar.setValue(0);
-		progressBar.setBounds(10, 435, 611, 14);
-		frmTsoHelper.getContentPane().add(progressBar);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 641, 423);
@@ -413,6 +409,7 @@ public class Window {
 		TSOChange.buildPanel();
 		TSODisco.buildPanel();
 		TSOAmend.buildPanel();
+		TSOCancel.buildPanel();
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		panel.add(tabbedPane_1);

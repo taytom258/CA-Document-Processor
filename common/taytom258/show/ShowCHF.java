@@ -14,6 +14,8 @@ import taytom258.window.Window;
 
 public class ShowCHF extends Window{
 
+	//TODO Add 1539 CHF functionality
+	
 	private static String currentText, creatingText;
 	private static ArrayList<String> create = new ArrayList<String>();
 	

@@ -31,5 +31,9 @@ public class Reference {
 	public static final String FINGERPRINT = "@FINGERPRINT@";
 	public static final String AUTHOR = "taytom258";
 	public static final String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
+	public static final int NUM_OPERATIONS = 4;
+	
+	//Variables
+	
 	
 }

@@ -95,8 +95,8 @@
 		<antcall target="increment_build_number" />
 		<antcall target="prep" />
 		<antcall target="create_manifest_build" />
-		<antcall target="resolve" />
-		<antcall target="unjar" />
+		<!--<antcall target="resolve" />
+		<antcall target="unjar" />-->
 		
 		<!-- Build the jar -->
 		<antcall target="compile" />
@@ -118,8 +118,8 @@
 		<antcall target="prep" />
 		<antcall target="replace_tokens" />
 		<antcall target="create_manifest_release" />
-		<antcall target="resolve" />
-		<antcall target="unjar" />
+		<!--<antcall target="resolve" />
+		<antcall target="unjar" /> -->
 
 		<!-- Build the jar -->
 		<antcall target="compile" />

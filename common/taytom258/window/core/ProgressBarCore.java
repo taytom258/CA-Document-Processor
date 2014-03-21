@@ -2,30 +2,39 @@ package taytom258.window.core;
 
 import javax.swing.JProgressBar;
 
-public class ProgressBarCore {
+import taytom258.window.Window;
 
-	public static int value = 0;
-	public static int pbMax = 1000;
-	public static int pbMin = 0;
+public class ProgressBarCore extends Window{
+	
+	private static int current = 0;
+	private static JProgressBar bar = null;
 	
 	
-	private static int calc(int current, int max){
-		float pbval = (current/max)*pbMax;
-		int actualValue = Math.round(pbval);
-		return actualValue;
+	private static void setBar(int value){
+		bar.setValue(value);
 	}
 	
-	public static void setProgress(int interval){
-		value = interval;
+	public static void init(int max, int min){
+		bar.setMaximum(max);
+		bar.setMinimum(min);
+		setBar(current);
 	}
 	
-	public static JProgressBar setBar(int value, int current, int max){
-		JProgressBar bar = new JProgressBar();
-		bar.setBounds(10, 438, 611, 14);
-		bar.setMaximum(ProgressBarCore.pbMax);
-		bar.setMinimum(ProgressBarCore.pbMin);
-		bar.setValue(calc(current, max));
-		return bar;
-		
+	public static int progress(){
+		current++;
+		setBar(current);
+		return current;
 	}
+	
+	public static int progress(int number){
+		current += number;
+		setBar(current);
+		return current;
+	}
+	
+	public static void clear(){
+		current = 0;
+		setBar(current);
+	}
+	
 }

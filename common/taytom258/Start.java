@@ -21,12 +21,8 @@ public class Start {
 		 *Initialization
 		 */
 		LogHelper.init();
-		
-		LogHelper.debug("Initialize Log Helper");
 		LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
-		
 		ConfigHandler.init();
-		
 		Check.call();
 		
 		/*
@@ -34,5 +30,13 @@ public class Start {
 		 */
 		
 		Window.appear();
+//		Testing.init();
+		
+		/*
+		 * Post-Initialization
+		 */
+		
+		
+		
 	}
 }
