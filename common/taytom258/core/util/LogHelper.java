@@ -9,7 +9,7 @@ import taytom258.core.log.LogHandler;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 
-public class LogHelper {
+public class LogHelper{
 
 		private static Logger logger = Logger.getLogger(Reference.APPLICATION_NAME);
 		private static Handler handler = new LogHandler();
@@ -20,16 +20,19 @@ public class LogHelper {
 			if(Reference.BUILD_NUMBER.equals("@BUILD_NUMBER@")){
 				log(Level.WARNING, Strings.DEVELOP_WARN);
 			}
+			
 		}
 		
 		private static void log(Level logLevel, Object object) {
-
 			logger.log(logLevel, object.toString());
+			
+			if(logLevel == Level.SEVERE){
+			}
 		}
 
 		public static void severe(Object object) {
-
 			log(Level.SEVERE, object.toString());
+			ErrorHelper.appear("ERROR: SEVERE", object.toString());
 		}
 
 		public static void debug(Object object) {
@@ -42,6 +45,7 @@ public class LogHelper {
 		public static void warning(Object object) {
 
 			log(Level.WARNING, object.toString());
+			ErrorHelper.appear("ERROR: WARNING", object.toString());
 		}
 
 		public static void info(Object object) {

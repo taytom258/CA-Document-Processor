@@ -8,6 +8,7 @@ public final class Strings {
 	public static final String CONFIG_NAME = "config.properties";
 	public static final String CHF_FOLDER = "CHF Default";
 	public static final String DISCO_PEND = "(Disco Pending)";
+	public static final String ONLY_1539 = "(1539 Only Circuits)";
 	public static final String FOUND_NOTHING = "The program didn't find any information. You did enter things, right?";
 	
 	public static final String PHYSICAL_FACILITY = "Circuit is physical in facility.";

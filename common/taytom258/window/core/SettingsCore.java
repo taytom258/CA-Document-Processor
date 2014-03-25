@@ -22,5 +22,6 @@ public class SettingsCore extends Settings{
 		Config.debug = Settings.getTglbtnDebugMode().isSelected();
 		Config.autoSelection = Settings.getTglbtnAutoSelection().isSelected();
 		Config.useChf = Settings.getTglbtnUseChf().isSelected();
+		Config.error = Settings.getTglbtnError().isSelected();
 	}
 }

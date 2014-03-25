@@ -45,7 +45,7 @@ import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
 
-//TODO Fix all tooltips
+//TODO Fix all tooltips (?)
 
 public class Window {
 
@@ -101,6 +101,7 @@ public class Window {
 	 * Launch the application.
 	 */
 	public static void appear() {
+		LogHelper.info("Main Window");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

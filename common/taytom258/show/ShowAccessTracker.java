@@ -7,7 +7,7 @@ import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.window.Window;
 
-//TODO Make fields match access database
+//TODO Make fields match access database (v3)
 
 public class ShowAccessTracker extends Window{
 

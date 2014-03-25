@@ -18,7 +18,7 @@ import taytom258.window.core.TextCore;
 
 public class Text{
 
-	public static JFrame frmEnterTso;
+	public JFrame frmEnterTso;
 	private static JTextArea text;
 
 	/**

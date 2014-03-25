@@ -21,14 +21,13 @@ public class LogHandler extends Handler {
 	public void flush() {
 		
 	}
-
+			
 	@Override
-	public void publish(LogRecord record) {
+	public void publish(final LogRecord record) {
 		if(!isLoggable(record)){
 			return;
 		}
 		System.out.println(getFormatter().format(record));
-
 	}
 
 }

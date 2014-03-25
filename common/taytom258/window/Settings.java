@@ -28,6 +28,7 @@ public class Settings{
 	private static JToggleButton tglbtnDebugMode;
 	private static JToggleButton tglbtnUseChf;
 	private static JToggleButton tglbtnAutoSelection;
+	private static JToggleButton tglbtnError;
 
 	/**
 	 * Launch the application.
@@ -129,6 +130,11 @@ public class Settings{
 		tglbtnAutoSelection.setSelected(Config.autoSelection);
 		tglbtnAutoSelection.setBounds(128, 369, 116, 26);
 		panel.add(tglbtnAutoSelection);
+		
+		tglbtnError = new JToggleButton("Error Popups");
+		tglbtnError.setSelected(Config.error);
+		tglbtnError.setBounds(128, 331, 116, 26);
+		panel.add(tglbtnError);
 	}
 	protected static JTextField getTextFieldchfPath() {
 		return textFieldchfPath;
@@ -144,5 +150,8 @@ public class Settings{
 	}
 	protected static JToggleButton getTglbtnAutoSelection() {
 		return tglbtnAutoSelection;
+	}
+	protected static JToggleButton getTglbtnError() {
+		return tglbtnError;
 	}
 }
