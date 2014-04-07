@@ -15,6 +15,7 @@ public class Config {
 	
 	public static final String CHF_PATH = "";
 	public static final String CHF_TEST = "";
+	public static final String DB_PATH = "D:\\Test.accdb";
 	
 	public static final boolean USE_CHF = false;
 	public static final boolean AUTO_SELECTION = false;

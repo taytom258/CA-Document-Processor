@@ -44,6 +44,8 @@ import taytom258.tso.TSOChange;
 import taytom258.tso.TSODisco;
 import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 //TODO Fix all tooltips (?)
 
@@ -132,43 +134,36 @@ public class Window {
 		frmTsoHelper.getContentPane().setLayout(null);
 		frmTsoHelper.setResizable(false);
 		
-		JButton button_EnterTso = new JButton("Enter TSO");
-		button_EnterTso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Text.appear();
-			}
-		});
-		button_EnterTso.setBounds(10, 435, 91, 60);
-		frmTsoHelper.getContentPane().add(button_EnterTso);
-		
 		JButton button_Settings = new JButton("Settings");
 		button_Settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Settings.appear();
 			}
 		});
-		button_Settings.setBounds(427, 435, 91, 60);
+		button_Settings.setBounds(10, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Settings);
 		
 		JButton button_Run = new JButton("Run");
 		button_Run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(textField_TsoSubject.getText().equals("") ||
-						textField_FullCcsd.getText().equals("") ||
-						textField_ServiceDate.getText().equals("")){
-						
-						LogHelper.severe(Strings.FOUND_NOTHING);
-						
-				}else{
-					WindowCore.collect.init();
-					ShowAccessTracker.show();
-					ShowCHF.show();
-					ShowFacit.show();
-				}
+//				if(textField_TsoSubject.getText().equals("") ||
+//						textField_FullCcsd.getText().equals("") ||
+//						textField_ServiceDate.getText().equals("")){
+//						
+//						LogHelper.severe(Strings.FOUND_NOTHING);
+//						
+//				}else{
+//					WindowCore.collect.init();
+//					ShowAccessTracker.show();
+//					ShowCHF.show();
+//					ShowFacit.show();
+//				}
+				
+				
 			}
 		});
-		button_Run.setBounds(113, 435, 91, 60);
+		button_Run.setBounds(273, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Run);
 		
 		JButton button_Exit = new JButton("Exit");
@@ -178,7 +173,7 @@ public class Window {
 				System.exit(0);
 			}
 		});
-		button_Exit.setBounds(530, 435, 91, 60);
+		button_Exit.setBounds(538, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Exit);
 		
 		JPanel panel = new JPanel();
@@ -187,7 +182,7 @@ public class Window {
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		panel.add(tabbedPane);
+//		panel.add(tabbedPane);
 		
 		JPanel panel_general = new JPanel();
 		panel_general.setLayout(null);
@@ -411,6 +406,18 @@ public class Window {
 		TSODisco.buildPanel();
 		TSOAmend.buildPanel();
 		TSOCancel.buildPanel();
+		
+		JPanel panel_2 = new JPanel();
+		panel.add(panel_2);
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton button_EnterTso = new JButton("Enter TSO");
+		panel_2.add(button_EnterTso);
+		button_EnterTso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Text.appear();
+			}
+		});
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		panel.add(tabbedPane_1);

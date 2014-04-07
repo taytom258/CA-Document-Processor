@@ -3,6 +3,8 @@ package taytom258.core.log;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+import taytom258.core.util.DateUtils;
+
 public class LogFormatter extends Formatter {
 
 	public LogFormatter() {

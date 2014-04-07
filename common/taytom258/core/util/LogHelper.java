@@ -32,7 +32,9 @@ public class LogHelper{
 
 		public static void severe(Object object) {
 			log(Level.SEVERE, object.toString());
-			ErrorHelper.appear("ERROR: SEVERE", object.toString());
+			if(Config.error){
+				ErrorPopHelper.appear("ERROR: SEVERE", object.toString());
+			}
 		}
 
 		public static void debug(Object object) {
@@ -45,7 +47,9 @@ public class LogHelper{
 		public static void warning(Object object) {
 
 			log(Level.WARNING, object.toString());
-			ErrorHelper.appear("ERROR: WARNING", object.toString());
+			if(Config.error){
+				ErrorPopHelper.appear("ERROR: WARNING", object.toString());
+			}
 		}
 
 		public static void info(Object object) {

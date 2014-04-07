@@ -1,4 +1,4 @@
-package taytom258.core.log;
+package taytom258.core.util;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;

@@ -4,6 +4,7 @@ import taytom258.config.ConfigHandler;
 import taytom258.core.security.Check;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Reference;
+import taytom258.testing.DatabaseTest;
 import taytom258.window.Window;
 
 
@@ -28,6 +29,7 @@ public class Start {
 	            	 * Post-Initialization
 	            	 */
 	            	LogHelper.info("Post-Loading...");
+	            	DatabaseTest.init();
 	            }
 	        }catch(InterruptedException e){
 	            e.printStackTrace();

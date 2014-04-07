@@ -1,6 +1,7 @@
 package taytom258.core.util;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,18 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-public class ErrorHelper extends JDialog {
-
+public class ErrorPopHelper extends JDialog {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2605535464107680020L;
 	private final JPanel contentPanel = new JPanel();
 	private static JTextArea textArea = new JTextArea();
-	private static ErrorHelper dialog = new ErrorHelper();
+	private static ErrorPopHelper dialog = new ErrorPopHelper();
 	
 	/**
 	 * Launch the application.
@@ -36,36 +38,36 @@ public class ErrorHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ErrorHelper() {
+	public ErrorPopHelper() {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 180);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new BorderLayout(0, 0));
+		contentPanel.setLayout(null);
 		{
+			textArea.setBounds(12, 42, 370, 62);
+			textArea.setBackground(UIManager.getColor("Button.background"));
 			textArea.setEditable(false);
 			textArea.setWrapStyleWord(true);
 			textArea.setLineWrap(true);
-			textArea.setFont(new Font("Dialog", Font.BOLD, 15));
-			contentPanel.add(textArea, BorderLayout.CENTER);
+			textArea.setFont(new Font("Dialog", Font.BOLD, 13));
+			contentPanel.add(textArea);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			buttonPane.setLayout(new BorderLayout(0, 0));
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						dialog.dispose();
-					}
-				});
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
+			JButton okButton = new JButton("OK");
+			okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					dialog.dispose();
+				}
+			});
+			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			buttonPane.add(okButton);
+			getRootPane().setDefaultButton(okButton);
 		}
 	}
 }
