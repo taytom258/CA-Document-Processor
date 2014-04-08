@@ -1,4 +1,4 @@
-package taytom258.show;
+package taytom258.show.tso;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,13 +16,13 @@ import taytom258.window.Window;
 
 public class ShowCHF extends Window {
 
-	private static String currentText, creatingText;
+	private static String currentText, creatingText, tsoName;
 	private static ArrayList<String> create = new ArrayList<String>();
 
 	public static void show() {
 		tsoName();
 		IOOperations(rootFolder());
-		LogHelper.info("CHF Tab Complete");
+		LogHelper.info("TSO (CHF) Tab Complete");
 	}
 
 	private static void IOOperations(File path) {
@@ -32,17 +32,18 @@ public class ShowCHF extends Window {
 	}
 
 	private static void tsoName() {
-		String text = Collection.tsoSubject.toUpperCase();
-		text = text.replace("/", "");
+		int index = Collection.tsoSubject.indexOf("-");
+		String pre = Collection.tsoSubject.trim().replace("/", "").substring(0, index+3);
+		tsoName = pre.trim() + ".txt";
 
-		getTextField_ChfTsoName().setText(text + ".txt");
+		getTextField_ChfTsoName().setText(tsoName);
 	}
 
 	private static File rootFolder() {
 		File folderExist = null;
 		File only = null;
 
-		if (Collection.disco) {
+		if (Collection.tsoAction.equals("DISCO")) {
 			getTextField_ChfChfLink().setText(
 					Collection.chfRootFolder + " " + Strings.DISCO_PEND);
 		} else {
@@ -66,10 +67,10 @@ public class ShowCHF extends Window {
 		File discoPend = new File(folderExist.toString() + " "
 				+ Strings.DISCO_PEND);
 		
-		if (Collection.disco) {
+		if (Collection.tsoAction.equals("DISCO")) {
 			folderExist.renameTo(discoPend);
 			folderExist = discoPend;
-		}else if(Collection.startIs1539 || Collection.changeIs1539 || Collection.amendIs1539){
+		}else if(Collection.is1539){
 			folderExist = only;
 		}
 
@@ -124,61 +125,17 @@ public class ShowCHF extends Window {
 	}
 
 	private static boolean check(String folder) {
-		if (Collection.start) {
-			if (Collection.startHasSams && folder.equals(Strings.FOLDERS[4])) {
-				return true;
-			} else if (Collection.startIsAnalog
-					&& folder.equals(Strings.FOLDERS[2])) {
-				return true;
-			} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
-					&& folder.equals(Strings.FOLDERS[5])) {
-				return true;
-			} else if (!Collection.startIsPassthrough
-					&& folder.equals(Strings.FOLDERS[8])) {
-				return true;
-			}
-		}
-		if (Collection.change) {
-			if (Collection.changeHasSams && folder.equals(Strings.FOLDERS[4])) {
-				return true;
-			} else if (Collection.changeIsAnalog
-					&& folder.equals(Strings.FOLDERS[2])) {
-				return true;
-			} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
-					&& folder.equals(Strings.FOLDERS[5])) {
-				return true;
-			} else if (!Collection.changeIsPassthrough
-					&& folder.equals(Strings.FOLDERS[8])) {
-				return true;
-			}
-		}
-		if (Collection.disco) {
-			if (Collection.discoHasSams && folder.equals(Strings.FOLDERS[4])) {
-				return true;
-			} else if (Collection.discoIsAnalog
-					&& folder.equals(Strings.FOLDERS[2])) {
-				return true;
-			} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
-					&& folder.equals(Strings.FOLDERS[5])) {
-				return true;
-			} else if (!Collection.discoIsPassthrough
-					&& folder.equals(Strings.FOLDERS[8])) {
-				return true;
-			}
-		}
-		if (Collection.amend) {
-			if (Collection.amendHasSams && folder.equals(Strings.FOLDERS[4])) {
-				return true;
-			} else if (Collection.amendIsAnalog
-					&& folder.equals(Strings.FOLDERS[2])) {
-				return true;
-			} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
-					&& folder.equals(Strings.FOLDERS[5])) {
-				return true;
-			} else if (!Collection.amendIsPassthrough
-					&& folder.equals(Strings.FOLDERS[8])) {
-				return true;
-			}
+		if (Collection.hasSams && folder.equals(Strings.FOLDERS[4])) {
+			return true;
+		} else if (Collection.isAnalog
+				&& folder.equals(Strings.FOLDERS[2])) {
+			return true;
+		} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
+				&& folder.equals(Strings.FOLDERS[5])) {
+			return true;
+		} else if (!Collection.isPassthrough
+				&& folder.equals(Strings.FOLDERS[8])) {
+			return true;
 		}
 		if (folder.equals(Strings.FOLDERS[0])) {
 			return true;
@@ -208,9 +165,7 @@ public class ShowCHF extends Window {
 
 	private static void createTso(String path) {
 
-		String text = Collection.tsoSubject.toUpperCase();
-		text = text.replace("/", "");
-		text = text + ".txt";
+		String text = tsoName;
 
 		File file = new File(path + "\\" + Strings.FOLDERS[6] + "\\" + text);
 
@@ -227,7 +182,7 @@ public class ShowCHF extends Window {
 	private static void create1539(String path){
 		
 		
-		if(Collection.startIs1539 || Collection.changeIs1539 || Collection.amendIs1539){
+		if(Collection.is1539){
 			try{
 				if (Config.useChf) {
 					File folder = new File(Config.chfPath + "\\" + Strings.ONLY_1539);

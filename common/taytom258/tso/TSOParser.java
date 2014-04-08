@@ -1,9 +1,12 @@
-package taytom258.testing;
+package taytom258.tso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
+
+import taytom258.core.util.LogHelper;
+import taytom258.lib.Collection;
 
 /**
  * Parse TSO text
@@ -12,7 +15,7 @@ import java.util.TreeMap;
  */
 
 
-public class ParserTest {
+public class TSOParser {
 
 	private static String[] addIn(String[] origArray, String element) {
 	    String[] newArray = new String[origArray.length + 1];
@@ -800,9 +803,74 @@ public class ParserTest {
 		 tso.put("Type of Service", SVC_TYPE.get(fullCCSD.substring(3, 4)));
 
 		 for(Map.Entry<String, String> entry : tso.entrySet()){
-			 String key = entry.getKey();
-			 String value = entry.getValue();
-			 System.out.println("(" + key + ")" + " : " + value);
+			 String key = entry.getKey().trim();
+			 String value = entry.getValue().trim();
+//			 System.out.println("(" + key + ")" + " : " + value);
+			 
+			 if(key.equals("Standardized CCSD")){
+				 Collection.fullCcsd = value;
+				 String inden = value.trim().substring(0, 4);
+				 String ccsd = value.trim().substring(4, 8);
+				 Collection.chfRootFolder = ccsd + "(" + inden + ")";
+			 }else if(key.equals("Full CCSD") && key.length() == 6){
+				 Collection.trunkId = value;
+			 }else if(key.equals("TSP Number")){
+				 Collection.tsp = value;
+			 }else if(key.equals("TSP")){
+				 if(key.equals("NA")){
+					 Collection.fullTsp = "Not Assigned";
+				 }else{
+					 Collection.fullTsp = value;
+				 }
+			 }else if(key.equals("To")){
+				 Collection.toLocation = value;
+			 }else if(key.equals("From")){
+				 Collection.fromLocation = value;
+			 }else if(key.equals("Requesting Department")){
+				 Collection.requestingDept = value;
+			 }else if(key.equals("Type of Service")){
+				 Collection.serviceType = value;
+			 }else if(key.equals("Circuit Use")){
+				 Collection.circuitUse = value;
+			 }else if(key.equals("Security")){
+				 Collection.security = value;
+			 }else if(key.equals("Data Rate")){
+				 Collection.dataRate = value;
+			 }else if(key.equals("Traffic Flow")){
+				 Collection.trafficFlow = value;
+			 }else if(key.equals("Term")){
+				 Collection.serviceAvail = value;
+			 }else if(key.equals("We Are CCO")){
+				 Collection.andrewsCmo = Boolean.valueOf(value);
+			 }else if(key.equals("CCO or CMO")){
+				 Collection.cmo = value;
+			 }else if(key.equals("Signaling")){
+				 Collection.signaling = value;
+			 }else if(key.equals("Quality Control Code")){
+				 Collection.qcc = value;
+			 }else if(key.equals("We Are Endpoint")){
+				 Collection.endPoint = Boolean.valueOf(value);
+				 Collection.isPassthrough = !Collection.endPoint;
+			 }else if(key.equals("TSO Number")){
+				 Collection.tsoNum = value;
+			 }else if(key.equals("TSO Suffix")){
+				 Collection.tsoSuffix = value;
+			 }else if(key.equals("TSO Action")){
+				 Collection.tsoAction = value;
+			 }else if(key.equals("Expected In Effect Date")){
+				 Collection.svcDate = value;
+			 }else if(key.equals("Completion Report Required")){
+				 Collection.crr = Boolean.valueOf(value);
+			 }else if(key.equals("Purpose")){
+				 Collection.purpose = value;
+			 }else if(key.equals("Subject")){
+				 Collection.tsoSubject = value;
+			 }else if(key.equals("TSR Number")){
+				 Collection.tsrNum = value;
+			 }else if(key.equals("Report Date")){
+				 Collection.reportDate = value;
+			 }
 		 }
-		}
+		 LogHelper.info("TSO (Parser) Complete");
+	}
 }

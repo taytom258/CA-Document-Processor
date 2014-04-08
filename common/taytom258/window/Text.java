@@ -14,7 +14,6 @@ import javax.swing.ScrollPaneConstants;
 
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
-import taytom258.testing.ParserTest;
 import taytom258.window.core.TextCore;
 
 public class Text{
@@ -64,9 +63,8 @@ public class Text{
 		JButton btnAccept = new JButton("Accept");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				TextCore.save();
-//				frmEnterTso.dispose();
-				ParserTest.parseTSO(text.getText().trim());
+				TextCore.save();
+				frmEnterTso.dispose();
 			}
 		});
 		btnAccept.setBounds(12, 431, 74, 26);

@@ -82,11 +82,11 @@ public class WindowCore extends Window{
 		private static void reset(){
 			String[] str1 = {"Action", "Start", "Change", "Disco", "Amend", "Cancel"};
 			cardSwap("Blank");
-			Collection.start = false;
-			Collection.change = false;
-			Collection.disco = false;
-			Collection.amend = false;
-			Collection.cancel = false;
+//			Collection.start = false;
+//			Collection.change = false;
+//			Collection.disco = false;
+//			Collection.amend = false;
+//			Collection.cancel = false;
 			
 			for(String element : str1){
 				if(getTabbedPane().indexOfTab(element) != -1){
@@ -112,17 +112,17 @@ public class WindowCore extends Window{
 			
 			if(getRadioButton_Other().isSelected()){
 				Collection.cmo = textField_CmoName.getText().toUpperCase().trim();
-				Collection.otherCmoDsn = textField_Dsn.getText().toUpperCase().trim();
-				Collection.otherCmoComm = textField_Comm.getText().toUpperCase().trim();
+				Collection.cmoDsn = textField_Dsn.getText().toUpperCase().trim();
+				Collection.cmoComm = textField_Comm.getText().toUpperCase().trim();
 			}else if(getRadioButton_Andrews().isSelected()){
 				Collection.cmo = Strings.ANDREWS_CMO;
 			}
 			
-			Collection.ancs = getCheckBox_Ancs().isSelected();
-			Collection.logical = getCheckBox_Logical().isSelected();
-			Collection.comReportRequired = getCheckBox_Crr().isSelected();
+			Collection.isAncs = getCheckBox_Ancs().isSelected();
+			Collection.isLogical = getCheckBox_Logical().isSelected();
+			Collection.crr = getCheckBox_Crr().isSelected();
 			
-			Collection.extraComments = getTextArea_Comments().getText().toUpperCase().trim();
+//			Collection.extraComments = getTextArea_Comments().getText().toUpperCase().trim();
 		}
 
 		public static void getAction(){
@@ -136,27 +136,27 @@ public class WindowCore extends Window{
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Start");
 					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Start"), true);
 					cardSwap("panel_Start");
-					Collection.start = true;
+//					Collection.start = true;
 				}else if(str2.length() < 3 && str2.equals("99")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Disco");
 					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Disco"), true);
 					cardSwap("panel_Disco");
-					Collection.disco = true;
+//					Collection.disco = true;
 				}else if(str2.length() < 3 && str2.length() > 1){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Change");
 					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Change"), true);
 					cardSwap("panel_Change");
-					Collection.change = true;
+//					Collection.change = true;
 				}else if(str2.length() == 3 && str2.matches(".*[a-yA-Y].*")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Amend");
 					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Amend"), true);
 					cardSwap("panel_Amend");
-					Collection.amend = true;
+//					Collection.amend = true;
 				}else if(str2.length() == 3 && str2.matches(".*[zZ].*")){
 					getTabbedPane().setTitleAt(getTabbedPane().indexOfTab("Action"), "Cancel");
 					getTabbedPane().setEnabledAt(getTabbedPane().indexOfTab("Cancel"), true);
 					cardSwap("panel_Cancel");
-					Collection.cancel = true;
+//					Collection.cancel = true;
 				}
 					getTabbedPane().validate();
 			}else{

@@ -2,10 +2,9 @@ package taytom258.window;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,19 +32,19 @@ import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
+import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
-import taytom258.show.ShowAccessTracker;
-import taytom258.show.ShowCHF;
-import taytom258.show.ShowFacit;
+import taytom258.show.tso.ShowCHF;
+import taytom258.show.tso.ShowDatabase;
+import taytom258.show.tso.ShowFacit;
 import taytom258.tso.TSOAmend;
 import taytom258.tso.TSOCancel;
 import taytom258.tso.TSOChange;
 import taytom258.tso.TSODisco;
+import taytom258.tso.TSOParser;
 import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 //TODO Fix all tooltips (?)
 
@@ -68,13 +67,6 @@ public class Window {
 	private static JTextArea textArea_Comments;
 	private static JTabbedPane tabbedPane;
 	private static JPanel panel_Action;
-	private static JTextField textField_TrackerFullCcsd;
-	private static JTextField textField_TrackerChfLink;
-	private static JTextField textField_TrackerCmo;
-	private static JTextField textField_TrackerCmoDsn;
-	private static JTextField textField_TrackerCmoComm;
-	private static JTextField textField_TrackerAction;
-	private static JTextField textField_TrackerSvcDate;
 	private static JTextField textField_ChfTsoName;
 	private static JTextField textField_ChfChfLink;
 	private static JTextField textField_FacitCcsd;
@@ -89,7 +81,6 @@ public class Window {
 	private static JTextField textField_FacitSvcDate;
 	private static JTextField textField_FacitTsoSubject;
 	private static JTextField textField_FacitReportDate;
-	private static JTextPane textPane_TrackerComment;
 	private static JRadioButton rdbtn_ChfRoot;
 	private static JTextPane textPane_ChfCurrent;
 	private static JTextPane textPane_ChfCreating;
@@ -97,7 +88,27 @@ public class Window {
 	private static JCheckBox chckbx_FacitCrr;
 	private static JRadioButton rdbtn_ChfRootCreated;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private static JPanel panel_Chf;
+	private static JPanel panel_TSO_Chf;
+	private static JTextField textField_DB_Ci_FullCcsd;
+	private static JTextField textField_DB_Cir_trunkId;
+	private static JTextField textField_DB_Cir_fullTsp;
+	private static JTextField textField_DB_Cir_tsp;
+	private static JTextField textField_DB_Cir_to;
+	private static JTextField textField_DB_Cir_from;
+	private static JTextField textField_DB_Cir_reqDepartment;
+	private static JTextField textField_DB_Cir_type;
+	private static JTextField textField_DB_Cir_use;
+	private static JTextField textField_DB_Cir_security;
+	private static JTextField textField_DB_Cir_rate;
+	private static JTextField textField_DB_Cir_flow;
+	private static JTextField textField_DB_Cir_avail;
+	private static JTextField textField_DB_Cir_cmo;
+	private static JTextField textField_DB_Cir_cmoDsn;
+	private static JTextField textField_DB_Cir_cmoComm;
+	private static JTextField textField_DB_Cir_signal;
+	private static JTextField textField_DB_Cir_qcc;
+	private static JCheckBox chckbxAndrewsCmo;
+	private static JCheckBox chckbxAndrewsEndpoint;
 	
 	/**
 	 * Launch the application.
@@ -144,8 +155,20 @@ public class Window {
 		frmTsoHelper.getContentPane().add(button_Settings);
 		
 		JButton button_Run = new JButton("Run");
+		button_Run.setToolTipText("Run Program");
 		button_Run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				if(Collection.tsoText.equals("")){
+					LogHelper.severe(Strings.FOUND_NOTHING);
+				}else{
+					TSOParser.parseTSO(Collection.tsoText);
+					ShowCHF.show();
+					ShowFacit.show();
+					ShowDatabase.show();
+				}
+				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				
 //				if(textField_TsoSubject.getText().equals("") ||
 //						textField_FullCcsd.getText().equals("") ||
@@ -163,7 +186,7 @@ public class Window {
 				
 			}
 		});
-		button_Run.setBounds(273, 435, 91, 60);
+		button_Run.setBounds(180, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Run);
 		
 		JButton button_Exit = new JButton("Exit");
@@ -179,7 +202,6 @@ public class Window {
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 641, 423);
 		frmTsoHelper.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 //		panel.add(tabbedPane);
@@ -406,72 +428,64 @@ public class Window {
 		TSODisco.buildPanel();
 		TSOAmend.buildPanel();
 		TSOCancel.buildPanel();
-		
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton button_EnterTso = new JButton("Enter TSO");
-		panel_2.add(button_EnterTso);
-		button_EnterTso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Text.appear();
-			}
-		});
+		panel.setLayout(null);
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.setBounds(115, 0, 526, 423);
 		panel.add(tabbedPane_1);
 		
-		panel_Chf = new JPanel();
-		panel_Chf.setLayout(null);
-		panel_Chf.setBackground(Color.WHITE);
-		tabbedPane_1.addTab("CHF", null, panel_Chf, null);
-		tabbedPane_1.setEnabledAt(0, true);
+		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.addTab("TSO", null, tabbedPane_2, null);
+		
+		panel_TSO_Chf = new JPanel();
+		tabbedPane_2.addTab("CHF", null, panel_TSO_Chf, "Circuit history folder stats");
+		panel_TSO_Chf.setLayout(null);
+		panel_TSO_Chf.setBackground(Color.WHITE);
 		
 		JLabel label_ChfTsoName = new JLabel("TSO Name");
 		label_ChfTsoName.setBounds(12, 12, 60, 16);
-		panel_Chf.add(label_ChfTsoName);
+		panel_TSO_Chf.add(label_ChfTsoName);
 		
 		JLabel lblChfRoot = new JLabel("CHF Root");
 		lblChfRoot.setBounds(12, 40, 51, 16);
-		panel_Chf.add(lblChfRoot);
+		panel_TSO_Chf.add(lblChfRoot);
 		
 		textField_ChfTsoName = new JTextField();
 		textField_ChfTsoName.setBackground(Color.WHITE);
 		textField_ChfTsoName.setEditable(false);
-		textField_ChfTsoName.setBounds(102, 12, 201, 20);
-		panel_Chf.add(textField_ChfTsoName);
+		textField_ChfTsoName.setBounds(102, 12, 407, 20);
+		panel_TSO_Chf.add(textField_ChfTsoName);
 		textField_ChfTsoName.setColumns(10);
 		
 		textField_ChfChfLink = new JTextField();
 		textField_ChfChfLink.setBackground(Color.WHITE);
 		textField_ChfChfLink.setEditable(false);
-		textField_ChfChfLink.setBounds(102, 40, 201, 20);
-		panel_Chf.add(textField_ChfChfLink);
+		textField_ChfChfLink.setBounds(102, 40, 407, 20);
+		panel_TSO_Chf.add(textField_ChfChfLink);
 		textField_ChfChfLink.setColumns(10);
 		
 		JPanel panel_ChfCreating = new JPanel();
 		panel_ChfCreating.setBackground(Color.WHITE);
 		panel_ChfCreating.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Created", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panel_ChfCreating.setBounds(175, 164, 133, 224);
-		panel_Chf.add(panel_ChfCreating);
+		panel_ChfCreating.setBounds(376, 164, 133, 191);
+		panel_TSO_Chf.add(panel_ChfCreating);
 		panel_ChfCreating.setLayout(null);
 		
 		textPane_ChfCreating = new JTextPane();
 		textPane_ChfCreating.setEditable(false);
-		textPane_ChfCreating.setBounds(12, 22, 109, 190);
+		textPane_ChfCreating.setBounds(12, 22, 109, 157);
 		panel_ChfCreating.add(textPane_ChfCreating);
 		
 		JPanel panel_ChfCurrent = new JPanel();
 		panel_ChfCurrent.setBackground(Color.WHITE);
 		panel_ChfCurrent.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Current", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_ChfCurrent.setBounds(7, 164, 133, 224);
-		panel_Chf.add(panel_ChfCurrent);
+		panel_ChfCurrent.setBounds(7, 164, 133, 191);
+		panel_TSO_Chf.add(panel_ChfCurrent);
 		panel_ChfCurrent.setLayout(null);
 		
 		textPane_ChfCurrent = new JTextPane();
 		textPane_ChfCurrent.setEditable(false);
-		textPane_ChfCurrent.setBounds(12, 22, 109, 190);
+		textPane_ChfCurrent.setBounds(12, 22, 109, 157);
 		panel_ChfCurrent.add(textPane_ChfCurrent);
 		
 		rdbtn_ChfRoot = new JRadioButton("Root Exists");
@@ -480,281 +494,428 @@ public class Window {
 		rdbtn_ChfRoot.setBackground(Color.WHITE);
 		rdbtn_ChfRoot.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtn_ChfRoot.setBounds(27, 132, 89, 24);
-		panel_Chf.add(rdbtn_ChfRoot);
+		panel_TSO_Chf.add(rdbtn_ChfRoot);
 		
 		rdbtn_ChfRootCreated = new JRadioButton("Root Created");
 		buttonGroup_1.add(rdbtn_ChfRootCreated);
 		rdbtn_ChfRootCreated.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtn_ChfRootCreated.setEnabled(false);
 		rdbtn_ChfRootCreated.setBackground(Color.WHITE);
-		rdbtn_ChfRootCreated.setBounds(192, 132, 99, 24);
-		panel_Chf.add(rdbtn_ChfRootCreated);
+		rdbtn_ChfRootCreated.setBounds(394, 132, 99, 24);
+		panel_TSO_Chf.add(rdbtn_ChfRootCreated);
 		
-		JScrollPane scrollPane_Facit = new JScrollPane();
-		scrollPane_Facit.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		tabbedPane_1.addTab("Facit", null, scrollPane_Facit, null);
-		scrollPane_Facit.getVerticalScrollBar().setUnitIncrement(20);
+		JScrollPane scrollPane_TSO_Facit = new JScrollPane();
+		tabbedPane_2.addTab("FACIT", null, scrollPane_TSO_Facit, "Info to transpose to FACIT");
+		scrollPane_TSO_Facit.getVerticalScrollBar().setUnitIncrement(20);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		scrollPane_Facit.setViewportView(panel_1);
+		scrollPane_TSO_Facit.setViewportView(panel_1);
 		panel_1.setLayout(null);
-		panel_1.setPreferredSize(new Dimension(0, 510));
+		//		panel_1.setPreferredSize(new Dimension(0, 350));
+				
+				JLabel label_FacitCcsd = new JLabel("CCSD");
+				label_FacitCcsd.setBounds(12, 12, 32, 16);
+				panel_1.add(label_FacitCcsd);
+				
+				JLabel label_FacitTsp = new JLabel("TSP");
+				label_FacitTsp.setBounds(12, 40, 23, 16);
+				panel_1.add(label_FacitTsp);
+				
+				JLabel label_FacitPurpose = new JLabel("Purpose");
+				label_FacitPurpose.setBounds(12, 68, 48, 16);
+				panel_1.add(label_FacitPurpose);
+				
+				JLabel label_FacitRate = new JLabel("Rate");
+				label_FacitRate.setBounds(12, 96, 26, 16);
+				panel_1.add(label_FacitRate);
+				
+				JLabel label_FacitSvcAvail = new JLabel("Service Availability");
+				label_FacitSvcAvail.setBounds(12, 124, 106, 16);
+				panel_1.add(label_FacitSvcAvail);
+				
+				JLabel label_FacitFullCcsd = new JLabel("Full CCSD");
+				label_FacitFullCcsd.setBounds(261, 14, 54, 16);
+				panel_1.add(label_FacitFullCcsd);
+				
+				JLabel label_FacitAction = new JLabel("Action");
+				label_FacitAction.setBounds(261, 42, 36, 16);
+				panel_1.add(label_FacitAction);
+				
+				JLabel label_FacitTsoNum = new JLabel("TSO Number");
+				label_FacitTsoNum.setBounds(12, 154, 72, 16);
+				panel_1.add(label_FacitTsoNum);
+				
+				JLabel label_FacitTsrNum = new JLabel("TSR Number");
+				label_FacitTsrNum.setBounds(261, 70, 71, 16);
+				panel_1.add(label_FacitTsrNum);
+				
+				JLabel label_FacitServiceDate = new JLabel("Service Date");
+				label_FacitServiceDate.setBounds(261, 98, 72, 16);
+				panel_1.add(label_FacitServiceDate);
+				
+				JLabel label_FacitTsoSubject = new JLabel("TSO Subject");
+				label_FacitTsoSubject.setBounds(12, 184, 70, 16);
+				panel_1.add(label_FacitTsoSubject);
+				
+				JLabel label_FacitReportDate = new JLabel("Report Date");
+				label_FacitReportDate.setBounds(261, 126, 67, 16);
+				panel_1.add(label_FacitReportDate);
+				
+				JPanel panel_FacitTsoState = new JPanel();
+				panel_FacitTsoState.setBackground(Color.WHITE);
+				panel_FacitTsoState.setBorder(new TitledBorder(null, "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+				panel_FacitTsoState.setBounds(12, 238, 489, 126);
+				panel_1.add(panel_FacitTsoState);
+				panel_FacitTsoState.setLayout(null);
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setViewportBorder(null);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollPane.setBounds(12, 21, 465, 93);
+				panel_FacitTsoState.add(scrollPane);
+				
+				textArea_FacitTsoState = new JTextArea();
+				scrollPane.setViewportView(textArea_FacitTsoState);
+				textArea_FacitTsoState.setWrapStyleWord(true);
+				textArea_FacitTsoState.setLineWrap(true);
+				textArea_FacitTsoState.setEditable(false);
+				
+				textField_FacitCcsd = new JTextField();
+				textField_FacitCcsd.setBackground(Color.WHITE);
+				textField_FacitCcsd.setEditable(false);
+				textField_FacitCcsd.setBounds(136, 10, 106, 20);
+				panel_1.add(textField_FacitCcsd);
+				textField_FacitCcsd.setColumns(10);
+				
+				textField_FacitTsp = new JTextField();
+				textField_FacitTsp.setBackground(Color.WHITE);
+				textField_FacitTsp.setEditable(false);
+				textField_FacitTsp.setBounds(136, 38, 106, 20);
+				panel_1.add(textField_FacitTsp);
+				textField_FacitTsp.setColumns(10);
+				
+				textField_FacitPurpose = new JTextField();
+				textField_FacitPurpose.setBackground(Color.WHITE);
+				textField_FacitPurpose.setEditable(false);
+				textField_FacitPurpose.setBounds(136, 66, 106, 20);
+				panel_1.add(textField_FacitPurpose);
+				textField_FacitPurpose.setColumns(10);
+				
+				textField_FacitRate = new JTextField();
+				textField_FacitRate.setBackground(Color.WHITE);
+				textField_FacitRate.setEditable(false);
+				textField_FacitRate.setBounds(136, 94, 106, 20);
+				panel_1.add(textField_FacitRate);
+				textField_FacitRate.setColumns(10);
+				
+				textField_FacitSvcAvailable = new JTextField();
+				textField_FacitSvcAvailable.setBackground(Color.WHITE);
+				textField_FacitSvcAvailable.setEditable(false);
+				textField_FacitSvcAvailable.setBounds(136, 122, 106, 20);
+				panel_1.add(textField_FacitSvcAvailable);
+				textField_FacitSvcAvailable.setColumns(10);
+				
+				textField_FacitFullCcsd = new JTextField();
+				textField_FacitFullCcsd.setBackground(Color.WHITE);
+				textField_FacitFullCcsd.setEditable(false);
+				textField_FacitFullCcsd.setBounds(385, 12, 106, 20);
+				panel_1.add(textField_FacitFullCcsd);
+				textField_FacitFullCcsd.setColumns(10);
+				
+				textField_FacitAction = new JTextField();
+				textField_FacitAction.setBackground(Color.WHITE);
+				textField_FacitAction.setEditable(false);
+				textField_FacitAction.setBounds(385, 40, 106, 20);
+				panel_1.add(textField_FacitAction);
+				textField_FacitAction.setColumns(10);
+				
+				textField_FacitTsoNum = new JTextField();
+				textField_FacitTsoNum.setBackground(Color.WHITE);
+				textField_FacitTsoNum.setEditable(false);
+				textField_FacitTsoNum.setBounds(136, 152, 355, 20);
+				panel_1.add(textField_FacitTsoNum);
+				textField_FacitTsoNum.setColumns(10);
+				
+				textField_FacitTsrNum = new JTextField();
+				textField_FacitTsrNum.setBackground(Color.WHITE);
+				textField_FacitTsrNum.setEditable(false);
+				textField_FacitTsrNum.setBounds(385, 68, 106, 20);
+				panel_1.add(textField_FacitTsrNum);
+				textField_FacitTsrNum.setColumns(10);
+				
+				textField_FacitSvcDate = new JTextField();
+				textField_FacitSvcDate.setBackground(Color.WHITE);
+				textField_FacitSvcDate.setEditable(false);
+				textField_FacitSvcDate.setBounds(385, 96, 106, 20);
+				panel_1.add(textField_FacitSvcDate);
+				textField_FacitSvcDate.setColumns(10);
+				
+				textField_FacitTsoSubject = new JTextField();
+				textField_FacitTsoSubject.setBackground(Color.WHITE);
+				textField_FacitTsoSubject.setEditable(false);
+				textField_FacitTsoSubject.setBounds(136, 182, 355, 20);
+				panel_1.add(textField_FacitTsoSubject);
+				textField_FacitTsoSubject.setColumns(10);
+				
+				textField_FacitReportDate = new JTextField();
+				textField_FacitReportDate.setBackground(Color.WHITE);
+				textField_FacitReportDate.setEditable(false);
+				textField_FacitReportDate.setBounds(385, 124, 106, 20);
+				panel_1.add(textField_FacitReportDate);
+				textField_FacitReportDate.setColumns(10);
+				
+				chckbx_FacitCrr = new JCheckBox("Completion Report Required");
+				chckbx_FacitCrr.setEnabled(false);
+				chckbx_FacitCrr.setBackground(Color.WHITE);
+				chckbx_FacitCrr.setBounds(159, 206, 184, 24);
+				panel_1.add(chckbx_FacitCrr);
 		
-		JLabel label_FacitCcsd = new JLabel("CCSD");
-		label_FacitCcsd.setBounds(12, 12, 32, 16);
-		panel_1.add(label_FacitCcsd);
+		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_2.addTab("DB", null, tabbedPane_TSO_DB, "Database Preview");
 		
-		JLabel label_FacitTsp = new JLabel("TSP");
-		label_FacitTsp.setBounds(12, 40, 23, 16);
-		panel_1.add(label_FacitTsp);
+		JPanel panel_Circuit = new JPanel();
+		panel_Circuit.setBackground(Color.WHITE);
+		tabbedPane_TSO_DB.addTab("Circuit", null, panel_Circuit, null);
+		panel_Circuit.setLayout(null);
 		
-		JLabel label_FacitPurpose = new JLabel("Purpose");
-		label_FacitPurpose.setBounds(12, 68, 48, 16);
-		panel_1.add(label_FacitPurpose);
+		JLabel lblFullCcsd = new JLabel("Full CCSD");
+		lblFullCcsd.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFullCcsd.setBounds(12, 12, 55, 16);
+		panel_Circuit.add(lblFullCcsd);
 		
-		JLabel label_FacitRate = new JLabel("Rate");
-		label_FacitRate.setBounds(12, 96, 26, 16);
-		panel_1.add(label_FacitRate);
+		textField_DB_Ci_FullCcsd = new JTextField();
+		textField_DB_Ci_FullCcsd.setBackground(Color.WHITE);
+		textField_DB_Ci_FullCcsd.setEditable(false);
+		textField_DB_Ci_FullCcsd.setBounds(85, 10, 114, 20);
+		panel_Circuit.add(textField_DB_Ci_FullCcsd);
+		textField_DB_Ci_FullCcsd.setColumns(10);
 		
-		JLabel label_FacitSvcAvail = new JLabel("Service Availability");
-		label_FacitSvcAvail.setBounds(12, 124, 106, 16);
-		panel_1.add(label_FacitSvcAvail);
+		JLabel lblTrunkId = new JLabel("Trunk ID");
+		lblTrunkId.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTrunkId.setBounds(12, 40, 55, 16);
+		panel_Circuit.add(lblTrunkId);
 		
-		JLabel label_FacitFullCcsd = new JLabel("Full CCSD");
-		label_FacitFullCcsd.setBounds(12, 152, 54, 16);
-		panel_1.add(label_FacitFullCcsd);
+		textField_DB_Cir_trunkId = new JTextField();
+		textField_DB_Cir_trunkId.setEditable(false);
+		textField_DB_Cir_trunkId.setBackground(Color.WHITE);
+		textField_DB_Cir_trunkId.setBounds(85, 38, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_trunkId);
+		textField_DB_Cir_trunkId.setColumns(10);
 		
-		JLabel label_FacitAction = new JLabel("Action");
-		label_FacitAction.setBounds(12, 180, 36, 16);
-		panel_1.add(label_FacitAction);
+		JLabel lblFullTsp = new JLabel("Full TSP");
+		lblFullTsp.setBounds(12, 68, 55, 16);
+		panel_Circuit.add(lblFullTsp);
 		
-		JLabel label_FacitTsoNum = new JLabel("TSO Number");
-		label_FacitTsoNum.setBounds(12, 208, 72, 16);
-		panel_1.add(label_FacitTsoNum);
+		textField_DB_Cir_fullTsp = new JTextField();
+		textField_DB_Cir_fullTsp.setEditable(false);
+		textField_DB_Cir_fullTsp.setBackground(Color.WHITE);
+		textField_DB_Cir_fullTsp.setBounds(85, 66, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_fullTsp);
+		textField_DB_Cir_fullTsp.setColumns(10);
 		
-		JLabel label_FacitTsrNum = new JLabel("TSR Number");
-		label_FacitTsrNum.setBounds(12, 236, 71, 16);
-		panel_1.add(label_FacitTsrNum);
+		JLabel lblTsp = new JLabel("TSP");
+		lblTsp.setBounds(12, 96, 55, 16);
+		panel_Circuit.add(lblTsp);
 		
-		JLabel label_FacitServiceDate = new JLabel("Service Date");
-		label_FacitServiceDate.setBounds(12, 264, 72, 16);
-		panel_1.add(label_FacitServiceDate);
+		textField_DB_Cir_tsp = new JTextField();
+		textField_DB_Cir_tsp.setEditable(false);
+		textField_DB_Cir_tsp.setBackground(Color.WHITE);
+		textField_DB_Cir_tsp.setBounds(85, 94, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_tsp);
+		textField_DB_Cir_tsp.setColumns(10);
 		
-		JLabel label_FacitTsoSubject = new JLabel("TSO Subject");
-		label_FacitTsoSubject.setBounds(12, 292, 70, 16);
-		panel_1.add(label_FacitTsoSubject);
+		JLabel lblToLocation = new JLabel("To");
+		lblToLocation.setBounds(217, 12, 66, 16);
+		panel_Circuit.add(lblToLocation);
 		
-		JLabel label_FacitReportDate = new JLabel("Report Date");
-		label_FacitReportDate.setBounds(12, 320, 67, 16);
-		panel_1.add(label_FacitReportDate);
+		textField_DB_Cir_to = new JTextField();
+		textField_DB_Cir_to.setEditable(false);
+		textField_DB_Cir_to.setBackground(Color.WHITE);
+		textField_DB_Cir_to.setBounds(301, 10, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_to);
+		textField_DB_Cir_to.setColumns(10);
 		
-		JPanel panel_FacitTsoState = new JPanel();
-		panel_FacitTsoState.setBackground(Color.WHITE);
-		panel_FacitTsoState.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panel_FacitTsoState.setBounds(5, 376, 283, 126);
-		panel_1.add(panel_FacitTsoState);
-		panel_FacitTsoState.setLayout(null);
+		JLabel lblFromLocation = new JLabel("From");
+		lblFromLocation.setBounds(217, 40, 81, 16);
+		panel_Circuit.add(lblFromLocation);
 		
-		textArea_FacitTsoState = new JTextArea();
-		textArea_FacitTsoState.setWrapStyleWord(true);
-		textArea_FacitTsoState.setLineWrap(true);
-		textArea_FacitTsoState.setEditable(false);
-		textArea_FacitTsoState.setBounds(5, 21, 273, 100);
-		panel_FacitTsoState.add(textArea_FacitTsoState);
+		textField_DB_Cir_from = new JTextField();
+		textField_DB_Cir_from.setEditable(false);
+		textField_DB_Cir_from.setBackground(Color.WHITE);
+		textField_DB_Cir_from.setBounds(301, 38, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_from);
+		textField_DB_Cir_from.setColumns(10);
 		
-		textField_FacitCcsd = new JTextField();
-		textField_FacitCcsd.setBackground(Color.WHITE);
-		textField_FacitCcsd.setEditable(false);
-		textField_FacitCcsd.setBounds(136, 10, 152, 20);
-		panel_1.add(textField_FacitCcsd);
-		textField_FacitCcsd.setColumns(10);
+		JLabel lblDepartment = new JLabel("Department");
+		lblDepartment.setToolTipText("Requesting Department");
+		lblDepartment.setBounds(12, 294, 67, 16);
+		panel_Circuit.add(lblDepartment);
 		
-		textField_FacitTsp = new JTextField();
-		textField_FacitTsp.setBackground(Color.WHITE);
-		textField_FacitTsp.setEditable(false);
-		textField_FacitTsp.setBounds(136, 38, 152, 20);
-		panel_1.add(textField_FacitTsp);
-		textField_FacitTsp.setColumns(10);
+		textField_DB_Cir_reqDepartment = new JTextField();
+		textField_DB_Cir_reqDepartment.setEditable(false);
+		textField_DB_Cir_reqDepartment.setBackground(Color.WHITE);
+		textField_DB_Cir_reqDepartment.setBounds(96, 292, 403, 20);
+		panel_Circuit.add(textField_DB_Cir_reqDepartment);
+		textField_DB_Cir_reqDepartment.setColumns(10);
 		
-		textField_FacitPurpose = new JTextField();
-		textField_FacitPurpose.setBackground(Color.WHITE);
-		textField_FacitPurpose.setEditable(false);
-		textField_FacitPurpose.setBounds(136, 66, 152, 20);
-		panel_1.add(textField_FacitPurpose);
-		textField_FacitPurpose.setColumns(10);
+		JLabel lblType = new JLabel("Type");
+		lblType.setToolTipText("Type of Service");
+		lblType.setBounds(217, 70, 55, 16);
+		panel_Circuit.add(lblType);
 		
-		textField_FacitRate = new JTextField();
-		textField_FacitRate.setBackground(Color.WHITE);
-		textField_FacitRate.setEditable(false);
-		textField_FacitRate.setBounds(136, 94, 152, 20);
-		panel_1.add(textField_FacitRate);
-		textField_FacitRate.setColumns(10);
+		textField_DB_Cir_type = new JTextField();
+		textField_DB_Cir_type.setEditable(false);
+		textField_DB_Cir_type.setBackground(Color.WHITE);
+		textField_DB_Cir_type.setBounds(301, 68, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_type);
+		textField_DB_Cir_type.setColumns(10);
 		
-		textField_FacitSvcAvailable = new JTextField();
-		textField_FacitSvcAvailable.setBackground(Color.WHITE);
-		textField_FacitSvcAvailable.setEditable(false);
-		textField_FacitSvcAvailable.setBounds(136, 122, 152, 20);
-		panel_1.add(textField_FacitSvcAvailable);
-		textField_FacitSvcAvailable.setColumns(10);
+		JLabel lblUse = new JLabel("Use");
+		lblUse.setToolTipText("Circuit Use");
+		lblUse.setBounds(217, 98, 55, 16);
+		panel_Circuit.add(lblUse);
 		
-		textField_FacitFullCcsd = new JTextField();
-		textField_FacitFullCcsd.setBackground(Color.WHITE);
-		textField_FacitFullCcsd.setEditable(false);
-		textField_FacitFullCcsd.setBounds(136, 150, 152, 20);
-		panel_1.add(textField_FacitFullCcsd);
-		textField_FacitFullCcsd.setColumns(10);
+		textField_DB_Cir_use = new JTextField();
+		textField_DB_Cir_use.setEditable(false);
+		textField_DB_Cir_use.setBackground(Color.WHITE);
+		textField_DB_Cir_use.setBounds(301, 96, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_use);
+		textField_DB_Cir_use.setColumns(10);
 		
-		textField_FacitAction = new JTextField();
-		textField_FacitAction.setBackground(Color.WHITE);
-		textField_FacitAction.setEditable(false);
-		textField_FacitAction.setBounds(136, 178, 152, 20);
-		panel_1.add(textField_FacitAction);
-		textField_FacitAction.setColumns(10);
+		JLabel lblSecurity = new JLabel("Security");
+		lblSecurity.setBounds(12, 124, 55, 16);
+		panel_Circuit.add(lblSecurity);
 		
-		textField_FacitTsoNum = new JTextField();
-		textField_FacitTsoNum.setBackground(Color.WHITE);
-		textField_FacitTsoNum.setEditable(false);
-		textField_FacitTsoNum.setBounds(136, 206, 152, 20);
-		panel_1.add(textField_FacitTsoNum);
-		textField_FacitTsoNum.setColumns(10);
+		textField_DB_Cir_security = new JTextField();
+		textField_DB_Cir_security.setEditable(false);
+		textField_DB_Cir_security.setBackground(Color.WHITE);
+		textField_DB_Cir_security.setBounds(85, 122, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_security);
+		textField_DB_Cir_security.setColumns(10);
 		
-		textField_FacitTsrNum = new JTextField();
-		textField_FacitTsrNum.setBackground(Color.WHITE);
-		textField_FacitTsrNum.setEditable(false);
-		textField_FacitTsrNum.setBounds(136, 234, 152, 20);
-		panel_1.add(textField_FacitTsrNum);
-		textField_FacitTsrNum.setColumns(10);
+		JLabel lblDataRate = new JLabel("Data Rate");
+		lblDataRate.setBounds(12, 152, 55, 16);
+		panel_Circuit.add(lblDataRate);
 		
-		textField_FacitSvcDate = new JTextField();
-		textField_FacitSvcDate.setBackground(Color.WHITE);
-		textField_FacitSvcDate.setEditable(false);
-		textField_FacitSvcDate.setBounds(136, 262, 152, 20);
-		panel_1.add(textField_FacitSvcDate);
-		textField_FacitSvcDate.setColumns(10);
+		textField_DB_Cir_rate = new JTextField();
+		textField_DB_Cir_rate.setEditable(false);
+		textField_DB_Cir_rate.setBackground(Color.WHITE);
+		textField_DB_Cir_rate.setBounds(85, 150, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_rate);
+		textField_DB_Cir_rate.setColumns(10);
 		
-		textField_FacitTsoSubject = new JTextField();
-		textField_FacitTsoSubject.setBackground(Color.WHITE);
-		textField_FacitTsoSubject.setEditable(false);
-		textField_FacitTsoSubject.setBounds(136, 290, 152, 20);
-		panel_1.add(textField_FacitTsoSubject);
-		textField_FacitTsoSubject.setColumns(10);
+		JLabel lblFlow = new JLabel("Flow");
+		lblFlow.setToolTipText("Traffic Flow");
+		lblFlow.setBounds(12, 180, 55, 16);
+		panel_Circuit.add(lblFlow);
 		
-		textField_FacitReportDate = new JTextField();
-		textField_FacitReportDate.setBackground(Color.WHITE);
-		textField_FacitReportDate.setEditable(false);
-		textField_FacitReportDate.setBounds(136, 318, 152, 20);
-		panel_1.add(textField_FacitReportDate);
-		textField_FacitReportDate.setColumns(10);
+		textField_DB_Cir_flow = new JTextField();
+		textField_DB_Cir_flow.setEditable(false);
+		textField_DB_Cir_flow.setEnabled(true);
+		textField_DB_Cir_flow.setBackground(Color.WHITE);
+		textField_DB_Cir_flow.setText("");
+		textField_DB_Cir_flow.setBounds(85, 178, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_flow);
+		textField_DB_Cir_flow.setColumns(10);
 		
-		chckbx_FacitCrr = new JCheckBox("Completion Report Required");
-		chckbx_FacitCrr.setEnabled(false);
-		chckbx_FacitCrr.setBackground(Color.WHITE);
-		chckbx_FacitCrr.setBounds(58, 349, 184, 24);
-		panel_1.add(chckbx_FacitCrr);
+		JLabel lblAvailable = new JLabel("Available");
+		lblAvailable.setToolTipText("Service Avaliability");
+		lblAvailable.setBounds(12, 208, 55, 16);
+		panel_Circuit.add(lblAvailable);
 		
-		JPanel panel_Tracker = new JPanel();
-		panel_Tracker.setBackground(Color.WHITE);
-		tabbedPane_1.addTab("Access Tracker", null, panel_Tracker, null);
-		tabbedPane_1.setEnabledAt(2, true);
-		panel_Tracker.setLayout(null);
+		textField_DB_Cir_avail = new JTextField();
+		textField_DB_Cir_avail.setEditable(false);
+		textField_DB_Cir_avail.setBackground(Color.WHITE);
+		textField_DB_Cir_avail.setBounds(85, 206, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_avail);
+		textField_DB_Cir_avail.setColumns(10);
 		
-		JLabel label_TrackerFullCcsd = new JLabel("Full CCSD");
-		label_TrackerFullCcsd.setBounds(17, 46, 55, 16);
-		panel_Tracker.add(label_TrackerFullCcsd);
+		JLabel lblCmo = new JLabel("CMO");
+		lblCmo.setToolTipText("CMO/CCO");
+		lblCmo.setBounds(217, 126, 55, 16);
+		panel_Circuit.add(lblCmo);
 		
-		JLabel label_TrackerChfLink = new JLabel("CHF Link");
-		label_TrackerChfLink.setBounds(17, 78, 55, 16);
-		panel_Tracker.add(label_TrackerChfLink);
+		textField_DB_Cir_cmo = new JTextField();
+		textField_DB_Cir_cmo.setEditable(false);
+		textField_DB_Cir_cmo.setBackground(Color.WHITE);
+		textField_DB_Cir_cmo.setBounds(301, 124, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_cmo);
+		textField_DB_Cir_cmo.setColumns(10);
 		
-		JLabel label_2 = new JLabel("CMO");
-		label_2.setBounds(17, 108, 27, 16);
-		panel_Tracker.add(label_2);
+		JLabel lblCmoDsn = new JLabel("CMO DSN");
+		lblCmoDsn.setBounds(217, 154, 55, 16);
+		panel_Circuit.add(lblCmoDsn);
 		
-		textField_TrackerFullCcsd = new JTextField();
-		textField_TrackerFullCcsd.setForeground(Color.BLACK);
-		textField_TrackerFullCcsd.setEditable(false);
-		textField_TrackerFullCcsd.setColumns(10);
-		textField_TrackerFullCcsd.setBackground(Color.WHITE);
-		textField_TrackerFullCcsd.setBounds(178, 44, 114, 20);
-		panel_Tracker.add(textField_TrackerFullCcsd);
+		textField_DB_Cir_cmoDsn = new JTextField();
+		textField_DB_Cir_cmoDsn.setEditable(false);
+		textField_DB_Cir_cmoDsn.setBackground(Color.WHITE);
+		textField_DB_Cir_cmoDsn.setBounds(301, 152, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_cmoDsn);
+		textField_DB_Cir_cmoDsn.setColumns(10);
 		
-		textField_TrackerChfLink = new JTextField();
-		textField_TrackerChfLink.setForeground(Color.BLACK);
-		textField_TrackerChfLink.setEditable(false);
-		textField_TrackerChfLink.setColumns(10);
-		textField_TrackerChfLink.setBackground(Color.WHITE);
-		textField_TrackerChfLink.setBounds(178, 76, 114, 20);
-		panel_Tracker.add(textField_TrackerChfLink);
+		JLabel lblCmoComm = new JLabel("CMO Comm");
+		lblCmoComm.setBounds(217, 182, 67, 16);
+		panel_Circuit.add(lblCmoComm);
 		
-		textField_TrackerCmo = new JTextField();
-		textField_TrackerCmo.setForeground(Color.BLACK);
-		textField_TrackerCmo.setEditable(false);
-		textField_TrackerCmo.setColumns(10);
-		textField_TrackerCmo.setBackground(Color.WHITE);
-		textField_TrackerCmo.setBounds(178, 106, 114, 20);
-		panel_Tracker.add(textField_TrackerCmo);
+		textField_DB_Cir_cmoComm = new JTextField();
+		textField_DB_Cir_cmoComm.setEditable(false);
+		textField_DB_Cir_cmoComm.setBackground(Color.WHITE);
+		textField_DB_Cir_cmoComm.setBounds(301, 180, 203, 20);
+		panel_Circuit.add(textField_DB_Cir_cmoComm);
+		textField_DB_Cir_cmoComm.setColumns(10);
 		
-		JLabel label_TrackerCmoDsn = new JLabel("CMO DSN");
-		label_TrackerCmoDsn.setBounds(17, 140, 55, 16);
-		panel_Tracker.add(label_TrackerCmoDsn);
+		JLabel lblSignaling = new JLabel("Signaling");
+		lblSignaling.setBounds(12, 236, 55, 16);
+		panel_Circuit.add(lblSignaling);
 		
-		JLabel label_TrackerCmoComm = new JLabel("CMO Comm");
-		label_TrackerCmoComm.setBounds(17, 172, 67, 16);
-		panel_Tracker.add(label_TrackerCmoComm);
+		textField_DB_Cir_signal = new JTextField();
+		textField_DB_Cir_signal.setEditable(false);
+		textField_DB_Cir_signal.setBackground(Color.WHITE);
+		textField_DB_Cir_signal.setBounds(85, 234, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_signal);
+		textField_DB_Cir_signal.setColumns(10);
 		
-		textField_TrackerCmoDsn = new JTextField();
-		textField_TrackerCmoDsn.setForeground(Color.BLACK);
-		textField_TrackerCmoDsn.setEditable(false);
-		textField_TrackerCmoDsn.setColumns(10);
-		textField_TrackerCmoDsn.setBackground(Color.WHITE);
-		textField_TrackerCmoDsn.setBounds(178, 138, 114, 20);
-		panel_Tracker.add(textField_TrackerCmoDsn);
+		JLabel lblQcc = new JLabel("QCC");
+		lblQcc.setToolTipText("Quality Control Code");
+		lblQcc.setBounds(12, 264, 55, 16);
+		panel_Circuit.add(lblQcc);
 		
-		textField_TrackerCmoComm = new JTextField();
-		textField_TrackerCmoComm.setForeground(Color.BLACK);
-		textField_TrackerCmoComm.setEditable(false);
-		textField_TrackerCmoComm.setColumns(10);
-		textField_TrackerCmoComm.setBackground(Color.WHITE);
-		textField_TrackerCmoComm.setBounds(178, 170, 114, 20);
-		panel_Tracker.add(textField_TrackerCmoComm);
+		textField_DB_Cir_qcc = new JTextField();
+		textField_DB_Cir_qcc.setEditable(false);
+		textField_DB_Cir_qcc.setBackground(Color.WHITE);
+		textField_DB_Cir_qcc.setBounds(85, 262, 114, 20);
+		panel_Circuit.add(textField_DB_Cir_qcc);
+		textField_DB_Cir_qcc.setColumns(10);
 		
-		JPanel panel_TrackerComment = new JPanel();
-		panel_TrackerComment.setLayout(null);
-		panel_TrackerComment.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192), 1, true), "Comment", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_TrackerComment.setBackground(Color.WHITE);
-		panel_TrackerComment.setBounds(12, 234, 280, 147);
-		panel_Tracker.add(panel_TrackerComment);
+		chckbxAndrewsCmo = new JCheckBox("Andrews CMO");
+		chckbxAndrewsCmo.setEnabled(false);
+		chckbxAndrewsCmo.setToolTipText("Are we the CMO for this circuit?");
+		chckbxAndrewsCmo.setBackground(Color.WHITE);
+		chckbxAndrewsCmo.setBounds(217, 208, 112, 24);
+		panel_Circuit.add(chckbxAndrewsCmo);
 		
-		textPane_TrackerComment = new JTextPane();
-		textPane_TrackerComment.setEditable(false);
-		textPane_TrackerComment.setBackground(Color.WHITE);
-		textPane_TrackerComment.setBounds(12, 22, 256, 113);
-		panel_TrackerComment.add(textPane_TrackerComment);
+		chckbxAndrewsEndpoint = new JCheckBox("Andrews Endpoint");
+		chckbxAndrewsEndpoint.setEnabled(false);
+		chckbxAndrewsEndpoint.setBackground(Color.WHITE);
+		chckbxAndrewsEndpoint.setToolTipText("Are we an endpoint of this circuit?");
+		chckbxAndrewsEndpoint.setBounds(217, 236, 128, 24);
+		panel_Circuit.add(chckbxAndrewsEndpoint);
 		
-		JLabel label_TrackerAction = new JLabel("Action");
-		label_TrackerAction.setBounds(17, 14, 36, 16);
-		panel_Tracker.add(label_TrackerAction);
+		JButton btnTso = new JButton("TSO");
+		btnTso.setToolTipText("Enter the TSO document here");
+		btnTso.setBounds(12, 12, 91, 26);
+		panel.add(btnTso);
 		
-		textField_TrackerAction = new JTextField();
-		textField_TrackerAction.setForeground(Color.BLACK);
-		textField_TrackerAction.setEditable(false);
-		textField_TrackerAction.setColumns(10);
-		textField_TrackerAction.setBackground(Color.WHITE);
-		textField_TrackerAction.setBounds(178, 12, 114, 20);
-		panel_Tracker.add(textField_TrackerAction);
-		
-		JLabel label_TrackerSvcDate = new JLabel("Service Date");
-		label_TrackerSvcDate.setBounds(17, 202, 72, 16);
-		panel_Tracker.add(label_TrackerSvcDate);
-		
-		textField_TrackerSvcDate = new JTextField();
-		textField_TrackerSvcDate.setForeground(Color.BLACK);
-		textField_TrackerSvcDate.setEditable(false);
-		textField_TrackerSvcDate.setColumns(10);
-		textField_TrackerSvcDate.setBackground(Color.WHITE);
-		textField_TrackerSvcDate.setBounds(178, 200, 114, 20);
-		panel_Tracker.add(textField_TrackerSvcDate);
+		JButton btnNewButton = new JButton("Commit");
+		btnNewButton.setToolTipText("Commit to Database");
+		btnNewButton.setBounds(349, 435, 98, 60);
+		frmTsoHelper.getContentPane().add(btnNewButton);
+		btnTso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Text.appear();
+			}
+		});
 	}
 	protected static JRadioButton getRadioButton_Other() {
 		return radioButton_Other;
@@ -779,30 +940,6 @@ public class Window {
 	}
 	protected static JTabbedPane getTabbedPane() {
 		return tabbedPane;
-	}
-	protected static JTextField getTextField_TrackerAction() {
-		return textField_TrackerAction;
-	}
-	protected static JTextField getTextField_TrackerFullCcsd() {
-		return textField_TrackerFullCcsd;
-	}
-	protected static JTextField getTextField_TrackerChfLink() {
-		return textField_TrackerChfLink;
-	}
-	protected static JTextField getTextField_TrackerCmo() {
-		return textField_TrackerCmo;
-	}
-	protected static JTextField getTextField_TrackerCmoDsn() {
-		return textField_TrackerCmoDsn;
-	}
-	protected static JTextField getTextField_TrackerCmoComm() {
-		return textField_TrackerCmoComm;
-	}
-	protected static JTextField getTextField_TrackerSvcDate() {
-		return textField_TrackerSvcDate;
-	}
-	protected static JTextPane getTextPane_TrackerComment() {
-		return textPane_TrackerComment;
 	}
 	protected static JTextField getTextField_ChfTsoName() {
 		return textField_ChfTsoName;
@@ -863,5 +1000,65 @@ public class Window {
 	}
 	protected static JRadioButton getRdbtn_ChfRootCreated() {
 		return rdbtn_ChfRootCreated;
+	}
+	protected static JTextField getTextField_DB_Ci_FullCcsd() {
+		return textField_DB_Ci_FullCcsd;
+	}
+	protected static JTextField getTextField_DB_Cir_trunkId() {
+		return textField_DB_Cir_trunkId;
+	}
+	protected static JTextField getTextField_DB_Cir_fullTsp() {
+		return textField_DB_Cir_fullTsp;
+	}
+	protected static JTextField getTextField_DB_Cir_tsp() {
+		return textField_DB_Cir_tsp;
+	}
+	protected static JTextField getTextField_DB_Cir_security() {
+		return textField_DB_Cir_security;
+	}
+	protected static JTextField getTextField_DB_Cir_rate() {
+		return textField_DB_Cir_rate;
+	}
+	protected static JTextField getTextField_DB_Cir_avail() {
+		return textField_DB_Cir_avail;
+	}
+	protected static JTextField getTextField_DB_Cir_signal() {
+		return textField_DB_Cir_signal;
+	}
+	protected static JTextField getTextField_DB_Cir_qcc() {
+		return textField_DB_Cir_qcc;
+	}
+	protected static JTextField getTextField_DB_Cir_to() {
+		return textField_DB_Cir_to;
+	}
+	protected static JTextField getTextField_DB_Cir_from() {
+		return textField_DB_Cir_from;
+	}
+	protected static JTextField getTextField_DB_Cir_reqDepartment() {
+		return textField_DB_Cir_reqDepartment;
+	}
+	protected static JTextField getTextField_DB_Cir_type() {
+		return textField_DB_Cir_type;
+	}
+	protected static JTextField getTextField_DB_Cir_use() {
+		return textField_DB_Cir_use;
+	}
+	protected static JTextField getTextField_DB_Cir_cmo() {
+		return textField_DB_Cir_cmo;
+	}
+	protected static JTextField getTextField_DB_Cir_cmoDsn() {
+		return textField_DB_Cir_cmoDsn;
+	}
+	protected static JTextField getTextField_DB_Cir_cmoComm() {
+		return textField_DB_Cir_cmoComm;
+	}
+	protected static JCheckBox getChckbxAndrewsCmo() {
+		return chckbxAndrewsCmo;
+	}
+	protected static JCheckBox getChckbxAndrewsEndpoint() {
+		return chckbxAndrewsEndpoint;
+	}
+	protected static JTextField getTextField_DB_Cir_flow() {
+		return textField_DB_Cir_flow;
 	}
 }

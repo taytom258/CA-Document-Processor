@@ -4,29 +4,39 @@ package taytom258.lib;
 
 public class Collection{
 
-	public static boolean start, change, disco, amend, cancel = false;
 	public static String tsoText = "";
 	
-	//General Tab
-	public static String tsoSubject, fullCcsd, svcDate, cmo, otherCmoDsn, otherCmoComm, extraComments, chfRootFolder;
-	public static boolean logical, comReportRequired, ancs;
+//	//Start Tab
+//	public static String startTsrNumber, startReportDate, startTsoStatement;
+//	public static boolean startIs1539, startHasSams, startIsAnalog, startIsPassthrough;
+//	
+//	//Change Tab
+//	public static String changeTsrNumber, changeReportDate, changeTsoStatement;
+//	public static boolean changeIs1539, changeHasSams, changeIsAnalog, changeIsPassthrough;
+//	
+//	//Disco Tab
+//	public static String discoTsrNumber, discoReportDate, discoTsoStatement;
+//	public static boolean discoIs1539, discoHasSams, discoIsAnalog, discoIsPassthrough;
+//	
+//	//Cancel Tab
+//	public static String cancelTsrNumber, cancelReportDate, cancelTsoStatement;
+//	
+//	//Amend Tab
+//	public static String amendTsrNumber, amendReportDate, amendTsoStatement;
+//	public static boolean amendIs1539, amendHasSams, amendIsAnalog, amendIsPassthrough;
 	
-	//Start Tab
-	public static String dataRate, serviceAvailible, tsp, startTsrNumber, startReportDate, startTsoStatement;
-	public static boolean startIs1539, startHasSams, startIsAnalog, startIsPassthrough;
+	//Popup
+	public static boolean is1539, hasSams, isAnalog, isPassthrough, isLogical, isAncs;
 	
-	//Change Tab
-	public static String changeTsrNumber, changeReportDate, changeTsoStatement;
-	public static boolean changeIs1539, changeHasSams, changeIsAnalog, changeIsPassthrough;
+	//Program Info
+	public static String purpose, tsoSubject, tsrNum, reportDate, chfRootFolder;
 	
-	//Disco Tab
-	public static String discoTsrNumber, discoReportDate, discoTsoStatement;
-	public static boolean discoIs1539, discoHasSams, discoIsAnalog, discoIsPassthrough;
+	//Access Database (Circuits)
+	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,
+	security, dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn, cmoComm, chfLink;
+	public static boolean andrewsCmo, endPoint;
 	
-	//Cancel Tab
-	public static String cancelTsrNumber, cancelReportDate, cancelTsoStatement;
-	
-	//Amend Tab
-	public static String amendTsrNumber, amendReportDate, amendTsoStatement;
-	public static boolean amendIs1539, amendHasSams, amendIsAnalog, amendIsPassthrough;
+	//Access Database (TSO)
+	public static String tsoNum, tsoSuffix, tsoAction, svcDate;
+	public static boolean crr;
 }
