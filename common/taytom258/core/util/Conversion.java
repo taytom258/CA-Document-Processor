@@ -3,7 +3,7 @@ package taytom258.core.util;
 
 public class Conversion {
 
-	public static String MMM_StringtoInt(String month){
+	private static String MMM_StringtoInt(String month){
 		
 		String x = "0";
 		
@@ -49,8 +49,9 @@ public class Conversion {
 		String time = format.substring(2, 7);
 		
 		String date = day + " " + month + " " + year + " " + time;
+		String date2 = MMM_StringtoInt(month)+"/"+day+"/"+year;
 		
-		return date;
+		return date2;
 	}
 	
 }

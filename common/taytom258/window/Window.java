@@ -32,21 +32,17 @@ import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.db.TSOCommit;
+import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 import taytom258.show.tso.ShowCHF;
 import taytom258.show.tso.ShowDatabase;
 import taytom258.show.tso.ShowFacit;
-import taytom258.tso.TSOAmend;
-import taytom258.tso.TSOCancel;
-import taytom258.tso.TSOChange;
-import taytom258.tso.TSODisco;
-import taytom258.tso.TSOParser;
-import taytom258.tso.TSOStart;
 import taytom258.window.core.WindowCore;
 
-//TODO Fix all tooltips (?)
+//TODO Fix all tooltips
 
 public class Window {
 
@@ -109,6 +105,12 @@ public class Window {
 	private static JTextField textField_DB_Cir_qcc;
 	private static JCheckBox chckbxAndrewsCmo;
 	private static JCheckBox chckbxAndrewsEndpoint;
+	private static JTextField textField_DB_TSO_TsoNum;
+	private static JTextField textField_DB_TSO_TsoSuff;
+	private static JTextField textField_DB_TSO_action;
+	private static JTextField textField_DB_TSO_fullCcsd;
+	private static JTextField textField_DB_TSO_svcDate;
+	private static JCheckBox chckbx_DB_TSO_crr;
 	
 	/**
 	 * Launch the application.
@@ -423,11 +425,11 @@ public class Window {
 		panel_Action.setLayout(new CardLayout(0, 0));
 		JPanel panel_Blank = new JPanel();
 		panel_Action.add(panel_Blank, "panel_Blank");
-		TSOStart.buildPanel();
-		TSOChange.buildPanel();
-		TSODisco.buildPanel();
-		TSOAmend.buildPanel();
-		TSOCancel.buildPanel();
+//		TSOStart.buildPanel();
+//		TSOChange.buildPanel();
+//		TSODisco.buildPanel();
+//		TSOAmend.buildPanel();
+//		TSOCancel.buildPanel();
 		panel.setLayout(null);
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
@@ -902,12 +904,87 @@ public class Window {
 		chckbxAndrewsEndpoint.setBounds(217, 236, 128, 24);
 		panel_Circuit.add(chckbxAndrewsEndpoint);
 		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
+		tabbedPane_TSO_DB.addTab("TSO", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		JLabel lblTsoNumber = new JLabel("TSO Number");
+		lblTsoNumber.setBounds(12, 12, 72, 16);
+		panel_2.add(lblTsoNumber);
+		
+		textField_DB_TSO_TsoNum = new JTextField();
+		textField_DB_TSO_TsoNum.setBackground(Color.WHITE);
+		textField_DB_TSO_TsoNum.setEditable(false);
+		textField_DB_TSO_TsoNum.setBounds(102, 10, 153, 20);
+		panel_2.add(textField_DB_TSO_TsoNum);
+		textField_DB_TSO_TsoNum.setColumns(10);
+		
+		JLabel lblTsoSuffix = new JLabel("TSO Suffix");
+		lblTsoSuffix.setBounds(12, 40, 60, 16);
+		panel_2.add(lblTsoSuffix);
+		
+		textField_DB_TSO_TsoSuff = new JTextField();
+		textField_DB_TSO_TsoSuff.setBackground(Color.WHITE);
+		textField_DB_TSO_TsoSuff.setEditable(false);
+		textField_DB_TSO_TsoSuff.setBounds(102, 38, 153, 20);
+		panel_2.add(textField_DB_TSO_TsoSuff);
+		textField_DB_TSO_TsoSuff.setColumns(10);
+		
+		JLabel lblAction = new JLabel("Action");
+		lblAction.setBounds(12, 68, 55, 16);
+		panel_2.add(lblAction);
+		
+		textField_DB_TSO_action = new JTextField();
+		textField_DB_TSO_action.setBackground(Color.WHITE);
+		textField_DB_TSO_action.setEditable(false);
+		textField_DB_TSO_action.setBounds(102, 66, 153, 20);
+		panel_2.add(textField_DB_TSO_action);
+		textField_DB_TSO_action.setColumns(10);
+		
+		JLabel lblFullCcsd_1 = new JLabel("Full CCSD");
+		lblFullCcsd_1.setBounds(12, 96, 55, 16);
+		panel_2.add(lblFullCcsd_1);
+		
+		textField_DB_TSO_fullCcsd = new JTextField();
+		textField_DB_TSO_fullCcsd.setBackground(Color.WHITE);
+		textField_DB_TSO_fullCcsd.setEditable(false);
+		textField_DB_TSO_fullCcsd.setBounds(102, 94, 153, 20);
+		panel_2.add(textField_DB_TSO_fullCcsd);
+		textField_DB_TSO_fullCcsd.setColumns(10);
+		
+		JLabel lblSvcDate = new JLabel("Svc Date");
+		lblSvcDate.setBounds(12, 124, 55, 16);
+		panel_2.add(lblSvcDate);
+		
+		textField_DB_TSO_svcDate = new JTextField();
+		textField_DB_TSO_svcDate.setBackground(Color.WHITE);
+		textField_DB_TSO_svcDate.setEditable(false);
+		textField_DB_TSO_svcDate.setBounds(102, 122, 153, 20);
+		panel_2.add(textField_DB_TSO_svcDate);
+		textField_DB_TSO_svcDate.setColumns(10);
+		
+		chckbx_DB_TSO_crr = new JCheckBox("Completion Report Required?");
+		chckbx_DB_TSO_crr.setEnabled(false);
+		chckbx_DB_TSO_crr.setBackground(Color.WHITE);
+		chckbx_DB_TSO_crr.setBounds(8, 148, 191, 24);
+		panel_2.add(chckbx_DB_TSO_crr);
+		
 		JButton btnTso = new JButton("TSO");
 		btnTso.setToolTipText("Enter the TSO document here");
 		btnTso.setBounds(12, 12, 91, 26);
 		panel.add(btnTso);
 		
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(12, 385, 91, 26);
+		panel.add(btnHelp);
+		
 		JButton btnNewButton = new JButton("Commit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TSOCommit.run();
+			}
+		});
 		btnNewButton.setToolTipText("Commit to Database");
 		btnNewButton.setBounds(349, 435, 98, 60);
 		frmTsoHelper.getContentPane().add(btnNewButton);
@@ -1060,5 +1137,23 @@ public class Window {
 	}
 	protected static JTextField getTextField_DB_Cir_flow() {
 		return textField_DB_Cir_flow;
+	}
+	protected static JTextField getTextField_DB_TSO_TsoNum() {
+		return textField_DB_TSO_TsoNum;
+	}
+	protected static JTextField getTextField_DB_TSO_TsoSuff() {
+		return textField_DB_TSO_TsoSuff;
+	}
+	protected static JTextField getTextField_DB_TSO_action() {
+		return textField_DB_TSO_action;
+	}
+	protected static JTextField getTextField_DB_TSO_fullCcsd() {
+		return textField_DB_TSO_fullCcsd;
+	}
+	protected static JTextField getTextField_DB_TSO_svcDate() {
+		return textField_DB_TSO_svcDate;
+	}
+	protected static JCheckBox getChckbx_DB_TSO_crr() {
+		return chckbx_DB_TSO_crr;
 	}
 }

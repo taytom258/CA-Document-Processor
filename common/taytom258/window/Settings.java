@@ -29,6 +29,7 @@ public class Settings{
 	private static JToggleButton tglbtnUseChf;
 	private static JToggleButton tglbtnAutoSelection;
 	private static JToggleButton tglbtnError;
+	private static JTextField textFielddbPath;
 
 	/**
 	 * Launch the application.
@@ -135,6 +136,16 @@ public class Settings{
 		tglbtnError.setSelected(Config.error);
 		tglbtnError.setBounds(128, 331, 116, 26);
 		panel.add(tglbtnError);
+		
+		JLabel lblDatabasePath = new JLabel("Database Path");
+		lblDatabasePath.setBounds(12, 74, 83, 16);
+		panel.add(lblDatabasePath);
+		
+		textFielddbPath = new JTextField();
+		textFielddbPath.setBounds(277, 72, 310, 20);
+		textFielddbPath.setText(Config.dbPath);
+		panel.add(textFielddbPath);
+		textFielddbPath.setColumns(10);
 	}
 	protected static JTextField getTextFieldchfPath() {
 		return textFieldchfPath;
@@ -153,5 +164,8 @@ public class Settings{
 	}
 	protected static JToggleButton getTglbtnError() {
 		return tglbtnError;
+	}
+	protected static JTextField getTextFielddbPath() {
+		return textFielddbPath;
 	}
 }

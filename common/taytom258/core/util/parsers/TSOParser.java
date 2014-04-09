@@ -1,4 +1,4 @@
-package taytom258.tso;
+package taytom258.core.util.parsers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -188,6 +188,24 @@ public class TSOParser {
 		 for (int i=0; i<STRNOTCCO.length; i++) {
 		  if (tso.get("CCO or CMO").indexOf(STRNOTCCO[i]) > -1) {tso.put("We Are CCO", "false");}
 		 }
+		 
+		 //Tomlin Request #3 (Redone completely, not java compatible cause of 'match')
+		 String[] contact = {};
+		 String cmo = tso.get("CCO or CMO");
+		 contact = cmo.split("[/,]");
+		 tso.put("CCO or CMO", contact[0]);
+		 if(contact[1].contains("C")){
+			 tso.put("CMO Comm", contact[1].replaceAll("[a-zA-Z]", ""));
+		 }else if(contact[1].contains("D")){
+			 tso.put("CMO DSN", contact[1].replaceAll("[a-zA-Z]", ""));
+		 }
+		 if(contact[2].contains("C")){
+			 tso.put("CMO Comm", contact[2].replaceAll("[a-zA-Z]", ""));
+		 }else if(contact[2].contains("D")){
+			 tso.put("CMO DSN", contact[2].replaceAll("[a-zA-Z]", "")); 
+		 }
+		 
+		 
 
 		 //break POC information into an array (because I can)
 		 String fs = tso.get("POC Information");
@@ -869,6 +887,10 @@ public class TSOParser {
 				 Collection.tsrNum = value;
 			 }else if(key.equals("Report Date")){
 				 Collection.reportDate = value;
+			 }else if(key.equals("CMO Comm")){
+				 Collection.cmoComm = value;
+			 }else if(key.equals("CMO DSN")){
+				 Collection.cmoDsn = value;
 			 }
 		 }
 		 LogHelper.info("TSO (Parser) Complete");

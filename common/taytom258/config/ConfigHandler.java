@@ -55,6 +55,7 @@ public class ConfigHandler{
 			Config.autoSelection = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[3]));
 			Config.debug = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[4]));
 			Config.error = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[5]));
+			Config.dbPath = prop.getProperty(Config.CONFIG_NAMES[6]);
 			
 			LogHelper.debug("Config loaded");
 			
@@ -79,6 +80,7 @@ public class ConfigHandler{
 			prop.setProperty(Config.CONFIG_NAMES[3], String.valueOf(Config.autoSelection));
 			prop.setProperty(Config.CONFIG_NAMES[4], String.valueOf(Config.debug));
 			prop.setProperty(Config.CONFIG_NAMES[5], String.valueOf(Config.error));
+			prop.setProperty(Config.CONFIG_NAMES[6], Config.dbPath);
 			
 			prop.store(os, Config.CONFIG_HEADER);
 			
@@ -97,6 +99,7 @@ public class ConfigHandler{
 		Config.autoSelection = Config.AUTO_SELECTION;
 		Config.debug = Config.DEBUG;
 		Config.error = Config.ERROR;
+		Config.dbPath = Config.DB_PATH;
 		
 		LogHelper.debug("Defaults saved");
 		

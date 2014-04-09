@@ -14,7 +14,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-public class ModePopHelper extends JDialog {
+public class InfoPopHelper extends JDialog {
 	
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class ModePopHelper extends JDialog {
 	private static final long serialVersionUID = -2605535464107680020L;
 	private final JPanel contentPanel = new JPanel();
 	private static JTextArea textArea = new JTextArea();
-	private static ModePopHelper dialog = new ModePopHelper();
+	private static InfoPopHelper dialog = new InfoPopHelper();
 	
 	/**
 	 * Launch the application.
@@ -38,7 +38,7 @@ public class ModePopHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ModePopHelper() {
+	public InfoPopHelper() {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 180);

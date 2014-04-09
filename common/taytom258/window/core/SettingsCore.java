@@ -16,6 +16,7 @@ public class SettingsCore extends Settings{
 	private static void lines(){
 		Config.chfPath = Settings.getTextFieldchfPath().getText().trim();
 		Config.chfTest = Settings.getTextFieldchfTest().getText().trim();
+		Config.dbPath = Settings.getTextFielddbPath().getText().trim();
 	}
 	
 	private static void buttons(){

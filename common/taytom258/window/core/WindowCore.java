@@ -9,10 +9,6 @@ import javax.swing.text.DefaultEditorKit;
 
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.tso.TSOCancel;
-import taytom258.tso.TSOChange;
-import taytom258.tso.TSODisco;
-import taytom258.tso.TSOStart;
 import taytom258.window.Window;
 
 
@@ -72,11 +68,11 @@ public class WindowCore extends Window{
 		
 		public static void init(){
 			genCollect();
-			TSOStart.collect();
-			TSOChange.collect();
-			TSODisco.collect();
-			TSOChange.collect();
-			TSOCancel.collect();
+//			TSOStart.collect();
+//			TSOChange.collect();
+//			TSODisco.collect();
+//			TSOChange.collect();
+//			TSOCancel.collect();
 		}
 		
 		private static void reset(){
