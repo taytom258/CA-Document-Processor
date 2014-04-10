@@ -47,8 +47,8 @@ class ThreadA extends Thread{
 			 *Initialization
 			 */
 			LogHelper.init();
-			LogHelper.info("Initializing...");
 			LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
+			LogHelper.info("Initializing...");
 			ConfigHandler.init();
 			Check.call();
 			notify();

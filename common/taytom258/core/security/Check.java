@@ -12,7 +12,7 @@ public class Check {
 			if(FingerprintCheck.selfIntegrityChecking()){
 				LogHelper.debug("Jar Verified");
 			}else{
-				LogHelper.warning("Jar Not Verified");
+				LogHelper.warning("Program has been modified. Please contact support");
 			}
 		}
 	}

@@ -25,7 +25,9 @@ public class Database {
 		}
 	}
 	
-	protected static void sqlInsert(String table, String field, String value){
+	protected static void sqlInsert(String table, String field, String value, String key, String keyField){
+		String[] fields = new String[19];
+		String[] values = new String[19];
 		try {
 			con = DriverManager.getConnection(db);
 			st = con.createStatement();
@@ -36,7 +38,10 @@ public class Database {
 			st.close();
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
-				LogHelper.warning("CCSD already exists in database, please use the access form to update circuit information");
+				LogHelper.info("CCSD already exists in database, updating information");
+				fields = field.replace(" ", "").split(",");
+				values = value.replace(" ", "").replace("'", "").split(",");
+				sqlUpdate(table, fields, values, key, keyField);
 			}else{
 				ex.printStackTrace();
 				LogHelper.severe(ex.getMessage());
@@ -46,15 +51,20 @@ public class Database {
 	
 	
 	//TODO fix this mess with updating
-	protected static void sqlUpdate(String table, String field, String value, String ID, String ID_Field){
+	private static void sqlUpdate(String table, String[] field, String[] value, String key, String keyField){
 		try {
 			con = DriverManager.getConnection(db);
 			st = con.createStatement();
-			String sql = "UPDATE " + table
-					+" SET " + field + " = " + value
-					+ " WHERE " + ID_Field +" = " + ID;
-//			System.out.println(sql);
-			st.executeUpdate(sql);
+			int update = 0;
+			for(int i=0; i<field.length; i++){
+				String sql = "UPDATE " + table
+						+" SET " + field[i] + " = " + "'" + value[i] + "'"
+						+ " WHERE " + keyField +" = '" + key + "'";
+//				System.out.println(sql);
+				st.executeUpdate(sql);
+				update++;
+			}
+			LogHelper.info(update + "records updated");
 			con.close();
 			st.close();
 		} catch (Exception ex) {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
@@ -22,6 +24,16 @@ public class TSOParser {
 	    System.arraycopy(origArray, 0, newArray, 0, origArray.length);
 	    newArray[newArray.length - 1] = element;
 	    return newArray;
+	}
+	
+	private static ArrayList<String> matcher(String regex, String input){
+		ArrayList<String> match = new ArrayList<String>();
+		Pattern p = Pattern.compile(regex);
+	    Matcher m = p.matcher(input);
+	    	while(m.find()) {
+	    		match.add(input.substring(m.start(), m.end()));
+	    	}
+	    return match;
 	}
 	
 	public static void parseTSO(String t) {
@@ -151,19 +163,23 @@ public class TSOParser {
 		  }
 		 }
 		 
-		 String[] TspNumber = tso.get("TSP").split("-");
-		 tso.put("TSP Number", TspNumber[1]);
+		 if(tso.get("TSP").equals("NA")){
+			 tso.put("TSP Number", tso.get("TSP"));
+		 }else if(tso.get("TSP").contains("-")){
+			 String[] TspNumber = tso.get("TSP").split("-");
+			 tso.put("TSP Number", TspNumber[1]); 
+		 }
 		 String[] TsoSuffix = tso.get("TSO Number").split("-");
 		 tso.put("TSO Suffix", TsoSuffix[1]);
 		 
 		 
+		 
 		 //Tomlin Request #1
-		 tso.put("Standardized CCSD", tso.get("Full CCSD"));
-		 if (tso.get("Standardized CCSD").length() < 8) {
+		 String ccsd = tso.get("Full CCSD").trim();
+		 if (ccsd.length() == 8) {
+			 tso.put("Standardized CCSD", ccsd);
+		 }else if(ccsd.length() > 8 && ccsd.indexOf("/") > -1 || ccsd.length() < 8) {
 			 tso.put("Standardized CCSD", tso.get("Alternate CCSD"));
-		 }
-		 if (tso.get("Standardized CCSD").length() > 8 && tso.get("Standardized CCSD").indexOf("/") > -1) {
-			 tso.put("Standardized CCSD", tso.get("Standardized CCSD").substring(0, tso.get("Standardized CCSD").indexOf("/")));
 		 }
 		 
 		 //Tomlin Request #2
@@ -192,18 +208,34 @@ public class TSOParser {
 		 //Tomlin Request #3 (Redone completely, not java compatible cause of 'match')
 		 String[] contact = {};
 		 String cmo = tso.get("CCO or CMO");
-		 contact = cmo.split("[/,]");
+		 boolean dsnF = false;
+		 contact = cmo.split("/");
 		 tso.put("CCO or CMO", contact[0]);
-		 if(contact[1].contains("C")){
-			 tso.put("CMO Comm", contact[1].replaceAll("[a-zA-Z]", ""));
-		 }else if(contact[1].contains("D")){
-			 tso.put("CMO DSN", contact[1].replaceAll("[a-zA-Z]", ""));
+		 if(contact[1].indexOf("D") > contact[1].indexOf("C")){
+			 dsnF = false;
+		 }else if(contact[1].indexOf("D") < contact[1].indexOf("C")){
+			 dsnF = true;
 		 }
-		 if(contact[2].contains("C")){
-			 tso.put("CMO Comm", contact[2].replaceAll("[a-zA-Z]", ""));
-		 }else if(contact[2].contains("D")){
-			 tso.put("CMO DSN", contact[2].replaceAll("[a-zA-Z]", "")); 
+		 ArrayList<String> arrayMatch = matcher("\\d{2}[\\s\\d-]+", contact[1]);
+		 for(String element : arrayMatch){
+			 if(element.length() < 12 || dsnF){
+				 tso.put("CMO DSN", element);
+				 dsnF = false;
+			 }else{
+				 tso.put("CMO Comm", element);
+			 }
 		 }
+		 
+//		 if(contact[1].contains("C")){
+//			 tso.put("CMO Comm", contact[1].replaceAll("[a-zA-Z]", ""));
+//		 }else if(contact[1].contains("D")){
+//			 tso.put("CMO DSN", contact[1].replaceAll("[a-zA-Z]", ""));
+//		 }
+//		 if(contact[2].contains("C")){
+//			 tso.put("CMO Comm", contact[2].replaceAll("[a-zA-Z]", ""));
+//		 }else if(contact[2].contains("D")){
+//			 tso.put("CMO DSN", contact[2].replaceAll("[a-zA-Z]", "")); 
+//		 }
 		 
 		 
 
@@ -827,9 +859,9 @@ public class TSOParser {
 			 
 			 if(key.equals("Standardized CCSD")){
 				 Collection.fullCcsd = value;
-				 String inden = value.trim().substring(0, 4);
-				 String ccsd = value.trim().substring(4, 8);
-				 Collection.chfRootFolder = ccsd + "(" + inden + ")";
+				 String first = value.trim().substring(0, 4);
+				 String second = value.trim().substring(4, 8);
+				 Collection.chfRootFolder = second + "(" + first + ")";
 			 }else if(key.equals("Full CCSD") && key.length() == 6){
 				 Collection.trunkId = value;
 			 }else if(key.equals("TSP Number")){

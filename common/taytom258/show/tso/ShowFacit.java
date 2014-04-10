@@ -62,7 +62,7 @@ public class ShowFacit extends Window{
 	}
 	
 	private static void tsoNum(){
-		Window.getTextField_FacitTsoNum().setText(Collection.tsoSubject.toUpperCase().substring(0, Collection.tsoSubject.indexOf("-")+3));
+		Window.getTextField_FacitTsoNum().setText(Collection.tsoNum);
 	}
 	
 	private static void tsrNum(){

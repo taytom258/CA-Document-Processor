@@ -3,6 +3,8 @@ package taytom258.show.tso;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
@@ -32,8 +34,18 @@ public class ShowCHF extends Window {
 	}
 
 	private static void tsoName() {
+		Pattern p2 = Pattern.compile("\\d{2}");
+		Pattern p3 = Pattern.compile("[\\d{2}][A-Z]");
 		int index = Collection.tsoSubject.indexOf("-");
-		String pre = Collection.tsoSubject.trim().replace("/", "").substring(0, index+3);
+		String[] split = Collection.tsoSubject.split("-");
+		Matcher m2 = p2.matcher(split[1]);
+		Matcher m3 = p3.matcher(split[1]);
+		if(m3.find()){
+			index += 3;	
+		}else if(m2.find()){
+			index += 2;
+		}
+		String pre = Collection.tsoSubject.trim().replace("/", "").substring(0, index);
 		tsoName = pre.trim() + ".txt";
 
 		getTextField_ChfTsoName().setText(tsoName);
