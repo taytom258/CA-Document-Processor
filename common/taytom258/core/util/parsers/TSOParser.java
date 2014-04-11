@@ -39,7 +39,7 @@ public class TSOParser {
 	public static void parseTSO(String t) {
 		 if (t.equals("") || t.equals(null)) {return;} //we ain't messin' around here kid
 
-		 //the TSO object: you can Ctrl+F "tso['" to find most of the item names (except section 2 that uses an array)
+		 //the TSO object
 		 TreeMap<String, String> tso = new TreeMap<String, String>();
 
 		 //useful Static Strings (for search and other things)
@@ -77,7 +77,13 @@ public class TSOParser {
 		 int sEnd = t.indexOf(REF);
 		 if (sEnd < 0) {sEnd = t.indexOf(PURPOSE);}
 		 tso.put("Subject", t.substring(t.indexOf(SUBJ) + SUBJ.length(), sEnd));
-		 String number = tso.get("Subject").substring(4, tso.get("Subject").indexOf(Dash) + 3).replaceAll("[/\\s]", "");
+		 String[] test = tso.get("Subject").split("-");
+		 if(test[1].length() > 2){
+			 sEnd = 4;
+		 }else{
+			 sEnd = 3;
+		 }
+		 String number = tso.get("Subject").substring(4, tso.get("Subject").indexOf(Dash) + sEnd).replaceAll("[/\\s]", "");
 		 tso.put("TSO Number", number);
 		 if(t.indexOf(DTG) == -1){
 			 tso.put("Report Date", t.substring(t.indexOf(FM) - ReportLength, t.indexOf(FM)));

@@ -30,7 +30,7 @@ public class ShowCHF extends Window {
 	private static void IOOperations(File path) {
 		folder(path.toString());
 		createTso(path.toString());
-		create1539(path.toString());
+//		create1539(path.toString());
 	}
 
 	private static void tsoName() {
@@ -55,7 +55,7 @@ public class ShowCHF extends Window {
 		File folderExist = null;
 		File only = null;
 
-		if (Collection.tsoAction.equals("DISCO")) {
+		if (Collection.tsoAction.equals("DISCONTINUE")) {
 			getTextField_ChfChfLink().setText(
 					Collection.chfRootFolder + " " + Strings.DISCO_PEND);
 		} else {
@@ -78,26 +78,30 @@ public class ShowCHF extends Window {
 
 		File discoPend = new File(folderExist.toString() + " "
 				+ Strings.DISCO_PEND);
+		String folderName = Collection.chfRootFolder;
 		
-		if (Collection.tsoAction.equals("DISCO")) {
+		if(Collection.tsoAction.equals("CANCEL") && discoPend.exists()){
+			discoPend.renameTo(folderExist);
+		}else if(Collection.tsoAction.equals("DISCONTINUE")) {
 			folderExist.renameTo(discoPend);
+			folderName += " " + Strings.DISCO_PEND;
 			folderExist = discoPend;
-		}else if(Collection.is1539){
-			folderExist = only;
+		}else if(discoPend.exists()){
+			folderName += " " + Strings.DISCO_PEND;
+			folderExist = discoPend;
 		}
 
-		if ((folderExist.exists() || discoPend.exists())
-				&& (folderExist.isDirectory() || discoPend.isDirectory())) {
+		if (folderExist.exists() && folderExist.isDirectory()) {
 			getRdbtn_ChfRoot().setSelected(true);
 		} else {
 			try {
 				if (Config.useChf && !only.equals(folderExist)) {
-					if(DirHandler.createDir(Collection.chfRootFolder,
+					if(DirHandler.createDir(folderName,
 							Config.chfPath)){
 					LogHelper.io("Created Root in: " + Config.chfPath);}
 					getRdbtn_ChfRootCreated().setSelected(true);
 				} else if (!only.equals(folderExist)) {
-					if(DirHandler.createDir(Collection.chfRootFolder,
+					if(DirHandler.createDir(folderName,
 							Config.chfTest)){
 					LogHelper.io("Created Root in: " + Config.chfTest);}
 					getRdbtn_ChfRootCreated().setSelected(true);
@@ -106,7 +110,6 @@ public class ShowCHF extends Window {
 				e.printStackTrace();
 			}
 		}
-
 		return folderExist;
 
 	}

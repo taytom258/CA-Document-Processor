@@ -43,6 +43,7 @@ import taytom258.show.tso.ShowFacit;
 import taytom258.window.core.WindowCore;
 
 //TODO Fix all tooltips
+//TODO Add right click functionality
 
 public class Window {
 
@@ -118,6 +119,7 @@ public class Window {
 	public static void appear() {
 		LogHelper.info("Main Window");
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Window window = new Window();
@@ -149,6 +151,7 @@ public class Window {
 		
 		JButton button_Settings = new JButton("Settings");
 		button_Settings.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Settings.appear();
 			}
@@ -159,6 +162,7 @@ public class Window {
 		JButton button_Run = new JButton("Run");
 		button_Run.setToolTipText("Run Program");
 		button_Run.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -193,6 +197,7 @@ public class Window {
 		
 		JButton button_Exit = new JButton("Exit");
 		button_Exit.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.debug("Terminate JVM");
 				System.exit(0);
@@ -205,7 +210,7 @@ public class Window {
 		panel.setBounds(0, 0, 641, 423);
 		frmTsoHelper.getContentPane().add(panel);
 		
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(SwingConstants.TOP);
 //		panel.add(tabbedPane);
 		
 		JPanel panel_general = new JPanel();
@@ -214,6 +219,7 @@ public class Window {
 		
 		textField_TsoSubject = new JTextField();
 		textField_TsoSubject.addCaretListener(new CaretListener() {
+			@Override
 			public void caretUpdate(CaretEvent arg0) {
 					WindowCore.collect.getAction();
 			}
@@ -307,6 +313,7 @@ public class Window {
 		
 		radioButton_Andrews = new JRadioButton("Andrews");
 		radioButton_Andrews.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				WindowCore.enableCmoFields(false);
 			}
@@ -318,6 +325,7 @@ public class Window {
 		
 		radioButton_Other = new JRadioButton("Other");
 		radioButton_Other.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 					WindowCore.enableCmoFields(true);
 				}
@@ -432,11 +440,11 @@ public class Window {
 //		TSOCancel.buildPanel();
 		panel.setLayout(null);
 
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane_1 = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_1.setBounds(115, 0, 526, 423);
 		panel.add(tabbedPane_1);
 		
-		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane_2 = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_1.addTab("TSO", null, tabbedPane_2, null);
 		
 		panel_TSO_Chf = new JPanel();
@@ -673,7 +681,7 @@ public class Window {
 				chckbx_FacitCrr.setBounds(159, 206, 184, 24);
 				panel_1.add(chckbx_FacitCrr);
 		
-		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_2.addTab("DB", null, tabbedPane_TSO_DB, "Database Preview");
 		
 		JPanel panel_Circuit = new JPanel();
@@ -981,6 +989,7 @@ public class Window {
 		
 		JButton btnNewButton = new JButton("Commit");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				TSOCommit.run();
 			}
@@ -989,6 +998,7 @@ public class Window {
 		btnNewButton.setBounds(349, 435, 98, 60);
 		frmTsoHelper.getContentPane().add(btnNewButton);
 		btnTso.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Text.appear();
 			}

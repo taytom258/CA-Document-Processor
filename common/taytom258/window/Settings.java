@@ -70,6 +70,7 @@ public class Settings{
 		
 		JButton btnNewButton = new JButton("Save & Close");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				SettingsCore.save();
 				frmSettings.dispose();

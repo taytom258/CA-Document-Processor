@@ -62,6 +62,7 @@ public class Text{
 		
 		JButton btnAccept = new JButton("Accept");
 		btnAccept.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				TextCore.save();
 				frmEnterTso.dispose();
@@ -85,6 +86,7 @@ public class Text{
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				text.setText("");
 			}

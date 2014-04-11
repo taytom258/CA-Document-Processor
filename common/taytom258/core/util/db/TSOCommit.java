@@ -1,5 +1,6 @@
 package taytom258.core.util.db;
 
+import taytom258.core.util.Conversion;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 
@@ -7,6 +8,7 @@ public class TSOCommit extends Database {
 
 	public static void run(){
 		circuit();
+		TSO();
 	}
 	
 	private static void circuit(){
@@ -34,8 +36,18 @@ public class TSOCommit extends Database {
 		sqlInsert("Circuits", field, value, Collection.fullCcsd, Strings.KEY_FIELD);
 	}
 	
-	//TODO Finish database inserts
 	private static void TSO(){
+		String c = "', '";
 		
+		int crr;
+		if(Collection.crr){
+			crr = 0;
+		}else{
+			crr = -1;
+		}
+		
+		String field = "TSO_Number, TSO_Suffix, Action, Full_CCSD, Service_Date, Completion_Report_Req";
+		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate)+c+crr;
+		sqlInsert("TSO", field, value, Collection.tsoNum, "TSO_Number");
 	}
 }

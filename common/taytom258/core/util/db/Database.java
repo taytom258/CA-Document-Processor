@@ -2,6 +2,8 @@ package taytom258.core.util.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 import taytom258.config.Config;
@@ -13,6 +15,7 @@ public class Database {
 	private static Statement st;
 	private static String db;
 
+	@Deprecated
 	protected static void sqlCommand(String sql) {
 		try {
 			con = DriverManager.getConnection(db);
@@ -34,14 +37,16 @@ public class Database {
 			String sql = "INSERT INTO " + table + " (" + field + ")" + " VALUES " + "('" + value + "')";
 //			System.out.println(sql);
 			st.executeUpdate(sql);
-			con.close();
 			st.close();
+			con.close();
+			sqlQueryNull(table, key, keyField);
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
 				LogHelper.info("CCSD already exists in database, updating information");
-				fields = field.replace(" ", "").split(",");
-				values = value.replace(" ", "").replace("'", "").split(",");
+				fields = field.split(",");
+				values = value.replace("'", "").split(",");
 				sqlUpdate(table, fields, values, key, keyField);
+				sqlQueryNull(table, key, keyField);
 			}else{
 				ex.printStackTrace();
 				LogHelper.severe(ex.getMessage());
@@ -49,8 +54,6 @@ public class Database {
 		}
 	}
 	
-	
-	//TODO fix this mess with updating
 	private static void sqlUpdate(String table, String[] field, String[] value, String key, String keyField){
 		try {
 			con = DriverManager.getConnection(db);
@@ -64,9 +67,9 @@ public class Database {
 				st.executeUpdate(sql);
 				update++;
 			}
-			LogHelper.info(update + "records updated");
-			con.close();
+			LogHelper.info(update + " records updated");
 			st.close();
+			con.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
@@ -85,5 +88,36 @@ public class Database {
 		}
 		LogHelper.debug("Database connection initialized");
 		
+	}
+	
+	private static void sqlQueryNull(String table, String key, String keyField){
+		try {
+		con = DriverManager.getConnection(db);
+		st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			String sql = "SELECT *"
+					+" FROM " + table
+					+ " WHERE " + keyField +" = '" + key + "'";
+//			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			ResultSetMetaData md = rs.getMetaData();
+			int numberOfColumns = md.getColumnCount();
+			int i = 1;
+			rs.beforeFirst();
+			rs.next();
+			while (i <= numberOfColumns) {
+	            String text = rs.getString(i);
+//	            System.out.println(text);
+	        	if(rs.wasNull() || text.equals(" null") || text.equals("") || text.equals("0")){
+	        		//TODO Create data popup
+	        		LogHelper.debug("Null value at column " + md.getColumnName(i++));
+	        	}else{
+	        		i++;
+	        	}
+			}
+		st.close();
+		con.close();
+		}catch (Exception e){
+		e.printStackTrace();
+		}
 	}
 }
