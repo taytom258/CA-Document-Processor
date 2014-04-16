@@ -212,6 +212,7 @@ public class TSOParser {
 		 }
 		 
 		 //Tomlin Request #3 (Redone completely, not java compatible cause of 'match')
+		 //TODO Make phone number collection more accurate
 		 String[] contact = {};
 		 String cmo = tso.get("CCO or CMO");
 		 boolean dsnF = false;
@@ -867,7 +868,7 @@ public class TSOParser {
 				 Collection.fullCcsd = value;
 				 String first = value.trim().substring(0, 4);
 				 String second = value.trim().substring(4, 8);
-				 Collection.chfRootFolder = second + "(" + first + ")";
+				 Collection.chfRootFolder = second + " (" + first + ")";
 			 }else if(key.equals("Full CCSD") && key.length() == 6){
 				 Collection.trunkId = value;
 			 }else if(key.equals("TSP Number")){

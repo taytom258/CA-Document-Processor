@@ -56,10 +56,10 @@ public class ShowCHF extends Window {
 		File only = null;
 
 		if (Collection.tsoAction.equals("DISCONTINUE")) {
-			getTextField_ChfChfLink().setText(
+			getTextField_ChfRoot().setText(
 					Collection.chfRootFolder + " " + Strings.DISCO_PEND);
 		} else {
-			getTextField_ChfChfLink().setText(Collection.chfRootFolder);
+			getTextField_ChfRoot().setText(Collection.chfRootFolder);
 		}
 
 		if (Config.useChf) {
@@ -110,6 +110,8 @@ public class ShowCHF extends Window {
 				e.printStackTrace();
 			}
 		}
+		getTextField_chfLink().setText(folderExist.toString());
+		Collection.chfLink = folderExist.toString();
 		return folderExist;
 
 	}

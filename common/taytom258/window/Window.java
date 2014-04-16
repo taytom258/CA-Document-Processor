@@ -31,8 +31,8 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
+import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.LogHelper;
-import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
@@ -43,7 +43,6 @@ import taytom258.show.tso.ShowFacit;
 import taytom258.window.core.WindowCore;
 
 //TODO Fix all tooltips
-//TODO Add right click functionality
 
 public class Window {
 
@@ -65,7 +64,7 @@ public class Window {
 	private static JTabbedPane tabbedPane;
 	private static JPanel panel_Action;
 	private static JTextField textField_ChfTsoName;
-	private static JTextField textField_ChfChfLink;
+	private static JTextField textField_ChfRoot;
 	private static JTextField textField_FacitCcsd;
 	private static JTextField textField_FacitTsp;
 	private static JTextField textField_FacitPurpose;
@@ -112,6 +111,8 @@ public class Window {
 	private static JTextField textField_DB_TSO_fullCcsd;
 	private static JTextField textField_DB_TSO_svcDate;
 	private static JCheckBox chckbx_DB_TSO_crr;
+	private static JTextField textField_chfLink;
+	private static JTextField textField_DB_TSO_reportDate;
 	
 	/**
 	 * Launch the application.
@@ -173,8 +174,10 @@ public class Window {
 					ShowCHF.show();
 					ShowFacit.show();
 					ShowDatabase.show();
+					Collection.runClicked = true;
 				}
 				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				
 				
 //				if(textField_TsoSubject.getText().equals("") ||
 //						textField_FullCcsd.getText().equals("") ||
@@ -453,11 +456,11 @@ public class Window {
 		panel_TSO_Chf.setBackground(Color.WHITE);
 		
 		JLabel label_ChfTsoName = new JLabel("TSO Name");
-		label_ChfTsoName.setBounds(12, 12, 60, 16);
+		label_ChfTsoName.setBounds(12, 14, 60, 16);
 		panel_TSO_Chf.add(label_ChfTsoName);
 		
 		JLabel lblChfRoot = new JLabel("CHF Root");
-		lblChfRoot.setBounds(12, 40, 51, 16);
+		lblChfRoot.setBounds(12, 42, 51, 16);
 		panel_TSO_Chf.add(lblChfRoot);
 		
 		textField_ChfTsoName = new JTextField();
@@ -467,12 +470,12 @@ public class Window {
 		panel_TSO_Chf.add(textField_ChfTsoName);
 		textField_ChfTsoName.setColumns(10);
 		
-		textField_ChfChfLink = new JTextField();
-		textField_ChfChfLink.setBackground(Color.WHITE);
-		textField_ChfChfLink.setEditable(false);
-		textField_ChfChfLink.setBounds(102, 40, 407, 20);
-		panel_TSO_Chf.add(textField_ChfChfLink);
-		textField_ChfChfLink.setColumns(10);
+		textField_ChfRoot = new JTextField();
+		textField_ChfRoot.setBackground(Color.WHITE);
+		textField_ChfRoot.setEditable(false);
+		textField_ChfRoot.setBounds(102, 40, 407, 20);
+		panel_TSO_Chf.add(textField_ChfRoot);
+		textField_ChfRoot.setColumns(10);
 		
 		JPanel panel_ChfCreating = new JPanel();
 		panel_ChfCreating.setBackground(Color.WHITE);
@@ -513,6 +516,32 @@ public class Window {
 		rdbtn_ChfRootCreated.setBackground(Color.WHITE);
 		rdbtn_ChfRootCreated.setBounds(394, 132, 99, 24);
 		panel_TSO_Chf.add(rdbtn_ChfRootCreated);
+		
+		JLabel lblChfLink = new JLabel("CHF Link");
+		lblChfLink.setBounds(12, 68, 55, 16);
+		panel_TSO_Chf.add(lblChfLink);
+		
+		
+		//TODO Add hyperlink to CHF Link
+		textField_chfLink = new JTextField();
+		textField_chfLink.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.isPopupTrigger() && Config.autoSelection){
+					e.getComponent().requestFocus();
+					textField_chfLink.selectAll();
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}else if(e.isPopupTrigger()){
+					e.getComponent().requestFocus();
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		});
+		textField_chfLink.setBackground(Color.WHITE);
+		textField_chfLink.setEditable(false);
+		textField_chfLink.setBounds(102, 66, 407, 20);
+		panel_TSO_Chf.add(textField_chfLink);
+		textField_chfLink.setColumns(10);
 		
 		JScrollPane scrollPane_TSO_Facit = new JScrollPane();
 		tabbedPane_2.addTab("FACIT", null, scrollPane_TSO_Facit, "Info to transpose to FACIT");
@@ -586,12 +615,38 @@ public class Window {
 				panel_FacitTsoState.add(scrollPane);
 				
 				textArea_FacitTsoState = new JTextArea();
+				textArea_FacitTsoState.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textArea_FacitTsoState.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				scrollPane.setViewportView(textArea_FacitTsoState);
 				textArea_FacitTsoState.setWrapStyleWord(true);
 				textArea_FacitTsoState.setLineWrap(true);
 				textArea_FacitTsoState.setEditable(false);
 				
 				textField_FacitCcsd = new JTextField();
+				textField_FacitCcsd.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitCcsd.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitCcsd.setBackground(Color.WHITE);
 				textField_FacitCcsd.setEditable(false);
 				textField_FacitCcsd.setBounds(136, 10, 106, 20);
@@ -599,6 +654,19 @@ public class Window {
 				textField_FacitCcsd.setColumns(10);
 				
 				textField_FacitTsp = new JTextField();
+				textField_FacitTsp.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitTsp.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitTsp.setBackground(Color.WHITE);
 				textField_FacitTsp.setEditable(false);
 				textField_FacitTsp.setBounds(136, 38, 106, 20);
@@ -606,6 +674,19 @@ public class Window {
 				textField_FacitTsp.setColumns(10);
 				
 				textField_FacitPurpose = new JTextField();
+				textField_FacitPurpose.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitPurpose.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitPurpose.setBackground(Color.WHITE);
 				textField_FacitPurpose.setEditable(false);
 				textField_FacitPurpose.setBounds(136, 66, 106, 20);
@@ -613,6 +694,19 @@ public class Window {
 				textField_FacitPurpose.setColumns(10);
 				
 				textField_FacitRate = new JTextField();
+				textField_FacitRate.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitRate.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitRate.setBackground(Color.WHITE);
 				textField_FacitRate.setEditable(false);
 				textField_FacitRate.setBounds(136, 94, 106, 20);
@@ -620,6 +714,19 @@ public class Window {
 				textField_FacitRate.setColumns(10);
 				
 				textField_FacitSvcAvailable = new JTextField();
+				textField_FacitSvcAvailable.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitSvcAvailable.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitSvcAvailable.setBackground(Color.WHITE);
 				textField_FacitSvcAvailable.setEditable(false);
 				textField_FacitSvcAvailable.setBounds(136, 122, 106, 20);
@@ -627,6 +734,19 @@ public class Window {
 				textField_FacitSvcAvailable.setColumns(10);
 				
 				textField_FacitFullCcsd = new JTextField();
+				textField_FacitFullCcsd.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitFullCcsd.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitFullCcsd.setBackground(Color.WHITE);
 				textField_FacitFullCcsd.setEditable(false);
 				textField_FacitFullCcsd.setBounds(385, 12, 106, 20);
@@ -634,6 +754,19 @@ public class Window {
 				textField_FacitFullCcsd.setColumns(10);
 				
 				textField_FacitAction = new JTextField();
+				textField_FacitAction.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitAction.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitAction.setBackground(Color.WHITE);
 				textField_FacitAction.setEditable(false);
 				textField_FacitAction.setBounds(385, 40, 106, 20);
@@ -641,6 +774,19 @@ public class Window {
 				textField_FacitAction.setColumns(10);
 				
 				textField_FacitTsoNum = new JTextField();
+				textField_FacitTsoNum.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitTsoNum.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitTsoNum.setBackground(Color.WHITE);
 				textField_FacitTsoNum.setEditable(false);
 				textField_FacitTsoNum.setBounds(136, 152, 355, 20);
@@ -648,6 +794,19 @@ public class Window {
 				textField_FacitTsoNum.setColumns(10);
 				
 				textField_FacitTsrNum = new JTextField();
+				textField_FacitTsrNum.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitTsrNum.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitTsrNum.setBackground(Color.WHITE);
 				textField_FacitTsrNum.setEditable(false);
 				textField_FacitTsrNum.setBounds(385, 68, 106, 20);
@@ -655,6 +814,19 @@ public class Window {
 				textField_FacitTsrNum.setColumns(10);
 				
 				textField_FacitSvcDate = new JTextField();
+				textField_FacitSvcDate.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitSvcDate.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitSvcDate.setBackground(Color.WHITE);
 				textField_FacitSvcDate.setEditable(false);
 				textField_FacitSvcDate.setBounds(385, 96, 106, 20);
@@ -662,6 +834,19 @@ public class Window {
 				textField_FacitSvcDate.setColumns(10);
 				
 				textField_FacitTsoSubject = new JTextField();
+				textField_FacitTsoSubject.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitTsoSubject.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitTsoSubject.setBackground(Color.WHITE);
 				textField_FacitTsoSubject.setEditable(false);
 				textField_FacitTsoSubject.setBounds(136, 182, 355, 20);
@@ -669,6 +854,19 @@ public class Window {
 				textField_FacitTsoSubject.setColumns(10);
 				
 				textField_FacitReportDate = new JTextField();
+				textField_FacitReportDate.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitReportDate.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
 				textField_FacitReportDate.setBackground(Color.WHITE);
 				textField_FacitReportDate.setEditable(false);
 				textField_FacitReportDate.setBounds(385, 124, 106, 20);
@@ -962,21 +1160,32 @@ public class Window {
 		textField_DB_TSO_fullCcsd.setColumns(10);
 		
 		JLabel lblSvcDate = new JLabel("Svc Date");
-		lblSvcDate.setBounds(12, 124, 55, 16);
+		lblSvcDate.setBounds(12, 152, 55, 16);
 		panel_2.add(lblSvcDate);
 		
 		textField_DB_TSO_svcDate = new JTextField();
 		textField_DB_TSO_svcDate.setBackground(Color.WHITE);
 		textField_DB_TSO_svcDate.setEditable(false);
-		textField_DB_TSO_svcDate.setBounds(102, 122, 153, 20);
+		textField_DB_TSO_svcDate.setBounds(102, 150, 153, 20);
 		panel_2.add(textField_DB_TSO_svcDate);
 		textField_DB_TSO_svcDate.setColumns(10);
 		
 		chckbx_DB_TSO_crr = new JCheckBox("Completion Report Required?");
 		chckbx_DB_TSO_crr.setEnabled(false);
 		chckbx_DB_TSO_crr.setBackground(Color.WHITE);
-		chckbx_DB_TSO_crr.setBounds(8, 148, 191, 24);
+		chckbx_DB_TSO_crr.setBounds(12, 176, 191, 24);
 		panel_2.add(chckbx_DB_TSO_crr);
+		
+		JLabel lblReportDate = new JLabel("Report Date");
+		lblReportDate.setBounds(12, 124, 67, 16);
+		panel_2.add(lblReportDate);
+		
+		textField_DB_TSO_reportDate = new JTextField();
+		textField_DB_TSO_reportDate.setBackground(Color.WHITE);
+		textField_DB_TSO_reportDate.setEditable(false);
+		textField_DB_TSO_reportDate.setBounds(102, 122, 153, 20);
+		panel_2.add(textField_DB_TSO_reportDate);
+		textField_DB_TSO_reportDate.setColumns(10);
 		
 		JButton btnTso = new JButton("TSO");
 		btnTso.setToolTipText("Enter the TSO document here");
@@ -984,6 +1193,11 @@ public class Window {
 		panel.add(btnTso);
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Help.appear();
+			}
+		});
 		btnHelp.setBounds(12, 385, 91, 26);
 		panel.add(btnHelp);
 		
@@ -991,7 +1205,12 @@ public class Window {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				TSOCommit.run();
+				if(Collection.runClicked){
+					TSOPopHelper.appear();
+				}else{
+					LogHelper.warning("Please run the program first");
+				}
+				
 			}
 		});
 		btnNewButton.setToolTipText("Commit to Database");
@@ -1000,7 +1219,7 @@ public class Window {
 		btnTso.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Text.appear();
+				TSO_Text.appear();
 			}
 		});
 	}
@@ -1031,8 +1250,8 @@ public class Window {
 	protected static JTextField getTextField_ChfTsoName() {
 		return textField_ChfTsoName;
 	}
-	protected static JTextField getTextField_ChfChfLink() {
-		return textField_ChfChfLink;
+	protected static JTextField getTextField_ChfRoot() {
+		return textField_ChfRoot;
 	}
 	protected static JRadioButton getRdbtn_ChfRoot() {
 		return rdbtn_ChfRoot;
@@ -1165,5 +1384,11 @@ public class Window {
 	}
 	protected static JCheckBox getChckbx_DB_TSO_crr() {
 		return chckbx_DB_TSO_crr;
+	}
+	protected static JTextField getTextField_chfLink() {
+		return textField_chfLink;
+	}
+	protected static JTextField getTextField_DB_TSO_reportDate() {
+		return textField_DB_TSO_reportDate;
 	}
 }

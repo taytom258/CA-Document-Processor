@@ -14,9 +14,9 @@ import javax.swing.ScrollPaneConstants;
 
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
-import taytom258.window.core.TextCore;
+import taytom258.window.core.TSO_TextCore;
 
-public class Text{
+public class TSO_Text{
 
 	public JFrame frmEnterTso;
 	private static JTextArea text;
@@ -30,7 +30,7 @@ public class Text{
 			@Override
 			public void run() {
 				try {
-					Text window = new Text();
+					TSO_Text window = new TSO_Text();
 					window.frmEnterTso.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class Text{
 	/**
 	 * Create the application.
 	 */
-	public Text() {
+	public TSO_Text() {
 		initialize();
 	}
 
@@ -64,7 +64,7 @@ public class Text{
 		btnAccept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TextCore.save();
+				TSO_TextCore.save();
 				frmEnterTso.dispose();
 			}
 		});

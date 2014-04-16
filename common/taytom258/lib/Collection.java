@@ -29,14 +29,17 @@ public class Collection{
 	public static boolean is1539, hasSams, isAnalog, isPassthrough, isLogical, isAncs;
 	
 	//Program Info
-	public static String purpose, tsoSubject, tsrNum, reportDate, chfRootFolder;
+	public static String purpose, tsoSubject, tsrNum, chfRootFolder;
+	public static boolean runClicked = false;
 	
 	//Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,
 	security, dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn, cmoComm, chfLink;
 	public static boolean andrewsCmo, endPoint;
+	public static double mrc, nrc;
 	
 	//Access Database (TSO)
-	public static String tsoNum, tsoSuffix, tsoAction, svcDate;
-	public static boolean crr;
+	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate;
+	public static boolean crr, careq;
+	
 }

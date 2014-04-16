@@ -55,6 +55,7 @@ public class ShowDatabase extends Window{
 		getTextField_DB_TSO_action().setText(Collection.tsoAction);
 		getTextField_DB_TSO_fullCcsd().setText(Collection.fullCcsd);
 		getTextField_DB_TSO_svcDate().setText(Conversion.dateConvert(Collection.svcDate));
+		getTextField_DB_TSO_reportDate().setText(Conversion.dateConvert(Collection.reportDate));
 	}
 	
 	private static void checkBoxes_Tso(){

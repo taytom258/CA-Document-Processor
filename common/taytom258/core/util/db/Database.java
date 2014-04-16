@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
+import taytom258.lib.Strings;
 
 public class Database {
 
@@ -39,14 +41,20 @@ public class Database {
 			st.executeUpdate(sql);
 			st.close();
 			con.close();
-			sqlQueryNull(table, key, keyField);
+			sqlQueryNull(table, field, key, keyField);
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
-				LogHelper.info("CCSD already exists in database, updating information");
+				LogHelper.info("Record already exists in database, updating information");
 				fields = field.split(",");
 				values = value.replace("'", "").split(",");
 				sqlUpdate(table, fields, values, key, keyField);
-				sqlQueryNull(table, key, keyField);
+				sqlQueryNull(table, field, key, keyField);
+				try {
+					st.close();
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}else{
 				ex.printStackTrace();
 				LogHelper.severe(ex.getMessage());
@@ -59,17 +67,21 @@ public class Database {
 			con = DriverManager.getConnection(db);
 			st = con.createStatement();
 			int update = 0;
-			for(int i=0; i<field.length; i++){
-				String sql = "UPDATE " + table
-						+" SET " + field[i] + " = " + "'" + value[i] + "'"
-						+ " WHERE " + keyField +" = '" + key + "'";
-//				System.out.println(sql);
-				st.executeUpdate(sql);
-				update++;
+			if(!table.equals("TSO")){
+				for(int i=0; i<field.length; i++){
+					String sql = "UPDATE " + table
+							+" SET " + field[i] + " = " + "'" + value[i] + "'"
+							+ " WHERE " + keyField +" = '" + key + "'";
+	//				System.out.println(sql);
+					st.executeUpdate(sql);
+					update++;
+				}
+				LogHelper.info(update + " records updated");
+				st.close();
+				con.close();
+			}else{
+				LogHelper.warning(Strings.DUPLICATE_WARN);
 			}
-			LogHelper.info(update + " records updated");
-			st.close();
-			con.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
@@ -90,11 +102,11 @@ public class Database {
 		
 	}
 	
-	private static void sqlQueryNull(String table, String key, String keyField){
+	private static void sqlQueryNull(String table, String field, String key, String keyField){
 		try {
 		con = DriverManager.getConnection(db);
 		st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			String sql = "SELECT *"
+			String sql = "SELECT " + field
 					+" FROM " + table
 					+ " WHERE " + keyField +" = '" + key + "'";
 //			System.out.println(sql);
@@ -107,12 +119,13 @@ public class Database {
 			while (i <= numberOfColumns) {
 	            String text = rs.getString(i);
 //	            System.out.println(text);
-	        	if(rs.wasNull() || text.equals(" null") || text.equals("") || text.equals("0")){
-	        		//TODO Create data popup
-	        		LogHelper.debug("Null value at column " + md.getColumnName(i++));
-	        	}else{
-	        		i++;
+	        	if(rs.wasNull() || text.equals(" null") || text.equals("")){
+	        		if(!md.getColumnName(i).equals("Trunk_ID")){
+	        			LogHelper.warning("Null value at field " + md.getColumnName(i) + " for CCSD " + key + ". Please edit in access.");
+	        		}
+	        		LogHelper.debug("Null value at field " + md.getColumnName(i));
 	        	}
+	        	i++;
 			}
 		st.close();
 		con.close();
