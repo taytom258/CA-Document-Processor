@@ -20,7 +20,8 @@ public final class Strings {
 										 "Brian Haddad - for all the helpful advice and code snippets\n";
 	public static final String HELP = "All source code is licensed under the GNU GPL and LGPL\n"+
 										 "You may find all source code at http://goo.gl/iAYF3z\n"+
-										 "Any issues/bugs should be submitted to http://goo.gl/jPB5Lv\n";
+										 "Any issues/bugs should be submitted to http://goo.gl/jPB5Lv\n"+
+										 "or emailed to taylortomlin@gmail.com";
 	
 	public static final String PHYSICAL_FACILITY = "Circuit is physical in facility.";
 	public static final String PHYSICAL_ANCS = "Circuit is physical in ANCS.";

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
@@ -53,7 +54,7 @@ public class TSO_Text{
 		frmEnterTso = new JFrame();
 		frmEnterTso.setTitle("Enter TSO");
 		frmEnterTso.setBounds(100, 100, 594, 507);
-		frmEnterTso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEnterTso.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frmEnterTso.getContentPane().setLayout(null);
 		
 		JButton btnCancel = new JButton("Cancel");

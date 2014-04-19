@@ -11,6 +11,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
@@ -63,7 +64,7 @@ public class Settings{
 		frmSettings = new JFrame();
 		frmSettings.setTitle("Settings");
 		frmSettings.setBounds(100, 100, 644, 535);
-		frmSettings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSettings.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
 		frmSettings.getContentPane().add(layeredPane, BorderLayout.CENTER);
@@ -147,6 +148,16 @@ public class Settings{
 		textFielddbPath.setText(Config.dbPath);
 		panel.add(textFielddbPath);
 		textFielddbPath.setColumns(10);
+		
+		JButton btnConsole = new JButton("Console");
+		btnConsole.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Console.getFrame().setVisible(true);
+			}
+		});
+		btnConsole.setBounds(254, 459, 98, 26);
+		layeredPane.add(btnConsole);
 	}
 	protected static JTextField getTextFieldchfPath() {
 		return textFieldchfPath;

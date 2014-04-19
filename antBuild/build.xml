@@ -43,7 +43,9 @@
 	</target>
 	
 	<target name="sign_jar">
-		<signjar jar="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar" keystore="${private.keystore_location}" alias="${private.keystore_user_alias}" storepass="${private.keystore_user_password}" />
+		<signjar jar="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
+			keystore="${private.keystore_location}" alias="${private.keystore_user_alias}"
+			storepass="${private.keystore_user_password}" tsaurl="${private.tsaurl}" />
 	</target>
 	
 	<target name="create_manifest_build">

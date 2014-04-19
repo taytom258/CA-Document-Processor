@@ -48,7 +48,7 @@ public class Conversion {
 		
 		String time = format.substring(2, 7);
 		
-		String date = day + " " + month + " " + year + " " + time;
+//		String date = day + " " + month + " " + year + " " + time;
 		String date2 = MMM_StringtoInt(month)+"/"+day+"/"+year;
 		
 		return date2;

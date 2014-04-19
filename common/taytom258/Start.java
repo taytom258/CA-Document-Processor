@@ -1,10 +1,12 @@
 package taytom258;
 
+import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
 import taytom258.core.security.Check;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Reference;
+import taytom258.window.Console;
 import taytom258.window.Window;
 
 
@@ -30,6 +32,9 @@ public class Start {
 	            	 */
 	            	LogHelper.info("Post-Loading...");
 	            	Database.init();
+	            	if(Config.debug){
+	            		Console.getFrame().setVisible(true);
+	            	}
 	            }
 	        }catch(InterruptedException e){
 	            e.printStackTrace();
@@ -46,7 +51,9 @@ class ThreadA extends Thread{
 	    	/*
 			 *Initialization
 			 */
+	    	Console.init();
 			LogHelper.init();
+			LogHelper.debug("Console initialized");
 			LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
 			LogHelper.info("Initializing...");
 			ConfigHandler.init();

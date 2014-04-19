@@ -168,7 +168,7 @@ public class Window {
 				
 				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				if(Collection.tsoText.equals("")){
-					LogHelper.severe(Strings.FOUND_NOTHING);
+					LogHelper.warning(Strings.FOUND_NOTHING);
 				}else{
 					TSOParser.parseTSO(Collection.tsoText);
 					ShowCHF.show();
@@ -1194,6 +1194,7 @@ public class Window {
 		
 		JButton btnHelp = new JButton("Help");
 		btnHelp.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Help.appear();
 			}
