@@ -17,7 +17,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.Font;
 
-public class ErrorPopHelper extends JDialog {
+public class PopHelper extends JDialog {
 	
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class ErrorPopHelper extends JDialog {
 	private static final long serialVersionUID = -2605535464107680020L;
 	private static final JPanel contentPanel = new JPanel();
 	private static final JTextPane textPane = new JTextPane();
-	private static ErrorPopHelper dialog = new ErrorPopHelper();
+	private static PopHelper dialog = new PopHelper();
 	
 	/**
 	 * Launch the application.
@@ -41,7 +41,7 @@ public class ErrorPopHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ErrorPopHelper() {
+	public PopHelper() {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 180);

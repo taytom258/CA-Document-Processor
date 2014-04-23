@@ -15,7 +15,7 @@ public class Config {
 	
 	//TODO Insert defaults
 	public static final String CHF_PATH = "";
-	public static final String CHF_TEST = "";
+	public static final String CHF_TEST = System.getProperty("user.home")+"\\Desktop";
 	public static final String DB_PATH = "";
 	
 	public static final boolean USE_CHF = false;

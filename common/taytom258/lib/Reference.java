@@ -10,7 +10,6 @@ import taytom258.Start;
 public class Reference {
 
 	//Location Code
-	@SuppressWarnings("unused")
 	public Reference(){
 	JarFile myJar;
 	CodeSource codeSource = Start.class.getProtectionDomain().getCodeSource();
@@ -32,6 +31,7 @@ public class Reference {
 	public static final String AUTHOR = "taytom258";
 	public static final String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
 	public static final int NUM_OPERATIONS = 4;
+	public static final File USER_ROOT = new File(System.getProperty("user.home")+"\\"+AUTHOR);
 	
 	//Variables
 	

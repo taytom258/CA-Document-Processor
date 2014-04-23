@@ -9,7 +9,7 @@ import taytom258.window.Console;
 public class LogHandler extends Handler {
 	
 	public static ArrayList<String> consoleList = new ArrayList<String>();
-
+	
 	public LogHandler() {
 		super();
 		
@@ -29,11 +29,24 @@ public class LogHandler extends Handler {
 			
 	@Override
 	public void publish(final LogRecord record) {
+		
+		String write = getFormatter().format(record);
 		if(!isLoggable(record)){
 			return;
 		}
 		System.out.println(getFormatter().format(record));
-		Console.getTextPane().setText(console(getFormatter().format(record), consoleList));
+		try{
+			if(write.contains("WARNING")){
+				Console.insertHTML(write, "#FFA500");
+			}else if(write.contains("SEVERE")){
+				Console.insertHTML(write, "red");
+			}else{
+				Console.insertHTML(write, "black");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+//		Console.getTextArea().setText(console(getFormatter().format(record), consoleList));
 	}
 	
 	private static String console(String record, ArrayList<String> array){
@@ -44,5 +57,4 @@ public class LogHandler extends Handler {
 		}
 		return temp;
 	}
-
 }

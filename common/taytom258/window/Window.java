@@ -42,8 +42,6 @@ import taytom258.show.tso.ShowDatabase;
 import taytom258.show.tso.ShowFacit;
 import taytom258.window.core.WindowCore;
 
-//TODO Fix all tooltips
-
 public class Window {
 
 	protected JFrame frmTsoHelper;
@@ -151,6 +149,7 @@ public class Window {
 		frmTsoHelper.setResizable(false);
 		
 		JButton button_Settings = new JButton("Settings");
+		button_Settings.setToolTipText("Program Settings");
 		button_Settings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -161,7 +160,7 @@ public class Window {
 		frmTsoHelper.getContentPane().add(button_Settings);
 		
 		JButton button_Run = new JButton("Run");
-		button_Run.setToolTipText("Run Program");
+		button_Run.setToolTipText("Run the Program");
 		button_Run.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -199,6 +198,7 @@ public class Window {
 		frmTsoHelper.getContentPane().add(button_Run);
 		
 		JButton button_Exit = new JButton("Exit");
+		button_Exit.setToolTipText("Close the Program");
 		button_Exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -448,10 +448,12 @@ public class Window {
 		panel.add(tabbedPane_1);
 		
 		JTabbedPane tabbedPane_2 = new JTabbedPane(SwingConstants.TOP);
+		tabbedPane_2.setToolTipText("TSO Document Tab");
 		tabbedPane_1.addTab("TSO", null, tabbedPane_2, null);
 		
 		panel_TSO_Chf = new JPanel();
-		tabbedPane_2.addTab("CHF", null, panel_TSO_Chf, "Circuit history folder stats");
+		panel_TSO_Chf.setToolTipText("");
+		tabbedPane_2.addTab("CHF", null, panel_TSO_Chf, "CHF Info Tab");
 		panel_TSO_Chf.setLayout(null);
 		panel_TSO_Chf.setBackground(Color.WHITE);
 		
@@ -464,6 +466,7 @@ public class Window {
 		panel_TSO_Chf.add(lblChfRoot);
 		
 		textField_ChfTsoName = new JTextField();
+		textField_ChfTsoName.setToolTipText("TSO file name");
 		textField_ChfTsoName.setBackground(Color.WHITE);
 		textField_ChfTsoName.setEditable(false);
 		textField_ChfTsoName.setBounds(102, 12, 407, 20);
@@ -471,6 +474,7 @@ public class Window {
 		textField_ChfTsoName.setColumns(10);
 		
 		textField_ChfRoot = new JTextField();
+		textField_ChfRoot.setToolTipText("Root folder name");
 		textField_ChfRoot.setBackground(Color.WHITE);
 		textField_ChfRoot.setEditable(false);
 		textField_ChfRoot.setBounds(102, 40, 407, 20);
@@ -485,6 +489,7 @@ public class Window {
 		panel_ChfCreating.setLayout(null);
 		
 		textPane_ChfCreating = new JTextPane();
+		textPane_ChfCreating.setToolTipText("Folders created inside root folder");
 		textPane_ChfCreating.setEditable(false);
 		textPane_ChfCreating.setBounds(12, 22, 109, 157);
 		panel_ChfCreating.add(textPane_ChfCreating);
@@ -497,11 +502,13 @@ public class Window {
 		panel_ChfCurrent.setLayout(null);
 		
 		textPane_ChfCurrent = new JTextPane();
+		textPane_ChfCurrent.setToolTipText("Folders currently in the root folder");
 		textPane_ChfCurrent.setEditable(false);
 		textPane_ChfCurrent.setBounds(12, 22, 109, 157);
 		panel_ChfCurrent.add(textPane_ChfCurrent);
 		
 		rdbtn_ChfRoot = new JRadioButton("Root Exists");
+		rdbtn_ChfRoot.setToolTipText("Does the root folder exist?");
 		buttonGroup_1.add(rdbtn_ChfRoot);
 		rdbtn_ChfRoot.setEnabled(false);
 		rdbtn_ChfRoot.setBackground(Color.WHITE);
@@ -510,6 +517,7 @@ public class Window {
 		panel_TSO_Chf.add(rdbtn_ChfRoot);
 		
 		rdbtn_ChfRootCreated = new JRadioButton("Root Created");
+		rdbtn_ChfRootCreated.setToolTipText("Was the root folder created?");
 		buttonGroup_1.add(rdbtn_ChfRootCreated);
 		rdbtn_ChfRootCreated.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtn_ChfRootCreated.setEnabled(false);
@@ -522,8 +530,8 @@ public class Window {
 		panel_TSO_Chf.add(lblChfLink);
 		
 		
-		//TODO Add hyperlink to CHF Link
 		textField_chfLink = new JTextField();
+		textField_chfLink.setToolTipText("Root folder location");
 		textField_chfLink.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -544,7 +552,8 @@ public class Window {
 		textField_chfLink.setColumns(10);
 		
 		JScrollPane scrollPane_TSO_Facit = new JScrollPane();
-		tabbedPane_2.addTab("FACIT", null, scrollPane_TSO_Facit, "Info to transpose to FACIT");
+		scrollPane_TSO_Facit.setToolTipText("");
+		tabbedPane_2.addTab("FACIT", null, scrollPane_TSO_Facit, "Facit Info Tab");
 		scrollPane_TSO_Facit.getVerticalScrollBar().setUnitIncrement(20);
 		
 		JPanel panel_1 = new JPanel();
@@ -615,6 +624,7 @@ public class Window {
 				panel_FacitTsoState.add(scrollPane);
 				
 				textArea_FacitTsoState = new JTextArea();
+				textArea_FacitTsoState.setToolTipText("TSO action statement");
 				textArea_FacitTsoState.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -634,6 +644,7 @@ public class Window {
 				textArea_FacitTsoState.setEditable(false);
 				
 				textField_FacitCcsd = new JTextField();
+				textField_FacitCcsd.setToolTipText("4 Character circuit ID");
 				textField_FacitCcsd.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -654,6 +665,7 @@ public class Window {
 				textField_FacitCcsd.setColumns(10);
 				
 				textField_FacitTsp = new JTextField();
+				textField_FacitTsp.setToolTipText("Circuit Priority");
 				textField_FacitTsp.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -694,6 +706,7 @@ public class Window {
 				textField_FacitPurpose.setColumns(10);
 				
 				textField_FacitRate = new JTextField();
+				textField_FacitRate.setToolTipText("Data Rate");
 				textField_FacitRate.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -734,6 +747,7 @@ public class Window {
 				textField_FacitSvcAvailable.setColumns(10);
 				
 				textField_FacitFullCcsd = new JTextField();
+				textField_FacitFullCcsd.setToolTipText("8 Character circuit ID");
 				textField_FacitFullCcsd.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -754,6 +768,7 @@ public class Window {
 				textField_FacitFullCcsd.setColumns(10);
 				
 				textField_FacitAction = new JTextField();
+				textField_FacitAction.setToolTipText("Action of TSO");
 				textField_FacitAction.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -814,6 +829,7 @@ public class Window {
 				textField_FacitTsrNum.setColumns(10);
 				
 				textField_FacitSvcDate = new JTextField();
+				textField_FacitSvcDate.setToolTipText("");
 				textField_FacitSvcDate.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
@@ -880,11 +896,13 @@ public class Window {
 				panel_1.add(chckbx_FacitCrr);
 		
 		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(SwingConstants.TOP);
+		tabbedPane_TSO_DB.setToolTipText("Database Info Tab");
 		tabbedPane_2.addTab("DB", null, tabbedPane_TSO_DB, "Database Preview");
 		
 		JPanel panel_Circuit = new JPanel();
+		panel_Circuit.setToolTipText("");
 		panel_Circuit.setBackground(Color.WHITE);
-		tabbedPane_TSO_DB.addTab("Circuit", null, panel_Circuit, null);
+		tabbedPane_TSO_DB.addTab("Circuit", null, panel_Circuit, "Circuit Table");
 		panel_Circuit.setLayout(null);
 		
 		JLabel lblFullCcsd = new JLabel("Full CCSD");
@@ -934,6 +952,7 @@ public class Window {
 		textField_DB_Cir_tsp.setColumns(10);
 		
 		JLabel lblToLocation = new JLabel("To");
+		lblToLocation.setToolTipText("To Location");
 		lblToLocation.setBounds(217, 12, 66, 16);
 		panel_Circuit.add(lblToLocation);
 		
@@ -945,6 +964,7 @@ public class Window {
 		textField_DB_Cir_to.setColumns(10);
 		
 		JLabel lblFromLocation = new JLabel("From");
+		lblFromLocation.setToolTipText("From Location");
 		lblFromLocation.setBounds(217, 40, 81, 16);
 		panel_Circuit.add(lblFromLocation);
 		
@@ -1111,8 +1131,9 @@ public class Window {
 		panel_Circuit.add(chckbxAndrewsEndpoint);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setToolTipText("");
 		panel_2.setBackground(Color.WHITE);
-		tabbedPane_TSO_DB.addTab("TSO", null, panel_2, null);
+		tabbedPane_TSO_DB.addTab("TSO", null, panel_2, "TSO Table");
 		panel_2.setLayout(null);
 		
 		JLabel lblTsoNumber = new JLabel("TSO Number");
@@ -1138,7 +1159,7 @@ public class Window {
 		textField_DB_TSO_TsoSuff.setColumns(10);
 		
 		JLabel lblAction = new JLabel("Action");
-		lblAction.setBounds(12, 68, 55, 16);
+		lblAction.setBounds(12, 68, 36, 16);
 		panel_2.add(lblAction);
 		
 		textField_DB_TSO_action = new JTextField();
@@ -1160,6 +1181,7 @@ public class Window {
 		textField_DB_TSO_fullCcsd.setColumns(10);
 		
 		JLabel lblSvcDate = new JLabel("Svc Date");
+		lblSvcDate.setToolTipText("Service Date");
 		lblSvcDate.setBounds(12, 152, 55, 16);
 		panel_2.add(lblSvcDate);
 		
@@ -1188,11 +1210,18 @@ public class Window {
 		textField_DB_TSO_reportDate.setColumns(10);
 		
 		JButton btnTso = new JButton("TSO");
-		btnTso.setToolTipText("Enter the TSO document here");
+		btnTso.setToolTipText("Telecommunication Service Order");
 		btnTso.setBounds(12, 12, 91, 26);
 		panel.add(btnTso);
+		btnTso.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TSO_Text.appear();
+			}
+		});
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.setToolTipText("Need support?");
 		btnHelp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1214,15 +1243,26 @@ public class Window {
 				
 			}
 		});
-		btnNewButton.setToolTipText("Commit to Database");
+		btnNewButton.setToolTipText("Commit to the Database");
 		btnNewButton.setBounds(349, 435, 98, 60);
 		frmTsoHelper.getContentPane().add(btnNewButton);
-		btnTso.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TSO_Text.appear();
+		
+		JButton btnT = new JButton("T");
+		btnT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LogHelper.severe("This is a test");
 			}
 		});
+		if(Config.debug){
+			btnT.setVisible(true);
+		}else{
+			btnT.setVisible(false);
+		}
+		btnT.setToolTipText("Test");
+		btnT.setBounds(485, 452, 41, 26);
+		frmTsoHelper.getContentPane().add(btnT);
+		
+		
 	}
 	protected static JRadioButton getRadioButton_Other() {
 		return radioButton_Other;

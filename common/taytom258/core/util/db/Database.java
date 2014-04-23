@@ -72,7 +72,7 @@ public class Database {
 					String sql = "UPDATE " + table
 							+" SET " + field[i] + " = " + "'" + value[i] + "'"
 							+ " WHERE " + keyField +" = '" + key + "'";
-	//				System.out.println(sql);
+//					System.out.println(sql);
 					st.executeUpdate(sql);
 					update++;
 				}
@@ -106,27 +106,26 @@ public class Database {
 		try {
 		con = DriverManager.getConnection(db);
 		st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			String sql = "SELECT " + field
-					+" FROM " + table
-					+ " WHERE " + keyField +" = '" + key + "'";
+		String sql = "SELECT " + field
+				+" FROM " + table
+				+ " WHERE " + keyField +" = '" + key + "'";
 //			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);
-			ResultSetMetaData md = rs.getMetaData();
-			int numberOfColumns = md.getColumnCount();
-			int i = 1;
-			rs.beforeFirst();
-			rs.next();
-			while (i <= numberOfColumns) {
-	            String text = rs.getString(i);
+		ResultSet rs = st.executeQuery(sql);
+		ResultSetMetaData md = rs.getMetaData();
+		int numberOfColumns = md.getColumnCount();
+		int i = 1;
+		rs.beforeFirst();
+		rs.next();
+		while (i <= numberOfColumns) {
+            String text = rs.getString(i);
 //	            System.out.println(text);
-	        	if(rs.wasNull() || text.equals(" null") || text.equals("")){
-	        		if(!md.getColumnName(i).equals("Trunk_ID")){
-	        			LogHelper.warning("Null value at field " + md.getColumnName(i) + " for CCSD " + key + ". Please edit in access.");
-	        		}
-	        		LogHelper.debug("Null value at field " + md.getColumnName(i));
-	        	}
-	        	i++;
-			}
+        	if(rs.wasNull() || text.equals(" null") || text.equals("")){
+        		if(!md.getColumnName(i).equals("Trunk_ID")){
+        			LogHelper.warning("Null value at field " + md.getColumnName(i) + " for CCSD " + key + ". Please edit in access if incorrect");
+        		}
+        	}
+        	i++;
+		}
 		st.close();
 		con.close();
 		}catch (Exception e){
