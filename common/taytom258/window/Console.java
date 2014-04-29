@@ -21,6 +21,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import taytom258.core.WriteHandler;
 import taytom258.core.log.LogHandler;
+import taytom258.core.util.LogHelper;
 import taytom258.core.util.PopHelper;
 import taytom258.lib.Reference;
 
@@ -45,6 +46,7 @@ public class Console {
 			frmConsole.setVisible(false);
 		} catch (Exception e) {
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 	}
 
@@ -71,6 +73,7 @@ public class Console {
 		
 		btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				textPane.setText("");
 				LogHandler.consoleList.clear();
@@ -82,6 +85,7 @@ public class Console {
 		
 		btnClose = new JButton("Close");
 		btnClose.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmConsole.setVisible(false);
 			}
@@ -90,6 +94,7 @@ public class Console {
 		final File LOG = new File(Reference.USER_ROOT.toString()+"\\log.txt");
 		btnCopyLogTo = new JButton("Copy Log to File");
 		btnCopyLogTo.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(LOG.exists()){
 					LOG.delete();

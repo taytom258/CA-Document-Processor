@@ -60,7 +60,9 @@ public class TSOParser {
 		 String[] STRLOCALID = {
 		  "ANDWSAFB/24/TCF",
 		  "ANDWSAFB",
+		  "BLLNGAFB",
 		  "-4187",
+		  "-5150",
 		  "-9257"
 		 };
 		 //These are search strings that remove false positives for local CCO (for when the above search strings are too general)
@@ -213,36 +215,52 @@ public class TSOParser {
 		 
 		 //Tomlin Request #3 (Redone completely, not java compatible cause of 'match')
 		 //TODO Make phone number collection more accurate
-		 String[] contact = {};
-		 String cmo = tso.get("CCO or CMO");
-		 boolean dsnF = false;
-		 contact = cmo.split("/");
-		 tso.put("CCO or CMO", contact[0]);
-		 if(contact[1].indexOf("D") > contact[1].indexOf("C")){
-			 dsnF = false;
-		 }else if(contact[1].indexOf("D") < contact[1].indexOf("C")){
-			 dsnF = true;
-		 }
-		 ArrayList<String> arrayMatch = matcher("\\d{2}[\\s\\d-]+", contact[1]);
-		 for(String element : arrayMatch){
-			 if(element.length() < 12 || dsnF){
-				 tso.put("CMO DSN", element);
-				 dsnF = false;
-			 }else{
-				 tso.put("CMO Comm", element);
-			 }
-		 }
 		 
-//		 if(contact[1].contains("C")){
-//			 tso.put("CMO Comm", contact[1].replaceAll("[a-zA-Z]", ""));
-//		 }else if(contact[1].contains("D")){
-//			 tso.put("CMO DSN", contact[1].replaceAll("[a-zA-Z]", ""));
+//		 String[] contact = {};
+//		 String cmo = tso.get("CCO or CMO");
+//		 boolean dsnF = false;
+//		 contact = cmo.split("/");
+//		 tso.put("CCO or CMO", contact[0]);
+//		 if(contact[1].indexOf("D") > contact[1].indexOf("C")){
+//			 dsnF = false;
+//		 }else if(contact[1].indexOf("D") < contact[1].indexOf("C")){
+//			 dsnF = true;
 //		 }
-//		 if(contact[2].contains("C")){
-//			 tso.put("CMO Comm", contact[2].replaceAll("[a-zA-Z]", ""));
-//		 }else if(contact[2].contains("D")){
-//			 tso.put("CMO DSN", contact[2].replaceAll("[a-zA-Z]", "")); 
+//		 ArrayList<String> arrayMatch = matcher("\\d{2}[\\s\\d-]+", contact[1]);
+//		 for(String element : arrayMatch){
+//			 if(element.length() < 12 || dsnF){
+//				 tso.put("CMO DSN", element);
+//				 dsnF = false;
+//			 }else{
+//				 tso.put("CMO Comm", element);
+//			 }
 //		 }
+		 
+		String cco = tso.get("CCO or CMO");
+		ArrayList<String> cpi = matcher("\\d{2}[\\s\\d\\-]+", cco);
+		
+		String[] temp = cco.split("/");
+		temp[0] = temp[0].replaceAll("CMO", "");
+		temp[0] = temp[0].replaceAll("CCO", "");
+		tso.put("CCO or CMO", temp[0]);
+		
+		for (int i=0; i<cpi.size(); i++) {
+			int ti = cco.indexOf(cpi.get(i)) - 1;
+			System.out.println(ti + " : " + cco);
+			if (cco.substring(ti,  ti+1).equals(")")){
+				ti--;
+			}
+			if(cco.substring(ti, ti+1).equals("D")){
+				System.out.println(cpi.get(i));
+				tso.put("CMO DSN",cpi.get(i));
+			}else if(cco.substring(ti, ti+1).equals("C")){
+				tso.put("CMO Comm",cpi.get(i));
+			}else{
+				if (!cco.substring(ti, ti+1).equals(" ") && cpi.get(i).length() > 4) {
+					tso.put("CCO Contact Numbers_"+cco.substring(ti, ti+1), cpi.get(i));
+				}
+			}
+		}
 		 
 		 
 

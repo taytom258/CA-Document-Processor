@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import taytom258.core.util.LogHelper;
+
 public class WriteHandler {
 
 	
@@ -38,7 +40,7 @@ public class WriteHandler {
     			textClear(path);
     			textWriter(path, array[i], notLastLine);
     		}catch(Exception e){
-    			System.out.println("Could not print file to location");
+    			LogHelper.severe("Could not print file to location");
     			return false;
     		}
     	}
@@ -56,7 +58,7 @@ public class WriteHandler {
     			textClear(path.toString());
     			textWriter(path.toString(), array[i], notLastLine);
     		}catch(Exception e){
-    			System.out.println("Could not print file to location");
+    			LogHelper.severe("Could not print file to location");
     			return false;
     		}
     	}

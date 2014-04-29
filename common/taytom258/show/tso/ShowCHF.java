@@ -108,6 +108,7 @@ public class ShowCHF extends Window {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
 			}
 		}
 		getTextField_chfLink().setText(folderExist.toString());
@@ -176,6 +177,7 @@ public class ShowCHF extends Window {
 					LogHelper.io("Created " + s + " in: " + path);}
 			} catch (IOException e) {
 				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
 			}
 		}
 	}
@@ -234,6 +236,7 @@ public class ShowCHF extends Window {
 				}
 			}catch (Exception e){
 				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
 			}
 		}
 	}

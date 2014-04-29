@@ -23,6 +23,8 @@ import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class TSOPopHelper extends JDialog {
 	
@@ -37,6 +39,7 @@ public class TSOPopHelper extends JDialog {
 	private final JTextField textField_mrc = new JTextField();
 	private final JLabel label_1 = new JLabel("NRC");
 	private final JCheckBox checkBox_careq = new JCheckBox("CA Action Required?");
+	private JComboBox comboBox = new JComboBox();
 	
 	/**
 	 * Launch the application.
@@ -54,7 +57,7 @@ public class TSOPopHelper extends JDialog {
 	public TSOPopHelper() {
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setBounds(100, 100, 400, 180);
+		setBounds(100, 100, 400, 245);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
@@ -66,20 +69,6 @@ public class TSOPopHelper extends JDialog {
 					save();
 					dialog.dispose();
 					TSOCommit.run();
-				}
-
-				private void save() {
-					double z = 0;
-					if (!textField_mrc.getText().equals("")) {
-						Collection.mrc = Double.valueOf(textField_mrc.getText().trim());
-					}else{
-						Collection.mrc = z;
-					}
-					if (!textField_nrc.getText().equals("")) {
-						Collection.nrc = Double.valueOf(textField_nrc.getText().trim());
-					}else{
-						Collection.nrc = z;
-					}
 				}
 			});
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -129,5 +118,34 @@ public class TSOPopHelper extends JDialog {
 		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
 		doc.setParagraphAttributes(0, doc.getLength(), center, false);
 		panel.add(textPane);
+		
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Andrews", "Bolling", "Andrews 1539"}));
+		comboBox.setBounds(228, 93, 154, 25);
+		comboBox.setEditable(false);
+		comboBox.setSelectedIndex(-1);
+		panel.add(comboBox);
+		
+		JLabel lblLocation = new JLabel("Location");
+		lblLocation.setBounds(155, 97, 55, 16);
+		panel.add(lblLocation);
+	}
+	
+	private void save() {
+		double z = 0;
+		if (!textField_mrc.getText().equals("")) {
+			Collection.mrc = Double.valueOf(textField_mrc.getText().trim());
+		}else{
+			Collection.mrc = z;
+		}
+		if (!textField_nrc.getText().equals("")) {
+			Collection.nrc = Double.valueOf(textField_nrc.getText().trim());
+		}else{
+			Collection.nrc = z;
+		}
+		if(comboBox.getSelectedIndex() != -1){
+			Collection.location = comboBox.getSelectedItem().toString();
+		}else{
+			Collection.location = "Not Set";
+		}
 	}
 }

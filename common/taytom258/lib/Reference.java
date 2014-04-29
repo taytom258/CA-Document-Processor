@@ -6,6 +6,7 @@ import java.security.CodeSource;
 import java.util.jar.JarFile;
 
 import taytom258.Start;
+import taytom258.core.util.LogHelper;
 
 public class Reference {
 
@@ -18,6 +19,7 @@ public class Reference {
 		jarFile = new File(codeSource.getLocation().toURI().getPath());
 	} catch (URISyntaxException e) {
 		e.printStackTrace();
+		LogHelper.severe(e.getMessage());
 	}
 	String jarDir = jarFile.getParentFile().getPath();
 	}

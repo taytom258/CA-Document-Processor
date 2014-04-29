@@ -35,7 +35,7 @@ public class Conversion {
 		return x;
 	}
 	
-	public static String dateConvert(String format){
+	public static String dateConvert(String format, boolean stringM, boolean db){
 		
 		format.toUpperCase().trim();
 		
@@ -48,10 +48,17 @@ public class Conversion {
 		
 		String time = format.substring(2, 7);
 		
-//		String date = day + " " + month + " " + year + " " + time;
-		String date2 = MMM_StringtoInt(month)+"/"+day+"/"+year;
+		String date = day + " " + month + " " + year + " " + time;
+		String date2 = MMM_StringtoInt(month) + "/" + day + "/" + year + " " + time;
+		String dateDB = day + "/" + MMM_StringtoInt(month) + "/" + year;
 		
-		return date2;
+		if(stringM){
+			return date;
+		}else if(db){
+			return dateDB;
+		}else{
+			return date2;
+		}
 	}
 	
 }

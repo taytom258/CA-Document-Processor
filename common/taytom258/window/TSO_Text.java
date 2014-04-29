@@ -1,6 +1,7 @@
 package taytom258.window;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
+import taytom258.lib.Strings;
+import taytom258.show.tso.ShowCHF;
+import taytom258.show.tso.ShowDatabase;
+import taytom258.show.tso.ShowFacit;
 import taytom258.window.core.TSO_TextCore;
 
 public class TSO_Text{
@@ -35,6 +41,7 @@ public class TSO_Text{
 					window.frmEnterTso.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					LogHelper.severe(e.getMessage());
 				}
 			}
 		});
@@ -61,15 +68,28 @@ public class TSO_Text{
 		btnCancel.setBounds(493, 431, 73, 26);
 		frmEnterTso.getContentPane().add(btnCancel);
 		
-		JButton btnAccept = new JButton("Accept");
+		JButton btnAccept = new JButton("Accept & Run");
 		btnAccept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TSO_TextCore.save();
+				Window.getFrmTsoHelper().getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				frmEnterTso.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				if(Collection.tsoText.equals("")){
+					LogHelper.warning(Strings.FOUND_NOTHING);
+				}else{
+					TSOParser.parseTSO(Collection.tsoText);
+					ShowCHF.show();
+					ShowFacit.show();
+					ShowDatabase.show();
+					Collection.runClicked = true;
+				}
+				Window.getFrmTsoHelper().getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				frmEnterTso.getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				frmEnterTso.dispose();
 			}
 		});
-		btnAccept.setBounds(12, 431, 74, 26);
+		btnAccept.setBounds(12, 431, 111, 26);
 		frmEnterTso.getContentPane().add(btnAccept);
 		
 		JPanel panel = new JPanel();

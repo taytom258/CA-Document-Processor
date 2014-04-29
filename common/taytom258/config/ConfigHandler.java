@@ -63,6 +63,7 @@ public class ConfigHandler{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 	}
 
@@ -88,6 +89,7 @@ public class ConfigHandler{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 	}
 	

@@ -45,6 +45,7 @@ public class Settings{
 					window.frmSettings.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					LogHelper.severe(e.getMessage());
 				}
 			}
 		});

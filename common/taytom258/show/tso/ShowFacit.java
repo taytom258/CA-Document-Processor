@@ -71,7 +71,7 @@ public class ShowFacit extends Window{
 	
 	private static void svcDate(){
 		if(!Collection.svcDate.equals("")){
-			Window.getTextField_FacitSvcDate().setText(Conversion.dateConvert(Collection.svcDate));
+			Window.getTextField_FacitSvcDate().setText(Conversion.dateConvert(Collection.svcDate, true, false));
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class ShowFacit extends Window{
 	}
 	
 	private static void reportDate(){
-		Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.reportDate));
+		Window.getTextField_FacitReportDate().setText(Conversion.dateConvert(Collection.reportDate, true, false));
 	}
 	
 	private static void comReport(){

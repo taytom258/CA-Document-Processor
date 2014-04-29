@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+import taytom258.core.util.LogHelper;
 import taytom258.window.Console;
 
 public class LogHandler extends Handler {
@@ -45,6 +46,7 @@ public class LogHandler extends Handler {
 			}
 		}catch (Exception e){
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 //		Console.getTextArea().setText(console(getFormatter().format(record), consoleList));
 	}

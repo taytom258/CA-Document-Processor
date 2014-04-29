@@ -17,6 +17,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Strings;
 
 import java.awt.event.ActionListener;
@@ -40,6 +41,7 @@ public class Help extends JDialog {
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 	}
 

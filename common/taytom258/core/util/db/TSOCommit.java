@@ -27,12 +27,12 @@ public class TSOCommit extends Database {
 		
 		String field = "FullCCSD, TrunkID, FullTSP, TSP, ToLocation, FromLocation, RequestingDepartment, TypeofService, "
 				+ "CircuitUse, Security, DataRate, TrafficFlow, Term, AndrewsCMO, CMO, CMODSN, CMOCOMM, Signaling, "
-				+ "QualityControlCode, EndPoint, CHFLink, MRC, NRC";
+				+ "QualityControlCode, EndPoint, CHFLink, Location, MRC, NRC";
 		String value = Collection.fullCcsd+c+Collection.trunkId+c+Collection.fullTsp+c+Collection.tsp+c+Collection.toLocation+c
 				+Collection.fromLocation+c+Collection.requestingDept+c+Collection.serviceType+c+Collection.circuitUse+c+Collection.security
 				+c+Collection.dataRate+c+Collection.trafficFlow+c+Collection.serviceAvail+c+andrewscmo+c
 				+Collection.cmo+c+Collection.cmoDsn+c+Collection.cmoComm+c+Collection.signaling+c+Collection.qcc+c+endpoint+c+Collection.chfLink
-				+c+Collection.mrc+c+Collection.nrc;
+				+c+Collection.location+c+Collection.mrc+c+Collection.nrc;
 		sqlInsert("Circuits", field, value, Collection.fullCcsd, "FullCCSD");
 	}
 	
@@ -53,8 +53,8 @@ public class TSOCommit extends Database {
 		}
 		
 		String field = "TSONumber, TSOSuffix, Action, FullCCSD, ServiceDate, ReportDate, CompletionReportReq, CAActionRequired";
-		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate)
-				+c+Conversion.dateConvert(Collection.reportDate)+c+crr+c+careq;
+		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate, false, true)
+				+c+Conversion.dateConvert(Collection.reportDate, false, true)+c+crr+c+careq;
 		sqlInsert("TSO", field, value, Collection.tsoNum, "TSONumber");
 	}
 }

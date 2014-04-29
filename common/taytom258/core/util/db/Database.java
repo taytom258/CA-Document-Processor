@@ -54,6 +54,7 @@ public class Database {
 					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					LogHelper.severe(e.getMessage());
 				}
 			}else{
 				ex.printStackTrace();
@@ -95,8 +96,10 @@ public class Database {
 			db = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=" + path;
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
+			LogHelper.severe(ex.getMessage());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 		LogHelper.debug("Database connection initialized");
 		
@@ -130,6 +133,7 @@ public class Database {
 		con.close();
 		}catch (Exception e){
 		e.printStackTrace();
+		LogHelper.severe(e.getMessage());
 		}
 	}
 }

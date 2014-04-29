@@ -38,6 +38,7 @@ public class Start {
 	            }
 	        }catch(InterruptedException e){
 	            e.printStackTrace();
+	            LogHelper.severe(e.getMessage());
 	        }
 	    }
 	    

@@ -2,7 +2,6 @@ package taytom258.window;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,20 +30,15 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
-import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.LogHelper;
-import taytom258.core.util.parsers.TSOParser;
+import taytom258.core.util.TSOPopHelper;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
-import taytom258.lib.Strings;
-import taytom258.show.tso.ShowCHF;
-import taytom258.show.tso.ShowDatabase;
-import taytom258.show.tso.ShowFacit;
 import taytom258.window.core.WindowCore;
 
 public class Window {
 
-	protected JFrame frmTsoHelper;
+	protected static JFrame frmTsoHelper;
 	protected static JTextField textField_TsoSubject;
 	protected static JTextField textField_FullCcsd;
 	protected static JTextField textField_ServiceDate;
@@ -125,6 +119,7 @@ public class Window {
 					window.frmTsoHelper.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					LogHelper.severe(e.getMessage());
 				}
 			}
 		});
@@ -158,44 +153,6 @@ public class Window {
 		});
 		button_Settings.setBounds(10, 435, 91, 60);
 		frmTsoHelper.getContentPane().add(button_Settings);
-		
-		JButton button_Run = new JButton("Run");
-		button_Run.setToolTipText("Run the Program");
-		button_Run.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
-				if(Collection.tsoText.equals("")){
-					LogHelper.warning(Strings.FOUND_NOTHING);
-				}else{
-					TSOParser.parseTSO(Collection.tsoText);
-					ShowCHF.show();
-					ShowFacit.show();
-					ShowDatabase.show();
-					Collection.runClicked = true;
-				}
-				frmTsoHelper.getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				
-				
-//				if(textField_TsoSubject.getText().equals("") ||
-//						textField_FullCcsd.getText().equals("") ||
-//						textField_ServiceDate.getText().equals("")){
-//						
-//						LogHelper.severe(Strings.FOUND_NOTHING);
-//						
-//				}else{
-//					WindowCore.collect.init();
-//					ShowAccessTracker.show();
-//					ShowCHF.show();
-//					ShowFacit.show();
-//				}
-				
-				
-			}
-		});
-		button_Run.setBounds(180, 435, 91, 60);
-		frmTsoHelper.getContentPane().add(button_Run);
 		
 		JButton button_Exit = new JButton("Exit");
 		button_Exit.setToolTipText("Close the Program");
@@ -1116,11 +1073,11 @@ public class Window {
 		panel_Circuit.add(textField_DB_Cir_qcc);
 		textField_DB_Cir_qcc.setColumns(10);
 		
-		chckbxAndrewsCmo = new JCheckBox("Andrews CMO");
+		chckbxAndrewsCmo = new JCheckBox("Andrews or Bolling CMO");
 		chckbxAndrewsCmo.setEnabled(false);
-		chckbxAndrewsCmo.setToolTipText("Are we the CMO for this circuit?");
+		chckbxAndrewsCmo.setToolTipText("Are we the CMO?");
 		chckbxAndrewsCmo.setBackground(Color.WHITE);
-		chckbxAndrewsCmo.setBounds(217, 208, 112, 24);
+		chckbxAndrewsCmo.setBounds(217, 208, 166, 24);
 		panel_Circuit.add(chckbxAndrewsCmo);
 		
 		chckbxAndrewsEndpoint = new JCheckBox("Andrews Endpoint");
@@ -1231,7 +1188,7 @@ public class Window {
 		btnHelp.setBounds(12, 385, 91, 26);
 		panel.add(btnHelp);
 		
-		JButton btnNewButton = new JButton("Commit");
+		JButton btnNewButton = new JButton("Commit to DB");
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -1244,11 +1201,12 @@ public class Window {
 			}
 		});
 		btnNewButton.setToolTipText("Commit to the Database");
-		btnNewButton.setBounds(349, 435, 98, 60);
+		btnNewButton.setBounds(267, 435, 111, 60);
 		frmTsoHelper.getContentPane().add(btnNewButton);
 		
-		JButton btnT = new JButton("T");
+		JButton btnT = new JButton("Test");
 		btnT.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.severe("This is a test");
 			}
@@ -1259,7 +1217,7 @@ public class Window {
 			btnT.setVisible(false);
 		}
 		btnT.setToolTipText("Test");
-		btnT.setBounds(485, 452, 41, 26);
+		btnT.setBounds(429, 452, 59, 26);
 		frmTsoHelper.getContentPane().add(btnT);
 		
 		
@@ -1431,5 +1389,8 @@ public class Window {
 	}
 	protected static JTextField getTextField_DB_TSO_reportDate() {
 		return textField_DB_TSO_reportDate;
+	}
+	protected static JFrame getFrmTsoHelper() {
+		return frmTsoHelper;
 	}
 }
