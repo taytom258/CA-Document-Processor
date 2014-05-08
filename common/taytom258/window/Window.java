@@ -1209,6 +1209,7 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.severe("This is a test");
+				
 			}
 		});
 		if(Config.debug){

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
@@ -17,17 +18,26 @@ public class Database {
 	private static Statement st;
 	private static String db;
 
-	@Deprecated
-	protected static void sqlCommand(String sql) {
+	protected static ArrayList<String> sqlQuery(String sql) {
+		
+		ArrayList<String> group = new ArrayList<String>();
+		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(db);
 			st = con.createStatement();
-			st.execute(sql);
+			rs = st.executeQuery(sql);
+			ResultSetMetaData md = rs.getMetaData();
+			while(rs.next()){
+				for(int i=1;i<=md.getColumnCount();i++){
+					group.add(rs.getString(i));
+				}
+			}
 			con.close();
 			st.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		return group;
 	}
 	
 	protected static void sqlInsert(String table, String field, String value, String key, String keyField){
@@ -39,9 +49,10 @@ public class Database {
 			String sql = "INSERT INTO " + table + " (" + field + ")" + " VALUES " + "('" + value + "')";
 //			System.out.println(sql);
 			st.executeUpdate(sql);
+//			Thread.sleep(4000);
+			sqlQueryNull(table, field, key, keyField);
 			st.close();
 			con.close();
-			sqlQueryNull(table, field, key, keyField);
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
 				LogHelper.info("Record already exists in database, updating information");
@@ -71,7 +82,7 @@ public class Database {
 			if(!table.equals("TSO")){
 				for(int i=0; i<field.length; i++){
 					String sql = "UPDATE " + table
-							+" SET " + field[i] + " = " + "'" + value[i] + "'"
+							+" SET " + field[i] + " = " + "'" + value[i].trim() + "'"
 							+ " WHERE " + keyField +" = '" + key + "'";
 //					System.out.println(sql);
 					st.executeUpdate(sql);
@@ -123,7 +134,7 @@ public class Database {
             String text = rs.getString(i);
 //	            System.out.println(text);
         	if(rs.wasNull() || text.equals(" null") || text.equals("")){
-        		if(!md.getColumnName(i).equals("Trunk_ID")){
+        		if(!md.getColumnName(i).equals("TrunkID")){
         			LogHelper.warning("Null value at field " + md.getColumnName(i) + " for CCSD " + key + ". Please edit in access if incorrect");
         		}
         	}

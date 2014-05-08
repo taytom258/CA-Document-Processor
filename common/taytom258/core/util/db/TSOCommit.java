@@ -6,6 +6,7 @@ import taytom258.lib.Collection;
 public class TSOCommit extends Database {
 
 	public static void run(){
+		CMO();
 		circuit();
 		TSO();
 	}
@@ -25,13 +26,13 @@ public class TSOCommit extends Database {
 			endpoint = 0;
 		}
 		
-		String field = "FullCCSD, TrunkID, FullTSP, TSP, ToLocation, FromLocation, RequestingDepartment, TypeofService, "
-				+ "CircuitUse, Security, DataRate, TrafficFlow, Term, AndrewsCMO, CMO, CMODSN, CMOCOMM, Signaling, "
+		String field = "FullCCSD, TrunkID, FullTSP, TSP, ToLocation, ToCode, FromLocation, FromCode, RequestingDepartment, TypeofService, "
+				+ "CircuitUse, Security, DataRate, TrafficFlow, Term, AndrewsCMO, CMO, Signaling, "
 				+ "QualityControlCode, EndPoint, CHFLink, Location, MRC, NRC";
-		String value = Collection.fullCcsd+c+Collection.trunkId+c+Collection.fullTsp+c+Collection.tsp+c+Collection.toLocation+c
-				+Collection.fromLocation+c+Collection.requestingDept+c+Collection.serviceType+c+Collection.circuitUse+c+Collection.security
+		String value = Collection.fullCcsd+c+Collection.trunkId+c+Collection.fullTsp+c+Collection.tsp+c+Collection.toLocation+c+Collection.toCode+c
+				+Collection.fromLocation+c+Collection.fromCode+c+Collection.requestingDept+c+Collection.serviceType+c+Collection.circuitUse+c+Collection.security
 				+c+Collection.dataRate+c+Collection.trafficFlow+c+Collection.serviceAvail+c+andrewscmo+c
-				+Collection.cmo+c+Collection.cmoDsn+c+Collection.cmoComm+c+Collection.signaling+c+Collection.qcc+c+endpoint+c+Collection.chfLink
+				+Collection.cmo+c+Collection.signaling+c+Collection.qcc+c+endpoint+c+Collection.chfLink
 				+c+Collection.location+c+Collection.mrc+c+Collection.nrc;
 		sqlInsert("Circuits", field, value, Collection.fullCcsd, "FullCCSD");
 	}
@@ -56,5 +57,14 @@ public class TSOCommit extends Database {
 		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate, false, true)
 				+c+Conversion.dateConvert(Collection.reportDate, false, true)+c+crr+c+careq;
 		sqlInsert("TSO", field, value, Collection.tsoNum, "TSONumber");
+	}
+	
+	private static void CMO(){
+		String c = "', '";
+		
+		String field = "CMO, CMODsn, CMOComm";
+		String value = Collection.cmo+c+Collection.cmoDsn+c+Collection.cmoComm;
+		sqlInsert("CMO", field, value, Collection.cmo, "CMO");
+		
 	}
 }

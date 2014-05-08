@@ -57,7 +57,7 @@ public class TSOPopHelper extends JDialog {
 	public TSOPopHelper() {
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setBounds(100, 100, 400, 245);
+		setBounds(100, 100, 400, 194);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
@@ -67,6 +67,7 @@ public class TSOPopHelper extends JDialog {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					save();
+					clear();
 					dialog.dispose();
 					TSOCommit.run();
 				}
@@ -88,11 +89,12 @@ public class TSOPopHelper extends JDialog {
 		{
 			textField_nrc.setBounds(42, 64, 86, 20);
 			textField_nrc.setColumns(10);
+			textField_nrc.setText("0.00");
 			panel.add(textField_nrc);
 		}
 		{
 			textField_mrc.setBounds(42, 94, 86, 20);
-			textField_mrc.setText("");
+			textField_mrc.setText("0.00");
 			textField_mrc.setColumns(10);
 			panel.add(textField_mrc);
 		}
@@ -122,7 +124,7 @@ public class TSOPopHelper extends JDialog {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Andrews", "Bolling", "Andrews 1539"}));
 		comboBox.setBounds(228, 93, 154, 25);
 		comboBox.setEditable(false);
-		comboBox.setSelectedIndex(-1);
+		comboBox.setSelectedIndex(0);
 		panel.add(comboBox);
 		
 		JLabel lblLocation = new JLabel("Location");
@@ -147,5 +149,13 @@ public class TSOPopHelper extends JDialog {
 		}else{
 			Collection.location = "Not Set";
 		}
+		Collection.careq = checkBox_careq.isSelected();
+	}
+	
+	private void clear(){
+		textField_mrc.setText("");
+		textField_nrc.setText("");
+		comboBox.setSelectedIndex(-1);
+		checkBox_careq.setSelected(false);
 	}
 }

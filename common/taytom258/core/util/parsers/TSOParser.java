@@ -8,7 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.db.Database;
 import taytom258.lib.Collection;
+import taytom258.lib.Strings;
 
 /**
  * Parse TSO text
@@ -246,12 +248,12 @@ public class TSOParser {
 		
 		for (int i=0; i<cpi.size(); i++) {
 			int ti = cco.indexOf(cpi.get(i)) - 1;
-			System.out.println(ti + " : " + cco);
+//			System.out.println(ti + " : " + cco);
 			if (cco.substring(ti,  ti+1).equals(")")){
 				ti--;
 			}
 			if(cco.substring(ti, ti+1).equals("D")){
-				System.out.println(cpi.get(i));
+//				System.out.println(cpi.get(i));
 				tso.put("CMO DSN",cpi.get(i));
 			}else if(cco.substring(ti, ti+1).equals("C")){
 				tso.put("CMO Comm",cpi.get(i));
@@ -898,9 +900,19 @@ public class TSOParser {
 					 Collection.fullTsp = value;
 				 }
 			 }else if(key.equals("To")){
-				 Collection.toLocation = value;
+				 String tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";
+				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim()+ "'";
+				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
+				 String[] name = temprs.split(":");
+				 Collection.toLocation = name[1] + ": " + name[0];
+				 Collection.toCode = value;
 			 }else if(key.equals("From")){
-				 Collection.fromLocation = value;
+				 String tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";
+				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim()+ "'";
+				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
+				 String[] name = temprs.split(":");
+				 Collection.fromLocation = name[1] + ": " + name[0];
+				 Collection.fromCode = value;
 			 }else if(key.equals("Requesting Department")){
 				 Collection.requestingDept = value;
 			 }else if(key.equals("Type of Service")){
@@ -951,5 +963,27 @@ public class TSOParser {
 			 }
 		 }
 		 LogHelper.info("TSO (Parser) Complete");
+	}
+}
+
+class LoadDB extends Database{
+	
+	public static String testGEOLOC(String GEOLOC, String StateCode){
+		
+		String re = "";
+		String sql = "SELECT * "+
+						"FROM "+Strings.GEOLOC_TABLE+
+						" WHERE GEOLOC = "+GEOLOC+" AND StateCountryCode = "+StateCode;
+		ArrayList<String> al = new ArrayList<String>();
+		al = sqlQuery(sql);
+		for(int i=0;i<al.size();i++){
+			String temp = al.get(i);
+			if(i == 5){
+				re += temp+":";
+			}else if(i == 7){
+				re += temp;
+			}
+		}
+		return re;
 	}
 }

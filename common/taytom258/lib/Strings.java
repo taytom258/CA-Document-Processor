@@ -39,5 +39,6 @@ public final class Strings {
 	public static final String ANDREWS_CMO = "ANDWSAFB";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
 	public static final String[] FOLDERS = {"Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters"};
+	public static final String GEOLOC_TABLE = "Java_GEOLOC";
 	
 }
