@@ -50,7 +50,7 @@ public class Database {
 //			System.out.println(sql);
 			st.executeUpdate(sql);
 //			Thread.sleep(4000);
-			sqlQueryNull(table, field, key, keyField);
+//			sqlQueryNull(table, field, key, keyField);
 			st.close();
 			con.close();
 		} catch (Exception ex) {
@@ -59,7 +59,7 @@ public class Database {
 				fields = field.split(",");
 				values = value.replace("'", "").split(",");
 				sqlUpdate(table, fields, values, key, keyField);
-				sqlQueryNull(table, field, key, keyField);
+//				sqlQueryNull(table, field, key, keyField);
 				try {
 					st.close();
 					con.close();
@@ -116,6 +116,8 @@ public class Database {
 		
 	}
 	
+	//TODO Get query null to work properly
+	
 	private static void sqlQueryNull(String table, String field, String key, String keyField){
 		try {
 		con = DriverManager.getConnection(db);
@@ -145,6 +147,14 @@ public class Database {
 		}catch (Exception e){
 		e.printStackTrace();
 		LogHelper.severe(e.getMessage());
+		try {
+			st.close();
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			LogHelper.severe(e1.getMessage());
+		}
+		
 		}
 	}
 }

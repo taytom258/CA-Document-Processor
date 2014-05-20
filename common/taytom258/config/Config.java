@@ -14,9 +14,9 @@ public class Config {
 	public static final String CONFIG_PATH = System.getProperty("user.home").concat("\\"+Reference.AUTHOR);
 	
 	//TODO Insert defaults
-	public static final String CHF_PATH = "";
-	public static final String CHF_TEST = System.getProperty("user.home")+"\\Desktop";
-	public static final String DB_PATH = "";
+	public static final String CHF_PATH = "\\\\ASPARAGUS\\Circuit History Folders";
+	public static final String CHF_TEST = Reference.findMe();
+	public static final String DB_PATH = Reference.findMe() + "\\DB.accdb";
 	
 	public static final boolean USE_CHF = false;
 	public static final boolean AUTO_SELECTION = false;

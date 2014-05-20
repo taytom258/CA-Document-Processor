@@ -11,7 +11,7 @@ import taytom258.core.util.LogHelper;
 public class Reference {
 
 	//Location Code
-	public Reference(){
+	public static String findMe(){
 	JarFile myJar;
 	CodeSource codeSource = Start.class.getProtectionDomain().getCodeSource();
 	File jarFile = null;
@@ -22,6 +22,7 @@ public class Reference {
 		LogHelper.severe(e.getMessage());
 	}
 	String jarDir = jarFile.getParentFile().getPath();
+	return jarDir;
 	}
 	
 	

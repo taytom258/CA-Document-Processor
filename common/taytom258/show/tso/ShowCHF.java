@@ -148,7 +148,7 @@ public class ShowCHF extends Window {
 		} else if (Collection.isAnalog
 				&& folder.equals(Strings.FOLDERS[2])) {
 			return true;
-		} else if (Collection.cmo.equals(Strings.ANDREWS_CMO)
+		} else if (Collection.andrewsCmo
 				&& folder.equals(Strings.FOLDERS[5])) {
 			return true;
 		} else if (!Collection.isPassthrough
@@ -165,6 +165,8 @@ public class ShowCHF extends Window {
 			return true;
 		} else if (folder.equals(Strings.FOLDERS[7])) {
 			return true;
+		}else if (folder.equals(Strings.FOLDERS[9])) {
+			//TODO Recognize 'MISC' and change to 'Miscellaneous'
 		}
 		return false;
 	}

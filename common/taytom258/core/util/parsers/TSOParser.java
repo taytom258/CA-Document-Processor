@@ -216,7 +216,6 @@ public class TSOParser {
 		 }
 		 
 		 //Tomlin Request #3 (Redone completely, not java compatible cause of 'match')
-		 //TODO Make phone number collection more accurate
 		 
 //		 String[] contact = {};
 //		 String cmo = tso.get("CCO or CMO");

@@ -1,5 +1,9 @@
 package taytom258.core.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Conversion {
 
@@ -48,16 +52,20 @@ public class Conversion {
 		
 		String time = format.substring(2, 7);
 		
-		String date = day + " " + month + " " + year + " " + time;
-		String date2 = MMM_StringtoInt(month) + "/" + day + "/" + year + " " + time;
-		String dateDB = day + "/" + MMM_StringtoInt(month) + "/" + year;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy");
+		Date date = new Date();
+		String yearpre = dateFormat.format(date).substring(0, 2);
+		
+		String date2 = day + " " + month + " " + year + " " + time;
+		String date3 = MMM_StringtoInt(month) + "/" + day + "/" + year + " " + time;
+		String dateDB = MMM_StringtoInt(month) + "/" + day + "/" + yearpre + year;
 		
 		if(stringM){
-			return date;
+			return date2;
 		}else if(db){
 			return dateDB;
 		}else{
-			return date2;
+			return date3;
 		}
 	}
 	

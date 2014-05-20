@@ -40,6 +40,7 @@ public class TSOPopHelper extends JDialog {
 	private final JLabel label_1 = new JLabel("NRC");
 	private final JCheckBox checkBox_careq = new JCheckBox("CA Action Required?");
 	private JComboBox comboBox = new JComboBox();
+	private final JButton btnCancel = new JButton("Cancel");
 	
 	/**
 	 * Launch the application.
@@ -75,6 +76,14 @@ public class TSOPopHelper extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			buttonPane.add(okButton);
 			getRootPane().setDefaultButton(okButton);
+			{
+				btnCancel.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dialog.dispose();
+					}
+				});
+				buttonPane.add(btnCancel);
+			}
 		}
 		{
 			panel.setBackground(UIManager.getColor("Button.background"));
@@ -153,9 +162,9 @@ public class TSOPopHelper extends JDialog {
 	}
 	
 	private void clear(){
-		textField_mrc.setText("");
-		textField_nrc.setText("");
-		comboBox.setSelectedIndex(-1);
+		textField_mrc.setText("0.00");
+		textField_nrc.setText("0.00");
+		comboBox.setSelectedIndex(0);
 		checkBox_careq.setSelected(false);
 	}
 }
