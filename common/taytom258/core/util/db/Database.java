@@ -36,6 +36,15 @@ public class Database {
 			st.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			LogHelper.severe(ex.getMessage());
+			try {
+				con.close();
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
+			}
+			
 		}
 		return group;
 	}
@@ -60,16 +69,16 @@ public class Database {
 				values = value.replace("'", "").split(",");
 				sqlUpdate(table, fields, values, key, keyField);
 //				sqlQueryNull(table, field, key, keyField);
-				try {
-					st.close();
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					LogHelper.severe(e.getMessage());
-				}
 			}else{
 				ex.printStackTrace();
 				LogHelper.severe(ex.getMessage());
+			}
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
 			}
 		}
 	}
@@ -88,7 +97,7 @@ public class Database {
 					st.executeUpdate(sql);
 					update++;
 				}
-				LogHelper.info(update + " records updated");
+				LogHelper.info(update + " fields updated");
 				st.close();
 				con.close();
 			}else{
@@ -97,6 +106,14 @@ public class Database {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(ex.getMessage());
+			}
+			
 		}
 	}
 

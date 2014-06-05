@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 import org.apache.commons.io.FileUtils;
 
 import taytom258.config.Config;
@@ -55,10 +57,15 @@ public class ShowCHF extends Window {
 		File folderExist = null;
 		File only = null;
 
-		if (Collection.tsoAction.equals("DISCONTINUE")) {
-			getTextField_ChfRoot().setText(
-					Collection.chfRootFolder + " " + Strings.DISCO_PEND);
-		} else {
+		if (Collection.tsoAction.equals("DISCONTINUE") && Collection.fullCcsd.length() == 6){
+			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND);
+			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";
+		}else if (Collection.tsoAction.equals("DISCONTINUE")) {
+			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + Strings.DISCO_PEND);
+		} else if (Collection.trunkId.length() == 6) {
+			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")");
+			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";
+		}else{
 			getTextField_ChfRoot().setText(Collection.chfRootFolder);
 		}
 
@@ -132,6 +139,15 @@ public class ShowCHF extends Window {
 				currentText = currentText.concat(element);
 				currentText = currentText.concat("\n");
 				getTextPane_ChfCurrent().setText(currentText);
+				if (folder.toString().contains(Strings.FOLDERS[9])){
+					File newFolder = new File(path + "\\" + Strings.FOLDERS[1]);
+					try {
+						FileUtils.moveDirectory(folder, newFolder);
+					} catch (IOException e) {
+						e.printStackTrace();
+						LogHelper.severe(e.getMessage());
+					}
+				}
 			} else if (!folder.exists() && check(element)) {
 				creatingText = creatingText.concat(element);
 				creatingText = creatingText.concat("\n");
@@ -165,8 +181,6 @@ public class ShowCHF extends Window {
 			return true;
 		} else if (folder.equals(Strings.FOLDERS[7])) {
 			return true;
-		}else if (folder.equals(Strings.FOLDERS[9])) {
-			//TODO Recognize 'MISC' and change to 'Miscellaneous'
 		}
 		return false;
 	}

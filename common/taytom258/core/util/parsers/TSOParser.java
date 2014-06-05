@@ -168,8 +168,16 @@ public class TSOParser {
 		  if (items[i] != skippy) {
 		   as = " " + ALPHABET[i] + ". ";
 		   bs = " " + ALPHABET[i + 1] + ". ";
-		   tso.put(items[i], st.substring(st.indexOf(as) + as.length(), st.indexOf(bs)));
-		   st = st.substring(st.indexOf(tso.get(items[i])) + tso.get(items[i]).length(), st.length());
+		   int temp1 = st.indexOf(as) + as.length();
+		   int temp2 = st.indexOf(bs);
+		   int temp =  st.indexOf(bs) - (st.indexOf(as) + as.length());
+		   if (st.indexOf(bs) - (st.indexOf(as) + as.length()) > 0) {
+			   tso.put(items[i], st.substring(st.indexOf(as) + as.length(), st.indexOf(bs)));
+			   st = st.substring(st.indexOf(tso.get(items[i])) + tso.get(items[i]).length(), st.length());
+		   }else{
+			   tso.put(items[i], "N/A");
+			   st = st.substring(st.indexOf(bs)); 
+		   }
 		  }
 		 }
 		 
@@ -888,7 +896,7 @@ public class TSOParser {
 				 String first = value.trim().substring(0, 4);
 				 String second = value.trim().substring(4, 8);
 				 Collection.chfRootFolder = second + " (" + first + ")";
-			 }else if(key.equals("Full CCSD") && key.length() == 6){
+			 }else if(key.equals("Full CCSD") && value.length() == 6){
 				 Collection.trunkId = value;
 			 }else if(key.equals("TSP Number")){
 				 Collection.tsp = value;
