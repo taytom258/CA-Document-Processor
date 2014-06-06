@@ -12,23 +12,23 @@ public class Conversion {
 		String x = "0";
 		
 		if (month.equals("JAN")){
-			x = "1";
+			x = "01";
 		}else if (month.equals("FEB")){
-			x = "2";
+			x = "02";
 		}else if (month.equals("MAR")){
-			x = "3";
+			x = "03";
 		}else if (month.equals("APR")){
-			x = "4";
+			x = "04";
 		}else if (month.equals("MAY")){
-			x = "5";
+			x = "05";
 		}else if (month.equals("JUN")){
-			x = "6";
+			x = "06";
 		}else if (month.equals("JUL")){
-			x = "7";
+			x = "07";
 		}else if (month.equals("AUG")){
-			x = "8";
+			x = "08";
 		}else if (month.equals("SEP")){
-			x = "9";
+			x = "09";
 		}else if (month.equals("OCT")){
 			x = "10";
 		}else if (month.equals("NOV")){
@@ -56,9 +56,13 @@ public class Conversion {
 		Date date = new Date();
 		String yearpre = dateFormat.format(date).substring(0, 2);
 		
+		String timeFormat = time.substring(0, 2);
+		timeFormat += ":" + time.substring(2, 4) + ":00";
+		
 		String date2 = day + " " + month + " " + year + " " + time;
 		String date3 = MMM_StringtoInt(month) + "/" + day + "/" + year + " " + time;
-		String dateDB = MMM_StringtoInt(month) + "/" + day + "/" + yearpre + year;
+//		String dateDB = MMM_StringtoInt(month) + "/" + day + "/" + yearpre + year;
+		String dateDB = yearpre + year + "-" + MMM_StringtoInt(month) + "-" + day + " " + timeFormat;
 		
 		if(stringM){
 			return date2;

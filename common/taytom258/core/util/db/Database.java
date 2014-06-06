@@ -6,10 +6,17 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 import taytom258.config.Config;
+import taytom258.core.util.Conversion;
 import taytom258.core.util.LogHelper;
+import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 
 public class Database {
@@ -64,11 +71,12 @@ public class Database {
 			con.close();
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
-				LogHelper.info("Record already exists in database, updating information");
 				fields = field.split(",");
 				values = value.replace("'", "").split(",");
 				sqlUpdate(table, fields, values, key, keyField);
 //				sqlQueryNull(table, field, key, keyField);
+//				ex.printStackTrace();
+//				LogHelper.severe(ex.getMessage());
 			}else{
 				ex.printStackTrace();
 				LogHelper.severe(ex.getMessage());
@@ -85,23 +93,51 @@ public class Database {
 	
 	private static void sqlUpdate(String table, String[] field, String[] value, String key, String keyField){
 		try {
+			int update = 0;
+			boolean newer = false;
+			String string = Conversion.dateConvert(Collection.reportDate, false, true);
+		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+		    Date report =  format.parse(string);
+			
+			//TODO take tso report date into consideration when replacing records
+			
+			ArrayList<String> rs = sqlQuery("SELECT ReportDate "
+					+ "FROM TSO "
+					+ "WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'");
+			Collections.sort(rs);
+			for (String element : rs){
+				String target = element;
+			    DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+			    Date result =  df.parse(target);
+			    System.out.println(report + " : " + result);
+			    if(report.compareTo(result) > 0){
+			    	System.out.println("newer");
+			    	newer = true;
+			    }else{
+			    	newer = false;
+			    }
+			}
+				
 			con = DriverManager.getConnection(db);
 			st = con.createStatement();
-			int update = 0;
-			if(!table.equals("TSO")){
-				for(int i=0; i<field.length; i++){
-					String sql = "UPDATE " + table
-							+" SET " + field[i] + " = " + "'" + value[i].trim() + "'"
-							+ " WHERE " + keyField +" = '" + key + "'";
-//					System.out.println(sql);
-					st.executeUpdate(sql);
-					update++;
+			
+			if(newer){
+				LogHelper.info("Record already exists in table "+table+", updating information");
+				if(!table.equals("TSO")){
+					for(int i=0; i<field.length; i++){
+						String sql = "UPDATE " + table
+								+" SET " + field[i] + " = " + "'" + value[i].trim() + "'"
+								+ " WHERE " + keyField +" = '" + key + "'";
+	//					System.out.println(sql);
+						st.executeUpdate(sql);
+						update++;
+					}
+					LogHelper.info(update + " fields updated");
+					st.close();
+					con.close();
+				}else{
+					LogHelper.warning(Strings.DUPLICATE_WARN);
 				}
-				LogHelper.info(update + " fields updated");
-				st.close();
-				con.close();
-			}else{
-				LogHelper.warning(Strings.DUPLICATE_WARN);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

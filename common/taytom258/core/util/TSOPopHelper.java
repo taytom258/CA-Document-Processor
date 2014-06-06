@@ -78,6 +78,7 @@ public class TSOPopHelper extends JDialog {
 			getRootPane().setDefaultButton(okButton);
 			{
 				btnCancel.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						dialog.dispose();
 					}

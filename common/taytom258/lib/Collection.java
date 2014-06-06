@@ -26,20 +26,20 @@ public class Collection{
 //	public static boolean amendIs1539, amendHasSams, amendIsAnalog, amendIsPassthrough;
 	
 	//Popup
-	public static boolean is1539, hasSams, isAnalog, isPassthrough, isLogical, isAncs;
+	public static boolean is1539, hasSams, isAnalog, isPassthrough, isLogical, isAncs = false;
 	
 	//Program Info
-	public static String purpose, tsoSubject, tsrNum, chfRootFolder;
+	public static String purpose, tsoSubject, tsrNum, chfRootFolder = "";
 	public static boolean runClicked = false;
 	
 	//Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,
-	security, dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn, cmoComm, chfLink, location, toCode, fromCode;
-	public static boolean andrewsCmo, endPoint;
-	public static double mrc, nrc;
+	security, dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn, cmoComm, chfLink, location, toCode, fromCode = "";
+	public static boolean andrewsCmo, endPoint = false;
+	public static double mrc, nrc = 0;
 	
 	//Access Database (TSO)
-	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate;
-	public static boolean crr, careq;
+	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate = "";
+	public static boolean crr, careq = false;
 	
 }

@@ -4,6 +4,9 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -116,7 +119,7 @@ public class Window {
 			public void run() {
 				try {
 					Window window = new Window();
-					window.frmTsoHelper.setVisible(true);
+					Window.frmTsoHelper.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 					LogHelper.severe(e.getMessage());
@@ -849,8 +852,20 @@ public class Window {
 				chckbx_FacitCrr = new JCheckBox("Completion Report Required");
 				chckbx_FacitCrr.setEnabled(false);
 				chckbx_FacitCrr.setBackground(Color.WHITE);
-				chckbx_FacitCrr.setBounds(159, 206, 184, 24);
+				chckbx_FacitCrr.setBounds(272, 210, 184, 24);
 				panel_1.add(chckbx_FacitCrr);
+				
+				JButton btnCopyTsoTo = new JButton("Copy TSO to Clipboard");
+				btnCopyTsoTo.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						StringSelection ss = new StringSelection (Collection.tsoText);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (ss, null);
+					}
+				});
+				btnCopyTsoTo.setBounds(62, 209, 160, 26);
+				panel_1.add(btnCopyTsoTo);
 		
 		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_TSO_DB.setToolTipText("Database Info Tab");
