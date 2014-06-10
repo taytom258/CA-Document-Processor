@@ -852,7 +852,7 @@ public class Window {
 				chckbx_FacitCrr = new JCheckBox("Completion Report Required");
 				chckbx_FacitCrr.setEnabled(false);
 				chckbx_FacitCrr.setBackground(Color.WHITE);
-				chckbx_FacitCrr.setBounds(272, 210, 184, 24);
+				chckbx_FacitCrr.setBounds(307, 210, 184, 24);
 				panel_1.add(chckbx_FacitCrr);
 				
 				JButton btnCopyTsoTo = new JButton("Copy TSO to Clipboard");
@@ -864,7 +864,7 @@ public class Window {
 						clpbrd.setContents (ss, null);
 					}
 				});
-				btnCopyTsoTo.setBounds(62, 209, 160, 26);
+				btnCopyTsoTo.setBounds(12, 209, 160, 26);
 				panel_1.add(btnCopyTsoTo);
 		
 		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(SwingConstants.TOP);
@@ -895,6 +895,18 @@ public class Window {
 		panel_Circuit.add(lblTrunkId);
 		
 		textField_DB_Cir_trunkId = new JTextField();
+		textField_DB_Cir_trunkId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.isPopupTrigger()){
+					e.getComponent().requestFocus();
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}else if(e.getButton() == 1 && Config.autoSelection){
+					e.getComponent().requestFocus();
+					textField_DB_Cir_trunkId.selectAll();
+				}
+			}
+		});
 		textField_DB_Cir_trunkId.setEditable(false);
 		textField_DB_Cir_trunkId.setBackground(Color.WHITE);
 		textField_DB_Cir_trunkId.setBounds(85, 38, 114, 20);
@@ -1095,11 +1107,11 @@ public class Window {
 		chckbxAndrewsCmo.setBounds(217, 208, 166, 24);
 		panel_Circuit.add(chckbxAndrewsCmo);
 		
-		chckbxAndrewsEndpoint = new JCheckBox("Andrews Endpoint");
+		chckbxAndrewsEndpoint = new JCheckBox("Andrews or Bolling Endpoint");
 		chckbxAndrewsEndpoint.setEnabled(false);
 		chckbxAndrewsEndpoint.setBackground(Color.WHITE);
 		chckbxAndrewsEndpoint.setToolTipText("Are we an endpoint of this circuit?");
-		chckbxAndrewsEndpoint.setBounds(217, 236, 128, 24);
+		chckbxAndrewsEndpoint.setBounds(217, 236, 184, 24);
 		panel_Circuit.add(chckbxAndrewsEndpoint);
 		
 		JPanel panel_2 = new JPanel();

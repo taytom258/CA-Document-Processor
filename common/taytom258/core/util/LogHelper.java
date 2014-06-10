@@ -81,4 +81,12 @@ public class LogHelper{
 			
 			log(Level.INFO, "[IO] " + object.toString());
 		}
+		
+		public static void popup(Object object){
+			
+			log(Level.INFO, object.toString());
+			if(Config.error){
+				PopHelper.appear("INFO", object.toString());
+			}
+		}
 	}

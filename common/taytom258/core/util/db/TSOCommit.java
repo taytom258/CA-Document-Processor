@@ -9,9 +9,14 @@ import taytom258.lib.Collection;
 public class TSOCommit extends Database {
 
 	public static void run(){
+		init(false);
 		CMO();
 		circuit();
 		TSO();
+		
+//		String[] temp = Config.dbPath.split("[.]");
+//		FileUtils.deleteQuietly(new File(temp[0] + "." + temp[1]));
+		init(true);
 	}
 	
 	private static void circuit(){

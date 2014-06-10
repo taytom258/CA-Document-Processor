@@ -7,19 +7,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.window.core.SettingsCore;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JToggleButton;
 
 public class Settings{
 

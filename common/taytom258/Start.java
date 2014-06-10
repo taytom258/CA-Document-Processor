@@ -31,7 +31,6 @@ public class Start {
 	            	 * Post-Initialization
 	            	 */
 	            	LogHelper.info("Post-Loading...");
-	            	Database.init();
 	            	if(Config.debug){
 	            		Console.getFrame().setVisible(true);
 	            	}

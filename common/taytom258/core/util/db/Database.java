@@ -17,12 +17,11 @@ import taytom258.config.Config;
 import taytom258.core.util.Conversion;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
-import taytom258.lib.Strings;
 
 public class Database {
 
-	private static Connection con;
-	private static Statement st;
+	public static Connection con;
+	public static Statement st;
 	private static String db;
 
 	protected static ArrayList<String> sqlQuery(String sql) {
@@ -30,8 +29,7 @@ public class Database {
 		ArrayList<String> group = new ArrayList<String>();
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(db);
-			st = con.createStatement();
+			
 			rs = st.executeQuery(sql);
 			ResultSetMetaData md = rs.getMetaData();
 			while(rs.next()){
@@ -39,14 +37,14 @@ public class Database {
 					group.add(rs.getString(i));
 				}
 			}
-			con.close();
-			st.close();
+			con.commit();
+			rs.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
 			try {
-				con.close();
-				st.close();
+				con.rollback();
+				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				LogHelper.severe(e.getMessage());
@@ -60,15 +58,12 @@ public class Database {
 		String[] fields = new String[19];
 		String[] values = new String[19];
 		try {
-			con = DriverManager.getConnection(db);
-			st = con.createStatement();
 			String sql = "INSERT INTO " + table + " (" + field + ")" + " VALUES " + "('" + value + "')";
 //			System.out.println(sql);
 			st.executeUpdate(sql);
 //			Thread.sleep(4000);
 //			sqlQueryNull(table, field, key, keyField);
-			st.close();
-			con.close();
+			con.commit();
 		} catch (Exception ex) {
 			if(ex.getMessage().contains("General error")){
 				fields = field.split(",");
@@ -82,8 +77,7 @@ public class Database {
 				LogHelper.severe(ex.getMessage());
 			}
 			try {
-				st.close();
-				con.close();
+				con.rollback();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				LogHelper.severe(e.getMessage());
@@ -109,42 +103,33 @@ public class Database {
 				String target = element;
 			    DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
 			    Date result =  df.parse(target);
-			    System.out.println(report + " : " + result);
+//			    System.out.println(report + " : " + result);
 			    if(report.compareTo(result) > 0){
-			    	System.out.println("newer");
+//			    	System.out.println("newer");
 			    	newer = true;
 			    }else{
 			    	newer = false;
 			    }
 			}
-				
-			con = DriverManager.getConnection(db);
-			st = con.createStatement();
 			
 			if(newer){
 				LogHelper.info("Record already exists in table "+table+", updating information");
-				if(!table.equals("TSO")){
-					for(int i=0; i<field.length; i++){
-						String sql = "UPDATE " + table
-								+" SET " + field[i] + " = " + "'" + value[i].trim() + "'"
-								+ " WHERE " + keyField +" = '" + key + "'";
-	//					System.out.println(sql);
-						st.executeUpdate(sql);
-						update++;
-					}
-					LogHelper.info(update + " fields updated");
-					st.close();
-					con.close();
-				}else{
-					LogHelper.warning(Strings.DUPLICATE_WARN);
+				for(int i=0; i<field.length; i++){
+					String sql = "UPDATE " + table
+							+" SET " + field[i] + " = " + "'" + value[i].trim() + "'"
+							+ " WHERE " + keyField +" = '" + key + "'";
+//					System.out.println(sql);
+					st.executeUpdate(sql);
+					update++;
 				}
+				LogHelper.info(update + " fields updated");
+				con.commit();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
 			try {
-				st.close();
-				con.close();
+				con.rollback();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				LogHelper.severe(ex.getMessage());
@@ -153,17 +138,34 @@ public class Database {
 		}
 	}
 
-	public static void init() {
+	public static void init(boolean close) {
+		if(close){
+			try {
+				con.close();
+				st.close();
+				LogHelper.debug("Database connection closed");
+			} catch (SQLException e) {
+				LogHelper.severe(e.getMessage());
+				e.printStackTrace();
+			}
+			return;
+		}
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			String path = Config.dbPath;
 			db = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=" + path;
+			con = DriverManager.getConnection(db);
+			con.setAutoCommit(false);
+			st = con.createStatement();
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
 			LogHelper.severe(ex.getMessage());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			LogHelper.severe(e.getMessage());
+		} catch (SQLException e) {
+			LogHelper.severe(e.getMessage());
+			e.printStackTrace();
 		}
 		LogHelper.debug("Database connection initialized");
 		

@@ -914,7 +914,8 @@ public class TSOParser {
 				 Collection.toCode = value;
 			 }else if(key.equals("From")){
 				 String tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";
-				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim()+ "'";
+				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "")+ "'";
+//				 System.out.println(LoadDB.testGEOLOC(tempGEO, tempState));
 				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
 				 String[] name = temprs.split(":");
 				 Collection.fromLocation = name[1] + ": " + name[0];
@@ -975,7 +976,7 @@ public class TSOParser {
 class LoadDB extends Database{
 	
 	public static String testGEOLOC(String GEOLOC, String StateCode){
-		
+		Database.init(false);
 		String re = "";
 		String sql = "SELECT * "+
 						"FROM "+Strings.GEOLOC_TABLE+
@@ -990,6 +991,7 @@ class LoadDB extends Database{
 				re += temp;
 			}
 		}
+		Database.init(true);
 		return re;
 	}
 }
