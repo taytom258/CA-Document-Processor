@@ -86,6 +86,7 @@ public class ConfigHandler{
 			prop.store(os, Config.CONFIG_HEADER);
 			
 			os.close();
+			load();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

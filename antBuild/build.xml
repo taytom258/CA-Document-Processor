@@ -26,7 +26,12 @@
 	<target name="prep">
 		<mkdir dir="${environment.base_location}/temp/compile" />
 		<mkdir dir="${environment.base_location}/temp/common" />
-		<copydir src="${environment.source_location}/common" dest="${environment.base_location}/temp/common" />
+		<copy todir="${environment.base_location}/temp/common">
+			<fileset dir="${environment.source_location}/common"/>
+			</copy>
+		<copy todir="${environment.base_location}/temp/compile/taytom258/lib/resources">
+			<fileset dir="${environment.source_location}/common/taytom258/lib/resources"/>
+			</copy>
 	</target>
 	
 	<target name="compile">

@@ -89,4 +89,9 @@ public class LogHelper{
 				PopHelper.appear("INFO", object.toString());
 			}
 		}
+		
+public static void db(Object object){
+			
+			log(Level.INFO, "[DB] " + object.toString());
+		}
 	}

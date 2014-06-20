@@ -7,6 +7,7 @@ import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Reference;
 import taytom258.window.Console;
+import taytom258.window.Splash;
 import taytom258.window.Window;
 
 
@@ -51,13 +52,19 @@ class ThreadA extends Thread{
 	    	/*
 			 *Initialization
 			 */
+	    	Splash.appear();
 	    	Console.init();
+	    	Splash.incrementBar();
 			LogHelper.init();
+			Splash.incrementBar();
 			LogHelper.debug("Console initialized");
 			LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
+			Splash.incrementBar();
 			LogHelper.info("Initializing...");
 			ConfigHandler.init();
+			Splash.incrementBar();
 			Check.call();
+			Splash.incrementBar();
 			notify();
 	    }
 	}
@@ -71,7 +78,9 @@ class ThreadB extends Thread{
     		 * Load
     		 */
             LogHelper.info("Loading...");
+            Splash.incrementBar();
     		Window.appear();
+    		Splash.dialog.dispose();
 //    		Testing.init();
     		notify();
 	    }

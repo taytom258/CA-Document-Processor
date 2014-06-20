@@ -16,7 +16,8 @@ public class Config {
 	//TODO Insert defaults
 	public static final String CHF_PATH = "\\\\ASPARAGUS\\Circuit History Folders";
 	public static final String CHF_TEST = Reference.findMe();
-	public static final String DB_PATH = Reference.findMe() + "\\DB.accdb";
+//	public static final String DB_PATH = Reference.findMe() + "\\DB.accdb";
+	public static final String DB_PATH = "\\\\ASPARAGUS\\Database\\Circuit_Database_TNT.accdb";
 	
 	public static final boolean USE_CHF = false;
 	public static final boolean AUTO_SELECTION = false;

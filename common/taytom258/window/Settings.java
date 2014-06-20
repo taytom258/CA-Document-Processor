@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -110,12 +112,12 @@ public class Settings{
 		panel.add(lblChfLocation);
 		
 		JLabel lblTestLocation = new JLabel("CHF Test Location");
-		lblTestLocation.setBounds(12, 46, 102, 16);
+		lblTestLocation.setBounds(12, 44, 102, 16);
 		panel.add(lblTestLocation);
 		
 		textFieldchfTest = new JTextField();
 		textFieldchfTest.setColumns(10);
-		textFieldchfTest.setBounds(277, 44, 310, 20);
+		textFieldchfTest.setBounds(277, 42, 310, 20);
 		panel.add(textFieldchfTest);
 		textFieldchfTest.setText(Config.chfTest);
 		
@@ -148,6 +150,57 @@ public class Settings{
 		textFielddbPath.setText(Config.dbPath);
 		panel.add(textFielddbPath);
 		textFielddbPath.setColumns(10);
+		
+		JButton btnNewButton_2 = new JButton("Browse");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser(textFieldchfPath.getText());
+				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = choose.showOpenDialog(frmSettings);
+
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = choose.getSelectedFile();
+		            textFieldchfPath.setText(file.toString());
+		        }
+		        choose = null;
+			}
+		});
+		btnNewButton_2.setBounds(167, 12, 98, 20);
+		panel.add(btnNewButton_2);
+		
+		JButton button = new JButton("Browse");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser(textFieldchfTest.getText());
+				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = choose.showOpenDialog(frmSettings);
+
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = choose.getSelectedFile();
+		            textFieldchfTest.setText(file.toString());
+		        }
+		        choose = null;
+			}
+		});
+		button.setBounds(167, 42, 98, 20);
+		panel.add(button);
+		
+		JButton button_1 = new JButton("Browse");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser(textFielddbPath.getText());
+//				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = choose.showOpenDialog(frmSettings);
+
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = choose.getSelectedFile();
+		            textFielddbPath.setText(file.toString());
+		        }
+		        choose = null;
+			}
+		});
+		button_1.setBounds(167, 72, 98, 20);
+		panel.add(button_1);
 		
 		JButton btnConsole = new JButton("Console");
 		btnConsole.addActionListener(new ActionListener() {

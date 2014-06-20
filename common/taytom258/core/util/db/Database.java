@@ -51,6 +51,7 @@ public class Database {
 			}
 			
 		}
+		LogHelper.db("SQL Query Complete");
 		return group;
 	}
 	
@@ -83,6 +84,7 @@ public class Database {
 				LogHelper.severe(e.getMessage());
 			}
 		}
+		LogHelper.db("SQL Insert Complete");
 	}
 	
 	private static void sqlUpdate(String table, String[] field, String[] value, String key, String keyField){
@@ -136,6 +138,7 @@ public class Database {
 			}
 			
 		}
+		LogHelper.db("SQL Update Complete");
 	}
 
 	public static void init(boolean close) {
@@ -153,7 +156,7 @@ public class Database {
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			String path = Config.dbPath;
-			db = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=" + path;
+			db = "jdbc:odbc:driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=" + path;
 			con = DriverManager.getConnection(db);
 			con.setAutoCommit(false);
 			st = con.createStatement();
