@@ -95,8 +95,6 @@ public class Database {
 		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
 		    Date report =  format.parse(string);
 			
-			//TODO take tso report date into consideration when replacing records
-			
 			ArrayList<String> rs = sqlQuery("SELECT ReportDate "
 					+ "FROM TSO "
 					+ "WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'");

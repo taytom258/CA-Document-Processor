@@ -14,7 +14,6 @@ public class ShowFacit extends Window{
 		rate();
 		availible();
 		fullCcsd();
-		statement();
 		action();
 		tsoNum();
 		tsrNum();
@@ -22,6 +21,9 @@ public class ShowFacit extends Window{
 		tsoSubject();
 		reportDate();
 		comReport();
+		amending();
+		trunkId();
+		isTrunk();
 		LogHelper.info("TSO (Facit) Tab Complete");
 	}
 	
@@ -47,14 +49,6 @@ public class ShowFacit extends Window{
 	
 	private static void fullCcsd(){
 		Window.getTextField_FacitFullCcsd().setText(Collection.fullCcsd.toUpperCase());
-	}
-	
-	private static void statement(){
-		if(!Collection.purpose.equals("")){
-			Window.getTextArea_FacitTsoState().setText(Collection.purpose);
-		}else{
-			Window.getTextArea_FacitTsoState().setText("");
-		}
 	}
 	
 	private static void action(){
@@ -88,6 +82,37 @@ public class ShowFacit extends Window{
 			Window.getChckbx_FacitCrr().setSelected(true);
 		}else{
 			Window.getChckbx_FacitCrr().setSelected(false);
+		}
+	}
+	
+	private static void amending(){
+		if(Collection.tsoAction.equals("AMEND")){
+			String temp = Collection.tsoSuffix.substring(0, 2);
+			if(temp.equals("01")){
+				Window.getTextField_FacitAmending().setText("START");
+			}else if(temp.equals("99")){
+				Window.getTextField_FacitAmending().setText("DISCO");
+			}else{
+				Window.getTextField_FacitAmending().setText("CHANGE");
+			}
+		}else{
+			Window.getTextField_FacitAmending().setText("");
+		}
+	}
+	
+	private static void trunkId(){
+		if(!Collection.trunkId.equals("")){
+			Window.getTextField_FacitTrunkID().setText(Collection.trunkId);
+		}else{
+			Window.getTextField_FacitTrunkID().setText("");
+		}
+	}
+	
+	private static void isTrunk(){
+		if(!Collection.trunkId.equals("")){
+			Window.getChckbx_FacitIsTrunk().setSelected(true);
+		}else{
+			Window.getChckbx_FacitIsTrunk().setSelected(false);
 		}
 	}
 }

@@ -25,7 +25,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -35,6 +34,7 @@ import javax.swing.event.CaretListener;
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.TSOPopHelper;
+import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.window.core.WindowCore;
@@ -75,7 +75,6 @@ public class Window {
 	private static JRadioButton rdbtn_ChfRoot;
 	private static JTextPane textPane_ChfCurrent;
 	private static JTextPane textPane_ChfCreating;
-	private static JTextArea textArea_FacitTsoState;
 	private static JCheckBox chckbx_FacitCrr;
 	private static JRadioButton rdbtn_ChfRootCreated;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
@@ -108,6 +107,9 @@ public class Window {
 	private static JCheckBox chckbx_DB_TSO_crr;
 	private static JTextField textField_chfLink;
 	private static JTextField textField_DB_TSO_reportDate;
+	private static JTextField textField_FacitAmending;
+	private static JTextField textField_FacitTrunkID;
+	private static JCheckBox chckbx_FacitIsTrunk;
 	
 	/**
 	 * Launch the application.
@@ -527,19 +529,19 @@ public class Window {
 				panel_1.add(label_FacitCcsd);
 				
 				JLabel label_FacitTsp = new JLabel("TSP");
-				label_FacitTsp.setBounds(12, 40, 23, 16);
+				label_FacitTsp.setBounds(12, 68, 23, 16);
 				panel_1.add(label_FacitTsp);
 				
 				JLabel label_FacitPurpose = new JLabel("Purpose");
-				label_FacitPurpose.setBounds(12, 68, 48, 16);
+				label_FacitPurpose.setBounds(12, 96, 48, 16);
 				panel_1.add(label_FacitPurpose);
 				
 				JLabel label_FacitRate = new JLabel("Rate");
-				label_FacitRate.setBounds(12, 96, 26, 16);
+				label_FacitRate.setBounds(12, 124, 26, 16);
 				panel_1.add(label_FacitRate);
 				
 				JLabel label_FacitSvcAvail = new JLabel("Service Availability");
-				label_FacitSvcAvail.setBounds(12, 124, 106, 16);
+				label_FacitSvcAvail.setBounds(12, 152, 106, 16);
 				panel_1.add(label_FacitSvcAvail);
 				
 				JLabel label_FacitFullCcsd = new JLabel("Full CCSD");
@@ -551,57 +553,24 @@ public class Window {
 				panel_1.add(label_FacitAction);
 				
 				JLabel label_FacitTsoNum = new JLabel("TSO Number");
-				label_FacitTsoNum.setBounds(12, 154, 72, 16);
+				label_FacitTsoNum.setBounds(12, 228, 72, 16);
 				panel_1.add(label_FacitTsoNum);
 				
 				JLabel label_FacitTsrNum = new JLabel("TSR Number");
-				label_FacitTsrNum.setBounds(261, 70, 71, 16);
+				label_FacitTsrNum.setBounds(261, 98, 71, 16);
 				panel_1.add(label_FacitTsrNum);
 				
 				JLabel label_FacitServiceDate = new JLabel("Service Date");
-				label_FacitServiceDate.setBounds(261, 98, 72, 16);
+				label_FacitServiceDate.setBounds(261, 126, 72, 16);
 				panel_1.add(label_FacitServiceDate);
 				
 				JLabel label_FacitTsoSubject = new JLabel("TSO Subject");
-				label_FacitTsoSubject.setBounds(12, 184, 70, 16);
+				label_FacitTsoSubject.setBounds(12, 258, 70, 16);
 				panel_1.add(label_FacitTsoSubject);
 				
 				JLabel label_FacitReportDate = new JLabel("Report Date");
-				label_FacitReportDate.setBounds(261, 126, 67, 16);
+				label_FacitReportDate.setBounds(261, 154, 67, 16);
 				panel_1.add(label_FacitReportDate);
-				
-				JPanel panel_FacitTsoState = new JPanel();
-				panel_FacitTsoState.setBackground(Color.WHITE);
-				panel_FacitTsoState.setBorder(new TitledBorder(null, "TSO Statement", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-				panel_FacitTsoState.setBounds(12, 238, 489, 126);
-				panel_1.add(panel_FacitTsoState);
-				panel_FacitTsoState.setLayout(null);
-				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setViewportBorder(null);
-				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				scrollPane.setBounds(12, 21, 465, 93);
-				panel_FacitTsoState.add(scrollPane);
-				
-				textArea_FacitTsoState = new JTextArea();
-				textArea_FacitTsoState.setToolTipText("TSO action statement");
-				textArea_FacitTsoState.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if(e.isPopupTrigger() && Config.autoSelection){
-							e.getComponent().requestFocus();
-							textArea_FacitTsoState.selectAll();
-							popup.show(e.getComponent(), e.getX(), e.getY());
-						}else if(e.isPopupTrigger()){
-							e.getComponent().requestFocus();
-							popup.show(e.getComponent(), e.getX(), e.getY());
-						}
-					}
-				});
-				scrollPane.setViewportView(textArea_FacitTsoState);
-				textArea_FacitTsoState.setWrapStyleWord(true);
-				textArea_FacitTsoState.setLineWrap(true);
-				textArea_FacitTsoState.setEditable(false);
 				
 				textField_FacitCcsd = new JTextField();
 				textField_FacitCcsd.setToolTipText("4 Character circuit ID");
@@ -641,7 +610,7 @@ public class Window {
 				});
 				textField_FacitTsp.setBackground(Color.WHITE);
 				textField_FacitTsp.setEditable(false);
-				textField_FacitTsp.setBounds(136, 38, 106, 20);
+				textField_FacitTsp.setBounds(136, 66, 106, 20);
 				panel_1.add(textField_FacitTsp);
 				textField_FacitTsp.setColumns(10);
 				
@@ -661,7 +630,7 @@ public class Window {
 				});
 				textField_FacitPurpose.setBackground(Color.WHITE);
 				textField_FacitPurpose.setEditable(false);
-				textField_FacitPurpose.setBounds(136, 66, 106, 20);
+				textField_FacitPurpose.setBounds(136, 94, 106, 20);
 				panel_1.add(textField_FacitPurpose);
 				textField_FacitPurpose.setColumns(10);
 				
@@ -682,7 +651,7 @@ public class Window {
 				});
 				textField_FacitRate.setBackground(Color.WHITE);
 				textField_FacitRate.setEditable(false);
-				textField_FacitRate.setBounds(136, 94, 106, 20);
+				textField_FacitRate.setBounds(136, 122, 106, 20);
 				panel_1.add(textField_FacitRate);
 				textField_FacitRate.setColumns(10);
 				
@@ -702,7 +671,7 @@ public class Window {
 				});
 				textField_FacitSvcAvailable.setBackground(Color.WHITE);
 				textField_FacitSvcAvailable.setEditable(false);
-				textField_FacitSvcAvailable.setBounds(136, 122, 106, 20);
+				textField_FacitSvcAvailable.setBounds(136, 150, 106, 20);
 				panel_1.add(textField_FacitSvcAvailable);
 				textField_FacitSvcAvailable.setColumns(10);
 				
@@ -764,7 +733,7 @@ public class Window {
 				});
 				textField_FacitTsoNum.setBackground(Color.WHITE);
 				textField_FacitTsoNum.setEditable(false);
-				textField_FacitTsoNum.setBounds(136, 152, 355, 20);
+				textField_FacitTsoNum.setBounds(136, 226, 355, 20);
 				panel_1.add(textField_FacitTsoNum);
 				textField_FacitTsoNum.setColumns(10);
 				
@@ -784,7 +753,7 @@ public class Window {
 				});
 				textField_FacitTsrNum.setBackground(Color.WHITE);
 				textField_FacitTsrNum.setEditable(false);
-				textField_FacitTsrNum.setBounds(385, 68, 106, 20);
+				textField_FacitTsrNum.setBounds(385, 96, 106, 20);
 				panel_1.add(textField_FacitTsrNum);
 				textField_FacitTsrNum.setColumns(10);
 				
@@ -805,7 +774,7 @@ public class Window {
 				});
 				textField_FacitSvcDate.setBackground(Color.WHITE);
 				textField_FacitSvcDate.setEditable(false);
-				textField_FacitSvcDate.setBounds(385, 96, 106, 20);
+				textField_FacitSvcDate.setBounds(385, 124, 106, 20);
 				panel_1.add(textField_FacitSvcDate);
 				textField_FacitSvcDate.setColumns(10);
 				
@@ -825,7 +794,7 @@ public class Window {
 				});
 				textField_FacitTsoSubject.setBackground(Color.WHITE);
 				textField_FacitTsoSubject.setEditable(false);
-				textField_FacitTsoSubject.setBounds(136, 182, 355, 20);
+				textField_FacitTsoSubject.setBounds(136, 256, 355, 20);
 				panel_1.add(textField_FacitTsoSubject);
 				textField_FacitTsoSubject.setColumns(10);
 				
@@ -845,17 +814,17 @@ public class Window {
 				});
 				textField_FacitReportDate.setBackground(Color.WHITE);
 				textField_FacitReportDate.setEditable(false);
-				textField_FacitReportDate.setBounds(385, 124, 106, 20);
+				textField_FacitReportDate.setBounds(385, 152, 106, 20);
 				panel_1.add(textField_FacitReportDate);
 				textField_FacitReportDate.setColumns(10);
 				
 				chckbx_FacitCrr = new JCheckBox("Completion Report Required");
 				chckbx_FacitCrr.setEnabled(false);
 				chckbx_FacitCrr.setBackground(Color.WHITE);
-				chckbx_FacitCrr.setBounds(307, 210, 184, 24);
+				chckbx_FacitCrr.setBounds(307, 327, 184, 24);
 				panel_1.add(chckbx_FacitCrr);
 				
-				JButton btnCopyTsoTo = new JButton("Copy TSO to Clipboard");
+				JButton btnCopyTsoTo = new JButton("TSO Text to Clipboard");
 				btnCopyTsoTo.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -864,8 +833,75 @@ public class Window {
 						clpbrd.setContents (ss, null);
 					}
 				});
-				btnCopyTsoTo.setBounds(12, 209, 160, 26);
+				btnCopyTsoTo.setBounds(12, 288, 160, 26);
 				panel_1.add(btnCopyTsoTo);
+				
+				JButton button = new JButton("TSO Statement to Clipboard");
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						StringSelection ss = new StringSelection (Collection.purpose);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (ss, null);
+					}
+				});
+				button.setBounds(12, 326, 191, 26);
+				panel_1.add(button);
+				
+				JLabel label = new JLabel("Amending");
+				label.setBounds(261, 68, 57, 16);
+				panel_1.add(label);
+				
+				textField_FacitAmending = new JTextField();
+				textField_FacitAmending.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitAmending.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}
+				});
+				textField_FacitAmending.setToolTipText("");
+				textField_FacitAmending.setEditable(false);
+				textField_FacitAmending.setColumns(10);
+				textField_FacitAmending.setBackground(Color.WHITE);
+				textField_FacitAmending.setBounds(385, 66, 106, 20);
+				panel_1.add(textField_FacitAmending);
+				
+				JLabel label_1 = new JLabel("Trunk ID");
+				label_1.setBounds(12, 40, 47, 16);
+				panel_1.add(label_1);
+				
+				textField_FacitTrunkID = new JTextField();
+				textField_FacitTrunkID.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.isPopupTrigger() && Config.autoSelection){
+							e.getComponent().requestFocus();
+							textField_FacitTrunkID.selectAll();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}else if(e.isPopupTrigger()){
+							e.getComponent().requestFocus();
+							popup.show(e.getComponent(), e.getX(), e.getY());
+						}
+					}		
+				});
+				textField_FacitTrunkID.setToolTipText("");
+				textField_FacitTrunkID.setEditable(false);
+				textField_FacitTrunkID.setColumns(10);
+				textField_FacitTrunkID.setBackground(Color.WHITE);
+				textField_FacitTrunkID.setBounds(136, 40, 106, 20);
+				panel_1.add(textField_FacitTrunkID);
+				
+				chckbx_FacitIsTrunk = new JCheckBox("Circuit is Trunk");
+				chckbx_FacitIsTrunk.setEnabled(false);
+				chckbx_FacitIsTrunk.setBackground(Color.WHITE);
+				chckbx_FacitIsTrunk.setBounds(307, 299, 112, 24);
+				panel_1.add(chckbx_FacitIsTrunk);
 		
 		JTabbedPane tabbedPane_TSO_DB = new JTabbedPane(SwingConstants.TOP);
 		tabbedPane_TSO_DB.setToolTipText("Database Info Tab");
@@ -1236,7 +1272,7 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.severe("This is a test");
-				
+				System.out.println(TSOCommit.isLatest());
 			}
 		});
 		if(Config.debug){
@@ -1288,9 +1324,6 @@ public class Window {
 	}
 	protected static JTextPane getTextPane_ChfCreating() {
 		return textPane_ChfCreating;
-	}
-	protected static JTextArea getTextArea_FacitTsoState() {
-		return textArea_FacitTsoState;
 	}
 	protected static JTextField getTextField_FacitCcsd() {
 		return textField_FacitCcsd;
@@ -1420,5 +1453,14 @@ public class Window {
 	}
 	protected static JFrame getFrmTsoHelper() {
 		return frmTsoHelper;
+	}
+	protected static JTextField getTextField_FacitAmending() {
+		return textField_FacitAmending;
+	}
+	protected static JTextField getTextField_FacitTrunkID() {
+		return textField_FacitTrunkID;
+	}
+	protected static JCheckBox getChckbx_FacitIsTrunk() {
+		return chckbx_FacitIsTrunk;
 	}
 }

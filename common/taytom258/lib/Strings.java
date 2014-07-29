@@ -40,5 +40,8 @@ public final class Strings {
 	public static final String DATE_FORMAT = "ddmmmyyyy";
 	public static final String[] FOLDERS = {"Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters", "MISC"};
 	public static final String GEOLOC_TABLE = "Java_GEOLOC";
+	public static final String DEPTCODE_TABLE = "Java_DEPTCODE";
+	public static final String USECODE_TABLE = "Java_PURCODE";
+	public static final String SVCTYPE_TABLE = "Java_SVCTYPE";
 	
 }

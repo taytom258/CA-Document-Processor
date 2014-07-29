@@ -4,7 +4,6 @@ import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
 import taytom258.core.security.Check;
 import taytom258.core.util.LogHelper;
-import taytom258.core.util.db.Database;
 import taytom258.lib.Reference;
 import taytom258.window.Console;
 import taytom258.window.Splash;

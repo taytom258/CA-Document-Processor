@@ -55,7 +55,7 @@ public class ShowCHF extends Window {
 		File folderExist = null;
 		File only = null;
 
-		if (Collection.tsoAction.equals("DISCONTINUE") && Collection.fullCcsd.length() == 6){
+		if (Collection.tsoAction.equals("DISCONTINUE") && Collection.trunkId.length() == 6){
 			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND);
 			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";
 		}else if (Collection.tsoAction.equals("DISCONTINUE")) {

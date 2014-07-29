@@ -1,31 +1,20 @@
 package taytom258.window;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JProgressBar;
-
 import java.awt.Color;
+import java.awt.SystemColor;
 
-import javax.swing.UIManager;
-
-import taytom258.core.util.LogHelper;
-import taytom258.lib.Reference;
-
-import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import java.awt.SystemColor;
+
+import taytom258.config.Config;
+import taytom258.core.util.LogHelper;
+import taytom258.lib.Reference;
 
 public class Splash extends JDialog {
 
@@ -81,12 +70,14 @@ public class Splash extends JDialog {
 	
 	public static void incrementBar(){
 		try {
-		Thread.sleep(800);
-		progressBar.setIndeterminate(false);
-		progressBar.setValue(progressBar.getValue()+1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			LogHelper.severe(e.getMessage());
+			if(!Config.debug){
+				Thread.sleep(600);
+			}
+			progressBar.setIndeterminate(false);
+			progressBar.setValue(progressBar.getValue()+1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
 		}
 	}
 

@@ -13,11 +13,10 @@ public class Config {
 	public static final String CONFIG_HEADER = Reference.APPLICATION_NAME+" "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER;
 	public static final String CONFIG_PATH = System.getProperty("user.home").concat("\\"+Reference.AUTHOR);
 	
-	//TODO Insert defaults
 	public static final String CHF_PATH = "\\\\ASPARAGUS\\Circuit History Folders";
 	public static final String CHF_TEST = Reference.findMe();
 //	public static final String DB_PATH = Reference.findMe() + "\\DB.accdb";
-	public static final String DB_PATH = "\\\\ASPARAGUS\\Database\\Circuit_Database_TNT.accdb";
+	public static final String DB_PATH = "\\\\ASPARAGUS\\Database\\Circuit Database (TNT).accdb";
 	
 	public static final boolean USE_CHF = false;
 	public static final boolean AUTO_SELECTION = false;

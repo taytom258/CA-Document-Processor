@@ -1,6 +1,9 @@
 package taytom258.core.util.db;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import taytom258.core.util.Conversion;
 import taytom258.core.util.LogHelper;
@@ -79,9 +82,19 @@ public class TSOCommit extends Database {
 				exists = true;
 			}
 		}
+		//TODO Latest TSO in Installer Form (may have issues)
+		int ignore = 0;
+		if(!exists){
+			if(isLatest()){
+				ignore = 0;
+			}else{
+				ignore = -1;
+			}
+		}
+		
 		String field = "TSONumber, TSOSuffix, Action, FullCCSD, ServiceDate, ReportDate, CompletionReportReq, CAActionRequired";
 		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate, false, true)
-				+c+Conversion.dateConvert(Collection.reportDate, false, true)+c+crr+c+careq;
+				+c+Conversion.dateConvert(Collection.reportDate, false, true)+c+crr+c+careq+c+ignore;
 		if (exists){
 			LogHelper.info("TSO already exists in database, skipping");
 		}else{
@@ -96,5 +109,42 @@ public class TSOCommit extends Database {
 		String value = Collection.cmo+c+Collection.cmoDsn+c+Collection.cmoComm;
 		sqlInsert("CMO", field, value, Collection.cmo, "CMO");
 		
+	}
+	
+	public static boolean isLatest(){
+		boolean latest = true;
+		int t = -1;
+		
+		String query = "SELECT FullCCSD, ReportDate, TSONumber FROM TSO WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'";
+		String update = "";
+		init(false);
+		ArrayList<String> al = sqlQuery(query);
+		init(true);
+		
+		
+		if(al.size()>0){
+			for(int i=1;i<al.size();i+=3){
+				Date current = null;
+				Date pulled = null;
+				try {
+					current = new SimpleDateFormat("yyyy-MM-dd H:m:s").parse(Conversion.dateConvert(Collection.reportDate, false, true));
+					pulled = new SimpleDateFormat("yyyy-MM-dd H:m:s").parse(al.get(i));
+				} catch (ParseException e) {
+					e.printStackTrace();
+					LogHelper.severe(e.getMessage());
+				}
+				if(!current.after(pulled)){
+					latest = false;
+				}else if(current.after(pulled)){
+					latest = true;
+					update = "UPDATE TSO SET Ignore = "+ t +" WHERE TSONumber = '"+al.get(i+1)+"'";
+					break;
+				}
+			}
+//			for(int i=0;i<al.size();i++){
+//				System.out.println(al.get(i));
+//			}
+		}
+		return latest;
 	}
 }
