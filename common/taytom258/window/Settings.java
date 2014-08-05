@@ -32,6 +32,7 @@ public class Settings{
 	private static JToggleButton tglbtnAutoSelection;
 	private static JToggleButton tglbtnError;
 	private static JTextField textFielddbPath;
+	private static JToggleButton tglbtnAutoCopy;
 
 	/**
 	 * Launch the application.
@@ -202,6 +203,13 @@ public class Settings{
 		button_1.setBounds(167, 72, 98, 20);
 		panel.add(button_1);
 		
+		tglbtnAutoCopy = new JToggleButton("Auto Copy");
+		tglbtnAutoCopy.setBounds(256, 369, 116, 26);
+		tglbtnAutoCopy.setSelected(Config.autoCopy);
+		//TODO Finish auto copy feature?
+		tglbtnAutoCopy.setVisible(false);
+		panel.add(tglbtnAutoCopy);
+		
 		JButton btnConsole = new JButton("Console");
 		btnConsole.addActionListener(new ActionListener() {
 			@Override
@@ -232,5 +240,8 @@ public class Settings{
 	}
 	protected static JTextField getTextFielddbPath() {
 		return textFielddbPath;
+	}
+	protected static JToggleButton getTglbtnAutoCopy() {
+		return tglbtnAutoCopy;
 	}
 }

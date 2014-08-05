@@ -24,5 +24,6 @@ public class SettingsCore extends Settings{
 		Config.autoSelection = Settings.getTglbtnAutoSelection().isSelected();
 		Config.useChf = Settings.getTglbtnUseChf().isSelected();
 		Config.error = Settings.getTglbtnError().isSelected();
+		Config.autoCopy = Settings.getTglbtnAutoCopy().isSelected();
 	}
 }

@@ -164,6 +164,7 @@ public class Window {
 		button_Exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//TODO Temp code to help get list of locations and ENR codes for those locations
 				LogHelper.debug("Terminate JVM");
 				System.exit(0);
 			}

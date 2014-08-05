@@ -22,7 +22,9 @@ import javax.swing.text.StyledDocument;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
+
 import java.awt.Font;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -99,12 +101,12 @@ public class TSOPopHelper extends JDialog {
 		{
 			textField_nrc.setBounds(42, 64, 86, 20);
 			textField_nrc.setColumns(10);
-			textField_nrc.setText("0.00");
+			textField_nrc.setText(String.valueOf(Collection.nrc));
 			panel.add(textField_nrc);
 		}
 		{
 			textField_mrc.setBounds(42, 94, 86, 20);
-			textField_mrc.setText("0.00");
+			textField_mrc.setText(String.valueOf(Collection.mrc));
 			textField_mrc.setColumns(10);
 			panel.add(textField_mrc);
 		}

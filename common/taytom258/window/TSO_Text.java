@@ -78,7 +78,14 @@ public class TSO_Text{
 				if(Collection.tsoText.equals("")){
 					LogHelper.warning(Strings.FOUND_NOTHING);
 				}else{
-					TSOParser.parseTSO(Collection.tsoText);
+					try {
+						TSOParser.parseTSO(Collection.tsoText);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						LogHelper.severe(e1.getClass()+": "+e1.getMessage());
+						Window.getFrmTsoHelper().getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						frmEnterTso.getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					}
 					ShowCHF.show();
 					ShowFacit.show();
 					ShowDatabase.show();

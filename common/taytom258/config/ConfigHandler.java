@@ -56,6 +56,7 @@ public class ConfigHandler{
 			Config.debug = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[4]));
 			Config.error = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[5]));
 			Config.dbPath = prop.getProperty(Config.CONFIG_NAMES[6]);
+			Config.autoCopy = Boolean.valueOf(prop.getProperty(Config.CONFIG_NAMES[7]));
 			
 			LogHelper.debug("Config loaded");
 			
@@ -82,6 +83,7 @@ public class ConfigHandler{
 			prop.setProperty(Config.CONFIG_NAMES[4], String.valueOf(Config.debug));
 			prop.setProperty(Config.CONFIG_NAMES[5], String.valueOf(Config.error));
 			prop.setProperty(Config.CONFIG_NAMES[6], Config.dbPath);
+			prop.setProperty(Config.CONFIG_NAMES[7], String.valueOf(Config.autoCopy));
 			
 			prop.store(os, Config.CONFIG_HEADER);
 			
@@ -103,6 +105,7 @@ public class ConfigHandler{
 		Config.debug = Config.DEBUG;
 		Config.error = Config.ERROR;
 		Config.dbPath = Config.DB_PATH;
+		Config.autoCopy = Config.AUTO_COPY;
 		
 		LogHelper.debug("Defaults saved");
 		

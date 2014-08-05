@@ -38,9 +38,8 @@ public class TSOParser {
 	    return match;
 	}
 	
-	public static void parseTSO(String t) {
-		 if (t.equals("") || t.equals(null)) {return;} //we ain't messin' around here kid
-
+	public static boolean parseTSO(String t) throws Exception{
+		 if (t.equals("") || t.equals(null)) {return false;} //we ain't messin' around here kid
 		 //the TSO object
 		 TreeMap<String, String> tso = new TreeMap<String, String>();
 
@@ -58,6 +57,9 @@ public class TSOParser {
 		 String FACINFO = " 3. FACILITY AND EQUIPMENT INFORMATION ";
 		 String NUMCONT = " 4. NUMBER CONTROL ";
 		 String OTHERSD = " 5. OTHER SPECIFIC DIRECTIONS ";
+		 String BONA = " (BONA FIDE NEED FY) ";
+		 String MRC = " (NTE MRC) ";
+		 String NRC = " (NTE NRC) ";
 		 //These are search strings to identify if POC information is for our local TCF (try to keep as specific as possible)
 		 String[] STRLOCALID = {
 		  "ANDWSAFB/24/TCF",
@@ -268,6 +270,18 @@ public class TSOParser {
 			}
 		}
 		 
+		//TODO get facilities from section 3
+//		String[] sec3 = new String[26];
+//		 String endLocationCode = "BLDG/DIRECTIONS/ADDRESS:";
+//		 sec3 = sections.get(2).split("/\\s[A-Z]\\.\\s/g");
+//		 for(String element : sec3){System.out.println(element);}
+//		 for (int i=0; i<sec3.length; i++) {sec3[i] = sec3[i].substring(0,sec3[i].indexOf(endLocationCode) - 1);}
+//		 for(String element : sec3){
+//			 System.out.println(sec3.length);
+//			 System.out.println(element);
+//		 }
+		
+		
 		 //break POC information into an array (because I can)
 		 String fs = tso.get("POC Information");
 		 String[] array = {};
@@ -290,7 +304,21 @@ public class TSOParser {
 		 tso.put("POC Information", arrayText);
 		 
 		 //pull out MRC and NRC from section 5
-//		 String first = sections.get(4).indexOf(str)
+		 Double zero = 0.00;
+		 String text = sections.get(4);
+		 if(text.indexOf(BONA) > -1){
+			 String BonaText = text.substring(text.indexOf(BONA)+BONA.length()+1);
+			 String MRCText = BonaText.substring(BonaText.indexOf(MRC)+MRC.length()+1, BonaText.indexOf(NRC)-1);
+			 String NRCText = BonaText.substring(BonaText.indexOf(NRC)+NRC.length()+1);
+			 NRCText = NRCText.substring(0, NRCText.indexOf(";"));
+			 Collection.mrc = Double.parseDouble(MRCText);
+			 Collection.nrc = Double.parseDouble(NRCText);
+			 System.out.println(MRCText + " : " + NRCText);
+		 }else{
+			 Collection.mrc = zero;
+			 Collection.nrc = zero;
+			 System.out.println(zero + " : " + zero);
+		 }
 
 		 //break the full CCSD down
 		 String fullCCSD = "";
@@ -386,6 +414,7 @@ public class TSOParser {
 			 }
 		 }
 		 LogHelper.info("TSO (Parser) Complete");
+		 return true;
 	}
 }
 
