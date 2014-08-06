@@ -1273,7 +1273,6 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LogHelper.severe("This is a test");
-				System.out.println(TSOCommit.isLatest());
 			}
 		});
 		if(Config.debug){

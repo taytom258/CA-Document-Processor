@@ -40,6 +40,7 @@ public class TSOParser {
 	
 	public static boolean parseTSO(String t) throws Exception{
 		 if (t.equals("") || t.equals(null)) {return false;} //we ain't messin' around here kid
+		 Database.init(false);
 		 //the TSO object
 		 TreeMap<String, String> tso = new TreeMap<String, String>();
 
@@ -413,6 +414,7 @@ public class TSOParser {
 				 Collection.cmoDsn = value;
 			 }
 		 }
+		 Database.init(true);
 		 LogHelper.info("TSO (Parser) Complete");
 		 return true;
 	}
@@ -421,7 +423,6 @@ public class TSOParser {
 class LoadDB extends Database{
 	
 	public static String testGEOLOC(String GEOLOC, String StateCode){
-		Database.init(false);
 		String re = "";
 		String sql = "SELECT * "+
 						"FROM "+Strings.GEOLOC_TABLE+
@@ -436,12 +437,10 @@ class LoadDB extends Database{
 				re += temp;
 			}
 		}
-		Database.init(true);
 		return re;
 	}
 	
 	public static String testDEPTCODE(String DEPTCODE){
-		Database.init(false);
 		String re = "";
 		String sql = "SELECT * "+
 						"FROM "+Strings.DEPTCODE_TABLE+
@@ -454,12 +453,10 @@ class LoadDB extends Database{
 				re = temp;
 			}
 		}
-		Database.init(true);
 		return re;
 	}
 	
 	public static String testUSECODE(String USECODE){
-		Database.init(false);
 		String re = "";
 		String sql = "SELECT * "+
 						"FROM "+Strings.USECODE_TABLE+
@@ -472,12 +469,10 @@ class LoadDB extends Database{
 				re = temp;
 			}
 		}
-		Database.init(true);
 		return re;
 	}
 	
 	public static String testSVCTYPE(String SVCTYPE){
-		Database.init(false);
 		String re = "";
 		String sql = "SELECT * "+
 						"FROM "+Strings.SVCTYPE_TABLE+
@@ -490,7 +485,6 @@ class LoadDB extends Database{
 				re = temp;
 			}
 		}
-		Database.init(true);
 		return re;
 	}
 }

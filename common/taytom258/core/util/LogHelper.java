@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import taytom258.config.Config;
 import taytom258.core.log.LogHandler;
+import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 
@@ -19,6 +20,7 @@ public class LogHelper{
 			logger.addHandler(handler);
 			if(Reference.BUILD_NUMBER.equals("@BUILD_NUMBER@")){
 				log(Level.WARNING, Strings.DEVELOP_WARN);
+				Collection.develop = true;
 			}
 			
 		}
@@ -90,8 +92,9 @@ public class LogHelper{
 			}
 		}
 		
-public static void db(Object object){
-			
-			log(Level.INFO, "[DB] " + object.toString());
+		public static void db(Object object){
+			if(Config.debug){
+				log(Level.INFO, "[DEBUG][DB] " + object.toString());
+			}
 		}
 	}

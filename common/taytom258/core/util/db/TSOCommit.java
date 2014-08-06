@@ -92,7 +92,7 @@ public class TSOCommit extends Database {
 			}
 		}
 		
-		String field = "TSONumber, TSOSuffix, Action, FullCCSD, ServiceDate, ReportDate, CompletionReportReq, CAActionRequired";
+		String field = "TSONumber, TSOSuffix, Action, FullCCSD, ServiceDate, ReportDate, CompletionReportReq, CAActionRequired, Ignore";
 		String value = Collection.tsoNum+c+Collection.tsoSuffix+c+Collection.tsoAction+c+Collection.fullCcsd+c+Conversion.dateConvert(Collection.svcDate, false, true)
 				+c+Conversion.dateConvert(Collection.reportDate, false, true)+c+crr+c+careq+c+ignore;
 		if (exists){
@@ -111,15 +111,13 @@ public class TSOCommit extends Database {
 		
 	}
 	
-	public static boolean isLatest(){
+	private static boolean isLatest(){
 		boolean latest = true;
 		int t = -1;
 		
 		String query = "SELECT FullCCSD, ReportDate, TSONumber FROM TSO WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'";
 		String update = "";
-		init(false);
 		ArrayList<String> al = sqlQuery(query);
-		init(true);
 		
 		
 		if(al.size()>0){
