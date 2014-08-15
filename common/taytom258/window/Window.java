@@ -110,6 +110,8 @@ public class Window {
 	private static JTextField textField_FacitAmending;
 	private static JTextField textField_FacitTrunkID;
 	private static JCheckBox chckbx_FacitIsTrunk;
+	private static JTextField textField_DB_TSO_Mrc;
+	private static JTextField textField_DB_TSO_Nrc;
 	
 	/**
 	 * Launch the application.
@@ -1230,6 +1232,32 @@ public class Window {
 		panel_2.add(textField_DB_TSO_reportDate);
 		textField_DB_TSO_reportDate.setColumns(10);
 		
+		textField_DB_TSO_Mrc = new JTextField();
+		textField_DB_TSO_Mrc.setForeground(Color.BLACK);
+		textField_DB_TSO_Mrc.setBackground(Color.WHITE);
+		textField_DB_TSO_Mrc.setEditable(false);
+		textField_DB_TSO_Mrc.setBounds(317, 10, 72, 20);
+		panel_2.add(textField_DB_TSO_Mrc);
+		textField_DB_TSO_Mrc.setColumns(10);
+		
+		textField_DB_TSO_Nrc = new JTextField();
+		textField_DB_TSO_Nrc.setForeground(Color.BLACK);
+		textField_DB_TSO_Nrc.setBackground(Color.WHITE);
+		textField_DB_TSO_Nrc.setEditable(false);
+		textField_DB_TSO_Nrc.setColumns(10);
+		textField_DB_TSO_Nrc.setBounds(317, 38, 72, 20);
+		panel_2.add(textField_DB_TSO_Nrc);
+		
+		JLabel lblMrc = new JLabel("MRC");
+		lblMrc.setToolTipText("Monthly Recurring Cost");
+		lblMrc.setBounds(273, 12, 26, 16);
+		panel_2.add(lblMrc);
+		
+		JLabel lblNrc = new JLabel("NRC");
+		lblNrc.setToolTipText("Non Recurring Cost");
+		lblNrc.setBounds(273, 40, 26, 16);
+		panel_2.add(lblNrc);
+		
 		JButton btnTso = new JButton("TSO");
 		btnTso.setToolTipText("Telecommunication Service Order");
 		btnTso.setBounds(12, 12, 91, 26);
@@ -1462,5 +1490,11 @@ public class Window {
 	}
 	protected static JCheckBox getChckbx_FacitIsTrunk() {
 		return chckbx_FacitIsTrunk;
+	}
+	protected static JTextField getTextField_DB_TSO_Mrc() {
+		return textField_DB_TSO_Mrc;
+	}
+	protected static JTextField getTextField_DB_TSO_Nrc() {
+		return textField_DB_TSO_Nrc;
 	}
 }

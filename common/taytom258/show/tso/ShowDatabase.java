@@ -56,10 +56,13 @@ public class ShowDatabase extends Window{
 		getTextField_DB_TSO_fullCcsd().setText(Collection.fullCcsd);
 		getTextField_DB_TSO_svcDate().setText(Conversion.dateConvert(Collection.svcDate, false, true));
 		getTextField_DB_TSO_reportDate().setText(Conversion.dateConvert(Collection.reportDate, false, true));
+		getTextField_DB_TSO_Mrc().setText(String.valueOf(Collection.mrc));
+		getTextField_DB_TSO_Nrc().setText(String.valueOf(Collection.nrc));
 	}
 	
 	private static void checkBoxes_Tso(){
 		getChckbx_DB_TSO_crr().setSelected(Collection.crr);
+		
 	}
 	
 	

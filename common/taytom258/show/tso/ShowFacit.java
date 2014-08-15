@@ -22,7 +22,6 @@ public class ShowFacit extends Window{
 		reportDate();
 		comReport();
 		amending();
-		trunkId();
 		isTrunk();
 		LogHelper.info("TSO (Facit) Tab Complete");
 	}
@@ -96,23 +95,16 @@ public class ShowFacit extends Window{
 				Window.getTextField_FacitAmending().setText("CHANGE");
 			}
 		}else{
-			Window.getTextField_FacitAmending().setText("");
-		}
-	}
-	
-	private static void trunkId(){
-		if(!Collection.trunkId.equals("")){
-			Window.getTextField_FacitTrunkID().setText(Collection.trunkId);
-		}else{
-			Window.getTextField_FacitTrunkID().setText("");
+			Window.getTextField_FacitAmending().setText("N/A");
 		}
 	}
 	
 	private static void isTrunk(){
-		if(!Collection.trunkId.equals("")){
+		if(Collection.trunkId.trim().length() == 6 || !Collection.trunkId.equals("N/A")){
 			Window.getChckbx_FacitIsTrunk().setSelected(true);
 		}else{
 			Window.getChckbx_FacitIsTrunk().setSelected(false);
 		}
+		Window.getTextField_FacitTrunkID().setText(Collection.trunkId);
 	}
 }

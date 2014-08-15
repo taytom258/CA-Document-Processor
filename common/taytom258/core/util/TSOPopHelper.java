@@ -133,7 +133,7 @@ public class TSOPopHelper extends JDialog {
 		doc.setParagraphAttributes(0, doc.getLength(), center, false);
 		panel.add(textPane);
 		
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Andrews", "Bolling", "Andrews 1539"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville"}));
 		comboBox.setBounds(228, 93, 154, 25);
 		comboBox.setEditable(false);
 		comboBox.setSelectedIndex(0);
@@ -165,8 +165,8 @@ public class TSOPopHelper extends JDialog {
 	}
 	
 	private void clear(){
-		textField_mrc.setText("0.00");
-		textField_nrc.setText("0.00");
+		textField_mrc.setText(String.valueOf(Collection.mrc));
+		textField_nrc.setText(String.valueOf(Collection.nrc));
 		comboBox.setSelectedIndex(0);
 		checkBox_careq.setSelected(false);
 	}

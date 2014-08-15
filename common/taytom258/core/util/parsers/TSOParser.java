@@ -61,6 +61,7 @@ public class TSOParser {
 		 String BONA = " (BONA FIDE NEED FY) ";
 		 String MRC = " (NTE MRC) ";
 		 String NRC = " (NTE NRC) ";
+		 String FUND = " (FUNDING OFFICE) ";
 		 //These are search strings to identify if POC information is for our local TCF (try to keep as specific as possible)
 		 String[] STRLOCALID = {
 		  "ANDWSAFB/24/TCF",
@@ -307,18 +308,30 @@ public class TSOParser {
 		 //pull out MRC and NRC from section 5
 		 Double zero = 0.00;
 		 String text = sections.get(4);
+		 Pattern pat = Pattern.compile("[\\$](\\d+(?:\\.\\d{1,2})?)");
 		 if(text.indexOf(BONA) > -1){
-			 String BonaText = text.substring(text.indexOf(BONA)+BONA.length()+1);
-			 String MRCText = BonaText.substring(BonaText.indexOf(MRC)+MRC.length()+1, BonaText.indexOf(NRC)-1);
-			 String NRCText = BonaText.substring(BonaText.indexOf(NRC)+NRC.length()+1);
-			 NRCText = NRCText.substring(0, NRCText.indexOf(";"));
+			 String BonaText = text.substring(text.indexOf(BONA)+BONA.length()+1, text.indexOf(FUND)).trim();
+			 Matcher match = pat.matcher(BonaText);
+			 boolean mrcf = false;
+			 String MRCText = "";
+			 String NRCText = "";
+			 if(BonaText.indexOf(MRC) < BonaText.indexOf(NRC)){
+				 mrcf = true;
+			 	}
+			 while(match.find()){
+				 if(mrcf){
+					 MRCText = match.group(1);
+					 mrcf = false;
+				 }else{
+					 NRCText = match.group(1);
+					 mrcf = true;
+				 }
+				 }
 			 Collection.mrc = Double.parseDouble(MRCText);
 			 Collection.nrc = Double.parseDouble(NRCText);
-			 System.out.println(MRCText + " : " + NRCText);
 		 }else{
 			 Collection.mrc = zero;
 			 Collection.nrc = zero;
-			 System.out.println(zero + " : " + zero);
 		 }
 
 		 //break the full CCSD down
@@ -352,8 +365,12 @@ public class TSOParser {
 					 Collection.fullTsp = value;
 				 }
 			 }else if(key.equals("To")){
-				 String tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";
-				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim()+ "'";
+				 String tempGEO = "";
+				 String testS = value.substring(value.indexOf(" ")+1);
+				 String testS2 = testS.substring(0, testS.indexOf(" "));
+				 if (testS2.length() < 3){tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+" "+testS2.trim()+ "'";}
+				 else{tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";}
+				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "")+ "'";
 				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
 				 String[] name = temprs.split(":");
 				 Collection.toLocation = name[1] + ": " + name[0];
