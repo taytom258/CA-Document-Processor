@@ -111,7 +111,6 @@
 		<jar destfile="${environment.build_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
 			manifest="MANIFEST.MF" index="true">
 			<fileset dir="${environment.base_location}/temp/compile" />
-			<fileset dir="${environment.source_location}/resources" />
 		</jar>
 		
 		<!-- Clean up the source now that we are done -->
@@ -134,7 +133,6 @@
 			<jar destfile="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
 				manifest="MANIFEST.MF" index="true">
 				<fileset dir="${environment.base_location}/temp/compile" />
-				<fileset dir="${environment.source_location}/resources" />
 			</jar>
 		
 		<!-- Sign the finished jar -->
