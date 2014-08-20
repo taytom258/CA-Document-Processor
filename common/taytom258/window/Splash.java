@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
 import taytom258.config.Config;
@@ -23,7 +24,7 @@ public class Splash extends JDialog {
 	 */
 	private static final long serialVersionUID = 6590549531899950560L;
 	private final JPanel contentPanel = new JPanel();
-	private static JProgressBar progressBar = new JProgressBar();
+	public static JProgressBar progressBar = new JProgressBar();
 	public static Splash dialog = new Splash();
 	private final JLabel lblNewLabel = new JLabel(Reference.APPLICATION_NAME + " : " + Reference.APPLICATION_VERSION);
 
@@ -32,7 +33,7 @@ public class Splash extends JDialog {
 	 */
 	public static void appear() {
 		try {
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			progressBar.setMinimum(1);
 			progressBar.setMaximum(6);

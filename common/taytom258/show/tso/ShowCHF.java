@@ -20,13 +20,37 @@ public class ShowCHF extends Window {
 
 	private static String currentText, creatingText, tsoName;
 	private static ArrayList<String> create = new ArrayList<String>();
+	private static File folderExist = null;
 
 	public static void show() {
 		tsoName();
 		IOOperations(rootFolder());
+		if(Collection.ccsdChange){checkDup();}
 		LogHelper.info("TSO (CHF) Tab Complete");
 	}
 
+	private static void checkDup(){
+		File root = new File(folderExist.toString());
+		File oldRoot = null;
+		String first = Collection.ccsdList[0].trim().substring(0, 4);
+		String second = Collection.ccsdList[0].trim().substring(4, 8);
+		String oldS = second + " (" + first + ")";
+		if(Config.useChf){
+			oldRoot = new File(Config.chfPath+"\\"+oldS);
+		}else{
+			oldRoot = new File(Config.chfTest+"\\"+oldS);
+		}
+		if(root.exists()){
+			try {
+				FileUtils.copyDirectory(oldRoot, root);
+				FileUtils.deleteDirectory(oldRoot);
+			} catch (IOException e) {
+				LogHelper.severe(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private static void IOOperations(File path) {
 		folder(path.toString());
 		createTso(path.toString());
@@ -52,14 +76,14 @@ public class ShowCHF extends Window {
 	}
 
 	private static File rootFolder() {
-		File folderExist = null;
 		File only = null;
 
 		if (Collection.tsoAction.equals("DISCONTINUE") && Collection.trunkId.length() == 6){
 			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND);
-			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";
+			Collection.chfRootFolder += " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND;
 		}else if (Collection.tsoAction.equals("DISCONTINUE")) {
 			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + Strings.DISCO_PEND);
+			Collection.chfRootFolder += " " + Strings.DISCO_PEND;
 		} else if (Collection.trunkId.length() == 6) {
 			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")");
 			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";

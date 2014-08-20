@@ -195,10 +195,15 @@ public class TSOParser {
 		 
 		 //Tomlin Request #1
 		 String ccsd = tso.get("Full CCSD").trim();
+		 Collection.ccsdChange = false;
 		 if (ccsd.length() == 8) {
 			 tso.put("Standardized CCSD", ccsd);
-		 }else if(ccsd.length() > 8 && ccsd.indexOf("/") > -1 || ccsd.length() < 8) {
+		 }else if(ccsd.length() < 8) {
 			 tso.put("Standardized CCSD", tso.get("Alternate CCSD"));
+		 }else if(ccsd.length() > 8 && ccsd.indexOf('/') > -1){
+			 Collection.ccsdChange = true;
+			 Collection.ccsdList = ccsd.split("/");
+			 tso.put("Standardized CCSD", Collection.ccsdList[1]);
 		 }
 		 
 		 //Tomlin Request #2
@@ -437,7 +442,7 @@ public class TSOParser {
 	}
 }
 
-class LoadDB extends Database{
+class LoadDB{
 	
 	public static String testGEOLOC(String GEOLOC, String StateCode){
 		String re = "";
@@ -445,7 +450,7 @@ class LoadDB extends Database{
 						"FROM "+Strings.GEOLOC_TABLE+
 						" WHERE GEOLOC = "+GEOLOC+" AND StateCountryCode = "+StateCode;
 		ArrayList<String> al = new ArrayList<String>();
-		al = sqlQuery(sql);
+		al = Database.dbQuery(sql);
 		for(int i=0;i<al.size();i++){
 			String temp = al.get(i);
 			if(i == 5){
@@ -463,7 +468,7 @@ class LoadDB extends Database{
 						"FROM "+Strings.DEPTCODE_TABLE+
 						" WHERE DeptCode = "+DEPTCODE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = sqlQuery(sql);
+		al = Database.dbQuery(sql);
 		for(int i=0;i<al.size();i++){
 			String temp = al.get(i);
 			if(i == 2){
@@ -479,7 +484,7 @@ class LoadDB extends Database{
 						"FROM "+Strings.USECODE_TABLE+
 						" WHERE PurposeCode = "+USECODE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = sqlQuery(sql);
+		al = Database.dbQuery(sql);
 		for(int i=0;i<al.size();i++){
 			String temp = al.get(i);
 			if(i == 3){
@@ -495,7 +500,7 @@ class LoadDB extends Database{
 						"FROM "+Strings.SVCTYPE_TABLE+
 						" WHERE Code = "+SVCTYPE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = sqlQuery(sql);
+		al = Database.dbQuery(sql);
 		for(int i=0;i<al.size();i++){
 			String temp = al.get(i);
 			if(i == 2){

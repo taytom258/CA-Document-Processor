@@ -34,7 +34,7 @@ import javax.swing.event.CaretListener;
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.TSOPopHelper;
-import taytom258.core.util.db.TSOCommit;
+import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.window.core.WindowCore;
@@ -841,6 +841,7 @@ public class Window {
 				
 				JButton button = new JButton("TSO Statement to Clipboard");
 				button.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						StringSelection ss = new StringSelection (Collection.purpose);
 						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
@@ -1300,7 +1301,7 @@ public class Window {
 		btnT.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LogHelper.severe("This is a test");
+				CircuitStatus.circuitStatusRepair();
 			}
 		});
 		if(Config.debug){

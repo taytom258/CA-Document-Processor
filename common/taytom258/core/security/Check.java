@@ -1,6 +1,5 @@
 package taytom258.core.security;
 
-import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 

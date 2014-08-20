@@ -30,7 +30,8 @@ public class Collection{
 	
 	//Program Info
 	public static String purpose, tsoSubject, tsrNum, chfRootFolder = "";
-	public static boolean runClicked, develop = false;
+	public static boolean runClicked, develop, ccsdChange = false;
+	public static String[] ccsdList;
 	
 	//Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,

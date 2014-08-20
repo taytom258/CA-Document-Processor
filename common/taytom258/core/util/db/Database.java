@@ -20,11 +20,11 @@ import taytom258.lib.Collection;
 
 public class Database {
 
-	public static Connection con;
-	public static Statement st;
+	private static Connection con;
+	private static Statement st;
 	private static String db;
-
-	protected static ArrayList<String> sqlQuery(String sql) {
+	
+	public static ArrayList<String> dbQuery(String sql) {
 		
 		ArrayList<String> group = new ArrayList<String>();
 		ResultSet rs = null;
@@ -51,11 +51,31 @@ public class Database {
 			}
 			
 		}
-		LogHelper.db("SQL Query Complete");
+		LogHelper.db("DB Query Complete");
 		return group;
 	}
 	
-	protected static void sqlInsert(String table, String field, String value, String key, String keyField){
+public static boolean dbUpdate(String sql) {
+		try {
+			st.executeUpdate(sql);
+			con.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			LogHelper.severe(ex.getMessage());
+			try {
+				con.rollback();
+				return false;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(e.getMessage());
+			}
+			
+		}
+		LogHelper.db("DB Update Complete");
+		return true;
+	}
+	
+	protected static void TSOInsert(String table, String field, String value, String key, String keyField){
 		String[] fields = new String[19];
 		String[] values = new String[19];
 		try {
@@ -69,7 +89,7 @@ public class Database {
 			if(ex.getMessage().contains("General error")){
 				fields = field.split(",");
 				values = value.replace("'", "").split(",");
-				sqlUpdate(table, fields, values, key, keyField);
+				TSOUpdate(table, fields, values, key, keyField);
 //				sqlQueryNull(table, field, key, keyField);
 //				ex.printStackTrace();
 //				LogHelper.severe(ex.getMessage());
@@ -84,10 +104,10 @@ public class Database {
 				LogHelper.severe(e.getMessage());
 			}
 		}
-		LogHelper.db("SQL Insert Complete");
+		LogHelper.db("TSO Insert Complete");
 	}
 	
-	private static void sqlUpdate(String table, String[] field, String[] value, String key, String keyField){
+	protected static void TSOUpdate(String table, String[] field, String[] value, String key, String keyField){
 		try {
 			int update = 0;
 			boolean newer = false;
@@ -95,7 +115,7 @@ public class Database {
 		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
 		    Date report =  format.parse(string);
 			
-			ArrayList<String> rs = sqlQuery("SELECT ReportDate "
+			ArrayList<String> rs = dbQuery("SELECT ReportDate "
 					+ "FROM TSO "
 					+ "WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'");
 			Collections.sort(rs);
@@ -136,9 +156,109 @@ public class Database {
 			}
 			
 		}
-		LogHelper.db("SQL Update Complete");
+		LogHelper.db("TSO Update Complete");
+	}
+	
+	protected static void TSOUpdate(String table, String field, String value, String key, String keyField){
+		try {
+			int update = 0;
+			boolean newer = false;
+			String string = Conversion.dateConvert(Collection.reportDate, false, true);
+		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+		    Date report =  format.parse(string);
+			
+			ArrayList<String> rs = dbQuery("SELECT ReportDate "
+					+ "FROM TSO "
+					+ "WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'");
+			Collections.sort(rs);
+			for (String element : rs){
+				String target = element;
+			    DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+			    Date result =  df.parse(target);
+//			    System.out.println(report + " : " + result);
+			    if(report.compareTo(result) > 0){
+//			    	System.out.println("newer");
+			    	newer = true;
+			    }else{
+			    	newer = false;
+			    }
+			}
+			
+			if(newer){
+				LogHelper.info("Record already exists in table "+table+", updating information");
+				String sql = "UPDATE " + table
+						+" SET " + field + " = " + "'" + value.trim() + "'"
+						+ " WHERE " + keyField +" = '" + key + "'";
+//					System.out.println(sql);
+				st.executeUpdate(sql);
+				update++;
+				LogHelper.info(update + " fields updated");
+				con.commit();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			LogHelper.severe(ex.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(ex.getMessage());
+			}
+			
+		}
+		LogHelper.db("TSO Update Complete");
 	}
 
+	protected static void TSOUpdate(String table, String field, int value, String key, String keyField){
+		try {
+			int update = 0;
+			boolean newer = false;
+			String string = Conversion.dateConvert(Collection.reportDate, false, true);
+		    DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+		    Date report =  format.parse(string);
+			
+			ArrayList<String> rs = dbQuery("SELECT ReportDate "
+					+ "FROM TSO "
+					+ "WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'");
+			Collections.sort(rs);
+			for (String element : rs){
+				String target = element;
+			    DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
+			    Date result =  df.parse(target);
+//			    System.out.println(report + " : " + result);
+			    if(report.compareTo(result) > 0){
+//			    	System.out.println("newer");
+			    	newer = true;
+			    }else{
+			    	newer = false;
+			    }
+			}
+			
+			if(newer){
+				LogHelper.info("Record already exists in table "+table+", updating information");
+				String sql = "UPDATE " + table
+						+" SET " + field + " = " + "'" + value + "'"
+						+ " WHERE " + keyField +" = '" + key + "'";
+//					System.out.println(sql);
+				st.executeUpdate(sql);
+				update++;
+				LogHelper.info(update + " fields updated");
+				con.commit();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			LogHelper.severe(ex.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LogHelper.severe(ex.getMessage());
+			}
+			
+		}
+		LogHelper.db("TSO Update Complete");
+	}
+	
 	public static void init(boolean close) {
 		if(close){
 			try {
@@ -174,6 +294,7 @@ public class Database {
 	
 	//TODO Get query null to work properly
 	
+	@Deprecated
 	private static void sqlQueryNull(String table, String field, String key, String keyField){
 		try {
 		con = DriverManager.getConnection(db);

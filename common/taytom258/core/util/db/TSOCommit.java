@@ -55,7 +55,7 @@ public class TSOCommit extends Database {
 				+c+Collection.dataRate+c+Collection.trafficFlow+c+Collection.serviceAvail+c+andrewscmo+c
 				+Collection.cmo+c+Collection.signaling+c+Collection.qcc+c+endpoint+c+Collection.chfLink
 				+c+userLetter+c+qc+c+Collection.location+c+Collection.mrc+c+Collection.nrc;
-		sqlInsert("Circuits", field, value, Collection.fullCcsd, "FullCCSD");
+		TSOInsert("Circuits", field, value, Collection.fullCcsd, "FullCCSD");
 	}
 	
 	private static void TSO(){
@@ -75,14 +75,13 @@ public class TSOCommit extends Database {
 		}
 		
 		boolean exists = false;
-		ArrayList<String> rs = sqlQuery("SELECT TSONumber "
+		ArrayList<String> rs = dbQuery("SELECT TSONumber "
 				+ "FROM	TSO");
 		for(String element : rs){
 			if (element.equals(Collection.tsoNum)){
 				exists = true;
 			}
 		}
-		//TODO Latest TSO in Installer Form (may have issues)
 		int ignore = 0;
 		if(!exists){
 			if(isLatest()){
@@ -98,7 +97,7 @@ public class TSOCommit extends Database {
 		if (exists){
 			LogHelper.info("TSO already exists in database, skipping");
 		}else{
-			sqlInsert("TSO", field, value, Collection.tsoNum, "TSONumber");
+			TSOInsert("TSO", field, value, Collection.tsoNum, "TSONumber");
 		}
 	}
 	
@@ -107,17 +106,17 @@ public class TSOCommit extends Database {
 		
 		String field = "CMO, CMODsn, CMOComm";
 		String value = Collection.cmo+c+Collection.cmoDsn+c+Collection.cmoComm;
-		sqlInsert("CMO", field, value, Collection.cmo, "CMO");
+		TSOInsert("CMO", field, value, Collection.cmo, "CMO");
 		
 	}
 	
 	private static boolean isLatest(){
-		boolean latest = true;
+		boolean latest = false;
 		int t = -1;
 		
 		String query = "SELECT FullCCSD, ReportDate, TSONumber FROM TSO WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'";
 		String update = "";
-		ArrayList<String> al = sqlQuery(query);
+		ArrayList<String> al = dbQuery(query);
 		
 		
 		if(al.size()>0){
@@ -127,16 +126,19 @@ public class TSOCommit extends Database {
 				try {
 					current = new SimpleDateFormat("yyyy-MM-dd H:m:s").parse(Conversion.dateConvert(Collection.reportDate, false, true));
 					pulled = new SimpleDateFormat("yyyy-MM-dd H:m:s").parse(al.get(i));
+//					System.out.println(current);
+//					System.out.println(pulled);
 				} catch (ParseException e) {
 					e.printStackTrace();
 					LogHelper.severe(e.getMessage());
 				}
 				if(!current.after(pulled)){
-					latest = false;
+					return false;
 				}else if(current.after(pulled)){
-					latest = true;
-					update = "UPDATE TSO SET Ignore = "+ t +" WHERE TSONumber = '"+al.get(i+1)+"'";
-					break;
+					TSOUpdate("TSO", "Ignore", t, Collection.fullCcsd, "FullCCSD");
+//					update = "UPDATE TSO SET Ignore = "+ t +" WHERE FullCCSD = '"+Collection.fullCcsd+"'";
+//					System.out.println(update);
+					return true;
 				}
 			}
 //			for(int i=0;i<al.size();i++){

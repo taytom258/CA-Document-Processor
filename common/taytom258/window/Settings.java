@@ -154,6 +154,7 @@ public class Settings{
 		
 		JButton btnNewButton_2 = new JButton("Browse");
 		btnNewButton_2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser(textFieldchfPath.getText());
 				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -171,6 +172,7 @@ public class Settings{
 		
 		JButton button = new JButton("Browse");
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser(textFieldchfTest.getText());
 				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -188,6 +190,7 @@ public class Settings{
 		
 		JButton button_1 = new JButton("Browse");
 		button_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser(textFielddbPath.getText());
 //				choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
