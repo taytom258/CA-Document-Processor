@@ -1285,8 +1285,10 @@ public class Window {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(Collection.runClicked){
-					TSOPopHelper.appear();
+				if(Collection.runClicked && Collection.inputNeeded.size()>0){
+					String[] temp = Collection.inputNeeded.get(0).split(":");
+					TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
+					pop.appear();
 				}else{
 					LogHelper.warning("Please run the program first");
 				}

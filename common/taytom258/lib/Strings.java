@@ -7,7 +7,7 @@ public final class Strings {
 	public static final String DEVELOP_WARN = "You are using a development version of this program. Weird things may happen!";
 	public static final String DUPLICATE_WARN = "There is already a TSO in the database by that name. If you need to edit TSO information, please use the access database forms.";
 	public static final String DATA_TITLE = "More information";
-	public static final String DATA_HEADER = "The program was unable to pull certain things from the document. Please input these below now...";
+	public static final String DATA_HEADER = "The ENR code listed is not in the database. Please select a location from the dropdown to match this ENR code.";
 	public static final String CONFIG_NAME = "config.properties";
 	public static final String CHF_FOLDER = "CHF Default";
 	public static final String DISCO_PEND = "(Disco Pending)";
@@ -37,11 +37,16 @@ public final class Strings {
 	public static final String AMEND = "Amend";
 	public static final String CANCEL = "Cancel";
 	public static final String ANDREWS_CMO = "ANDWSAFB";
+	public static final String BOLLING_CMO = "BLLNGAFB";
+	public static final String DVILLE_CMO = "DVDSNVLL";
+	public static final String BWINE_CMO = "BRANDYWN";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
 	public static final String[] FOLDERS = {"Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs", "User Letters", "MISC"};
 	public static final String GEOLOC_TABLE = "Java_GEOLOC";
 	public static final String DEPTCODE_TABLE = "Java_DEPTCODE";
 	public static final String USECODE_TABLE = "Java_PURCODE";
 	public static final String SVCTYPE_TABLE = "Java_SVCTYPE";
+	public static final String ENRCODE_TABLE = "Java_ENRCODE";
+	public static final String[] LOCATIONS = {"Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville"};
 	
 }

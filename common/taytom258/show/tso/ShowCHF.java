@@ -40,7 +40,7 @@ public class ShowCHF extends Window {
 		}else{
 			oldRoot = new File(Config.chfTest+"\\"+oldS);
 		}
-		if(root.exists()){
+		if(oldRoot.exists()){
 			try {
 				FileUtils.copyDirectory(oldRoot, root);
 				FileUtils.deleteDirectory(oldRoot);

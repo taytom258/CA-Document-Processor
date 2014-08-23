@@ -1,5 +1,7 @@
 package taytom258.lib;
 
+import java.util.ArrayList;
+
 
 
 public class Collection{
@@ -42,5 +44,12 @@ public class Collection{
 	//Access Database (TSO)
 	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate = "";
 	public static boolean crr, careq = false;
+	public static ArrayList<String> facilities, enrCode, inputNeeded, userENRInput = null;
 	
+	public static void init(){
+		facilities = new ArrayList<String>();
+		enrCode = new ArrayList<String>();
+		inputNeeded = new ArrayList<String>();
+		userENRInput = new ArrayList<String>();
+	}
 }

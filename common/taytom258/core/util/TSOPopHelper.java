@@ -5,28 +5,22 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
+import taytom258.core.util.db.Database;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-
-import java.awt.Font;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class TSOPopHelper extends JDialog {
 	
@@ -34,21 +28,17 @@ public class TSOPopHelper extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -2605535464107680020L;
-	private static TSOPopHelper dialog = new TSOPopHelper();
+	public static TSOPopHelper dialog = null;
 	private final JPanel panel = new JPanel();
-	private final JLabel label = new JLabel("MRC");
-	private final JTextField textField_nrc = new JTextField();
-	private final JTextField textField_mrc = new JTextField();
-	private final JLabel label_1 = new JLabel("NRC");
-	private final JCheckBox checkBox_careq = new JCheckBox("CA Action Required?");
-	private JComboBox comboBox = new JComboBox();
 	private final JButton btnCancel = new JButton("Cancel");
+	private JTextField textField_locationCode;
+	private JTextField textField_ENRCode;
+	private JComboBox<String> comboBox_location;
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void appear() {
-		
+	public void appear() {
 		dialog.setTitle(Strings.DATA_TITLE);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
@@ -57,10 +47,12 @@ public class TSOPopHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public TSOPopHelper() {
+	public TSOPopHelper(String ENR, String LocationCode) {
+		System.out.println("Window Created");
+		dialog = this;
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setBounds(100, 100, 400, 194);
+		setBounds(100, 100, 262, 194);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
@@ -70,8 +62,30 @@ public class TSOPopHelper extends JDialog {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					save();
+					if(Collection.userENRInput.size() != Collection.inputNeeded.size()){
+						String[] temp = Collection.inputNeeded.get(Collection.userENRInput.size()).split(":");
+						TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
+						pop.appear();
+					}else if(Collection.userENRInput.size() == Collection.inputNeeded.size()){
+						for(String element:Collection.userENRInput){
+							String first = element.substring(0, element.indexOf(':'));
+							String second = element.substring(element.indexOf(':')+1, element.indexOf(':', element.indexOf(':')+1));
+							String third = element.substring((element.indexOf(':', element.indexOf(':')+1))+1);
+							//TODO finish ENR commit priority system
+							if(third == Strings.ANDREWS_CMO){
+								Collection.location = third;
+							}else if(third == Strings.BOLLING_CMO && !Collection.location.equals(Strings.ANDREWS_CMO)){
+								Collection.location = third;
+							}else if(third == Strings.DVILLE_CMO && !Collection.location.equals(Strings.BOLLING_CMO) || !Collection.location.equals(Strings.ANDREWS_CMO)){
+								Collection.location = third;
+							}else if(third == Strings.BWINE_CMO && !Collection.location.equals(Strings.BOLLING_CMO) || !Collection.location.equals(Strings.ANDREWS_CMO)){
+								Collection.location = third;
+							}
+							String sql = "INSERT INTO "+Strings.ENRCODE_TABLE+"(ENR, Location, Sublocation) VALUES ('"+second+"', '"+first+"', '"+third+"')";
+							Database.dbUpdate(sql);
+						}
+					}
 					clear();
-					dialog.dispose();
 					TSOCommit.run();
 				}
 			});
@@ -79,13 +93,13 @@ public class TSOPopHelper extends JDialog {
 			buttonPane.add(okButton);
 			getRootPane().setDefaultButton(okButton);
 			{
+				buttonPane.add(btnCancel);
 				btnCancel.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						dialog.dispose();
+						clear();
 					}
-				});
-				buttonPane.add(btnCancel);
+				});	
 			}
 		}
 		{
@@ -93,81 +107,47 @@ public class TSOPopHelper extends JDialog {
 			getContentPane().add(panel, BorderLayout.CENTER);
 		}
 		panel.setLayout(null);
-		{
-			label.setBounds(10, 97, 26, 16);
-			label.setHorizontalAlignment(SwingConstants.CENTER);
-			panel.add(label);
-		}
-		{
-			textField_nrc.setBounds(42, 64, 86, 20);
-			textField_nrc.setColumns(10);
-			textField_nrc.setText(String.valueOf(Collection.nrc));
-			panel.add(textField_nrc);
-		}
-		{
-			textField_mrc.setBounds(42, 94, 86, 20);
-			textField_mrc.setText(String.valueOf(Collection.mrc));
-			textField_mrc.setColumns(10);
-			panel.add(textField_mrc);
-		}
-		{
-			label_1.setBounds(10, 66, 24, 16);
-			label_1.setHorizontalAlignment(SwingConstants.CENTER);
-			panel.add(label_1);
-		}
-		{
-			checkBox_careq.setBounds(245, 61, 141, 24);
-			checkBox_careq.setBackground(UIManager.getColor("Button.background"));
-			panel.add(checkBox_careq);
-		}
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setFont(new Font("Dialog", Font.PLAIN, 14));
-		textPane.setEditable(false);
-		textPane.setText(Strings.DATA_HEADER);
-		textPane.setBackground(UIManager.getColor("Button.background"));
-		textPane.setBounds(10, 11, 374, 44);
-		StyledDocument doc = textPane.getStyledDocument();
+		JLabel lblLocationCode = new JLabel("Location CODE");
+		lblLocationCode.setBounds(27, 12, 84, 16);
+		panel.add(lblLocationCode);
+		
+		JLabel lblEnrCode = new JLabel("ENR Code");
+		lblEnrCode.setBounds(189, 12, 55, 16);
+		panel.add(lblEnrCode);
+		
+		textField_locationCode = new JTextField();
+		textField_locationCode.setEditable(false);
+		textField_locationCode.setBounds(12, 40, 114, 20);
+		panel.add(textField_locationCode);
+		textField_locationCode.setColumns(10);
+		textField_locationCode.setText(LocationCode);
+		
+		textField_ENRCode = new JTextField();
+		textField_ENRCode.setEditable(false);
+		textField_ENRCode.setBounds(189, 40, 55, 20);
+		panel.add(textField_ENRCode);
+		textField_ENRCode.setColumns(10);
+		textField_ENRCode.setText(ENR);
+		
+		comboBox_location = new JComboBox<String>();
+		comboBox_location.setModel(new DefaultComboBoxModel<String>(Strings.LOCATIONS));
+		comboBox_location.setBounds(12, 93, 114, 25);
+		panel.add(comboBox_location);
+		
+		JLabel lblSelectLocation = new JLabel("Select Location...");
+		lblSelectLocation.setBounds(18, 72, 97, 16);
+		panel.add(lblSelectLocation);
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-		doc.setParagraphAttributes(0, doc.getLength(), center, false);
-		panel.add(textPane);
-		
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville"}));
-		comboBox.setBounds(228, 93, 154, 25);
-		comboBox.setEditable(false);
-		comboBox.setSelectedIndex(0);
-		panel.add(comboBox);
-		
-		JLabel lblLocation = new JLabel("Location");
-		lblLocation.setBounds(155, 97, 55, 16);
-		panel.add(lblLocation);
 	}
 	
 	private void save() {
-		double z = 0;
-		if (!textField_mrc.getText().equals("")) {
-			Collection.mrc = Double.valueOf(textField_mrc.getText().trim());
-		}else{
-			Collection.mrc = z;
-		}
-		if (!textField_nrc.getText().equals("")) {
-			Collection.nrc = Double.valueOf(textField_nrc.getText().trim());
-		}else{
-			Collection.nrc = z;
-		}
-		if(comboBox.getSelectedIndex() != -1){
-			Collection.location = comboBox.getSelectedItem().toString();
-		}else{
-			Collection.location = "Not Set";
-		}
-		Collection.careq = checkBox_careq.isSelected();
+		Collection.userENRInput.add(textField_locationCode.getText()+":"+textField_ENRCode.getText()+":"+comboBox_location.getSelectedItem());
 	}
 	
 	private void clear(){
-		textField_mrc.setText(String.valueOf(Collection.mrc));
-		textField_nrc.setText(String.valueOf(Collection.nrc));
-		comboBox.setSelectedIndex(0);
-		checkBox_careq.setSelected(false);
+		dialog.dispose();
+		dialog = null;
 	}
 }

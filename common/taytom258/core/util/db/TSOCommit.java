@@ -8,6 +8,7 @@ import java.util.Date;
 import taytom258.core.util.Conversion;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
+import taytom258.lib.Strings;
 
 public class TSOCommit extends Database {
 
@@ -16,6 +17,7 @@ public class TSOCommit extends Database {
 		CMO();
 		circuit();
 		TSO();
+		CircuitStatus.circuitStatusUpdate(Collection.fullCcsd);
 		
 //		String[] temp = Config.dbPath.split("[.]");
 //		FileUtils.deleteQuietly(new File(temp[0] + "." + temp[1]));
@@ -31,10 +33,10 @@ public class TSOCommit extends Database {
 		}else{
 			andrewscmo = 0;
 		}
-		if(Collection.andrewsCmo && !Collection.location.equals("Andrews 1539")){
+		if(Collection.andrewsCmo && !Collection.location.equals(Strings.LOCATIONS[2])){
 			userLetter = -1;
 			qc = -1;
-		}else if(Collection.andrewsCmo && Collection.location.equals("Andrews 1539")){
+		}else if(Collection.andrewsCmo && Collection.location.equals(Strings.LOCATIONS[2])){
 			userLetter = 0;
 			qc = -1;
 		}else{
@@ -111,11 +113,10 @@ public class TSOCommit extends Database {
 	}
 	
 	private static boolean isLatest(){
-		boolean latest = false;
+		boolean latest = true;
 		int t = -1;
 		
 		String query = "SELECT FullCCSD, ReportDate, TSONumber FROM TSO WHERE FullCCSD = "+"'"+Collection.fullCcsd+"'";
-		String update = "";
 		ArrayList<String> al = dbQuery(query);
 		
 		
@@ -133,12 +134,12 @@ public class TSOCommit extends Database {
 					LogHelper.severe(e.getMessage());
 				}
 				if(!current.after(pulled)){
-					return false;
+					latest = false;
 				}else if(current.after(pulled)){
 					TSOUpdate("TSO", "Ignore", t, Collection.fullCcsd, "FullCCSD");
 //					update = "UPDATE TSO SET Ignore = "+ t +" WHERE FullCCSD = '"+Collection.fullCcsd+"'";
 //					System.out.println(update);
-					return true;
+					latest = true;
 				}
 			}
 //			for(int i=0;i<al.size();i++){

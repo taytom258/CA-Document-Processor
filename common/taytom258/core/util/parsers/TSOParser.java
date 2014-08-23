@@ -7,10 +7,13 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import taytom258.Start;
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
+import taytom258.threads.ThreadC;
 
 /**
  * Parse TSO text
@@ -40,6 +43,7 @@ public class TSOParser {
 	
 	public static boolean parseTSO(String t) throws Exception{
 		 if (t.equals("") || t.equals(null)) {return false;} //we ain't messin' around here kid
+		 Collection.init();
 		 Database.init(false);
 		 //the TSO object
 		 TreeMap<String, String> tso = new TreeMap<String, String>();
@@ -277,187 +281,258 @@ public class TSOParser {
 			}
 		}
 		 
-		//TODO get facilities from section 3
-//		String[] sec3 = new String[26];
-//		 String endLocationCode = "BLDG/DIRECTIONS/ADDRESS:";
-//		 sec3 = sections.get(2).split("/\\s[A-Z]\\.\\s/g");
-//		 for(String element : sec3){System.out.println(element);}
-//		 for (int i=0; i<sec3.length; i++) {sec3[i] = sec3[i].substring(0,sec3[i].indexOf(endLocationCode) - 1);}
-//		 for(String element : sec3){
-//			 System.out.println(sec3.length);
-//			 System.out.println(element);
-//		 }
-		
-		
-		 //break POC information into an array (because I can)
-		 String fs = tso.get("POC Information");
-		 String[] array = {};
-		 int sn = 2;
-		 as = "(" + (sn - 1) + ") ";
-		 bs = "(" + sn + ") ";
-		 found = (fs.indexOf(as) > -1);
-		 int end = fs.indexOf(bs);
-		 while (found) {
-		  String element = fs.substring(fs.indexOf(as) + as.length(), end);
-		  array = addIn(array, element);
-		  sn++;
-		  as = "(" + (sn - 1) + ") ";
-		  bs = "(" + sn + ") ";
-		  found = (fs.indexOf(as) > -1);
-		  end = fs.indexOf(bs);
-		  if (end < 0) {end = fs.length();}
+		//get facilities from section 3 and set ENR table with location information
+		ArrayList<String> sec3 = new ArrayList<String>();
+		 String elc = "BLDG/DIRECTIONS/ADDRESS:";
+		 Pattern p = Pattern.compile("\\s[A-Z]\\.\\s");
+		 Matcher mat = p.matcher(sections.get(2));
+		 while(mat.find()){
+			 String add = sections.get(2).substring(mat.end(),sections.get(2).indexOf(elc, mat.end()) - 1).trim();
+			 sec3.add(add);
 		 }
-		 String arrayText = Arrays.toString(array).replace(",", "\n").replace("[", "").replace("]", "");
-		 tso.put("POC Information", arrayText);
-		 
-		 //pull out MRC and NRC from section 5
-		 Double zero = 0.00;
-		 String text = sections.get(4);
-		 Pattern pat = Pattern.compile("[\\$](\\d+(?:\\.\\d{1,2})?)");
-		 if(text.indexOf(BONA) > -1){
-			 String BonaText = text.substring(text.indexOf(BONA)+BONA.length()+1, text.indexOf(FUND)).trim();
-			 Matcher match = pat.matcher(BonaText);
-			 boolean mrcf = false;
-			 String MRCText = "";
-			 String NRCText = "";
-			 if(BonaText.indexOf(MRC) < BonaText.indexOf(NRC)){
-				 mrcf = true;
-			 	}
-			 while(match.find()){
-				 if(mrcf){
-					 MRCText = match.group(1);
-					 mrcf = false;
-				 }else{
-					 NRCText = match.group(1);
-					 mrcf = true;
+		 for(int i=0;i<sec3.size();i++){
+			 String num = String.valueOf(i+1);
+			 String s = sec3.get(i);
+			 int space = 0;
+			 for(int i2=0;i2<s.length();i2++){
+				 if(s.charAt(i2) == ' '){
+					 space++;
 				 }
-				 }
-			 Collection.mrc = Double.parseDouble(MRCText);
-			 Collection.nrc = Double.parseDouble(NRCText);
-		 }else{
-			 Collection.mrc = zero;
-			 Collection.nrc = zero;
-		 }
-
-		 //break the full CCSD down
-		 String fullCCSD = "";
-		 if (tso.get("Full CCSD").length() > 6 || (tso.get("Full CCSD").indexOf("/") > -1 && tso.get("Full CCSD").length() == 17)) {fullCCSD = tso.get("Full CCSD");}
-		 else {fullCCSD = tso.get("Alternate CCSD");}
-		 tso.put("Requesting Department", LoadDB.testDEPTCODE("'"+fullCCSD.substring(0, 1)+"'"));
-		 tso.put("Circuit Use", LoadDB.testUSECODE("'"+fullCCSD.substring(1, 3)+"'"));
-		 tso.put("Type of Service", LoadDB.testSVCTYPE("'"+fullCCSD.substring(3, 4)+"'"));
-
-		 for(Map.Entry<String, String> entry : tso.entrySet()){
-			 String key = entry.getKey().trim();
-			 String value = entry.getValue().trim();
-//			 System.out.println("(" + key + ")" + " : " + value);
+			 }
+			 String geo = "";
+			 String state = "";
+			 if(space==2){
+				 geo = s.substring(0, s.indexOf(" ", s.indexOf(" ")+1));
+				 state = s.substring(s.indexOf(" ", s.indexOf(" ")+1)+1, s.indexOf(" ", s.indexOf(" ")+1)+3);
+			 }else if(space==1){
+				geo = s.substring(0, s.indexOf(" "));
+				state = s.substring(s.indexOf(" ")+1, s.indexOf(" ")+3);
+			 }
 			 
-			 if(key.equals("Standardized CCSD")){
-				 Collection.fullCcsd = value;
-				 String first = value.trim().substring(0, 4);
-				 String second = value.trim().substring(4, 8);
-				 Collection.chfRootFolder = second + " (" + first + ")";
-			 }else if(key.equals("Full CCSD") && value.length() == 6){
-				 Collection.trunkId = value;
-			 }else if(key.equals("Full CCSD") && value.length() != 6){
-				 Collection.trunkId = "N/A";
-			 }else if(key.equals("TSP Number")){
-				 Collection.tsp = value;
-			 }else if(key.equals("TSP")){
-				 if(key.equals("NA")){
-					 Collection.fullTsp = "Not Assigned";
-				 }else{
-					 Collection.fullTsp = value;
-				 }
-			 }else if(key.equals("To")){
-				 String tempGEO = "";
-				 String testS = value.substring(value.indexOf(" ")+1);
-				 String testS2 = testS.substring(0, testS.indexOf(" "));
-				 if (testS2.length() < 3){tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+" "+testS2.trim()+ "'";}
-				 else{tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";}
-				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "")+ "'";
-				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
-				 String[] name = temprs.split(":");
-				 Collection.toLocation = name[1] + ": " + name[0];
-				 Collection.toCode = value;
-			 }else if(key.equals("From")){
-				 String tempGEO = "'" +value.substring(0, value.indexOf(' ')).trim()+ "'";
-				 String tempState = "'" +value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "")+ "'";
-				 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
-				 String[] name = temprs.split(":");
-				 Collection.fromLocation = name[1] + ": " + name[0];
-				 Collection.fromCode = value;
-			 }else if(key.equals("Requesting Department")){
-				 Collection.requestingDept = value;
-			 }else if(key.equals("Type of Service")){
-				 Collection.serviceType = value;
-			 }else if(key.equals("Circuit Use")){
-				 Collection.circuitUse = value;
-			 }else if(key.equals("Security")){
-				 Collection.security = value;
-			 }else if(key.equals("Data Rate")){
-				 Collection.dataRate = value;
-			 }else if(key.equals("Traffic Flow")){
-				 Collection.trafficFlow = value;
-			 }else if(key.equals("Term")){
-				 Collection.serviceAvail = value;
-			 }else if(key.equals("We Are CCO")){
-				 Collection.andrewsCmo = Boolean.valueOf(value);
-			 }else if(key.equals("CCO or CMO")){
-				 Collection.cmo = value;
-			 }else if(key.equals("Signaling")){
-				 Collection.signaling = value;
-			 }else if(key.equals("Quality Control Code")){
-				 Collection.qcc = value;
-			 }else if(key.equals("We Are Endpoint")){
-				 Collection.endPoint = Boolean.valueOf(value);
-				 Collection.isPassthrough = !Collection.endPoint;
-			 }else if(key.equals("TSO Number")){
-				 Collection.tsoNum = value;
-			 }else if(key.equals("TSO Suffix")){
-				 Collection.tsoSuffix = value;
-			 }else if(key.equals("TSO Action")){
-				 Collection.tsoAction = value;
-			 }else if(key.equals("Expected In Effect Date")){
-				 Collection.svcDate = value;
-			 }else if(key.equals("Completion Report Required")){
-				 Collection.crr = Boolean.valueOf(value);
-			 }else if(key.equals("Purpose")){
-				 Collection.purpose = value;
-			 }else if(key.equals("Subject")){
-				 Collection.tsoSubject = value;
-			 }else if(key.equals("TSR Number")){
-				 Collection.tsrNum = value;
-			 }else if(key.equals("Report Date")){
-				 Collection.reportDate = value;
-			 }else if(key.equals("CMO Comm")){
-				 Collection.cmoComm = value;
-			 }else if(key.equals("CMO DSN")){
-				 Collection.cmoDsn = value;
+			 
+			 Collection.facilities.add(num+". "+LoadDB.testGEOLOC(geo, state));
+		 }
+		 
+		 for(String ele:sec3){
+			 String[] temp1 = ele.split("\\s");
+			 if(temp1[0].equals(Strings.ANDREWS_CMO) || temp1[0].equals(Strings.BOLLING_CMO) || temp1[0].equals(Strings.DVILLE_CMO) || temp1[0].equals(Strings.BWINE_CMO)){
+				 Collection.enrCode.add(temp1[0]+":"+temp1[1].substring(3).trim());
 			 }
 		 }
-		 Database.init(true);
-		 LogHelper.info("TSO (Parser) Complete");
-		 return true;
+		 
+		 for(String element:Collection.enrCode){
+			 String[] temp1 = element.split(":");
+			 if(LoadDB.testENRCODE(temp1[1], temp1[0]).length()<1){
+				 Collection.location = "NOT SET";
+				 Collection.inputNeeded.add(element);
+			 }else{
+				 String[] sa = LoadDB.testENRCODE(temp1[1], temp1[0]).split(":");
+				 if(sa[0].equals(Strings.ANDREWS_CMO)){
+					 for(String element2:Strings.LOCATIONS){
+						 for(int i=0;i<sa.length;i++){
+							 if(sa[1].equals(Strings.LOCATIONS[i])){
+								 Collection.location = Strings.LOCATIONS[i];
+							 }
+						 }
+					 }
+				 }else if(sa[0].equals(Strings.BOLLING_CMO)){
+					 for(String element2:Strings.LOCATIONS){
+						 for(int i=0;i<sa.length;i++){
+							 if(sa[1].equals(Strings.LOCATIONS[i])){
+								 Collection.location = Strings.LOCATIONS[i];
+							 }
+						 }
+					 }
+				 }else if(sa[0].equals(Strings.DVILLE_CMO)){
+					 for(String element2:Strings.LOCATIONS){
+						 for(int i=0;i<sa.length;i++){
+							 if(sa[1].equals(Strings.LOCATIONS[i])){
+								 Collection.location = Strings.LOCATIONS[i];
+							 }
+						 }
+					 }
+				 }else if(sa[0].equals(Strings.BWINE_CMO)){
+					 for(String element2:Strings.LOCATIONS){
+						 for(int i=0;i<sa.length;i++){
+							 if(sa[1].equals(Strings.LOCATIONS[i])){
+								 Collection.location = Strings.LOCATIONS[i];
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }
+			
+			 //break POC information into an array (because I can)
+			 String fs = tso.get("POC Information");
+			 String[] array = {};
+			 int sn = 2;
+			 as = "(" + (sn - 1) + ") ";
+			 bs = "(" + sn + ") ";
+			 found = (fs.indexOf(as) > -1);
+			 int end = fs.indexOf(bs);
+			 while (found) {
+			  String element = fs.substring(fs.indexOf(as) + as.length(), end);
+			  array = addIn(array, element);
+			  sn++;
+			  as = "(" + (sn - 1) + ") ";
+			  bs = "(" + sn + ") ";
+			  found = (fs.indexOf(as) > -1);
+			  end = fs.indexOf(bs);
+			  if (end < 0) {end = fs.length();}
+			 }
+			 String arrayText = Arrays.toString(array).replace(",", "\n").replace("[", "").replace("]", "");
+			 tso.put("POC Information", arrayText);
+			 
+			 //pull out MRC and NRC from section 5
+			 Double zero = 0.00;
+			 String text = sections.get(4);
+			 Pattern pat = Pattern.compile("[\\$](\\d+(?:\\.\\d{1,2})?)");
+			 if(text.indexOf(BONA) > -1){
+				 String BonaText = text.substring(text.indexOf(BONA)+BONA.length()+1, text.indexOf(FUND)).trim();
+				 Matcher match = pat.matcher(BonaText);
+				 boolean mrcf = false;
+				 String MRCText = "";
+				 String NRCText = "";
+				 if(BonaText.indexOf(MRC) < BonaText.indexOf(NRC)){
+					 mrcf = true;
+				 	}
+				 while(match.find()){
+					 if(mrcf){
+						 MRCText = match.group(1);
+						 mrcf = false;
+					 }else{
+						 NRCText = match.group(1);
+						 mrcf = true;
+					 }
+					 }
+				 Collection.mrc = Double.parseDouble(MRCText);
+				 Collection.nrc = Double.parseDouble(NRCText);
+			 }else{
+				 Collection.mrc = zero;
+				 Collection.nrc = zero;
+			 }
+	
+			 //break the full CCSD down
+			 String fullCCSD = "";
+			 if (tso.get("Full CCSD").length() > 6 || (tso.get("Full CCSD").indexOf("/") > -1 && tso.get("Full CCSD").length() == 17)) {fullCCSD = tso.get("Full CCSD");}
+			 else {fullCCSD = tso.get("Alternate CCSD");}
+			 tso.put("Requesting Department", LoadDB.testDEPTCODE("'"+fullCCSD.substring(0, 1)+"'"));
+			 tso.put("Circuit Use", LoadDB.testUSECODE("'"+fullCCSD.substring(1, 3)+"'"));
+			 tso.put("Type of Service", LoadDB.testSVCTYPE("'"+fullCCSD.substring(3, 4)+"'"));
+	
+			 for(Map.Entry<String, String> entry : tso.entrySet()){
+				 String key = entry.getKey().trim();
+				 String value = entry.getValue().trim();
+	//			 System.out.println("(" + key + ")" + " : " + value);
+				 
+				 if(key.equals("Standardized CCSD")){
+					 Collection.fullCcsd = value;
+					 String first = value.trim().substring(0, 4);
+					 String second = value.trim().substring(4, 8);
+					 Collection.chfRootFolder = second + " (" + first + ")";
+				 }else if(key.equals("Full CCSD") && value.length() == 6){
+					 Collection.trunkId = value;
+				 }else if(key.equals("Full CCSD") && value.length() != 6){
+					 Collection.trunkId = "N/A";
+				 }else if(key.equals("TSP Number")){
+					 Collection.tsp = value;
+				 }else if(key.equals("TSP")){
+					 if(key.equals("NA")){
+						 Collection.fullTsp = "Not Assigned";
+					 }else{
+						 Collection.fullTsp = value;
+					 }
+				 }else if(key.equals("To")){
+					 String tempGEO = "";
+					 String testS = value.substring(value.indexOf(" ")+1);
+					 String testS2 = testS.substring(0, testS.indexOf(" "));
+					 if (testS2.length() < 3){tempGEO = value.substring(0, value.indexOf(' ')).trim()+" "+testS2.trim();}
+					 else{tempGEO = value.substring(0, value.indexOf(' ')).trim();}
+					 String tempState = value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "");
+					 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
+					 Collection.toLocation = temprs;
+					 Collection.toCode = value;
+				 }else if(key.equals("From")){
+					 String tempGEO = value.substring(0, value.indexOf(' ')).trim();
+					 String tempState = value.substring(value.indexOf('/')-2, value.indexOf('/')).trim().replaceFirst("^0+(?!$)", "");
+					 String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
+					 Collection.fromLocation = temprs;
+					 Collection.fromCode = value;
+				 }else if(key.equals("Requesting Department")){
+					 Collection.requestingDept = value;
+				 }else if(key.equals("Type of Service")){
+					 Collection.serviceType = value;
+				 }else if(key.equals("Circuit Use")){
+					 Collection.circuitUse = value;
+				 }else if(key.equals("Security")){
+					 Collection.security = value;
+				 }else if(key.equals("Data Rate")){
+					 Collection.dataRate = value;
+				 }else if(key.equals("Traffic Flow")){
+					 Collection.trafficFlow = value;
+				 }else if(key.equals("Term")){
+					 Collection.serviceAvail = value;
+				 }else if(key.equals("We Are CCO")){
+					 Collection.andrewsCmo = Boolean.valueOf(value);
+				 }else if(key.equals("CCO or CMO")){
+					 Collection.cmo = value;
+				 }else if(key.equals("Signaling")){
+					 Collection.signaling = value;
+				 }else if(key.equals("Quality Control Code")){
+					 Collection.qcc = value;
+				 }else if(key.equals("We Are Endpoint")){
+					 Collection.endPoint = Boolean.valueOf(value);
+					 Collection.isPassthrough = !Collection.endPoint;
+				 }else if(key.equals("TSO Number")){
+					 Collection.tsoNum = value;
+				 }else if(key.equals("TSO Suffix")){
+					 Collection.tsoSuffix = value;
+				 }else if(key.equals("TSO Action")){
+					 Collection.tsoAction = value;
+				 }else if(key.equals("Expected In Effect Date")){
+					 Collection.svcDate = value;
+				 }else if(key.equals("Completion Report Required")){
+					 Collection.crr = Boolean.valueOf(value);
+				 }else if(key.equals("Purpose")){
+					 Collection.purpose = value;
+				 }else if(key.equals("Subject")){
+					 Collection.tsoSubject = value;
+				 }else if(key.equals("TSR Number")){
+					 Collection.tsrNum = value;
+				 }else if(key.equals("Report Date")){
+					 Collection.reportDate = value;
+				 }else if(key.equals("CMO Comm")){
+					 Collection.cmoComm = value;
+				 }else if(key.equals("CMO DSN")){
+					 Collection.cmoDsn = value;
+				 }
+			 }
+			 Database.init(true);
+			 LogHelper.info("TSO (Parser) Complete");
+			 return true;
+		 }
 	}
-}
 
 class LoadDB{
 	
 	public static String testGEOLOC(String GEOLOC, String StateCode){
 		String re = "";
+		ArrayList<String> sa = new ArrayList<String>();
 		String sql = "SELECT * "+
 						"FROM "+Strings.GEOLOC_TABLE+
-						" WHERE GEOLOC = "+GEOLOC+" AND StateCountryCode = "+StateCode;
+						" WHERE GEOLOC = '"+GEOLOC+"' AND StateCountryCode = '"+StateCode+"'";
 		ArrayList<String> al = new ArrayList<String>();
 		al = Database.dbQuery(sql);
 		for(int i=0;i<al.size();i++){
-			String temp = al.get(i);
 			if(i == 5){
-				re += temp+":";
+				sa.add(al.get(i));
 			}else if(i == 7){
-				re += temp;
+				sa.add(al.get(i));
 			}
+		}
+		if(sa.size()>0){
+			re = sa.get(1)+":"+sa.get(0);
 		}
 		return re;
 	}
@@ -508,5 +583,23 @@ class LoadDB{
 			}
 		}
 		return re;
+	}
+	
+	public static String testENRCODE(String ENRCODE, String GEOLOC){
+		String re = "";
+		String sql = "SELECT * "+
+						"FROM "+Strings.ENRCODE_TABLE+
+						" WHERE ENR = '"+ENRCODE+"' AND Location = '"+GEOLOC+"'";
+		ArrayList<String> al = new ArrayList<String>();
+		al = Database.dbQuery(sql);
+		for(int i=0;i<al.size();i++){
+			if(al.get(i).equals(ENRCODE)){
+				if(al.get(i+1).equals(GEOLOC)){
+					re = al.get(i+1)+":"+al.get(i+2);
+					return re;
+				}
+			}
+		}
+		return "";
 	}
 }
