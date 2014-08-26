@@ -37,16 +37,16 @@ public class WindowCore extends Window{
 	
 	public static JPopupMenu createPopup() {
         JMenuItem menuItem = null;
-        JPopupMenu popup = new JPopupMenu();
+        JPopupMenu popup = new JPopupMenu();;
 
 //        menuItem = new JMenuItem(new DefaultEditorKit.CutAction());
 //        menuItem.setText("Cut");
 //        popup.add(menuItem);
 
-        menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
-        menuItem.setText("Copy");
-        popup.add(menuItem);
-
+        	menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
+        	menuItem.setText("Copy");
+        	popup.add(menuItem);
+        	
 //        menuItem = new JMenuItem(new DefaultEditorKit.PasteAction());
 //        menuItem.setText("Paste");
 //        popup.add(menuItem);

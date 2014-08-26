@@ -47,6 +47,8 @@ public final class Strings {
 	public static final String USECODE_TABLE = "Java_PURCODE";
 	public static final String SVCTYPE_TABLE = "Java_SVCTYPE";
 	public static final String ENRCODE_TABLE = "Java_ENRCODE";
-	public static final String[] LOCATIONS = {"Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville"};
+	public static final String NR = "Not Responsible";
+	public static final String[] LOCATIONS = {"Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville", NR};
+	
 	
 }

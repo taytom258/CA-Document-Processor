@@ -14,7 +14,7 @@ public class CircuitStatus{
 		ArrayList<String> al = Database.dbQuery(query);
 		if(al.size()>0){
 			for(int i=1;i<al.size();i+=3){
-				System.out.println(al.get(i-1)+" : "+al.get(i));
+//				System.out.println(al.get(i-1)+" : "+al.get(i));
 				if(Integer.parseInt(al.get(i)) == 0){
 					String[] sa = al.get(i+1).split("-");
 					if(sa[1].equals("01")){
@@ -45,7 +45,7 @@ public class CircuitStatus{
 		ArrayList<String> al = Database.dbQuery(query);
 		if(al.size()>0){
 			for(int i=1;i<al.size();i+=3){
-				System.out.println(al.get(i-1)+" : "+al.get(i));
+//				System.out.println(al.get(i-1)+" : "+al.get(i));
 				if(Integer.parseInt(al.get(i)) == 0){
 					String[] sa = al.get(i+1).split("-");
 					if(sa[1].equals("01")){

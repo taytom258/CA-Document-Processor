@@ -61,9 +61,11 @@ public class TSOPopHelper extends JDialog {
 			okButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					Database.init(false);
 					save();
 					if(Collection.userENRInput.size() != Collection.inputNeeded.size()){
 						String[] temp = Collection.inputNeeded.get(Collection.userENRInput.size()).split(":");
+						clear();
 						TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
 						pop.appear();
 					}else if(Collection.userENRInput.size() == Collection.inputNeeded.size()){
@@ -71,22 +73,27 @@ public class TSOPopHelper extends JDialog {
 							String first = element.substring(0, element.indexOf(':'));
 							String second = element.substring(element.indexOf(':')+1, element.indexOf(':', element.indexOf(':')+1));
 							String third = element.substring((element.indexOf(':', element.indexOf(':')+1))+1);
-							//TODO finish ENR commit priority system
-							if(third == Strings.ANDREWS_CMO){
-								Collection.location = third;
-							}else if(third == Strings.BOLLING_CMO && !Collection.location.equals(Strings.ANDREWS_CMO)){
-								Collection.location = third;
-							}else if(third == Strings.DVILLE_CMO && !Collection.location.equals(Strings.BOLLING_CMO) || !Collection.location.equals(Strings.ANDREWS_CMO)){
-								Collection.location = third;
-							}else if(third == Strings.BWINE_CMO && !Collection.location.equals(Strings.BOLLING_CMO) || !Collection.location.equals(Strings.ANDREWS_CMO)){
+							
+							int code = -1, code2 = -1;
+							for(int i=0;i<Strings.LOCATIONS.length;i++){
+								if(third.equals(Strings.LOCATIONS[i])){
+									code = i;
+								}
+								if(Collection.location.equals(Strings.LOCATIONS[i])){
+									code2 = i;
+								}
+							}
+							if(code2 > code || code2 == -1){
 								Collection.location = third;
 							}
+							
 							String sql = "INSERT INTO "+Strings.ENRCODE_TABLE+"(ENR, Location, Sublocation) VALUES ('"+second+"', '"+first+"', '"+third+"')";
 							Database.dbUpdate(sql);
 						}
+						clear();
 					}
-					clear();
 					TSOCommit.run();
+					Database.init(true);
 				}
 			});
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));

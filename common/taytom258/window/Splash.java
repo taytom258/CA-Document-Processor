@@ -36,7 +36,7 @@ public class Splash extends JDialog {
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			progressBar.setMinimum(1);
-			progressBar.setMaximum(6);
+			progressBar.setMaximum(7);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,6 @@ public class Splash extends JDialog {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		
 		contentPanel.add(progressBar, BorderLayout.SOUTH);
-		progressBar.setIndeterminate(true);
 		
 		JLabel lblImage = new JLabel(new ImageIcon(Splash.class.getResource("/taytom258/lib/resources/splash.jpg")));
 		lblImage.setBackground(Color.WHITE);
@@ -74,7 +73,6 @@ public class Splash extends JDialog {
 			if(!Config.debug){
 				Thread.sleep(600);
 			}
-			progressBar.setIndeterminate(false);
 			progressBar.setValue(progressBar.getValue()+1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

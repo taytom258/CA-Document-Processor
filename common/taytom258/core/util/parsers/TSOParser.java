@@ -7,13 +7,10 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import taytom258.Start;
 import taytom258.core.util.LogHelper;
-import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.threads.ThreadC;
 
 /**
  * Parse TSO text
@@ -328,35 +325,27 @@ public class TSOParser {
 			 }else{
 				 String[] sa = LoadDB.testENRCODE(temp1[1], temp1[0]).split(":");
 				 if(sa[0].equals(Strings.ANDREWS_CMO)){
-					 for(String element2:Strings.LOCATIONS){
-						 for(int i=0;i<sa.length;i++){
-							 if(sa[1].equals(Strings.LOCATIONS[i])){
-								 Collection.location = Strings.LOCATIONS[i];
-							 }
+					 for(int i=0;i<Strings.LOCATIONS.length;i++){
+						 if(sa[1].equals(Strings.LOCATIONS[i])){
+							 Collection.location = Strings.LOCATIONS[i];
 						 }
 					 }
-				 }else if(sa[0].equals(Strings.BOLLING_CMO)){
-					 for(String element2:Strings.LOCATIONS){
-						 for(int i=0;i<sa.length;i++){
-							 if(sa[1].equals(Strings.LOCATIONS[i])){
-								 Collection.location = Strings.LOCATIONS[i];
-							 }
+				 }else if(sa[0].equals(Strings.BOLLING_CMO) && !Collection.location.equals(Strings.LOCATIONS[0])){
+					 for(int i=0;i<Strings.LOCATIONS.length;i++){
+						 if(sa[1].equals(Strings.LOCATIONS[i])){
+							 Collection.location = Strings.LOCATIONS[i];
 						 }
 					 }
-				 }else if(sa[0].equals(Strings.DVILLE_CMO)){
-					 for(String element2:Strings.LOCATIONS){
-						 for(int i=0;i<sa.length;i++){
-							 if(sa[1].equals(Strings.LOCATIONS[i])){
-								 Collection.location = Strings.LOCATIONS[i];
-							 }
+				 }else if(sa[0].equals(Strings.DVILLE_CMO) && !Collection.location.equals(Strings.LOCATIONS[1]) && !Collection.location.equals(Strings.LOCATIONS[0])){
+					 for(int i=0;i<Strings.LOCATIONS.length;i++){
+						 if(sa[1].equals(Strings.LOCATIONS[i])){
+							 Collection.location = Strings.LOCATIONS[i];
 						 }
 					 }
-				 }else if(sa[0].equals(Strings.BWINE_CMO)){
-					 for(String element2:Strings.LOCATIONS){
-						 for(int i=0;i<sa.length;i++){
-							 if(sa[1].equals(Strings.LOCATIONS[i])){
-								 Collection.location = Strings.LOCATIONS[i];
-							 }
+				 }else if(sa[0].equals(Strings.BWINE_CMO) && !Collection.location.equals(Strings.LOCATIONS[1]) && !Collection.location.equals(Strings.LOCATIONS[0]) && !Collection.location.equals(Strings.LOCATIONS[4])){
+					 for(int i=0;i<Strings.LOCATIONS.length;i++){
+						 if(sa[1].equals(Strings.LOCATIONS[i])){
+							 Collection.location = Strings.LOCATIONS[i];
 						 }
 					 }
 				 }

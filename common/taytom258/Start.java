@@ -3,6 +3,7 @@ package taytom258;
 import taytom258.config.ConfigHandler;
 import taytom258.core.security.Check;
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Reference;
 import taytom258.threads.ThreadC;
 import taytom258.window.Console;
@@ -59,6 +60,10 @@ class ThreadA extends Thread{
 			ConfigHandler.init();
 			Splash.incrementBar();
 			Check.call();
+			Splash.incrementBar();
+			Splash.progressBar.setIndeterminate(true);
+			CircuitStatus.circuitStatusRepair();
+			Splash.progressBar.setIndeterminate(false);
 			Splash.incrementBar();
 			notify();
 	    }

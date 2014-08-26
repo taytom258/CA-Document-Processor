@@ -35,11 +35,12 @@ import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.db.CircuitStatus;
+import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.window.core.WindowCore;
 
-public class Window {
+public class Window{
 
 	protected static JFrame frmTsoHelper;
 	protected static JTextField textField_TsoSubject;
@@ -166,7 +167,6 @@ public class Window {
 		button_Exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO Temp code to help get list of locations and ENR codes for those locations
 				LogHelper.debug("Terminate JVM");
 				System.exit(0);
 			}
@@ -1194,7 +1194,7 @@ public class Window {
 		textField_DB_TSO_action.setColumns(10);
 		
 		JLabel lblFullCcsd_1 = new JLabel("Full CCSD");
-		lblFullCcsd_1.setBounds(12, 96, 55, 16);
+		lblFullCcsd_1.setBounds(12, 96, 58, 16);
 		panel_2.add(lblFullCcsd_1);
 		
 		textField_DB_TSO_fullCcsd = new JTextField();
@@ -1251,12 +1251,12 @@ public class Window {
 		
 		JLabel lblMrc = new JLabel("MRC");
 		lblMrc.setToolTipText("Monthly Recurring Cost");
-		lblMrc.setBounds(273, 12, 26, 16);
+		lblMrc.setBounds(273, 12, 27, 16);
 		panel_2.add(lblMrc);
 		
 		JLabel lblNrc = new JLabel("NRC");
 		lblNrc.setToolTipText("Non Recurring Cost");
-		lblNrc.setBounds(273, 40, 26, 16);
+		lblNrc.setBounds(273, 40, 27, 16);
 		panel_2.add(lblNrc);
 		
 		JButton btnTso = new JButton("TSO");
@@ -1289,6 +1289,8 @@ public class Window {
 					String[] temp = Collection.inputNeeded.get(0).split(":");
 					TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
 					pop.appear();
+				}else if(Collection.runClicked){
+					TSOCommit.run();
 				}else{
 					LogHelper.warning("Please run the program first");
 				}

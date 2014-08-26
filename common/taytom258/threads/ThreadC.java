@@ -1,6 +1,5 @@
 package taytom258.threads;
 
-import taytom258.Start;
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.window.Console;
