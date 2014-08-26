@@ -5,8 +5,13 @@ import java.util.ArrayList;
 
 
 public class Collection{
-
-	public static String tsoText = "";
+	
+	public static void init(){
+		facilities = new ArrayList<String>();
+		enrCode = new ArrayList<String>();
+		inputNeeded = new ArrayList<String>();
+		userENRInput = new ArrayList<String>();
+	}
 	
 //	//Start Tab
 //	public static String startTsrNumber, startReportDate, startTsoStatement;
@@ -35,6 +40,9 @@ public class Collection{
 	public static boolean runClicked, develop, ccsdChange = false;
 	public static String[] ccsdList;
 	
+	//IER Info
+	public static String ierFullCCSD = "";
+	
 	//Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,
 	security, dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn, cmoComm, chfLink, location, toCode, fromCode = "";
@@ -42,14 +50,8 @@ public class Collection{
 	public static double mrc, nrc = 0;
 	
 	//Access Database (TSO)
-	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate = "";
+	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate, tsoText = "";
 	public static boolean crr, careq = false;
 	public static ArrayList<String> facilities, enrCode, inputNeeded, userENRInput = null;
 	
-	public static void init(){
-		facilities = new ArrayList<String>();
-		enrCode = new ArrayList<String>();
-		inputNeeded = new ArrayList<String>();
-		userENRInput = new ArrayList<String>();
-	}
 }
