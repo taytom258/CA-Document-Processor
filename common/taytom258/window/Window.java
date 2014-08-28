@@ -1306,7 +1306,7 @@ public class Window{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				IER.run();
+				IER.runOnceCleanUp();
 				
 			}
 		});

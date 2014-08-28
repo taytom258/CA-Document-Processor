@@ -15,6 +15,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
@@ -30,28 +33,43 @@ public class IER {
 		ArrayList<String> list = files(rootFolder());
 		ArrayList<TreeMap<String, String>> iers = new ArrayList<TreeMap<String, String>>();
 		TreeMap<Date, Integer> dates = new TreeMap<Date, Integer>();
-		for(String element:list)
-			if(element.contains(ss)){
-				iers.add(IERParser.parseIER(readFile(element.toString())));
-				for(int i=0;i<iers.size();i++){
-					for(Map.Entry<String, String> entry:iers.get(i).entrySet()){
-						if(entry.getKey().equals("Report Date")){
-							try {
-								dates.put(format.parse(entry.getValue()), i);
-							} catch (ParseException e) {
-								LogHelper.severe(e.getMessage());
-								e.printStackTrace();
+		if(list.size()>0){
+			for(String element:list){
+				if(element.contains(ss)){
+					iers.add(IERParser.parseIER(readFile(element.toString()), false));
+					for(int i=0;i<iers.size();i++){
+						for(Map.Entry<String, String> entry:iers.get(i).entrySet()){
+							if(entry.getKey().equals("Report Date")){
+								try {
+									dates.put(format.parse(entry.getValue()), i);
+								} catch (ParseException e) {
+									LogHelper.severe(e.getMessage());
+									e.printStackTrace();
+								}
 							}
+							
 						}
-						
 					}
 				}
 			}
+		}
 		SortedSet<Date> keys = new TreeSet<Date>(dates.keySet());
 		for(Map.Entry<String, String> entry:iers.get(dates.get(keys.last())).entrySet()){
-			if(entry.getKey().equals("Full CCSD")){
+			if(entry.getKey().equals("Subject")){
+				Collection.ierSubject = entry.getValue();
+			}else if(entry.getKey().equals("Report Date")){
+				Collection.ierReportDate = entry.getValue();
+			}else if(entry.getKey().equals("TSO Number")){
+				Collection.ierTSONum = entry.getValue();
+			}else if(entry.getKey().equals("TSR Number")){
+				Collection.ierTSRNum = entry.getValue();
+			}else if(entry.getKey().equals("Full CCSD")){
 				Collection.ierFullCCSD = entry.getValue();
-			} //TODO finish IER collection commit
+			}else if(entry.getKey().equals("TSO Action")){
+				Collection.ierTSOAct = entry.getValue();
+			}else if(entry.getKey().equals("POC Info")){
+				Collection.ierPOCInfo = entry.getValue();
+			}
 		}
 	}
 	
@@ -69,7 +87,9 @@ public class IER {
 		ArrayList<String> fileList = new ArrayList<String>();
 		Iterator<File> it = FileUtils.iterateFiles(folder , null, false);
 		while(it.hasNext()){
-			fileList.add(folder + "\\" + it.next().getName());
+			if(folder.exists()){
+				fileList.add(folder + "\\" + it.next().getName());
+			}
 		}
 		return fileList;
 	}
@@ -100,6 +120,25 @@ public class IER {
 			}
 	    }
 		return everything;
+	}
+	
+	@Deprecated
+	//TODO fix run once to set DB circuit statuses based on IERs currently in folders
+	public static void runOnceCleanUp(){
+		File path = null;
+		if(Config.useChf){
+			path = new File(Config.chfPath);
+		}else{
+			path = new File(Config.chfTest);
+		}
+		
+		Iterator<File> it = FileUtils.iterateFiles(path, TrueFileFilter.INSTANCE, null);
+		while(it.hasNext()) {
+			if(it.next().isDirectory()){
+				Collection.chfRootFolder = it.next().toString();
+//				run();
+			}
+		}
 	}
 	
 	

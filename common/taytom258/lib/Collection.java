@@ -41,7 +41,7 @@ public class Collection{
 	public static String[] ccsdList;
 	
 	//IER Info
-	public static String ierFullCCSD = "";
+	public static String ierSubject, ierReportDate, ierTSONum, ierTSRNum, ierFullCCSD, ierTSOAct, ierPOCInfo = "";
 	
 	//Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation, fromLocation, requestingDept, serviceType, circuitUse,

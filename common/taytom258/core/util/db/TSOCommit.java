@@ -17,7 +17,7 @@ public class TSOCommit extends Database {
 		CMO();
 		circuit();
 		TSO();
-		CircuitStatus.circuitStatusUpdate(Collection.fullCcsd);
+		CircuitStatus.circuitStatusUpdateTSO(Collection.fullCcsd);
 		
 //		String[] temp = Config.dbPath.split("[.]");
 //		FileUtils.deleteQuietly(new File(temp[0] + "." + temp[1]));

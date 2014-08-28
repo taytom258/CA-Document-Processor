@@ -11,6 +11,7 @@ import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
+import taytom258.testing.IER;
 
 /**
  * Parse TSO text
@@ -499,6 +500,7 @@ public class TSOParser {
 			 }
 			 Database.init(true);
 			 LogHelper.info("TSO (Parser) Complete");
+			 IER.run();
 			 return true;
 		 }
 	}

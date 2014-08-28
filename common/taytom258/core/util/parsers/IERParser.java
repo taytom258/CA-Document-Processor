@@ -1,11 +1,13 @@
 package taytom258.core.util.parsers;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import taytom258.core.util.LogHelper;
+import taytom258.core.util.db.CircuitStatus;
 import taytom258.core.util.db.Database;
 import taytom258.lib.Collection;
 
@@ -35,7 +37,7 @@ public class IERParser {
 	    return match;
 	}
 	
-	public static TreeMap<String, String> parseIER(String t){
+	public static TreeMap<String, String> parseIER(String t, boolean auto){
 		 if (t.equals("") || t.equals(null)) {return null;} //we ain't messin' around here kid
 		 Collection.init();
 		 Database.init(false);
@@ -73,7 +75,7 @@ public class IERParser {
 		 ArrayList<String> sections = new ArrayList<String>();
 		 sections.add(" "+t.substring(t.indexOf(REPORT, sbegin) + REPORT.length()));    //section 1
 		 
-		 /*extract important data from section two (sections[1])
+		 	/*extract important data
 			 * the "skippy" entries are for lettered sections that are unimportant or I
 			 * just didn't know what they were
 			 */
@@ -106,6 +108,26 @@ public class IERParser {
 			  }
 			 }
 		 
+			 if(auto){
+				 for(Map.Entry<String, String> entry:ier.entrySet()){
+					if(entry.getKey().equals("Subject")){
+						Collection.ierSubject = entry.getValue();
+					}else if(entry.getKey().equals("Report Date")){
+						Collection.ierReportDate = entry.getValue();
+					}else if(entry.getKey().equals("TSO Number")){
+						Collection.ierTSONum = entry.getValue().replaceAll("/", "");
+					}else if(entry.getKey().equals("TSR Number")){
+						Collection.ierTSRNum = entry.getValue();
+					}else if(entry.getKey().equals("Full CCSD")){
+						Collection.ierFullCCSD = entry.getValue();
+					}else if(entry.getKey().equals("TSO Action")){
+						Collection.ierTSOAct = entry.getValue();
+					}else if(entry.getKey().equals("POC Info")){
+						Collection.ierPOCInfo = entry.getValue();
+					}
+				}
+				 CircuitStatus.circuitStatusUpdateIER(Collection.ierTSONum);
+			 }
 		 
 			 Database.init(true);
 			 LogHelper.info("IER (Parser) Complete");
