@@ -398,7 +398,7 @@ public final class FingerprintCheck extends Provider {
 				}
 			} catch (Exception ex) {
 				SecurityException se = new SecurityException();
-//				se.initCause(ex);
+				// se.initCause(ex);
 				throw se;
 			}
 

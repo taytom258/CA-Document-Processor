@@ -26,7 +26,8 @@ public class Splash extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	public static JProgressBar progressBar = new JProgressBar();
 	public static Splash dialog = new Splash();
-	private final JLabel lblNewLabel = new JLabel(Reference.APPLICATION_NAME + " : " + Reference.APPLICATION_VERSION);
+	private final JLabel lblNewLabel = new JLabel(Reference.APPLICATION_NAME
+			+ " : " + Reference.APPLICATION_VERSION);
 
 	/**
 	 * Launch the application.
@@ -54,29 +55,32 @@ public class Splash extends JDialog {
 		setBounds(100, 100, 233, 198);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED, SystemColor.activeCaption, SystemColor.scrollbar));
+		contentPanel.setBorder(new EtchedBorder(EtchedBorder.RAISED,
+				SystemColor.activeCaption, SystemColor.scrollbar));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
-		
+
 		contentPanel.add(progressBar, BorderLayout.SOUTH);
-		
-		JLabel lblImage = new JLabel(new ImageIcon(Splash.class.getResource("/taytom258/lib/resources/splash.jpg")));
+
+		JLabel lblImage = new JLabel(
+				new ImageIcon(Splash.class
+						.getResource("/taytom258/lib/resources/splash.jpg")));
 		lblImage.setBackground(Color.WHITE);
 		contentPanel.add(lblImage, BorderLayout.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		contentPanel.add(lblNewLabel, BorderLayout.NORTH);
 	}
-	
-	public static void incrementBar(){
+
+	public static void incrementBar() {
 		try {
-			if(!Config.debug){
+			if (!Config.debug) {
 				Thread.sleep(600);
 			}
-			progressBar.setValue(progressBar.getValue()+1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				LogHelper.severe(e.getMessage());
+			progressBar.setValue(progressBar.getValue() + 1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
 		}
 	}
 
