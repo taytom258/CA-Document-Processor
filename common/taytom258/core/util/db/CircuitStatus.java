@@ -154,8 +154,29 @@ public class CircuitStatus {
 				update = "UPDATE TSO SET Installed = '" + -1
 						+ "' WHERE TSONumber = '" + TSONum + "'";
 				Database.dbUpdate(update);
+				
 			}
 		}
 		Database.init(true);
+	}
+	
+	//TODO finish ignore repair
+	public static void tsoIgnoreRepair(){
+		Database.init(false);
+		String query = "SELECT FullCCSD FROM Circuits";
+		String CCSD = "";
+		ArrayList<String> alCircuits = Database.dbQuery(query);
+		for(String element:alCircuits){
+			CCSD = element;
+			query = "SELECT ReportDate, Ignore FROM TSO WHERE FullCCSD = " + "'" + CCSD + "'";
+			ArrayList<String> alTso = Database.dbQuery(query);
+			for(int i=1;i<alTso.size();i=+3){
+				
+			}
+		}
+	}
+	
+	public static void databasePurge(){
+		
 	}
 }

@@ -69,7 +69,6 @@ public class ConfigHandler {
 			Config.dbPath = prop.getProperty(Config.CONFIG_NAMES[6]);
 			Config.autoCopy = Boolean.valueOf(prop
 					.getProperty(Config.CONFIG_NAMES[7]));
-			Config.repair = prop.getProperty(Config.CONFIG_NAMES[8]);
 
 			LogHelper.debug("Config loaded");
 
@@ -102,8 +101,6 @@ public class ConfigHandler {
 			prop.setProperty(Config.CONFIG_NAMES[6], Config.dbPath);
 			prop.setProperty(Config.CONFIG_NAMES[7],
 					String.valueOf(Config.autoCopy));
-			prop.setProperty(Config.CONFIG_NAMES[8],
-					Config.repair);
 
 			prop.store(os, Config.CONFIG_HEADER);
 

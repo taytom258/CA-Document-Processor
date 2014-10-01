@@ -1,11 +1,11 @@
 package taytom258;
 
+import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
 import taytom258.core.security.Check;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Reference;
-import taytom258.threads.ThreadC;
 import taytom258.window.Console;
 import taytom258.window.Splash;
 import taytom258.window.Window;
@@ -83,6 +83,21 @@ class ThreadB extends Thread {
 			Splash.dialog.dispose();
 			// Testing.init();
 			notify();
+		}
+	}
+}
+
+class ThreadC extends Thread {
+	@Override
+	public void run() {
+		synchronized (this) {
+			/*
+			 * Post-Initialization
+			 */
+			LogHelper.info("Post-Loading...");
+			if (Config.debug) {
+				Console.getFrame().setVisible(true);
+			}
 		}
 	}
 }

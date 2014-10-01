@@ -30,7 +30,6 @@ public class IER {
 		String pattern = "ddkkmm'Z 'MMM' 'yy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
 		
-		//TODO fix "reports" not being recognized as folder
 		if(rootFolder().isDirectory()){
 			ArrayList<String> list = files(rootFolder());
 			ArrayList<TreeMap<String, String>> iers = new ArrayList<TreeMap<String, String>>();
@@ -86,10 +85,10 @@ public class IER {
 	private static File rootFolder() {
 		File folder = null;
 		if (Config.useChf) {
-			folder = new File(Config.chfPath + "\\" + Collection.chfRootFolder
+			folder = new File(Collection.chfRootFolder
 					+ "\\" + "Reports");
 		} else {
-			folder = new File(Config.chfTest + "\\" + Collection.chfRootFolder
+			folder = new File(Collection.chfRootFolder
 					+ "\\" + "Reports");
 		}
 		return folder;

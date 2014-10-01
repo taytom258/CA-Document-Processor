@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -113,6 +114,7 @@ public class TSO_Text {
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
 		text.setText(Collection.tsoText);
+		text.setDropMode(DropMode.INSERT);
 		JScrollPane scroll = new JScrollPane(text);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

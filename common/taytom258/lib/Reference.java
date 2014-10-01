@@ -35,7 +35,7 @@ public class Reference {
 	public static final String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
 	public static final int NUM_OPERATIONS = 4;
 	public static final File USER_ROOT = new File(
-			System.getProperty("user.home") + "\\" + AUTHOR);
+			System.getProperty("user.home") + "\\AppData\\Roaming");
 
 	// Variables
 

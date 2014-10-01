@@ -3,11 +3,13 @@ package taytom258.core;
 import java.io.File;
 import java.io.IOException;
 
+import taytom258.lib.Reference;
+
 public class DirHandler {
 
 	public static boolean createUserDir(final String dirName)
 			throws IOException {
-		final File homeDir = new File(System.getProperty("user.home"));
+		final File homeDir = Reference.USER_ROOT;
 		final File dir = new File(homeDir, dirName);
 		if (!dir.exists() && !dir.mkdirs()) {
 			throw new IOException("Unable to create " + dir.getAbsolutePath());

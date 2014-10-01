@@ -150,10 +150,10 @@ public class IERParser {
 				}
 			}
 			CircuitStatus.circuitStatusUpdateIER(Collection.ierTSONum);
+			LogHelper.info("IER (Parser) Complete");
 		}
 
 		Database.init(true);
-		LogHelper.info("IER (Parser) Complete");
 		return ier;
 	}
 }

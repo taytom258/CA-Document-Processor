@@ -39,6 +39,7 @@ import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.testing.IER;
+import taytom258.testing.MassInsert;
 import taytom258.window.core.WindowCore;
 
 public class Window {
@@ -1324,7 +1325,7 @@ public class Window {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				IER.runOnceCleanUp();
+				MassInsert.test();
 
 			}
 		});
