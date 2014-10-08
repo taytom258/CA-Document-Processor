@@ -2,6 +2,7 @@ package taytom258.testing;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
@@ -20,6 +21,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import taytom258.config.Config;
 import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
+import taytom258.core.util.db.Database;
 import taytom258.core.util.parsers.IERParser;
 import taytom258.lib.Collection;
 
@@ -29,38 +31,40 @@ public class IER {
 		String ss = "IER ";
 		String pattern = "ddkkmm'Z 'MMM' 'yy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
-		
-		if(rootFolder().isDirectory()){
+
+		if (rootFolder().isDirectory()) {
 			ArrayList<String> list = files(rootFolder());
 			ArrayList<TreeMap<String, String>> iers = new ArrayList<TreeMap<String, String>>();
 			TreeMap<Date, Integer> dates = new TreeMap<Date, Integer>();
 			if (list.size() > 0) {
 				for (String element : list) {
 					if (element.contains(ss)) {
-						iers.add(IERParser.parseIER(readFile(element.toString()),
-								false));
+						iers.add(IERParser.parseIER(
+								readFile(element.toString()), false));
 						for (int i = 0; i < iers.size(); i++) {
 							for (Map.Entry<String, String> entry : iers.get(i)
 									.entrySet()) {
 								if (entry.getKey().equals("Report Date")) {
 									try {
-										dates.put(format.parse(entry.getValue()), i);
+										dates.put(
+												format.parse(entry.getValue()),
+												i);
 									} catch (ParseException e) {
 										LogHelper.severe(e.getMessage());
 										e.printStackTrace();
 									}
 								}
-	
+
 							}
 						}
 					}
 				}
 			}
-			
-			if(iers.size() > 0){
+
+			if (iers.size() > 0) {
 				SortedSet<Date> keys = new TreeSet<Date>(dates.keySet());
-				for (Map.Entry<String, String> entry : iers.get(dates.get(keys.last()))
-						.entrySet()) {
+				for (Map.Entry<String, String> entry : iers.get(
+						dates.get(keys.last())).entrySet()) {
 					if (entry.getKey().equals("Subject")) {
 						Collection.ierSubject = entry.getValue();
 					} else if (entry.getKey().equals("Report Date")) {
@@ -85,11 +89,9 @@ public class IER {
 	private static File rootFolder() {
 		File folder = null;
 		if (Config.useChf) {
-			folder = new File(Collection.chfRootFolder
-					+ "\\" + "Reports");
+			folder = new File(Collection.chfRootFolder + "\\" + "Reports");
 		} else {
-			folder = new File(Collection.chfRootFolder
-					+ "\\" + "Reports");
+			folder = new File(Collection.chfRootFolder + "\\" + "Reports");
 		}
 		return folder;
 	}
@@ -135,21 +137,42 @@ public class IER {
 
 	@Deprecated
 	public static void runOnceCleanUp() {
+		Database.init(false);
+		ArrayList<String> al = new ArrayList<String>();
+		String query = "SELECT FullCCSD FROM Circuits";
+		String as = "";
+		String bs = "";
 		File path = null;
+		al = Database.dbQuery(query);
+
 		if (Config.useChf) {
 			path = new File(Config.chfPath);
 		} else {
 			path = new File(Config.chfTest);
 		}
 
-		Iterator<File> it = FileUtils.iterateFiles(path,
-				TrueFileFilter.INSTANCE, null);
-		while (it.hasNext()) {
-			if (it.next().isDirectory()) {
-				Collection.chfRootFolder = it.next().toString();
-				// run();
+		File[] subDirs = path.listFiles(new FileFilter() {
+
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory();
+			}
+		});
+
+		if (al.size() > 0) {
+			for (String element : al) {
+				as = element.substring(0, 4);
+				bs = element.substring(4);
+				String filename = bs + " (" + as + ")";
+				for (File folder : subDirs) {
+					if (folder.toString().contains(filename)) {
+						Collection.chfRootFolder = folder.toString();
+						IER.run();
+					}
+				}
 			}
 		}
+		Database.init(true);
 	}
 
 }

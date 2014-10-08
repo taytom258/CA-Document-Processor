@@ -16,7 +16,8 @@ public class Config {
 	// Default Config
 	public static final String CONFIG_HEADER = Reference.APPLICATION_NAME + " "
 			+ Reference.APPLICATION_VERSION + "." + Reference.BUILD_NUMBER;
-	public static final String CONFIG_PATH = Reference.USER_ROOT.toString()+"\\"+Reference.AUTHOR;
+	public static final String CONFIG_PATH = Reference.USER_ROOT.toString()
+			+ "\\" + Reference.AUTHOR;
 
 	public static final String CHF_PATH = "\\\\ASPARAGUS\\Circuit History Folders";
 	public static final String CHF_TEST = Reference.findMe();

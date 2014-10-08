@@ -2,17 +2,20 @@ package taytom258.core.util.db;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
+
 import taytom258.config.Config;
+import taytom258.core.util.DateUtils;
+import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
 import taytom258.testing.IER;
 
 public class CircuitStatus {
 
-	
-	
 	public static void circuitStatusRepair() {
 		Database.init(false);
 		String circuitStatus = "";
@@ -35,6 +38,52 @@ public class CircuitStatus {
 						circuitStatus = "Pending Disco";
 						if (Integer.parseInt(al.get(i + 2)) != 0) {
 							circuitStatus = "Discontinued";
+							String update = "UPDATE Circuits SET DeactivationDate = '"
+									+ DateUtils.deactivateDate(true)
+									+ "' WHERE FullCCSD = '"
+									+ al.get(i - 1)
+									+ "'";
+							Database.dbUpdate(update);
+							File path = null;
+							if (Config.useChf) {
+								path = new File(Config.chfPath);
+							} else {
+								path = new File(Config.chfTest);
+							}
+							File[] list = path.listFiles(new FileFilter() {
+
+								@Override
+								public boolean accept(File pathname) {
+									return pathname.isDirectory();
+								}
+							});
+
+							String root = "";
+							for (File element : list) {
+								if (element.toString().contains(
+										al.get(i - 1).substring(4))) {
+									root = element.toString();
+								}
+							}
+
+							if(root.indexOf("Disco Pending)") > -1){
+								//"\\\\ASPARAGUS\\Circuit History Folders\\(DELETE LATER)"
+								String newDir = root.substring(0, root.indexOf("\\", root.indexOf("Folders")))+"\\(DELETE LATER)\\"+root.substring(root.indexOf("\\", root.indexOf("Folders")), root.indexOf("Disco Pending)"))
+										+ "Discontinued ["
+										+ DateUtils.deactivateDate(false) + "])";
+//								String newDir = root.substring(0,
+//										root.indexOf("Disco Pending)"))
+//										+ "Discontinued ["
+//										+ DateUtils.deactivateDate(false) + "])";
+								try {
+									FileUtils.copyDirectory(new File(root),
+											new File(newDir));
+									FileUtils.deleteDirectory(new File(root));
+								} catch (IOException e) {
+									LogHelper.severe(e.getMessage());
+									e.printStackTrace();
+								}
+							}
 						}
 					} else if (sa[1].equals("99Z")) {
 						circuitStatus = "Active";
@@ -53,42 +102,7 @@ public class CircuitStatus {
 				}
 			}
 		}
-		
-		query = "SELECT FullCCSD FROM Circuits";
-		String as = "";
-		String bs = "";
-		File path = null;
-		al = Database.dbQuery(query);
-		
-		if(Config.useChf){
-			path = new File(Config.chfPath);
-		}else{
-			path = new File(Config.chfTest);
-		}
-		
-		File[] subDirs = path.listFiles(new FileFilter() {
-			
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isDirectory();
-			}
-		});
-		
-		if(al.size() > 0){
-			for(String element:al){
-				as = element.substring(0, 4);
-				bs = element.substring(4);
-				String filename = bs+" ("+as+")";
-				for(File folder:subDirs){
-					if(folder.toString().contains(filename)){
-						Collection.chfRootFolder = folder.toString();
-						IER.run();
-					}
-				}
-			}
-		}
 		Database.init(true);
-		
 	}
 
 	public static void circuitStatusUpdateTSO(String fullccsd) {
@@ -141,6 +155,44 @@ public class CircuitStatus {
 						circuitStatus = "Active";
 					} else if (sa[1].equals("99")) {
 						circuitStatus = "Discontinued";
+						String update = "UPDATE Circuits SET DeactivationDate = '"
+								+ DateUtils.deactivateDate(true)
+								+ "' WHERE FullCCSD = '" + al.get(i - 1) + "'";
+						Database.dbUpdate(update);
+						File path = null;
+						if (Config.useChf) {
+							path = new File(Config.chfPath);
+						} else {
+							path = new File(Config.chfTest);
+						}
+						File[] list = path.listFiles(new FileFilter() {
+
+							@Override
+							public boolean accept(File pathname) {
+								return pathname.isDirectory();
+							}
+						});
+
+						String root = "";
+						for (File element : list) {
+							if (element.toString().contains(
+									al.get(i - 1).substring(4))) {
+								root = element.toString();
+							}
+						}
+
+						String newDir = root.substring(0,
+								root.indexOf("Disco Pending)"))
+								+ "Discontinued ["
+								+ DateUtils.deactivateDate(false) + "])";
+						try {
+							FileUtils.copyDirectory(new File(root), new File(
+									newDir));
+							FileUtils.deleteDirectory(new File(root));
+						} catch (IOException e) {
+							LogHelper.severe(e.getMessage());
+							e.printStackTrace();
+						}
 					} else if (sa[1].equals("99Z")) {
 						circuitStatus = "Active";
 					} else {
@@ -154,29 +206,30 @@ public class CircuitStatus {
 				update = "UPDATE TSO SET Installed = '" + -1
 						+ "' WHERE TSONumber = '" + TSONum + "'";
 				Database.dbUpdate(update);
-				
+
 			}
 		}
 		Database.init(true);
 	}
-	
-	//TODO finish ignore repair
-	public static void tsoIgnoreRepair(){
+
+	// TODO finish ignore repair
+	public static void tsoIgnoreRepair() {
 		Database.init(false);
 		String query = "SELECT FullCCSD FROM Circuits";
 		String CCSD = "";
 		ArrayList<String> alCircuits = Database.dbQuery(query);
-		for(String element:alCircuits){
+		for (String element : alCircuits) {
 			CCSD = element;
-			query = "SELECT ReportDate, Ignore FROM TSO WHERE FullCCSD = " + "'" + CCSD + "'";
+			query = "SELECT ReportDate, Ignore FROM TSO WHERE FullCCSD = "
+					+ "'" + CCSD + "'";
 			ArrayList<String> alTso = Database.dbQuery(query);
-			for(int i=1;i<alTso.size();i=+3){
-				
+			for (int i = 1; i < alTso.size(); i = +3) {
+
 			}
 		}
 	}
-	
-	public static void databasePurge(){
-		
+
+	public static void databasePurge() {
+
 	}
 }

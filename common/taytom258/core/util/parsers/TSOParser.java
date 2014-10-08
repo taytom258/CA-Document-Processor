@@ -335,7 +335,7 @@ public class TSOParser {
 		while (mat.find()) {
 			int start = mat.end();
 			int end = sections.get(2).indexOf(elc, mat.end()) - 1;
-			//TODO fix if match matches something other than title letters
+			// TODO fix if match matches something other than title letters
 			String add = sections
 					.get(2)
 					.substring(mat.end(),
@@ -414,6 +414,13 @@ public class TSOParser {
 							Collection.location = element2;
 						}
 					}
+				}
+
+				if (Collection.location.equals(Strings.LOCATIONS[0])
+						|| Collection.location.equals(Strings.LOCATIONS[1])) {
+					Collection.careq = true;
+				}else{
+					Collection.careq = false;
 				}
 			}
 		}

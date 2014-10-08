@@ -6,16 +6,20 @@ import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JPopupMenu;
+
 import taytom258.core.util.LogHelper;
+import taytom258.window.core.WindowCore;
 
 public class MassInsert {
 
 	public static int currentNum = 0;
-	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity\\JAVA";
-	
-	private static File[] readFolder(File path){
+	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity\\Roles\\Document Tracker\\Document Processor\\TSOs";
+	public static JPopupMenu popup = WindowCore.createPopup();
+
+	private static File[] readFolder(File path) {
 		File[] files = path.listFiles(new FileFilter() {
-			
+
 			@Override
 			public boolean accept(File pathname) {
 				return !pathname.isDirectory();
@@ -23,13 +27,16 @@ public class MassInsert {
 		});
 		return files;
 	}
-	
-	public static void test(){
-		File path = new File(root+"\\Process");
+
+	public static void test() {
+		File path = new File(root + "\\Process");
 		File[] files = readFolder(path);
-		InsertPop.appear(files);
+		currentNum = 0;
+		if(files.length != 0){
+			InsertPop.appear(files);
+		}
 	}
-	
+
 	public static String readFile(String filePath) {
 		BufferedReader br = null;
 		String everything = "";

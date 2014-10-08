@@ -101,31 +101,30 @@ public class IERParser {
 		String bs = "";
 		String st = sections.get(0);
 		ArrayList<String> numbersFound = new ArrayList<String>();
-		for(String element:NUMBERS){
-			as = " "+element+". ";
-			if(st.indexOf(as) > 0){
+		for (String element : NUMBERS) {
+			as = " " + element + ". ";
+			if (st.indexOf(as) > 0) {
 				numbersFound.add(as);
 			}
 		}
 		for (int i = 0; i < items.length; i++) {
 			if (items[i] != skippy && i < numbersFound.size()) {
-				if(i+1 == numbersFound.size()){
+				if (i + 1 == numbersFound.size()) {
 					as = numbersFound.get(i);
 					ier.put(items[i],
 							st.substring(st.indexOf(as) + as.length()));
 					st = st.substring(
 							st.indexOf(ier.get(items[i]))
 									+ ier.get(items[i]).length(), st.length());
-				}else{
+				} else {
 					as = numbersFound.get(i);
-					bs = numbersFound.get(i+1);
+					bs = numbersFound.get(i + 1);
 					if (st.indexOf(bs) - (st.indexOf(as) + as.length()) > 0) {
 						ier.put(items[i],
 								st.substring(st.indexOf(as) + as.length(),
 										st.indexOf(bs)));
-						st = st.substring(
-								st.indexOf(ier.get(items[i]))
-										+ ier.get(items[i]).length(), st.length());
+						st = st.substring(st.indexOf(ier.get(items[i]))
+								+ ier.get(items[i]).length(), st.length());
 					}
 				}
 			}
