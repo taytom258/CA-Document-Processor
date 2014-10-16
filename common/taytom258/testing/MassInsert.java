@@ -33,7 +33,8 @@ public class MassInsert {
 		File[] files = readFolder(path);
 		currentNum = 0;
 		if(files.length != 0){
-			InsertPop.appear(files);
+//			InsertPop.appear(files);
+			Quick.show(files);
 		}
 	}
 

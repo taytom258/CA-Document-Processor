@@ -335,7 +335,7 @@ public class TSOParser {
 		while (mat.find()) {
 			int start = mat.end();
 			int end = sections.get(2).indexOf(elc, mat.end()) - 1;
-			// TODO fix if match matches something other than title letters
+			// FIXME fix if match matches something other than title letters
 			String add = sections
 					.get(2)
 					.substring(mat.end(),

@@ -85,7 +85,7 @@ public class InsertPop extends JDialog {
 				TSOCommit.run();
 			}
 		} catch (Exception e1) {
-			LogHelper.severe(e1.getMessage());
+			//LogHelper.severe(e1.getMessage());
 			e1.printStackTrace();
 		}
 

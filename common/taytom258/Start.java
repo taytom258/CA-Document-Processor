@@ -62,7 +62,9 @@ class ThreadA extends Thread {
 			Check.call();
 			Splash.incrementBar();
 			Splash.progressBar.setIndeterminate(true);
-			CircuitStatus.circuitStatusRepair();
+			if (!Config.debug) {
+				CircuitStatus.circuitStatusRepair();
+			}
 			Splash.progressBar.setIndeterminate(false);
 			Splash.incrementBar();
 			notify();

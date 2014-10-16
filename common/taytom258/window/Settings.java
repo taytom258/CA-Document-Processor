@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
+import taytom258.core.DirHandler;
 import taytom258.core.util.LogHelper;
 import taytom258.testing.WorkSaver;
 import taytom258.window.core.SettingsCore;
@@ -213,7 +214,7 @@ public class Settings {
 		tglbtnAutoCopy = new JToggleButton("Auto Copy");
 		tglbtnAutoCopy.setBounds(256, 369, 116, 26);
 		tglbtnAutoCopy.setSelected(Config.autoCopy);
-		// TODO Finish auto copy feature?
+		// FIXME Finish auto copy feature?
 		tglbtnAutoCopy.setVisible(false);
 		panel.add(tglbtnAutoCopy);
 		

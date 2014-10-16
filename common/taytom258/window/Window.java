@@ -1324,7 +1324,7 @@ public class Window {
 		btnT.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Test mode
+				// MARK Test mode
 
 				MassInsert.test();
 

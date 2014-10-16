@@ -17,6 +17,7 @@ import taytom258.config.Config;
 import taytom258.core.util.Conversion;
 import taytom258.core.util.LogHelper;
 import taytom258.lib.Collection;
+import taytom258.lib.Reference;
 
 public class Database {
 
@@ -290,7 +291,7 @@ public class Database {
 			String path = Config.dbPath;
 			db = "jdbc:odbc:driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ="
 					+ path;
-			con = DriverManager.getConnection(db);
+			con = DriverManager.getConnection(db, Reference.DB_USER, Reference.DB_PASS);
 			con.setAutoCommit(false);
 			st = con.createStatement();
 		} catch (NullPointerException ex) {
@@ -306,8 +307,6 @@ public class Database {
 		LogHelper.debug("Database connection initialized");
 
 	}
-
-	// TODO Get query null to work properly
 
 	@Deprecated
 	private static void sqlQueryNull(String table, String field, String key,
