@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.swing.JPopupMenu;
 
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.window.core.WindowCore;
 
 public class MassInsert {
@@ -32,8 +32,8 @@ public class MassInsert {
 		File path = new File(root + "\\Process");
 		File[] files = readFolder(path);
 		currentNum = 0;
-		if(files.length != 0){
-//			InsertPop.appear(files);
+		if (files.length != 0) {
+			// InsertPop.appear(files);
 			Quick.show(files);
 		}
 	}

@@ -1,11 +1,11 @@
-package taytom258.core.util;
+package taytom258.core.log;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import taytom258.config.Config;
-import taytom258.core.log.LogHandler;
+import taytom258.core.util.popups.NormalPop;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
@@ -35,7 +35,7 @@ public class LogHelper {
 	public static void severe(Object object) {
 		log(Level.SEVERE, object.toString());
 		if (Config.error) {
-			PopHelper.appear("ERROR: SEVERE", object.toString());
+			NormalPop.appear("ERROR: SEVERE", object.toString());
 		}
 	}
 
@@ -50,7 +50,7 @@ public class LogHelper {
 
 		log(Level.WARNING, object.toString());
 		if (Config.error) {
-			PopHelper.appear("ERROR: WARNING", object.toString());
+			NormalPop.appear("ERROR: WARNING", object.toString());
 		}
 	}
 
@@ -88,7 +88,7 @@ public class LogHelper {
 
 		log(Level.INFO, object.toString());
 		if (Config.error) {
-			PopHelper.appear("INFO", object.toString());
+			NormalPop.appear("INFO", object.toString());
 		}
 	}
 

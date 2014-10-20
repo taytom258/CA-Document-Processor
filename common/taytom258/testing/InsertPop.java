@@ -15,25 +15,30 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FileUtils;
 
+import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
-import taytom258.core.util.LogHelper;
-import taytom258.core.util.TSOPopHelper;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
+import taytom258.core.util.popups.TSOInputNeededPop;
 import taytom258.lib.Collection;
 import taytom258.show.tso.ShowCHF;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 public class InsertPop extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6535607711564379825L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtCCSD;
 	private JTextField txtTSONum;
@@ -48,7 +53,7 @@ public class InsertPop extends JDialog {
 			Collection.tsoNum = DateUtils.fileDate();
 			Collection.fullCcsd = "00000000";
 			dialog = new InsertPop(list);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,13 +84,13 @@ public class InsertPop extends JDialog {
 			ShowCHF.show();
 			if (Collection.inputNeeded.size() > 0) {
 				String[] temp = Collection.inputNeeded.get(0).split(":");
-				TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
+				TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 				pop.appear();
 			} else {
 				TSOCommit.run();
 			}
 		} catch (Exception e1) {
-			//LogHelper.severe(e1.getMessage());
+			// LogHelper.severe(e1.getMessage());
 			e1.printStackTrace();
 		}
 
@@ -118,7 +123,7 @@ public class InsertPop extends JDialog {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(46, 163, 336, 258);
 		contentPanel.add(scrollPane);
 
@@ -136,13 +141,14 @@ public class InsertPop extends JDialog {
 			{
 				JButton btnNewButton_2 = new JButton("Completed");
 				btnNewButton_2.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						File f = new File(MassInsert.root + "\\Completed");
 						File txt = new File(f.toString() + "\\"
 								+ Collection.tsoNum + ".txt");
 						try {
 							FileUtils
-									.moveFile(list[MassInsert.currentNum], txt);
+							.moveFile(list[MassInsert.currentNum], txt);
 						} catch (IOException e1) {
 							LogHelper.severe(e1.getMessage());
 							e1.printStackTrace();
@@ -151,7 +157,7 @@ public class InsertPop extends JDialog {
 						dialog = null;
 						Collection.fullCcsd = null;
 						MassInsert.currentNum++;
-						if (MassInsert.currentNum != (list.length)
+						if (MassInsert.currentNum != list.length
 								&& !tglbtnQuit.isSelected()) {
 							InsertPop.appear(list);
 						}
@@ -162,13 +168,14 @@ public class InsertPop extends JDialog {
 			{
 				JButton btnNewButton_1 = new JButton("Hold");
 				btnNewButton_1.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						File f = new File(MassInsert.root + "\\Hold");
 						File txt = new File(f.toString() + "\\"
 								+ Collection.tsoNum + ".txt");
 						try {
 							FileUtils
-									.moveFile(list[MassInsert.currentNum], txt);
+							.moveFile(list[MassInsert.currentNum], txt);
 						} catch (IOException e1) {
 							LogHelper.severe(e1.getMessage());
 							e1.printStackTrace();
@@ -177,7 +184,7 @@ public class InsertPop extends JDialog {
 						dialog = null;
 						Collection.fullCcsd = null;
 						MassInsert.currentNum++;
-						if (MassInsert.currentNum != (list.length - 1)
+						if (MassInsert.currentNum != list.length - 1
 								&& !tglbtnQuit.isSelected()) {
 							InsertPop.appear(list);
 						}
@@ -186,6 +193,7 @@ public class InsertPop extends JDialog {
 				{
 					JButton btnNewButton = new JButton("Facit");
 					btnNewButton.addActionListener(new ActionListener() {
+						@Override
 						public void actionPerformed(ActionEvent e) {
 							File f = new File(MassInsert.root + "\\Facit");
 							File txt = new File(f.toString() + "\\"
@@ -202,7 +210,7 @@ public class InsertPop extends JDialog {
 							Collection.fullCcsd = null;
 							MassInsert.currentNum++;
 							;
-							if (MassInsert.currentNum != (list.length)
+							if (MassInsert.currentNum != list.length
 									&& !tglbtnQuit.isSelected()) {
 								InsertPop.appear(list);
 							}

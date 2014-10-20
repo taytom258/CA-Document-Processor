@@ -1,18 +1,19 @@
 package taytom258.core.util.db;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import taytom258.core.util.Conversion;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 
-public class TSOCommit extends Database {
+public class TSOCommit extends DatabaseUtils {
 
-	public static void run() {
+	public static void run() throws SQLException {
 		init(false);
 		CMO();
 		circuit();
@@ -24,7 +25,7 @@ public class TSOCommit extends Database {
 		init(true);
 	}
 
-	private static void circuit() {
+	private static void circuit() throws SQLException {
 		String c = "', '";
 		int andrewscmo, endpoint, userLetter, qc;
 
@@ -68,7 +69,7 @@ public class TSOCommit extends Database {
 		TSOInsert("Circuits", field, value, Collection.fullCcsd, "FullCCSD");
 	}
 
-	private static void TSO() {
+	private static void TSO() throws SQLException {
 		String c = "', '";
 
 		int crr;
@@ -103,8 +104,8 @@ public class TSOCommit extends Database {
 		String field = "TSONumber, TSOSuffix, Action, FullCCSD, ServiceDate, ReportDate, CompletionReportReq, CAActionRequired, Ignore";
 		String value = Collection.tsoNum + c + Collection.tsoSuffix + c
 				+ Collection.tsoAction + c + Collection.fullCcsd + c
-				+ Conversion.dateConvert(Collection.svcDate, false, true) + c
-				+ Conversion.dateConvert(Collection.reportDate, false, true)
+				+ DateUtils.dateConvert(Collection.svcDate, false, true) + c
+				+ DateUtils.dateConvert(Collection.reportDate, false, true)
 				+ c + crr + c + careq + c + ignore;
 		if (exists) {
 			LogHelper.info("TSO already exists in database, skipping");
@@ -113,7 +114,7 @@ public class TSOCommit extends Database {
 		}
 	}
 
-	private static void CMO() {
+	private static void CMO() throws SQLException {
 		String c = "', '";
 
 		String field = "CMO, CMODsn, CMOComm";
@@ -137,8 +138,8 @@ public class TSOCommit extends Database {
 				Date pulled = null;
 				try {
 					current = new SimpleDateFormat("yyyy-MM-dd H:m:s")
-							.parse(Conversion.dateConvert(
-									Collection.reportDate, false, true));
+					.parse(DateUtils.dateConvert(
+							Collection.reportDate, false, true));
 					pulled = new SimpleDateFormat("yyyy-MM-dd H:m:s").parse(al
 							.get(i));
 					// System.out.println(current);

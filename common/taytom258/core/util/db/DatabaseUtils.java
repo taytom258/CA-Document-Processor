@@ -14,12 +14,12 @@ import java.util.Date;
 import java.util.Locale;
 
 import taytom258.config.Config;
-import taytom258.core.util.Conversion;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 
-public class Database {
+public class DatabaseUtils {
 
 	private static Connection con;
 	private static Statement st;
@@ -77,7 +77,7 @@ public class Database {
 	}
 
 	protected static void TSOInsert(String table, String field, String value,
-			String key, String keyField) {
+			String key, String keyField) throws SQLException {
 		String[] fields = new String[19];
 		String[] values = new String[19];
 		try {
@@ -115,7 +115,7 @@ public class Database {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = Conversion.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(Collection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
@@ -171,7 +171,7 @@ public class Database {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = Conversion.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(Collection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
@@ -225,7 +225,7 @@ public class Database {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = Conversion.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(Collection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
@@ -291,7 +291,8 @@ public class Database {
 			String path = Config.dbPath;
 			db = "jdbc:odbc:driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ="
 					+ path;
-			con = DriverManager.getConnection(db, Reference.DB_USER, Reference.DB_PASS);
+			con = DriverManager.getConnection(db, Reference.DB_USER,
+					Reference.DB_PASS);
 			con.setAutoCommit(false);
 			st = con.createStatement();
 		} catch (NullPointerException ex) {

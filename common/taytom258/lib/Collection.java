@@ -38,7 +38,7 @@ public class Collection {
 
 	// Popup
 	public static boolean is1539, hasSams, isAnalog, isPassthrough, isLogical,
-			isAncs = false;
+	isAncs = false;
 
 	// Program Info
 	public static String purpose, tsoSubject, tsrNum, chfRootFolder = "";
@@ -47,21 +47,21 @@ public class Collection {
 
 	// IER Info
 	public static String ierSubject, ierReportDate, ierTSONum, ierTSRNum,
-			ierFullCCSD, ierTSOAct, ierPOCInfo = "";
+	ierFullCCSD, ierTSOAct, ierPOCInfo = "";
 
 	// Access Database (Circuits)
 	public static String fullCcsd, tsp, trunkId, fullTsp, toLocation,
-			fromLocation, requestingDept, serviceType, circuitUse, security,
-			dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn,
-			cmoComm, chfLink, location, toCode, fromCode = "";
+	fromLocation, requestingDept, serviceType, circuitUse, security,
+	dataRate, trafficFlow, serviceAvail, signaling, qcc, cmo, cmoDsn,
+	cmoComm, chfLink, location, toCode, fromCode = "";
 	public static boolean andrewsCmo, endPoint = false;
 	public static double mrc, nrc = 0;
 
 	// Access Database (TSO)
 	public static String tsoNum, tsoSuffix, tsoAction, svcDate, reportDate,
-			tsoText = "";
+	tsoText = "";
 	public static boolean crr, careq = false;
 	public static ArrayList<String> facilities, enrCode, inputNeeded,
-			userENRInput = null;
+	userENRInput = null;
 
 }

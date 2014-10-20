@@ -1,6 +1,6 @@
 package taytom258.core.security;
 
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.lib.Collection;
 
 public class Check {
@@ -13,7 +13,7 @@ public class Check {
 				LogHelper.debug("Jar Verified");
 			} else {
 				LogHelper
-						.warning("Program has been modified. Please contact support");
+				.warning("Program has been modified. Please contact support");
 			}
 		}
 	}

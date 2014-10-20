@@ -6,9 +6,9 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
-import taytom258.core.util.db.Database;
+import taytom258.core.util.db.DatabaseUtils;
 import taytom258.lib.Collection;
 
 /**
@@ -42,7 +42,7 @@ public class IERParser {
 			return null;
 		} // we ain't messin' around here kid
 		Collection.init();
-		Database.init(false);
+		DatabaseUtils.init(false);
 		// the TSO object
 		TreeMap<String, String> ier = new TreeMap<String, String>();
 
@@ -62,13 +62,13 @@ public class IERParser {
 
 		// text sanitization:
 		t = t.replaceAll("\\r\\n|\\n|\\r", LBC); // remove line breaks and
-													// replace with LBC (see
-													// //replace strings)
+		// replace with LBC (see
+		// //replace strings)
 		t = t.replaceAll("\\s\\s+", " "); // remove double spaces and replace
-											// with a single space
+		// with a single space
 		t = t.replaceAll("['\"]", "\\$&"); // escape apostrophes and quotes
-											// (replace string might need double
-											// the backslashes)
+		// (replace string might need double
+		// the backslashes)
 
 		// get basics from the start
 		int sbegin = t.indexOf(SUBJ) + SUBJ.length();
@@ -88,7 +88,7 @@ public class IERParser {
 		ArrayList<String> sections = new ArrayList<String>();
 		sections.add(" "
 				+ t.substring(t.indexOf(REPORT, sbegin) + REPORT.length())); // section
-																				// 1
+		// 1
 
 		/*
 		 * extract important data the "skippy" entries are for lettered sections
@@ -115,7 +115,7 @@ public class IERParser {
 							st.substring(st.indexOf(as) + as.length()));
 					st = st.substring(
 							st.indexOf(ier.get(items[i]))
-									+ ier.get(items[i]).length(), st.length());
+							+ ier.get(items[i]).length(), st.length());
 				} else {
 					as = numbersFound.get(i);
 					bs = numbersFound.get(i + 1);
@@ -152,7 +152,7 @@ public class IERParser {
 			LogHelper.info("IER (Parser) Complete");
 		}
 
-		Database.init(true);
+		DatabaseUtils.init(true);
 		return ier;
 	}
 }

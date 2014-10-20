@@ -1,7 +1,7 @@
 package taytom258.show.tso;
 
-import taytom258.core.util.Conversion;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.window.Window;
 
@@ -55,9 +55,9 @@ public class ShowDatabase extends Window {
 		getTextField_DB_TSO_action().setText(Collection.tsoAction);
 		getTextField_DB_TSO_fullCcsd().setText(Collection.fullCcsd);
 		getTextField_DB_TSO_svcDate().setText(
-				Conversion.dateConvert(Collection.svcDate, false, true));
+				DateUtils.dateConvert(Collection.svcDate, false, true));
 		getTextField_DB_TSO_reportDate().setText(
-				Conversion.dateConvert(Collection.reportDate, false, true));
+				DateUtils.dateConvert(Collection.reportDate, false, true));
 		getTextField_DB_TSO_Mrc().setText(String.valueOf(Collection.mrc));
 		getTextField_DB_TSO_Nrc().setText(String.valueOf(Collection.nrc));
 	}

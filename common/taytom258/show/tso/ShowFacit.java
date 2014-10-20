@@ -1,7 +1,7 @@
 package taytom258.show.tso;
 
-import taytom258.core.util.Conversion;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.window.Window;
 
@@ -70,7 +70,7 @@ public class ShowFacit extends Window {
 	private static void svcDate() {
 		if (!Collection.svcDate.equals("")) {
 			Window.getTextField_FacitSvcDate().setText(
-					Conversion.dateConvert(Collection.svcDate, true, false));
+					DateUtils.dateConvert(Collection.svcDate, true, false));
 		}
 	}
 
@@ -81,7 +81,7 @@ public class ShowFacit extends Window {
 
 	private static void reportDate() {
 		Window.getTextField_FacitReportDate().setText(
-				Conversion.dateConvert(Collection.reportDate, true, false));
+				DateUtils.dateConvert(Collection.reportDate, true, false));
 	}
 
 	private static void comReport() {

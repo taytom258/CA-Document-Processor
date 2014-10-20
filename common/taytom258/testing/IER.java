@@ -16,12 +16,11 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import taytom258.config.Config;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
-import taytom258.core.util.db.Database;
+import taytom258.core.util.db.DatabaseUtils;
 import taytom258.core.util.parsers.IERParser;
 import taytom258.lib.Collection;
 
@@ -137,13 +136,13 @@ public class IER {
 
 	@Deprecated
 	public static void runOnceCleanUp() {
-		Database.init(false);
+		DatabaseUtils.init(false);
 		ArrayList<String> al = new ArrayList<String>();
 		String query = "SELECT FullCCSD FROM Circuits";
 		String as = "";
 		String bs = "";
 		File path = null;
-		al = Database.dbQuery(query);
+		al = DatabaseUtils.dbQuery(query);
 
 		if (Config.useChf) {
 			path = new File(Config.chfPath);
@@ -172,7 +171,7 @@ public class IER {
 				}
 			}
 		}
-		Database.init(true);
+		DatabaseUtils.init(true);
 	}
 
 }

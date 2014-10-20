@@ -1,9 +1,10 @@
-package taytom258.core.util;
+package taytom258.core.util.popups;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -17,18 +18,19 @@ import javax.swing.WindowConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import taytom258.core.util.db.Database;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.db.DatabaseUtils;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 
-public class TSOPopHelper extends JDialog {
+public class TSOInputNeededPop extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2605535464107680020L;
-	public static TSOPopHelper dialog = null;
+	public static TSOInputNeededPop dialog = null;
 	private final JPanel panel = new JPanel();
 	private final JButton btnCancel = new JButton("Cancel");
 	private JTextField textField_locationCode;
@@ -47,7 +49,7 @@ public class TSOPopHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public TSOPopHelper(String ENR, String LocationCode) {
+	public TSOInputNeededPop(String ENR, String LocationCode) {
 		dialog = this;
 		setAlwaysOnTop(true);
 		setResizable(false);
@@ -60,14 +62,14 @@ public class TSOPopHelper extends JDialog {
 			okButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Database.init(false);
+					DatabaseUtils.init(false);
 					save();
 					if (Collection.userENRInput.size() != Collection.inputNeeded
 							.size()) {
 						String[] temp = Collection.inputNeeded.get(
 								Collection.userENRInput.size()).split(":");
 						clear();
-						TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
+						TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 						pop.appear();
 					} else if (Collection.userENRInput.size() == Collection.inputNeeded
 							.size()) {
@@ -76,7 +78,7 @@ public class TSOPopHelper extends JDialog {
 									element.indexOf(':'));
 							String second = element.substring(element
 									.indexOf(':') + 1, element.indexOf(':',
-									element.indexOf(':') + 1));
+											element.indexOf(':') + 1));
 							String third = element.substring(element.indexOf(
 									':', element.indexOf(':') + 1) + 1);
 
@@ -98,12 +100,17 @@ public class TSOPopHelper extends JDialog {
 									+ "(ENR, Location, Sublocation) VALUES ('"
 									+ second + "', '" + first + "', '" + third
 									+ "')";
-							Database.dbUpdate(sql);
+							DatabaseUtils.dbUpdate(sql);
 						}
 						clear();
 					}
-					TSOCommit.run();
-					Database.init(true);
+					try {
+						TSOCommit.run();
+					} catch (SQLException e1) {
+						LogHelper.severe(e1.getMessage());
+						e1.printStackTrace();
+					}
+					DatabaseUtils.init(true);
 				}
 			});
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));

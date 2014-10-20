@@ -2,8 +2,8 @@ package taytom258;
 
 import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
+import taytom258.core.log.LogHelper;
 import taytom258.core.security.Check;
-import taytom258.core.util.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Reference;
 import taytom258.window.Console;

@@ -39,8 +39,8 @@ public final class Strings {
 	public static final String BWINE_CMO = "BRANDYWN";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
 	public static final String[] FOLDERS = { "Diagrams", "Miscellaneous",
-			"QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs",
-			"User Letters", "MISC" };
+		"QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs",
+		"User Letters", "MISC" };
 	public static final String GEOLOC_TABLE = "Java_GEOLOC";
 	public static final String DEPTCODE_TABLE = "Java_DEPTCODE";
 	public static final String USECODE_TABLE = "Java_PURCODE";
@@ -48,6 +48,6 @@ public final class Strings {
 	public static final String ENRCODE_TABLE = "Java_ENRCODE";
 	public static final String NR = "Not Responsible";
 	public static final String[] LOCATIONS = { "Andrews", "Bolling",
-			"Andrews 1539", "Brandywine", "Davidsonville", NR };
+		"Andrews 1539", "Brandywine", "Davidsonville", NR };
 
 }

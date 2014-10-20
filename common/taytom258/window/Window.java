@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -32,13 +33,12 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import taytom258.config.Config;
-import taytom258.core.util.LogHelper;
-import taytom258.core.util.PopHelper;
-import taytom258.core.util.TSOPopHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.TSOCommit;
+import taytom258.core.util.popups.NormalPop;
+import taytom258.core.util.popups.TSOInputNeededPop;
 import taytom258.lib.Collection;
 import taytom258.lib.Reference;
-import taytom258.testing.IER;
 import taytom258.testing.MassInsert;
 import taytom258.window.core.WindowCore;
 
@@ -465,7 +465,7 @@ public class Window {
 
 		textPane_ChfCreating = new JTextPane();
 		textPane_ChfCreating
-				.setToolTipText("Folders created inside root folder");
+		.setToolTipText("Folders created inside root folder");
 		textPane_ChfCreating.setEditable(false);
 		textPane_ChfCreating.setBounds(12, 22, 109, 157);
 		panel_ChfCreating.add(textPane_ChfCreating);
@@ -481,7 +481,7 @@ public class Window {
 
 		textPane_ChfCurrent = new JTextPane();
 		textPane_ChfCurrent
-				.setToolTipText("Folders currently in the root folder");
+		.setToolTipText("Folders currently in the root folder");
 		textPane_ChfCurrent.setEditable(false);
 		textPane_ChfCurrent.setBounds(12, 22, 109, 157);
 		panel_ChfCurrent.add(textPane_ChfCurrent);
@@ -1168,7 +1168,7 @@ public class Window {
 		chckbxAndrewsEndpoint.setEnabled(false);
 		chckbxAndrewsEndpoint.setBackground(Color.WHITE);
 		chckbxAndrewsEndpoint
-				.setToolTipText("Are we an endpoint of this circuit?");
+		.setToolTipText("Are we an endpoint of this circuit?");
 		chckbxAndrewsEndpoint.setBounds(217, 236, 184, 24);
 		panel_Circuit.add(chckbxAndrewsEndpoint);
 
@@ -1284,7 +1284,7 @@ public class Window {
 		btnTso.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TSO_Text.appear();
+				TSO.appear();
 			}
 		});
 
@@ -1305,14 +1305,19 @@ public class Window {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Collection.runClicked && Collection.inputNeeded.size() > 0) {
 					String[] temp = Collection.inputNeeded.get(0).split(":");
-					TSOPopHelper pop = new TSOPopHelper(temp[1], temp[0]);
+					TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 					pop.appear();
 				} else if (Collection.runClicked) {
-					TSOCommit.run();
+					try {
+						TSOCommit.run();
+					} catch (SQLException e) {
+						LogHelper.severe(e.getMessage());
+						e.printStackTrace();
+					}
 				} else {
 					LogHelper.warning("Please run the program first");
 				}
-				PopHelper.appear("Database", "Database commit complete");
+				NormalPop.appear("Database", "Database commit complete");
 
 			}
 		});

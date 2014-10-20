@@ -9,9 +9,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 
 import taytom258.config.Config;
-import taytom258.core.DirHandler;
-import taytom258.core.WriteHandler;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.IOUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.window.Window;
@@ -85,7 +84,7 @@ public class ShowCHF extends Window {
 				&& Collection.trunkId.length() == 6) {
 			getTextField_ChfRoot().setText(
 					Collection.chfRootFolder + " " + "(" + Collection.trunkId
-							+ ")" + " " + Strings.DISCO_PEND);
+					+ ")" + " " + Strings.DISCO_PEND);
 			Collection.chfRootFolder += " " + "(" + Collection.trunkId + ")"
 					+ " " + Strings.DISCO_PEND;
 		} else if (Collection.tsoAction.equals("DISCONTINUE")) {
@@ -95,7 +94,7 @@ public class ShowCHF extends Window {
 		} else if (Collection.trunkId.length() == 6) {
 			getTextField_ChfRoot().setText(
 					Collection.chfRootFolder + " " + "(" + Collection.trunkId
-							+ ")");
+					+ ")");
 			Collection.chfRootFolder += " " + "(" + Collection.trunkId + ")";
 		} else {
 			getTextField_ChfRoot().setText(Collection.chfRootFolder);
@@ -133,12 +132,12 @@ public class ShowCHF extends Window {
 		} else {
 			try {
 				if (Config.useChf && !only.equals(folderExist)) {
-					if (DirHandler.createDir(folderName, Config.chfPath)) {
+					if (IOUtils.createDir(folderName, Config.chfPath)) {
 						LogHelper.io("Created Root in: " + Config.chfPath);
 					}
 					getRdbtn_ChfRootCreated().setSelected(true);
 				} else if (!only.equals(folderExist)) {
-					if (DirHandler.createDir(folderName, Config.chfTest)) {
+					if (IOUtils.createDir(folderName, Config.chfTest)) {
 						LogHelper.io("Created Root in: " + Config.chfTest);
 					}
 					getRdbtn_ChfRootCreated().setSelected(true);
@@ -217,7 +216,7 @@ public class ShowCHF extends Window {
 
 		for (String s : create) {
 			try {
-				if (DirHandler.createDir(s, path)) {
+				if (IOUtils.createDir(s, path)) {
 					LogHelper.io("Created " + s + " in: " + path);
 				}
 			} catch (IOException e) {
@@ -234,7 +233,7 @@ public class ShowCHF extends Window {
 		File file = new File(path + "\\" + Strings.FOLDERS[6] + "\\" + text);
 
 		if (!file.exists()) {
-			if (WriteHandler.fileWriter(Collection.tsoText, file)) {
+			if (IOUtils.fileWriter(Collection.tsoText, file)) {
 				LogHelper.io("Created file " + text + " in " + path + "\\"
 						+ Strings.FOLDERS[6]);
 			}
@@ -256,7 +255,7 @@ public class ShowCHF extends Window {
 							+ Collection.chfRootFolder);
 
 					if (!folder.exists()) {
-						if (DirHandler.createDir(Strings.ONLY_1539,
+						if (IOUtils.createDir(Strings.ONLY_1539,
 								Config.chfPath)) {
 							LogHelper.io("Created 1539 only root folder in: "
 									+ Config.chfPath);
@@ -277,7 +276,7 @@ public class ShowCHF extends Window {
 							+ Collection.chfRootFolder);
 
 					if (!folder.exists()) {
-						if (DirHandler.createDir(Strings.ONLY_1539,
+						if (IOUtils.createDir(Strings.ONLY_1539,
 								Config.chfTest)) {
 							LogHelper.io("Created 1539 only root folder in: "
 									+ Config.chfTest);

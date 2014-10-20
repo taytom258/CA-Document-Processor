@@ -6,7 +6,7 @@ import java.security.CodeSource;
 import java.util.jar.JarFile;
 
 import taytom258.Start;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 
 public class Reference {
 

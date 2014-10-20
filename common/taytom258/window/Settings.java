@@ -19,8 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
-import taytom258.core.DirHandler;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.testing.WorkSaver;
 import taytom258.window.core.SettingsCore;
 
@@ -217,10 +216,11 @@ public class Settings {
 		// FIXME Finish auto copy feature?
 		tglbtnAutoCopy.setVisible(false);
 		panel.add(tglbtnAutoCopy);
-		
-		if(Config.debug){
+
+		if (Config.debug) {
 			JButton btnOffload = new JButton("Offload");
 			btnOffload.addActionListener(new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					WorkSaver.offload();
 				}
@@ -228,10 +228,11 @@ public class Settings {
 			btnOffload.setBounds(498, 333, 100, 23);
 			panel.add(btnOffload);
 		}
-		
-		if(Config.debug){
+
+		if (Config.debug) {
 			JButton btnUpload = new JButton("Download");
 			btnUpload.addActionListener(new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					WorkSaver.download();
 				}

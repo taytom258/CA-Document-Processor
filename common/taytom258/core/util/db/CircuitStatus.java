@@ -4,24 +4,21 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
 import taytom258.config.Config;
+import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
-import taytom258.core.util.LogHelper;
-import taytom258.lib.Collection;
-import taytom258.testing.IER;
 
 public class CircuitStatus {
 
 	public static void circuitStatusRepair() {
-		Database.init(false);
+		DatabaseUtils.init(false);
 		String circuitStatus = "";
 
 		String query = "SELECT FullCCSD, Ignore, TSONumber, Installed FROM TSO";
-		ArrayList<String> al = Database.dbQuery(query);
+		ArrayList<String> al = DatabaseUtils.dbQuery(query);
 		if (al.size() > 0) {
 			for (int i = 1; i < al.size(); i += 4) {
 				// System.out.println(al.get(i-1)+" : "+al.get(i));
@@ -43,7 +40,7 @@ public class CircuitStatus {
 									+ "' WHERE FullCCSD = '"
 									+ al.get(i - 1)
 									+ "'";
-							Database.dbUpdate(update);
+							DatabaseUtils.dbUpdate(update);
 							File path = null;
 							if (Config.useChf) {
 								path = new File(Config.chfPath);
@@ -66,15 +63,23 @@ public class CircuitStatus {
 								}
 							}
 
-							if(root.indexOf("Disco Pending)") > -1){
-								//"\\\\ASPARAGUS\\Circuit History Folders\\(DELETE LATER)"
-								String newDir = root.substring(0, root.indexOf("\\", root.indexOf("Folders")))+"\\(DELETE LATER)\\"+root.substring(root.indexOf("\\", root.indexOf("Folders")), root.indexOf("Disco Pending)"))
-										+ "Discontinued ["
-										+ DateUtils.deactivateDate(false) + "])";
-//								String newDir = root.substring(0,
-//										root.indexOf("Disco Pending)"))
-//										+ "Discontinued ["
-//										+ DateUtils.deactivateDate(false) + "])";
+							if (root.indexOf("Disco Pending)") > -1) {
+								// "\\\\ASPARAGUS\\Circuit History Folders\\(DELETE LATER)"
+								String newDir = root.substring(
+										0,
+										root.indexOf("\\",
+												root.indexOf("Folders")))
+												+ "\\(DELETE LATER)\\"
+												+ root.substring(root.indexOf("\\",
+														root.indexOf("Folders")), root
+														.indexOf("Disco Pending)"))
+														+ "Discontinued ["
+														+ DateUtils.deactivateDate(false)
+														+ "])";
+								// String newDir = root.substring(0,
+								// root.indexOf("Disco Pending)"))
+								// + "Discontinued ["
+								// + DateUtils.deactivateDate(false) + "])";
 								try {
 									FileUtils.copyDirectory(new File(root),
 											new File(newDir));
@@ -96,22 +101,22 @@ public class CircuitStatus {
 					String update = "UPDATE Circuits SET CircuitStatus = '"
 							+ circuitStatus + "' WHERE FullCCSD = '"
 							+ al.get(i - 1) + "'";
-					Database.dbUpdate(update);
+					DatabaseUtils.dbUpdate(update);
 					// dbUpdate("Circuits", "CircuitStatus", circuitStatus,
 					// al.get(i-1), "FullCCSD");
 				}
 			}
 		}
-		Database.init(true);
+		DatabaseUtils.init(true);
 	}
 
 	public static void circuitStatusUpdateTSO(String fullccsd) {
-		Database.init(false);
+		DatabaseUtils.init(false);
 		String circuitStatus = "";
 
 		String query = "SELECT FullCCSD, Ignore, TSONumber FROM TSO WHERE FullCCSD = '"
 				+ fullccsd + "'";
-		ArrayList<String> al = Database.dbQuery(query);
+		ArrayList<String> al = DatabaseUtils.dbQuery(query);
 		if (al.size() > 0) {
 			for (int i = 1; i < al.size(); i += 3) {
 				// System.out.println(al.get(i-1)+" : "+al.get(i));
@@ -131,22 +136,22 @@ public class CircuitStatus {
 					String update = "UPDATE Circuits SET CircuitStatus = '"
 							+ circuitStatus + "' WHERE FullCCSD = '"
 							+ al.get(i - 1) + "'";
-					Database.dbUpdate(update);
+					DatabaseUtils.dbUpdate(update);
 					// dbUpdate("Circuits", "CircuitStatus", circuitStatus,
 					// al.get(i-1), "FullCCSD");
 				}
 			}
 		}
-		Database.init(true);
+		DatabaseUtils.init(true);
 	}
 
 	public static void circuitStatusUpdateIER(String TSONum) {
-		Database.init(false);
+		DatabaseUtils.init(false);
 		String circuitStatus = "";
 
 		String query = "SELECT FullCCSD, Ignore, Installed FROM TSO WHERE TSONumber = '"
 				+ TSONum + "'";
-		ArrayList<String> al = Database.dbQuery(query);
+		ArrayList<String> al = DatabaseUtils.dbQuery(query);
 		if (al.size() > 0) {
 			for (int i = 0; i < al.size(); i += 3) {
 				if (Integer.parseInt(al.get(i)) == 0) {
@@ -158,7 +163,7 @@ public class CircuitStatus {
 						String update = "UPDATE Circuits SET DeactivationDate = '"
 								+ DateUtils.deactivateDate(true)
 								+ "' WHERE FullCCSD = '" + al.get(i - 1) + "'";
-						Database.dbUpdate(update);
+						DatabaseUtils.dbUpdate(update);
 						File path = null;
 						if (Config.useChf) {
 							path = new File(Config.chfPath);
@@ -202,27 +207,27 @@ public class CircuitStatus {
 				String update = "UPDATE Circuits SET CircuitStatus = '"
 						+ circuitStatus + "' WHERE FullCCSD = '" + al.get(i)
 						+ "'";
-				Database.dbUpdate(update);
+				DatabaseUtils.dbUpdate(update);
 				update = "UPDATE TSO SET Installed = '" + -1
 						+ "' WHERE TSONumber = '" + TSONum + "'";
-				Database.dbUpdate(update);
+				DatabaseUtils.dbUpdate(update);
 
 			}
 		}
-		Database.init(true);
+		DatabaseUtils.init(true);
 	}
 
 	// TODO finish ignore repair
 	public static void tsoIgnoreRepair() {
-		Database.init(false);
+		DatabaseUtils.init(false);
 		String query = "SELECT FullCCSD FROM Circuits";
 		String CCSD = "";
-		ArrayList<String> alCircuits = Database.dbQuery(query);
+		ArrayList<String> alCircuits = DatabaseUtils.dbQuery(query);
 		for (String element : alCircuits) {
 			CCSD = element;
 			query = "SELECT ReportDate, Ignore FROM TSO WHERE FullCCSD = "
 					+ "'" + CCSD + "'";
-			ArrayList<String> alTso = Database.dbQuery(query);
+			ArrayList<String> alTso = DatabaseUtils.dbQuery(query);
 			for (int i = 1; i < alTso.size(); i = +3) {
 
 			}

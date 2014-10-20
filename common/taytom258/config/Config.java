@@ -1,7 +1,5 @@
 package taytom258.config;
 
-import java.util.Date;
-
 import taytom258.lib.Reference;
 
 public class Config {
@@ -10,8 +8,8 @@ public class Config {
 	public static boolean useChf, autoSelection, debug, error, autoCopy;
 
 	public static final String[] CONFIG_NAMES = { "S_chf_Path", "S_chf_Test",
-			"b_use_Chf", "b_auto_Selection", "b_debug", "b_error", "S_db_Path",
-			"b_auto_Copy", "Date_lastRepairRan" };
+		"b_use_Chf", "b_auto_Selection", "b_debug", "b_error", "S_db_Path",
+		"b_auto_Copy", "Date_lastRepairRan" };
 
 	// Default Config
 	public static final String CONFIG_HEADER = Reference.APPLICATION_NAME + " "

@@ -19,10 +19,10 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import taytom258.core.WriteHandler;
 import taytom258.core.log.LogHandler;
-import taytom258.core.util.LogHelper;
-import taytom258.core.util.PopHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.IOUtils;
+import taytom258.core.util.popups.NormalPop;
 import taytom258.lib.Reference;
 
 public class Console {
@@ -99,10 +99,10 @@ public class Console {
 				if (LOG.exists()) {
 					LOG.delete();
 				}
-				WriteHandler.fileWriter(
+				IOUtils.fileWriter(
 						textPane.getText().trim().replaceAll("\\<.*?\\>", ""),
 						LOG);
-				PopHelper.appear("Saved", "Log file saved to " + LOG.toString());
+				NormalPop.appear("Saved", "Log file saved to " + LOG.toString());
 			}
 		});
 		panel.add(btnCopyLogTo);

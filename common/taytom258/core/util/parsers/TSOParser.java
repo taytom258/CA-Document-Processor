@@ -7,8 +7,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import taytom258.core.util.LogHelper;
-import taytom258.core.util.db.Database;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.db.DatabaseUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.testing.IER;
@@ -44,7 +44,7 @@ public class TSOParser {
 			return false;
 		} // we ain't messin' around here kid
 		Collection.init();
-		Database.init(false);
+		DatabaseUtils.init(false);
 		// the TSO object
 		TreeMap<String, String> tso = new TreeMap<String, String>();
 
@@ -78,13 +78,13 @@ public class TSOParser {
 
 		// text sanitization:
 		t = t.replaceAll("\\r\\n|\\n|\\r", " "); // remove line breaks and
-													// replace with LBC (see
-													// //replace strings)
+		// replace with LBC (see
+		// //replace strings)
 		t = t.replaceAll("\\s\\s+", " "); // remove double spaces and replace
-											// with a single space
+		// with a single space
 		t = t.replaceAll("['\"]", "\\$&"); // escape apostrophes and quotes
-											// (replace string might need double
-											// the backslashes)
+		// (replace string might need double
+		// the backslashes)
 
 		// get basics from the start
 		int sEnd = t.indexOf(REF);
@@ -115,7 +115,7 @@ public class TSOParser {
 
 		// Look for evidence that a completion report is NOT required
 		String[] crsp = { "COMPLETION REPORT NOT REQUIRED",
-				"COMPLETION REPORT IS NOT REQUIRED" };
+		"COMPLETION REPORT IS NOT REQUIRED" };
 		boolean crr = true;
 		for (String element : crsp) {
 			if (t.toUpperCase().indexOf(element) > -1) {
@@ -152,7 +152,7 @@ public class TSOParser {
 		}
 		int sci = 0; // search character index
 		int so = 9; // start search over at 9 (which will be "A") after numbers
-					// fail
+		// fail
 		String ss = ""; // search string
 		while (found) {
 			ss = " " + sc[sci] + ". ";
@@ -204,7 +204,7 @@ public class TSOParser {
 									st.indexOf(bs)));
 					st = st.substring(
 							st.indexOf(tso.get(items[i]))
-									+ tso.get(items[i]).length(), st.length());
+							+ tso.get(items[i]).length(), st.length());
 				} else {
 					tso.put(items[i], "N/A");
 					st = st.substring(st.indexOf(bs));
@@ -419,7 +419,7 @@ public class TSOParser {
 				if (Collection.location.equals(Strings.LOCATIONS[0])
 						|| Collection.location.equals(Strings.LOCATIONS[1])) {
 					Collection.careq = true;
-				}else{
+				} else {
 					Collection.careq = false;
 				}
 			}
@@ -591,7 +591,7 @@ public class TSOParser {
 				Collection.cmoDsn = value;
 			}
 		}
-		Database.init(true);
+		DatabaseUtils.init(true);
 		LogHelper.info("TSO (Parser) Complete");
 		IER.run();
 		return true;
@@ -607,7 +607,7 @@ class LoadDB {
 				+ " WHERE GEOLOC = '" + GEOLOC + "' AND StateCountryCode = '"
 				+ StateCode + "'";
 		ArrayList<String> al = new ArrayList<String>();
-		al = Database.dbQuery(sql);
+		al = DatabaseUtils.dbQuery(sql);
 		for (int i = 0; i < al.size(); i++) {
 			if (i == 5) {
 				sa.add(al.get(i));
@@ -626,7 +626,7 @@ class LoadDB {
 		String sql = "SELECT * " + "FROM " + Strings.DEPTCODE_TABLE
 				+ " WHERE DeptCode = " + DEPTCODE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = Database.dbQuery(sql);
+		al = DatabaseUtils.dbQuery(sql);
 		for (int i = 0; i < al.size(); i++) {
 			String temp = al.get(i);
 			if (i == 2) {
@@ -641,7 +641,7 @@ class LoadDB {
 		String sql = "SELECT * " + "FROM " + Strings.USECODE_TABLE
 				+ " WHERE PurposeCode = " + USECODE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = Database.dbQuery(sql);
+		al = DatabaseUtils.dbQuery(sql);
 		for (int i = 0; i < al.size(); i++) {
 			String temp = al.get(i);
 			if (i == 3) {
@@ -656,7 +656,7 @@ class LoadDB {
 		String sql = "SELECT * " + "FROM " + Strings.SVCTYPE_TABLE
 				+ " WHERE Code = " + SVCTYPE;
 		ArrayList<String> al = new ArrayList<String>();
-		al = Database.dbQuery(sql);
+		al = DatabaseUtils.dbQuery(sql);
 		for (int i = 0; i < al.size(); i++) {
 			String temp = al.get(i);
 			if (i == 2) {
@@ -672,7 +672,7 @@ class LoadDB {
 				+ " WHERE ENR = '" + ENRCODE + "' AND Location = '" + GEOLOC
 				+ "'";
 		ArrayList<String> al = new ArrayList<String>();
-		al = Database.dbQuery(sql);
+		al = DatabaseUtils.dbQuery(sql);
 		for (int i = 0; i < al.size(); i++) {
 			if (al.get(i).equals(ENRCODE)) {
 				if (al.get(i + 1).equals(GEOLOC)) {

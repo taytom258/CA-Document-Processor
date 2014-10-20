@@ -1,4 +1,4 @@
-package taytom258.core.util;
+package taytom258.core.util.popups;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -17,7 +17,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-public class PopHelper extends JDialog {
+public class NormalPop extends JDialog {
 
 	/**
 	 * 
@@ -25,12 +25,12 @@ public class PopHelper extends JDialog {
 	private static final long serialVersionUID = -2605535464107680020L;
 	private static final JPanel contentPanel = new JPanel();
 	private static final JTextPane textPane = new JTextPane();
-	private static PopHelper dialog = new PopHelper();
+	private static NormalPop dialog = new NormalPop();
 
 	/**
 	 * Launch the application.
 	 */
-	public static PopHelper appear(String title, String text) {
+	public static NormalPop appear(String title, String text) {
 
 		dialog.setTitle(title);
 		textPane.setText(text);
@@ -42,7 +42,7 @@ public class PopHelper extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PopHelper() {
+	public NormalPop() {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 180);

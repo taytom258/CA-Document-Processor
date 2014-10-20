@@ -1,15 +1,15 @@
-package taytom258.core;
+package taytom258.core.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.lib.Reference;
 
-public class WriteHandler {
+public class IOUtils {
 
-	// Start code copied from stack overflow
 	private static void textClear(String FileName) throws IOException {
 		FileWriter fstream = new FileWriter(FileName, true);
 		BufferedWriter out = new BufferedWriter(fstream);
@@ -27,8 +27,6 @@ public class WriteHandler {
 		}
 		out.close();
 	}
-
-	// End code copied from stack overflow
 
 	public static boolean fileWriter(String line, String path) {
 		String[] array = line.split("\\n");
@@ -62,6 +60,25 @@ public class WriteHandler {
 				LogHelper.severe("Could not print file to location");
 				return false;
 			}
+		}
+		return true;
+	}
+	
+	public static boolean createUserDir(final String dirName)
+			throws IOException {
+		final File homeDir = Reference.USER_ROOT;
+		final File dir = new File(homeDir, dirName);
+		if (!dir.exists() && !dir.mkdirs()) {
+			throw new IOException("Unable to create " + dir.getAbsolutePath());
+		}
+		return true;
+	}
+
+	public static boolean createDir(String dirName, String path)
+			throws IOException {
+		final File dir = new File(path, dirName);
+		if (!dir.exists() && !dir.mkdirs()) {
+			throw new IOException("Unable to create " + dir.getAbsolutePath());
 		}
 		return true;
 	}

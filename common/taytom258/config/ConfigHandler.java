@@ -6,15 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Properties;
 
-import taytom258.core.DirHandler;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.IOUtils;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 
@@ -28,7 +23,7 @@ public class ConfigHandler {
 
 		if (!dir.exists()) {
 			try {
-				DirHandler.createUserDir(Reference.AUTHOR);
+				IOUtils.createUserDir(Reference.AUTHOR);
 			} catch (IOException e) {
 				e.printStackTrace();
 				LogHelper.warning("Unable to create root directory");
@@ -41,7 +36,7 @@ public class ConfigHandler {
 			load();
 		} else if (!file.exists()) {
 			LogHelper
-					.warning("Config not found: creating default config (This is normal on a first start)");
+			.warning("Config not found: creating default config (This is normal on a first start)");
 			createDefaults();
 		}
 		LogHelper.debug("Config handler initilized");

@@ -77,7 +77,7 @@ public class WindowCore extends Window {
 
 		private static void reset() {
 			String[] str1 = { "Action", "Start", "Change", "Disco", "Amend",
-					"Cancel" };
+			"Cancel" };
 			cardSwap("Blank");
 			// Collection.start = false;
 			// Collection.change = false;

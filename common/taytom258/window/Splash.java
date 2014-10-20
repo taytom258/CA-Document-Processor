@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
 import taytom258.config.Config;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.lib.Reference;
 
 public class Splash extends JDialog {
