@@ -1,4 +1,4 @@
-package taytom258.testing;
+package taytom258.testing.testCode;
 
 import java.io.File;
 import java.io.IOException;

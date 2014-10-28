@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-import taytom258.window.Console;
+import taytom258.windows.console.Console;
 
 public class LogHandler extends Handler {
 
@@ -37,11 +37,11 @@ public class LogHandler extends Handler {
 		System.out.println(getFormatter().format(record));
 		try {
 			if (write.contains("WARNING")) {
-				Console.insertHTML(write, "#FFA500");
+				Console.(write, "#FFA500");
 			} else if (write.contains("SEVERE")) {
-				Console.insertHTML(write, "red");
+				Console.insertText(write, "red");
 			} else {
-				Console.insertHTML(write, "black");
+				Console.insertText(write, "black");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

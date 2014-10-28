@@ -3,9 +3,9 @@ package taytom258.show.tso;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
-import taytom258.window.Window;
+import taytom258.windows.main.MainWindow;
 
-public class ShowDatabase extends Window {
+public class ShowDatabase extends MainWindow {
 
 	public static void show() {
 		circuit();

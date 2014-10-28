@@ -1,4 +1,4 @@
-package taytom258.window;
+package taytom258.windows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -20,7 +21,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import taytom258.core.log.LogHelper;
+import taytom258.core.util.popups.ContextMenu;
 import taytom258.lib.Strings;
+import taytom258.windows.main.MainWindow;
 
 public class Help extends JDialog {
 
@@ -30,6 +33,7 @@ public class Help extends JDialog {
 	private static final long serialVersionUID = 6742154977741087647L;
 	private final JPanel contentPanel = new JPanel();
 	private final static Help dialog = new Help();
+	private JPopupMenu popup = ContextMenu.copy();
 
 	/**
 	 * Launch the application.
@@ -64,7 +68,7 @@ public class Help extends JDialog {
 				public void mouseReleased(MouseEvent e) {
 					if (e.isPopupTrigger()) {
 						e.getComponent().requestFocus();
-						Window.popup.show(e.getComponent(), e.getX(), e.getY());
+						popup.show(e.getComponent(), e.getX(), e.getY());
 					} else if (e.getButton() == 1) {
 						e.getComponent().requestFocus();
 					}
@@ -86,7 +90,7 @@ public class Help extends JDialog {
 				public void mouseReleased(MouseEvent e) {
 					if (e.isPopupTrigger()) {
 						e.getComponent().requestFocus();
-						Window.popup.show(e.getComponent(), e.getX(), e.getY());
+						popup.show(e.getComponent(), e.getX(), e.getY());
 					} else if (e.getButton() == 1) {
 						e.getComponent().requestFocus();
 					}

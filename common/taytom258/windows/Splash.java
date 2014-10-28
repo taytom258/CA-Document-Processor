@@ -1,4 +1,4 @@
-package taytom258.window;
+package taytom258.windows;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

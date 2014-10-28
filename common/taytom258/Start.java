@@ -6,9 +6,9 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.security.Check;
 import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Reference;
-import taytom258.window.Console;
-import taytom258.window.Splash;
-import taytom258.window.Window;
+import taytom258.windows.Splash;
+import taytom258.windows.console.Console;
+import taytom258.windows.main.MainWindow;
 
 public class Start {
 
@@ -81,7 +81,7 @@ class ThreadB extends Thread {
 			 */
 			LogHelper.info("Loading...");
 			Splash.incrementBar();
-			Window.appear();
+			MainWindow.show();
 			Splash.dialog.dispose();
 			// Testing.init();
 			notify();
@@ -98,7 +98,7 @@ class ThreadC extends Thread {
 			 */
 			LogHelper.info("Post-Loading...");
 			if (Config.debug) {
-				Console.getFrame().setVisible(true);
+				Console.show(true);
 			}
 		}
 	}

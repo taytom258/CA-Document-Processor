@@ -1,4 +1,4 @@
-package taytom258.window;
+package taytom258.windows;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -22,7 +22,8 @@ import taytom258.lib.Strings;
 import taytom258.show.tso.ShowCHF;
 import taytom258.show.tso.ShowDatabase;
 import taytom258.show.tso.ShowFacit;
-import taytom258.window.core.TSOCore;
+import taytom258.windows.core.TSOCore;
+import taytom258.windows.main.MainWindow;
 
 public class TSO {
 
@@ -74,10 +75,8 @@ public class TSO {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TSOCore.save();
-				Window.getFrmTsoHelper().getRootPane()
-				.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-				frmEnterTso.getRootPane().setCursor(
-						new Cursor(Cursor.WAIT_CURSOR));
+				MainWindow.frmMain.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				frmEnterTso.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				if (Collection.tsoText.equals("")) {
 					LogHelper.warning(Strings.FOUND_NOTHING);
 				} else {
@@ -90,13 +89,13 @@ public class TSO {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 						LogHelper.severe(e1.getClass() + ": " + e1.getMessage());
-						Window.getFrmTsoHelper().getRootPane()
+						MainWindow.frmMain.getRootPane()
 						.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 						frmEnterTso.getRootPane().setCursor(
 								new Cursor(Cursor.DEFAULT_CURSOR));
 					}
 				}
-				Window.getFrmTsoHelper().getRootPane()
+				MainWindow.frmMain.getRootPane()
 				.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				frmEnterTso.getRootPane().setCursor(
 						new Cursor(Cursor.DEFAULT_CURSOR));

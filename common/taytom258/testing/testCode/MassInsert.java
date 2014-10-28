@@ -1,4 +1,4 @@
-package taytom258.testing;
+package taytom258.testing.testCode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,16 +6,14 @@ import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javax.swing.JPopupMenu;
-
 import taytom258.core.log.LogHelper;
-import taytom258.window.core.WindowCore;
 
 public class MassInsert {
 
 	public static int currentNum = 0;
-	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity\\Roles\\Document Tracker\\Document Processor\\TSOs";
-	public static JPopupMenu popup = WindowCore.createPopup();
+//	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity"
+//			+ "\\Roles\\Document Tracker\\Document Processor\\TSOs";
+	public static String root = "C:\\Java Development\\Work Programs\\Files\\TSOs";
 
 	private static File[] readFolder(File path) {
 		File[] files = path.listFiles(new FileFilter() {

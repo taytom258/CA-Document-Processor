@@ -1,6 +1,7 @@
-package taytom258.window;
+package taytom258.windows.console;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -8,7 +9,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,62 +19,83 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.EditorKit;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import taytom258.config.Config;
 import taytom258.core.log.LogHandler;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.IOUtils;
 import taytom258.core.util.popups.NormalPop;
 import taytom258.lib.Reference;
+import taytom258.windows.main.MainWindow;
 
-public class Console {
-
+/**
+ * Class containing all code to create the visuals for a console window.
+ * @author taytom258
+ *
+ */
+public class Console extends ConsoleCore{
+ 
 	private static JFrame frmConsole;
-	private JPanel panel;
-	private JButton btnClear;
-	private JButton btnClose;
-	private JButton btnCopyLogTo;
-	private JScrollPane scrollPane;
-	private static JTextPane textPane = new JTextPane();
-	private static HTMLEditorKit textPane_html_kit = new HTMLEditorKit();
-	private JTextArea textArea;
+	private static JPanel panel;
+	private static JButton btnClear;
+	private static JButton btnClose;
+	private static JScrollPane scrollPane;
+	private static JTextPane textPane;
+	private static HTMLEditorKit textPane_html_kit = new HTMLEditorKit();;
+	private static JButton btnCopyLogTo;
 
 	/**
-	 * Launch the application.
+	 * Initialize console window that is initially invisible.
 	 */
 	public static void init() {
-		try {
-			Console window = new Console();
-			frmConsole.setVisible(false);
-		} catch (Exception e) {
-			e.printStackTrace();
-			LogHelper.severe(e.getMessage());
-		}
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new Console();
+			}
+		});
+	}
+	
+	/**
+	 * Show the console window.
+	 * @param setVisible visibility state
+	 */
+	public static void show(boolean setVisible){
+		frmConsole.setVisible(setVisible);
+		LogHelper.info("Console window");
 	}
 
 	/**
-	 * Create the application.
+	 * Constructs a new console window.
+	 * @see JFrame
 	 */
-	public Console() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	private Console() {
 		frmConsole = new JFrame();
 		frmConsole.setAlwaysOnTop(false);
 		frmConsole.setTitle("Console");
 		frmConsole.setBounds(100, 100, 650, 500);
 		frmConsole.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frmConsole.getContentPane().setLayout(new BorderLayout(0, 0));
-
+		
+		frmConsole.getContentPane().add(createScroll(), BorderLayout.CENTER);
+		frmConsole.getContentPane().add(createPanel(), BorderLayout.SOUTH);
+		
+	}
+	
+	/**
+	 * Create the console button panel.
+	 * @return Console button panel
+	 */
+	private static JPanel createPanel(){
 		panel = new JPanel();
-		frmConsole.getContentPane().add(panel, BorderLayout.SOUTH);
-
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
 		btnClear = new JButton("Clear");
+		btnClear.setToolTipText("Clear console of all text");
 		btnClear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -79,57 +103,54 @@ public class Console {
 				LogHandler.consoleList.clear();
 			}
 		});
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		btnClear.setToolTipText("Clear console of all text");
 		panel.add(btnClear);
-
+		
 		btnClose = new JButton("Close");
+		btnClose.setToolTipText("Close this window");
 		btnClose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmConsole.setVisible(false);
 			}
 		});
-
-		final File LOG = new File(Reference.USER_ROOT.toString() + "\\log.txt");
+		panel.add(btnClose);
+		
 		btnCopyLogTo = new JButton("Copy Log to File");
 		btnCopyLogTo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (LOG.exists()) {
-					LOG.delete();
-				}
-				IOUtils.fileWriter(
-						textPane.getText().trim().replaceAll("\\<.*?\\>", ""),
-						LOG);
-				NormalPop.appear("Saved", "Log file saved to " + LOG.toString());
+				ConsoleCore.logCopy(textPane.getText(), Config.LOG_PATH);
 			}
 		});
 		panel.add(btnCopyLogTo);
-		btnClose.setToolTipText("Close this window");
-		panel.add(btnClose);
-
+		
+		return panel;
+	}
+	
+	/**
+	 * Create the console scroll pane with a text pane as the viewport.
+	 * @return Console scroll pane
+	 */
+	private static JScrollPane createScroll(){
 		scrollPane = new JScrollPane();
-		frmConsole.getContentPane().add(scrollPane, BorderLayout.CENTER);
-
+		textPane = new JTextPane();
+		
 		textPane.setContentType("text/html");
 		textPane.setEditable(false);
 		textPane.setBackground(SystemColor.menu);
 		textPane.setEditorKit(textPane_html_kit);
 		textPane.setDocument(new HTMLDocument());
+		
 		scrollPane.setViewportView(textPane);
-
+		
+		return scrollPane;
 	}
-
-	public static void insertHTML(String str, String fontColor)
-			throws BadLocationException, IOException {
-		String line = "<div><font color=" + fontColor + ">" + str
-				+ "</font></div>";
-		textPane_html_kit.insertHTML((HTMLDocument) textPane.getDocument(),
-				textPane.getDocument().getLength(), line, 0, 0, null);
-	}
-
-	public static JFrame getFrame() {
-		return frmConsole;
+	
+	/**
+	 * Insert text as HTML to console text pane
+	 * @param text to be inserted
+	 */
+	public static void insertText(String text){
+		
 	}
 }

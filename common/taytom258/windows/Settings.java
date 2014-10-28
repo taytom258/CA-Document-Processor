@@ -1,4 +1,4 @@
-package taytom258.window;
+package taytom258.windows;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -20,8 +20,9 @@ import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
 import taytom258.core.log.LogHelper;
-import taytom258.testing.WorkSaver;
-import taytom258.window.core.SettingsCore;
+import taytom258.testing.testCode.WorkSaver;
+import taytom258.windows.console.Console;
+import taytom258.windows.core.SettingsCore;
 
 public class Settings {
 

@@ -13,9 +13,9 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.IOUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.window.Window;
+import taytom258.windows.main.MainWindow;
 
-public class ShowCHF extends Window {
+public class ShowCHF extends MainWindow {
 
 	private static String currentText, creatingText, tsoName;
 	private static ArrayList<String> create = new ArrayList<String>();
