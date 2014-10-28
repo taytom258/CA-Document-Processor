@@ -1,7 +1,8 @@
-package taytom258.core.util;
+package taytom258.core.util.popups;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,33 +16,33 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import java.awt.Font;
 
-public class PopHelper extends JDialog {
-	
+public class NormalPop extends JDialog {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2605535464107680020L;
 	private static final JPanel contentPanel = new JPanel();
 	private static final JTextPane textPane = new JTextPane();
-	private static PopHelper dialog = new PopHelper();
-	
+	private static NormalPop dialog = new NormalPop();
+
 	/**
 	 * Launch the application.
 	 */
-	public static void appear(String title, String text) {
-		
+	public static NormalPop appear(String title, String text) {
+
 		dialog.setTitle(title);
 		textPane.setText(text);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
+		return dialog;
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public PopHelper() {
+	public NormalPop() {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 180);
@@ -51,8 +52,7 @@ public class PopHelper extends JDialog {
 		contentPanel.setLayout(null);
 		textPane.setEditable(false);
 		textPane.setFont(new Font("Dialog", Font.PLAIN, 16));
-		
-		
+
 		textPane.setBackground(UIManager.getColor("Button.background"));
 		textPane.setBounds(12, 12, 370, 92);
 		StyledDocument doc = textPane.getStyledDocument();
@@ -60,7 +60,7 @@ public class PopHelper extends JDialog {
 		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
 		doc.setParagraphAttributes(0, doc.getLength(), center, false);
 		contentPanel.add(textPane);
-			
+
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		JButton okButton = new JButton("OK");

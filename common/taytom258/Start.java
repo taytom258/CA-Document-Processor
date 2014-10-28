@@ -2,86 +2,104 @@ package taytom258;
 
 import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
+import taytom258.core.log.LogHelper;
 import taytom258.core.security.Check;
-import taytom258.core.util.LogHelper;
+import taytom258.core.util.db.CircuitStatus;
 import taytom258.lib.Reference;
 import taytom258.window.Console;
 import taytom258.window.Splash;
 import taytom258.window.Window;
 
-
-
 public class Start {
+
+	public static ThreadA a = new ThreadA();
+	public static ThreadB b = new ThreadB();
+	public static ThreadC c = new ThreadC();
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args){
-		ThreadA a = new ThreadA();
-		ThreadB b = new ThreadB();
-	    a.start();
-	    
-	    synchronized(a){
-	        try{
-	            a.wait();
-	            b.start();
-	            synchronized(b){
-	            	b.wait();
-	            	/*
-	            	 * Post-Initialization
-	            	 */
-	            	LogHelper.info("Post-Loading...");
-	            	if(Config.debug){
-	            		Console.getFrame().setVisible(true);
-	            	}
-	            }
-	        }catch(InterruptedException e){
-	            e.printStackTrace();
-	            LogHelper.severe(e.getMessage());
-	        }
-	    }
-	    
+	public static void main(String[] args) {
+
+		try {
+			a.start();
+			synchronized (a) {
+				a.wait();
+				b.start();
+				synchronized (b) {
+					b.wait();
+					c.start();
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			LogHelper.severe(e.getMessage());
+		}
 	}
+
 }
-	
-class ThreadA extends Thread{
+
+class ThreadA extends Thread {
 	@Override
-	public void run(){
-	    synchronized(this){
-	    	/*
-			 *Initialization
+	public void run() {
+		synchronized (this) {
+			/*
+			 * Initialization
 			 */
-	    	Splash.appear();
-	    	Console.init();
-	    	Splash.incrementBar();
+			Splash.appear();
+			Console.init();
+			Splash.incrementBar();
 			LogHelper.init();
 			Splash.incrementBar();
 			LogHelper.debug("Console initialized");
-			LogHelper.info(Reference.APPLICATION_NAME+": "+Reference.APPLICATION_VERSION+"."+Reference.BUILD_NUMBER);
+			LogHelper.info(Reference.APPLICATION_NAME + ": "
+					+ Reference.APPLICATION_VERSION + "."
+					+ Reference.BUILD_NUMBER);
 			Splash.incrementBar();
 			LogHelper.info("Initializing...");
 			ConfigHandler.init();
 			Splash.incrementBar();
 			Check.call();
 			Splash.incrementBar();
+			Splash.progressBar.setIndeterminate(true);
+			if (!Config.debug) {
+				CircuitStatus.circuitStatusRepair();
+			}
+			Splash.progressBar.setIndeterminate(false);
+			Splash.incrementBar();
 			notify();
-	    }
+		}
 	}
 }
 
-class ThreadB extends Thread{
+class ThreadB extends Thread {
 	@Override
-	public void run(){
-	    synchronized(this){
-	    	/*
-    		 * Load
-    		 */
-            LogHelper.info("Loading...");
-            Splash.incrementBar();
-    		Window.appear();
-    		Splash.dialog.dispose();
-//    		Testing.init();
-    		notify();
-	    }
+	public void run() {
+		synchronized (this) {
+			/*
+			 * Load
+			 */
+			LogHelper.info("Loading...");
+			Splash.incrementBar();
+			Window.appear();
+			Splash.dialog.dispose();
+			// Testing.init();
+			notify();
+		}
+	}
+}
+
+class ThreadC extends Thread {
+	@Override
+	public void run() {
+		synchronized (this) {
+			/*
+			 * Post-Initialization
+			 */
+			LogHelper.info("Post-Loading...");
+			if (Config.debug) {
+				Console.getFrame().setVisible(true);
+			}
+		}
 	}
 }

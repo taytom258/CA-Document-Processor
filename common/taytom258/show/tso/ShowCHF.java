@@ -9,9 +9,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 
 import taytom258.config.Config;
-import taytom258.core.DirHandler;
-import taytom258.core.WriteHandler;
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
+import taytom258.core.util.IOUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.window.Window;
@@ -25,22 +24,24 @@ public class ShowCHF extends Window {
 	public static void show() {
 		tsoName();
 		IOOperations(rootFolder());
-		if(Collection.ccsdChange){checkDup();}
+		if (Collection.ccsdChange) {
+			checkDup();
+		}
 		LogHelper.info("TSO (CHF) Tab Complete");
 	}
 
-	private static void checkDup(){
+	private static void checkDup() {
 		File root = new File(folderExist.toString());
 		File oldRoot = null;
 		String first = Collection.ccsdList[0].trim().substring(0, 4);
 		String second = Collection.ccsdList[0].trim().substring(4, 8);
 		String oldS = second + " (" + first + ")";
-		if(Config.useChf){
-			oldRoot = new File(Config.chfPath+"\\"+oldS);
-		}else{
-			oldRoot = new File(Config.chfTest+"\\"+oldS);
+		if (Config.useChf) {
+			oldRoot = new File(Config.chfPath + "\\" + oldS);
+		} else {
+			oldRoot = new File(Config.chfTest + "\\" + oldS);
 		}
-		if(root.exists()){
+		if (oldRoot.exists()) {
 			try {
 				FileUtils.copyDirectory(oldRoot, root);
 				FileUtils.deleteDirectory(oldRoot);
@@ -50,11 +51,11 @@ public class ShowCHF extends Window {
 			}
 		}
 	}
-	
+
 	private static void IOOperations(File path) {
 		folder(path.toString());
 		createTso(path.toString());
-//		create1539(path.toString());
+		// create1539(path.toString());
 	}
 
 	private static void tsoName() {
@@ -64,12 +65,13 @@ public class ShowCHF extends Window {
 		String[] split = Collection.tsoSubject.split("-");
 		Matcher m2 = p2.matcher(split[1]);
 		Matcher m3 = p3.matcher(split[1]);
-		if(m3.find()){
-			index += 3;	
-		}else if(m2.find()){
+		if (m3.find()) {
+			index += 3;
+		} else if (m2.find()) {
 			index += 2;
 		}
-		String pre = Collection.tsoSubject.trim().replace("/", "").substring(0, index);
+		String pre = Collection.tsoSubject.trim().replace("/", "")
+				.substring(0, index);
 		tsoName = pre.trim() + ".txt";
 
 		getTextField_ChfTsoName().setText(tsoName);
@@ -78,44 +80,49 @@ public class ShowCHF extends Window {
 	private static File rootFolder() {
 		File only = null;
 
-		if (Collection.tsoAction.equals("DISCONTINUE") && Collection.trunkId.length() == 6){
-			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND);
-			Collection.chfRootFolder += " " + "("+Collection.trunkId+")" + " " + Strings.DISCO_PEND;
-		}else if (Collection.tsoAction.equals("DISCONTINUE")) {
-			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + Strings.DISCO_PEND);
+		if (Collection.tsoAction.equals("DISCONTINUE")
+				&& Collection.trunkId.length() == 6) {
+			getTextField_ChfRoot().setText(
+					Collection.chfRootFolder + " " + "(" + Collection.trunkId
+					+ ")" + " " + Strings.DISCO_PEND);
+			Collection.chfRootFolder += " " + "(" + Collection.trunkId + ")"
+					+ " " + Strings.DISCO_PEND;
+		} else if (Collection.tsoAction.equals("DISCONTINUE")) {
+			getTextField_ChfRoot().setText(
+					Collection.chfRootFolder + " " + Strings.DISCO_PEND);
 			Collection.chfRootFolder += " " + Strings.DISCO_PEND;
 		} else if (Collection.trunkId.length() == 6) {
-			getTextField_ChfRoot().setText(Collection.chfRootFolder + " " + "("+Collection.trunkId+")");
-			Collection.chfRootFolder += " " + "("+Collection.trunkId+")";
-		}else{
+			getTextField_ChfRoot().setText(
+					Collection.chfRootFolder + " " + "(" + Collection.trunkId
+					+ ")");
+			Collection.chfRootFolder += " " + "(" + Collection.trunkId + ")";
+		} else {
 			getTextField_ChfRoot().setText(Collection.chfRootFolder);
 		}
 
 		if (Config.useChf) {
 			folderExist = new File(Config.chfPath + "\\"
 					+ Collection.chfRootFolder);
-			only = new File(Config.chfPath + "\\"
-					+ Strings.ONLY_1539 + "\\"
+			only = new File(Config.chfPath + "\\" + Strings.ONLY_1539 + "\\"
 					+ Collection.chfRootFolder);
 		} else {
 			folderExist = new File(Config.chfTest + "\\"
 					+ Collection.chfRootFolder);
-			only = new File(Config.chfTest + "\\"
-					+ Strings.ONLY_1539 + "\\"
+			only = new File(Config.chfTest + "\\" + Strings.ONLY_1539 + "\\"
 					+ Collection.chfRootFolder);
 		}
 
 		File discoPend = new File(folderExist.toString() + " "
 				+ Strings.DISCO_PEND);
 		String folderName = Collection.chfRootFolder;
-		
-		if(Collection.tsoAction.equals("CANCEL") && discoPend.exists()){
+
+		if (Collection.tsoAction.equals("CANCEL") && discoPend.exists()) {
 			discoPend.renameTo(folderExist);
-		}else if(Collection.tsoAction.equals("DISCONTINUE")) {
+		} else if (Collection.tsoAction.equals("DISCONTINUE")) {
 			folderExist.renameTo(discoPend);
 			folderName += " " + Strings.DISCO_PEND;
 			folderExist = discoPend;
-		}else if(discoPend.exists()){
+		} else if (discoPend.exists()) {
 			folderName += " " + Strings.DISCO_PEND;
 			folderExist = discoPend;
 		}
@@ -125,14 +132,14 @@ public class ShowCHF extends Window {
 		} else {
 			try {
 				if (Config.useChf && !only.equals(folderExist)) {
-					if(DirHandler.createDir(folderName,
-							Config.chfPath)){
-					LogHelper.io("Created Root in: " + Config.chfPath);}
+					if (IOUtils.createDir(folderName, Config.chfPath)) {
+						LogHelper.io("Created Root in: " + Config.chfPath);
+					}
 					getRdbtn_ChfRootCreated().setSelected(true);
 				} else if (!only.equals(folderExist)) {
-					if(DirHandler.createDir(folderName,
-							Config.chfTest)){
-					LogHelper.io("Created Root in: " + Config.chfTest);}
+					if (IOUtils.createDir(folderName, Config.chfTest)) {
+						LogHelper.io("Created Root in: " + Config.chfTest);
+					}
 					getRdbtn_ChfRootCreated().setSelected(true);
 				}
 			} catch (IOException e) {
@@ -161,7 +168,7 @@ public class ShowCHF extends Window {
 				currentText = currentText.concat(element);
 				currentText = currentText.concat("\n");
 				getTextPane_ChfCurrent().setText(currentText);
-				if (folder.toString().contains(Strings.FOLDERS[9])){
+				if (folder.toString().contains(Strings.FOLDERS[9])) {
 					File newFolder = new File(path + "\\" + Strings.FOLDERS[1]);
 					try {
 						FileUtils.moveDirectory(folder, newFolder);
@@ -183,11 +190,9 @@ public class ShowCHF extends Window {
 	private static boolean check(String folder) {
 		if (Collection.hasSams && folder.equals(Strings.FOLDERS[4])) {
 			return true;
-		} else if (Collection.isAnalog
-				&& folder.equals(Strings.FOLDERS[2])) {
+		} else if (Collection.isAnalog && folder.equals(Strings.FOLDERS[2])) {
 			return true;
-		} else if (Collection.andrewsCmo
-				&& folder.equals(Strings.FOLDERS[5])) {
+		} else if (Collection.andrewsCmo && folder.equals(Strings.FOLDERS[5])) {
 			return true;
 		} else if (!Collection.isPassthrough
 				&& folder.equals(Strings.FOLDERS[8])) {
@@ -211,8 +216,9 @@ public class ShowCHF extends Window {
 
 		for (String s : create) {
 			try {
-				if(DirHandler.createDir(s, path)){
-					LogHelper.io("Created " + s + " in: " + path);}
+				if (IOUtils.createDir(s, path)) {
+					LogHelper.io("Created " + s + " in: " + path);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				LogHelper.severe(e.getMessage());
@@ -227,7 +233,7 @@ public class ShowCHF extends Window {
 		File file = new File(path + "\\" + Strings.FOLDERS[6] + "\\" + text);
 
 		if (!file.exists()) {
-			if (WriteHandler.fileWriter(Collection.tsoText, file)) {
+			if (IOUtils.fileWriter(Collection.tsoText, file)) {
 				LogHelper.io("Created file " + text + " in " + path + "\\"
 						+ Strings.FOLDERS[6]);
 			}
@@ -235,44 +241,55 @@ public class ShowCHF extends Window {
 			LogHelper.info("TSO File Already Exists");
 		}
 	}
-	
+
 	@Deprecated
-	private static void create1539(String path){
-		
-		
-		if(Collection.is1539){
-			try{
+	private static void create1539(String path) {
+
+		if (Collection.is1539) {
+			try {
 				if (Config.useChf) {
-					File folder = new File(Config.chfPath + "\\" + Strings.ONLY_1539);
+					File folder = new File(Config.chfPath + "\\"
+							+ Strings.ONLY_1539);
 					File root = new File(path);
-					File newRoot = new File(folder.toString() + "\\" + Collection.chfRootFolder);
-					
-					if (!folder.exists()){
-						if(DirHandler.createDir(Strings.ONLY_1539, Config.chfPath)){
-							LogHelper.io("Created 1539 only root folder in: " + Config.chfPath);}
+					File newRoot = new File(folder.toString() + "\\"
+							+ Collection.chfRootFolder);
+
+					if (!folder.exists()) {
+						if (IOUtils.createDir(Strings.ONLY_1539,
+								Config.chfPath)) {
+							LogHelper.io("Created 1539 only root folder in: "
+									+ Config.chfPath);
+						}
 					}
-					if(!root.equals(newRoot)){
+					if (!root.equals(newRoot)) {
 						FileUtils.copyDirectory(root, newRoot, false);
 						FileUtils.deleteQuietly(root);
-						LogHelper.io("Moved folder from: " + root + " to: " + newRoot);
+						LogHelper.io("Moved folder from: " + root + " to: "
+								+ newRoot);
 					}
-					
+
 				} else {
-					File folder = new File(Config.chfTest + "\\" + Strings.ONLY_1539);
+					File folder = new File(Config.chfTest + "\\"
+							+ Strings.ONLY_1539);
 					File root = new File(path);
-					File newRoot = new File(folder.toString() + "\\" + Collection.chfRootFolder);
-					
-					if (!folder.exists()){
-						if(DirHandler.createDir(Strings.ONLY_1539, Config.chfTest)){
-							LogHelper.io("Created 1539 only root folder in: " + Config.chfTest);}
+					File newRoot = new File(folder.toString() + "\\"
+							+ Collection.chfRootFolder);
+
+					if (!folder.exists()) {
+						if (IOUtils.createDir(Strings.ONLY_1539,
+								Config.chfTest)) {
+							LogHelper.io("Created 1539 only root folder in: "
+									+ Config.chfTest);
+						}
 					}
-					if(!root.equals(newRoot)){
+					if (!root.equals(newRoot)) {
 						FileUtils.copyDirectory(root, newRoot, false);
 						FileUtils.deleteQuietly(root);
-						LogHelper.io("Moved folder from: " + root + " to: " + newRoot);
+						LogHelper.io("Moved folder from: " + root + " to: "
+								+ newRoot);
 					}
 				}
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 				LogHelper.severe(e.getMessage());
 			}

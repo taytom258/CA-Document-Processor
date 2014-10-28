@@ -3,6 +3,8 @@ package taytom258.window;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,11 +19,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import taytom258.core.util.LogHelper;
+import taytom258.core.log.LogHelper;
 import taytom258.lib.Strings;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Help extends JDialog {
 
@@ -63,10 +62,10 @@ public class Help extends JDialog {
 			textPane.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if(e.isPopupTrigger()){
+					if (e.isPopupTrigger()) {
 						e.getComponent().requestFocus();
 						Window.popup.show(e.getComponent(), e.getX(), e.getY());
-					}else if(e.getButton() == 1){
+					} else if (e.getButton() == 1) {
 						e.getComponent().requestFocus();
 					}
 				}
@@ -85,17 +84,18 @@ public class Help extends JDialog {
 			txtpnAllSourceCode.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if(e.isPopupTrigger()){
+					if (e.isPopupTrigger()) {
 						e.getComponent().requestFocus();
 						Window.popup.show(e.getComponent(), e.getX(), e.getY());
-					}else if(e.getButton() == 1){
+					} else if (e.getButton() == 1) {
 						e.getComponent().requestFocus();
 					}
 				}
 			});
 			txtpnAllSourceCode.setEditable(false);
 			txtpnAllSourceCode.setText(Strings.HELP);
-			txtpnAllSourceCode.setBackground(UIManager.getColor("Button.background"));
+			txtpnAllSourceCode.setBackground(UIManager
+					.getColor("Button.background"));
 			contentPanel.add(txtpnAllSourceCode);
 		}
 		{
