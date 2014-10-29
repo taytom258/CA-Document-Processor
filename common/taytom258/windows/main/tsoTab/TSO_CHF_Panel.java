@@ -19,14 +19,14 @@ import taytom258.config.Config;
 import taytom258.core.util.popups.ContextMenu;
 
 /**
- * Panel for TSO  Tab
+ * Class for TSO CHF Tab
  * @author taytom258
  *
  */
 public class TSO_CHF_Panel extends JPanel {
 
 	private static final long serialVersionUID = -3500353515226347640L;
-	private JTextField textField_TsoName;
+	public static JTextField textField_TsoName;
 	private JLabel label_TsoName;
 	private JLabel lblRoot;
 	private JTextField textField_Root;

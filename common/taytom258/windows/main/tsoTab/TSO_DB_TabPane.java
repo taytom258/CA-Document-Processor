@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import taytom258.core.util.popups.ContextMenu;
 
 /**
- * Tabbed Pane for TSO DB tab
+ * Class for TSO DB tab
  * @author taytom258
  *
  */
@@ -23,7 +23,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 	
 	private static final long serialVersionUID = 5832577867024082207L;
 	private JPanel panel_Circuit;
-	private JTextField textFieldFullCcsd;
+	protected static JTextField textFieldFullCcsdCircuit;
 	private JLabel lblFullCcsd;
 	private JLabel lblTrunkId;
 	private JLabel lblFullTsp;
@@ -42,28 +42,27 @@ public class TSO_DB_TabPane extends JTabbedPane {
 	private JLabel lblCmoComm;
 	private JLabel lblSignaling;
 	private JLabel lblQcc;
-	private JTextField textFieldtrunkId;
-	private JTextField textFieldfullTsp;
-	private JTextField textFieldtsp;
-	private JTextField textFieldto;
-	private JTextField textFieldfrom;
-	protected Object popup = ContextMenu.copy();
-	private JTextField textFieldreqDepartment;
-	private JTextField textFieldtype;
-	private JTextField textFielduse;
-	private JTextField textFieldsecurity;
-	private JTextField textFieldrate;
-	private JTextField textFieldflow;
-	private JCheckBox chckbxAndrewsCmo;
-	private JCheckBox chckbxAndrewsEndpoint;
-	private JTextField textFieldavail;
-	private JTextField textFieldcmo;
-	private JTextField textFieldcmoDsn;
-	private JTextField textFieldcmoComm;
-	private JTextField textFieldsignal;
-	private JTextField textFieldqcc;
+	protected static JTextField textFieldtrunkId;
+	protected static JTextField textFieldfullTsp;
+	protected static JTextField textFieldtsp;
+	protected static JTextField textFieldto;
+	protected static JTextField textFieldfrom;
+	protected static JTextField textFieldreqDepartment;
+	protected static JTextField textFieldtype;
+	protected static JTextField textFielduse;
+	protected static JTextField textFieldsecurity;
+	protected static JTextField textFieldrate;
+	protected static JTextField textFieldflow;
+	protected static JCheckBox chckbxAndrewsCmo;
+	protected static JCheckBox chckbxAndrewsEndpoint;
+	protected static JTextField textFieldavail;
+	protected static JTextField textFieldcmo;
+	protected static JTextField textFieldcmoDsn;
+	protected static JTextField textFieldcmoComm;
+	protected static JTextField textFieldsignal;
+	protected static JTextField textFieldqcc;
 	private JPanel panel_Tso;
-	private JTextField textFieldTsoNum;
+	protected static JTextField textFieldTsoNum;
 	private JLabel lblMrc;
 	private JLabel lblReportDate;
 	private JLabel lblNrc;
@@ -72,17 +71,17 @@ public class TSO_DB_TabPane extends JTabbedPane {
 	private JLabel lblAction;
 	private JLabel lblTsoSuffix;
 	private JLabel lblTsoNumber;
-	private JTextField textFieldTsoSuff;
-	private JTextField textFieldaction;
-	private JTextField textFieldfullCcsd;
-	private JTextField textFieldsvcDate;
-	private JCheckBox chckbxcrr;
-	private JTextField textFieldreportDate;
-	private JTextField textFieldMrc;
-	private JTextField textFieldNrc;
+	protected static JTextField textFieldTsoSuff;
+	protected static JTextField textFieldaction;
+	protected static JTextField textFieldFullCcsdTso;
+	protected static JTextField textFieldsvcDate;
+	protected static JCheckBox chckbxcrr;
+	protected static JTextField textFieldreportDate;
+	protected static JTextField textFieldMrc;
+	protected static JTextField textFieldNrc;
 
 	/**
-	 * Create tabbed pane
+	 * Create tabbed pane and add tabs to it
 	 */
 	public TSO_DB_TabPane() {
 		
@@ -90,6 +89,10 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		this.addTab("TSO", null, panelTso(), "TSO Table");
 	}
 	
+	/**
+	 * Create circuit panel inside of tab pane
+	 * @return panel created
+	 */
 	private JPanel panelCircuit(){
 		
 		/*
@@ -189,12 +192,12 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		/*
 		 * Create and layout textfields
 		 */
-		textFieldFullCcsd = new JTextField();
-		textFieldFullCcsd.setBackground(Color.WHITE);
-		textFieldFullCcsd.setEditable(false);
-		textFieldFullCcsd.setBounds(85, 10, 114, 20);
-		panel_Circuit.add(textFieldFullCcsd);
-		textFieldFullCcsd.setColumns(10);
+		textFieldFullCcsdCircuit = new JTextField();
+		textFieldFullCcsdCircuit.setBackground(Color.WHITE);
+		textFieldFullCcsdCircuit.setEditable(false);
+		textFieldFullCcsdCircuit.setBounds(85, 10, 114, 20);
+		panel_Circuit.add(textFieldFullCcsdCircuit);
+		textFieldFullCcsdCircuit.setColumns(10);
 
 		textFieldtrunkId = new JTextField();
 		textFieldtrunkId.setEditable(false);
@@ -338,6 +341,10 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		
 	}
 	
+	/**
+	 * Create tso panel inside of tab pane
+	 * @return panel created
+	 */
 	private JPanel panelTso(){
 		
 		/*
@@ -369,12 +376,12 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		textFieldaction.setColumns(10);
 		panel_Tso.add(textFieldaction);
 
-		textFieldfullCcsd = new JTextField();
-		textFieldfullCcsd.setBackground(Color.WHITE);
-		textFieldfullCcsd.setEditable(false);
-		textFieldfullCcsd.setBounds(102, 94, 153, 20);
-		textFieldfullCcsd.setColumns(10);
-		panel_Tso.add(textFieldfullCcsd);
+		textFieldFullCcsdTso = new JTextField();
+		textFieldFullCcsdTso.setBackground(Color.WHITE);
+		textFieldFullCcsdTso.setEditable(false);
+		textFieldFullCcsdTso.setBounds(102, 94, 153, 20);
+		textFieldFullCcsdTso.setColumns(10);
+		panel_Tso.add(textFieldFullCcsdTso);
 
 		textFieldsvcDate = new JTextField();
 		textFieldsvcDate.setBackground(Color.WHITE);

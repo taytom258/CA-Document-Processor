@@ -10,6 +10,10 @@ public class Collection {
 		inputNeeded = new ArrayList<String>();
 		userENRInput = new ArrayList<String>();
 	}
+	
+	/*
+	 * 
+	 */
 
 	// //Start Tab
 	// public static String startTsrNumber, startReportDate, startTsoStatement;

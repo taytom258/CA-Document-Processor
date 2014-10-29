@@ -11,7 +11,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 /**
- * Sub panel inside of TSO CHF Tab showing currently found folders
+ * Class for sub panel inside of TSO CHF Tab showing currently found folders
  * @author taytom258
  *
  */

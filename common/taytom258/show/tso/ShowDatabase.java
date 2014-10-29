@@ -4,29 +4,49 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.windows.main.MainWindow;
+import taytom258.windows.main.tsoTab.TSO_DB_TabPane;
 
-public class ShowDatabase extends MainWindow {
+/**
+ * Class for display of information on DB tab
+ * @author taytom258
+ *
+ */
+public class ShowDatabase extends TSO_DB_TabPane {
 
-	public static void show() {
+	private static final long serialVersionUID = -3884967648371445162L;
+
+	/**
+	 * Display information based on collected data
+	 */
+	public static void display() {
 		circuit();
 		tso();
 		LogHelper.info("TSO (Database) Tab Complete");
 	}
 
+	/**
+	 * Display information for circuit tab based on collected information
+	 */
 	private static void circuit() {
 		textFields_Circuit();
 		checkBoxes_Circuit();
 	}
 
+	/**
+	 * Display information for tso tab based on collected information
+	 */
 	private static void tso() {
 		textFields_Tso();
 		checkBoxes_Tso();
 	}
 
+	/**
+	 * Set circuit text fields based on collected information
+	 */
 	private static void textFields_Circuit() {
-		getTextField_DB_Ci_FullCcsd().setText(Collection.fullCcsd);
-		getTextField_DB_Cir_trunkId().setText(Collection.trunkId);
-		getTextField_DB_Cir_fullTsp().setText(Collection.fullTsp);
+		textFieldFullCcsdCircuit.setText(Collection.fullCcsd);
+		textFieldtrunkId.setText(Collection.trunkId);
+		textFieldfullTsp.setText(Collection.fullTsp);
 		getTextField_DB_Cir_tsp().setText(Collection.tsp);
 		getTextField_DB_Cir_security().setText(Collection.security);
 		getTextField_DB_Cir_rate().setText(Collection.dataRate);
@@ -44,11 +64,17 @@ public class ShowDatabase extends MainWindow {
 		getTextField_DB_Cir_cmoComm().setText(Collection.cmoComm);
 	}
 
+	/**
+	 * Set circuit check boxes based on collected information
+	 */
 	private static void checkBoxes_Circuit() {
 		getChckbxAndrewsCmo().setSelected(Collection.andrewsCmo);
 		getChckbxAndrewsEndpoint().setSelected(Collection.endPoint);
 	}
 
+	/**
+	 * Set tso text fields based on collected information
+	 */
 	private static void textFields_Tso() {
 		getTextField_DB_TSO_TsoNum().setText(Collection.tsoNum);
 		getTextField_DB_TSO_TsoSuff().setText(Collection.tsoSuffix);
@@ -62,6 +88,9 @@ public class ShowDatabase extends MainWindow {
 		getTextField_DB_TSO_Nrc().setText(String.valueOf(Collection.nrc));
 	}
 
+	/**
+	 * Set tso check boxes based on collected information
+	 */
 	private static void checkBoxes_Tso() {
 		getChckbx_DB_TSO_crr().setSelected(Collection.crr);
 

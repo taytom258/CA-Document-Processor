@@ -24,7 +24,7 @@ import taytom258.core.util.popups.ContextMenu;
 import taytom258.lib.Collection;
 
 /**
- * Panel for the TSO Facit tab
+ * Class for TSO Facit tab
  * @author taytom258
  *
  */
@@ -66,7 +66,7 @@ public class TSO_Facit_Panel extends JScrollPane {
 	private JLabel label_TrunkId;
 	
 	/**
-	 * Create the this
+	 * Create the panel
 	 */
 	
 	public TSO_Facit_Panel() {

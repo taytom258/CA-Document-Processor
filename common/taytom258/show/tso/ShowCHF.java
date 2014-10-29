@@ -14,14 +14,20 @@ import taytom258.core.util.IOUtils;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
 import taytom258.windows.main.MainWindow;
+import taytom258.windows.main.tsoTab.TSO_CHF_Panel;
 
+/**
+ * Class for displaying the information for the CHF tab
+ * @author taytom258
+ *
+ */
 public class ShowCHF extends MainWindow {
 
 	private static String currentText, creatingText, tsoName;
 	private static ArrayList<String> create = new ArrayList<String>();
 	private static File folderExist = null;
 
-	public static void show() {
+	public static void display() {
 		tsoName();
 		IOOperations(rootFolder());
 		if (Collection.ccsdChange) {
@@ -58,11 +64,11 @@ public class ShowCHF extends MainWindow {
 		// create1539(path.toString());
 	}
 
-	private static void tsoName() {
+	private static void tsoName(String text) {
 		Pattern p2 = Pattern.compile("\\d{2}");
 		Pattern p3 = Pattern.compile("[\\d{2}][A-Z]");
-		int index = Collection.tsoSubject.indexOf("-");
-		String[] split = Collection.tsoSubject.split("-");
+		int index = text.indexOf("-");
+		String[] split = text.split("-");
 		Matcher m2 = p2.matcher(split[1]);
 		Matcher m3 = p3.matcher(split[1]);
 		if (m3.find()) {
@@ -74,7 +80,7 @@ public class ShowCHF extends MainWindow {
 				.substring(0, index);
 		tsoName = pre.trim() + ".txt";
 
-		getTextField_ChfTsoName().setText(tsoName);
+		TSO_CHF_Panel.textField_TsoName.setText(tsoName);
 	}
 
 	private static File rootFolder() {
