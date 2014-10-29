@@ -24,7 +24,6 @@ import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.show.tso.ShowCHF;
 
 public class Quick extends JDialog {
 
@@ -165,7 +164,8 @@ public class Quick extends JDialog {
 							}
 
 						} else {
-							ShowCHF.show();
+							//TODO uncomment
+//							ShowCHF.show();
 							TSOCommit.run();
 
 							File f = new File(MassInsert.root + "\\Auto");
@@ -200,7 +200,8 @@ public class Quick extends JDialog {
 							}
 
 						} else {
-							ShowCHF.show();
+							//TODO uncomment
+//							ShowCHF.show();
 							TSOCommit.run();
 
 							File f = new File(MassInsert.root + "\\Auto");
@@ -233,7 +234,8 @@ public class Quick extends JDialog {
 						}
 
 					} else {
-						ShowCHF.show();
+						//TODO uncomment
+//						ShowCHF.show();
 						TSOCommit.run();
 
 						File f = new File(MassInsert.root + "\\Auto");

@@ -4,31 +4,42 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
 import taytom258.lib.Collection;
 import taytom258.windows.main.MainWindow;
+import taytom258.windows.main.tsoTab.TSO_Facit_Panel;
 
-public class ShowFacit extends MainWindow {
+/**
+ * Class for display of information on TSO Facit tab
+ * @author taytom258
+ *
+ */
+public class ShowFacit extends TSO_Facit_Panel {
 
-	public static void show() {
-		ccsd();
-		tsp();
-		purpose();
-		rate();
-		availible();
-		fullCcsd();
-		action();
-		tsoNum();
-		tsrNum();
-		svcDate();
-		tsoSubject();
-		reportDate();
-		comReport();
-		amending();
-		isTrunk();
+	private static final long serialVersionUID = 2294372967106952036L;
+
+	public static void display() {
+//		ccsd();
+//		tsp();
+//		purpose();
+//		rate();
+//		availible();
+//		fullCcsd();
+//		action();
+//		tsoNum();
+//		tsrNum();
+//		svcDate();
+//		tsoSubject();
+//		reportDate();
+//		comReport();
+//		amending();
+//		isTrunk();
 		LogHelper.info("TSO (Facit) Tab Complete");
 	}
 
+	private void textFields(){
+		textField_FullCcsd.setText(Collection.fullCcsd.substring(4).toUpperCase());
+		
+	}
 	private static void ccsd() {
-		MainWindow.getTextField_FacitCcsd().setText(
-				Collection.fullCcsd.substring(4).toUpperCase());
+		MainWindow.getTextField_FacitCcsd().setText(Collection.fullCcsd.substring(4).toUpperCase());
 	}
 
 	private static void tsp() {

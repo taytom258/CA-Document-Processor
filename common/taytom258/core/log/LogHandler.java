@@ -1,5 +1,6 @@
 package taytom258.core.log;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
@@ -37,11 +38,11 @@ public class LogHandler extends Handler {
 		System.out.println(getFormatter().format(record));
 		try {
 			if (write.contains("WARNING")) {
-				Console.(write, "#FFA500");
+				Console.insertText(write, Color.decode("#FFA500"));
 			} else if (write.contains("SEVERE")) {
-				Console.insertText(write, "red");
+				Console.insertText(write, Color.red);
 			} else {
-				Console.insertText(write, "black");
+				Console.insertText(write, Color.black);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

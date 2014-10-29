@@ -246,7 +246,7 @@ public class Settings {
 		btnConsole.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Console.getFrame().setVisible(true);
+				Console.show(true);
 			}
 		});
 		btnConsole.setBounds(254, 459, 98, 26);

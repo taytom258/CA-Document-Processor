@@ -15,6 +15,8 @@ local.properties
 .settings/
 .loadpath
 private.properties
+/BUILD
+/RELEASE
 
 # Package Files #
 *.jar

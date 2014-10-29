@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="CA-Document-Processor" default="build">
+<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 	
 	<tstamp prefix="time" />
 
@@ -35,7 +36,7 @@
 	</target>
 	
 	<target name="compile">
-		<javac fork="yes" executable="C:\Program Files\Java\jdk1.6.0_45\bin\javac.exe" nowarn="on" encoding="UTF-8" sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
+		<javac fork="yes" executable="C:\Program Files\Java\jdk1.7.0_65\bin\javac.exe" nowarn="on" encoding="UTF-8" sourcepath="" srcdir="${environment.base_location}/temp/common" includeantruntime = "false"
 			destdir="${environment.base_location}/temp/compile" >
 		<include name="**/*.java"/>
 		</javac>
@@ -92,8 +93,6 @@
 		</unzip>
 	 </target>
 	
-	
-	
 	<!-- Build Targets -->
 	
 	<target name="build">
@@ -107,11 +106,11 @@
 		
 		<!-- Build the jar -->
 		<antcall target="compile" />
-		<mkdir dir="${environment.build_location}/${build.app_name}/${build.app_version}" />
-		<jar destfile="${environment.build_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
+		<jar destfile="${environment.build_location}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
 			manifest="MANIFEST.MF" index="true">
 			<fileset dir="${environment.base_location}/temp/compile" />
 		</jar>
+		
 		
 		<!-- Clean up the source now that we are done -->
 		<antcall target="clean" />

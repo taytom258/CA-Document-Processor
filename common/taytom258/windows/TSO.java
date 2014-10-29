@@ -19,9 +19,6 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.show.tso.ShowCHF;
-import taytom258.show.tso.ShowDatabase;
-import taytom258.show.tso.ShowFacit;
 import taytom258.windows.core.TSOCore;
 import taytom258.windows.main.MainWindow;
 
@@ -82,9 +79,10 @@ public class TSO {
 				} else {
 					try {
 						TSOParser.parseTSO(Collection.tsoText);
-						ShowCHF.show();
-						ShowFacit.show();
-						ShowDatabase.show();
+						//TODO uncomment
+//						ShowCHF.show();
+//						ShowFacit.display();
+//						ShowDatabase.display();
 						Collection.runClicked = true;
 					} catch (Exception e1) {
 						e1.printStackTrace();

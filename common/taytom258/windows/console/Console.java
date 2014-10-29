@@ -1,35 +1,29 @@
 package taytom258.windows.console;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.EditorKit;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import taytom258.config.Config;
 import taytom258.core.log.LogHandler;
 import taytom258.core.log.LogHelper;
-import taytom258.core.util.IOUtils;
-import taytom258.core.util.popups.NormalPop;
-import taytom258.lib.Reference;
-import taytom258.windows.main.MainWindow;
 
 /**
  * Class containing all code to create the visuals for a console window.
@@ -150,7 +144,13 @@ public class Console extends ConsoleCore{
 	 * Insert text as HTML to console text pane
 	 * @param text to be inserted
 	 */
-	public static void insertText(String text){
-		
+	public static void insertText(String text, Color color){
+        StyledDocument doc = textPane.getStyledDocument();
+
+        Style style = textPane.addStyle("Colors", null);
+        StyleConstants.setForeground(style, color);
+
+        try { doc.insertString(doc.getLength(), text + System.lineSeparator(), style); }
+        catch (BadLocationException e){}
 	}
 }

@@ -31,7 +31,6 @@ import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
 import taytom258.core.util.popups.TSOInputNeededPop;
 import taytom258.lib.Collection;
-import taytom258.show.tso.ShowCHF;
 
 public class InsertPop extends JDialog {
 
@@ -81,7 +80,8 @@ public class InsertPop extends JDialog {
 				.toString());
 		try {
 			TSOParser.parseTSO(text);
-			ShowCHF.show();
+			//TODO uncomment
+//			ShowCHF.show();
 			if (Collection.inputNeeded.size() > 0) {
 				String[] temp = Collection.inputNeeded.get(0).split(":");
 				TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
