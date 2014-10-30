@@ -2,8 +2,6 @@ package taytom258.windows.console;
 
 import java.io.File;
 
-import javax.swing.JTextPane;
-
 import taytom258.core.util.IOUtils;
 import taytom258.core.util.popups.NormalPop;
 

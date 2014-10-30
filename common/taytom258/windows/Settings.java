@@ -22,7 +22,6 @@ import taytom258.config.Config;
 import taytom258.core.log.LogHelper;
 import taytom258.testing.testCode.WorkSaver;
 import taytom258.windows.console.Console;
-import taytom258.windows.core.SettingsCore;
 
 public class Settings {
 

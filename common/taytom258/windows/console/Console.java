@@ -31,13 +31,13 @@ import taytom258.core.log.LogHelper;
  *
  */
 public class Console extends ConsoleCore{
- 
+
 	private static JFrame frmConsole;
 	private static JPanel panel;
 	private static JButton btnClear;
 	private static JButton btnClose;
 	private static JScrollPane scrollPane;
-	private static JTextPane textPane;
+	public static JTextPane textPane;
 	private static HTMLEditorKit textPane_html_kit = new HTMLEditorKit();;
 	private static JButton btnCopyLogTo;
 
@@ -52,7 +52,7 @@ public class Console extends ConsoleCore{
 			}
 		});
 	}
-	
+
 	/**
 	 * Show the console window.
 	 * @param setVisible visibility state
@@ -73,12 +73,12 @@ public class Console extends ConsoleCore{
 		frmConsole.setBounds(100, 100, 650, 500);
 		frmConsole.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frmConsole.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		frmConsole.getContentPane().add(createScroll(), BorderLayout.CENTER);
 		frmConsole.getContentPane().add(createPanel(), BorderLayout.SOUTH);
-		
+
 	}
-	
+
 	/**
 	 * Create the console button panel.
 	 * @return Console button panel
@@ -86,8 +86,8 @@ public class Console extends ConsoleCore{
 	private static JPanel createPanel(){
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		
+
+
 		btnClear = new JButton("Clear");
 		btnClear.setToolTipText("Clear console of all text");
 		btnClear.addActionListener(new ActionListener() {
@@ -98,7 +98,7 @@ public class Console extends ConsoleCore{
 			}
 		});
 		panel.add(btnClear);
-		
+
 		btnClose = new JButton("Close");
 		btnClose.setToolTipText("Close this window");
 		btnClose.addActionListener(new ActionListener() {
@@ -108,7 +108,7 @@ public class Console extends ConsoleCore{
 			}
 		});
 		panel.add(btnClose);
-		
+
 		btnCopyLogTo = new JButton("Copy Log to File");
 		btnCopyLogTo.addActionListener(new ActionListener() {
 			@Override
@@ -117,10 +117,10 @@ public class Console extends ConsoleCore{
 			}
 		});
 		panel.add(btnCopyLogTo);
-		
+
 		return panel;
 	}
-	
+
 	/**
 	 * Create the console scroll pane with a text pane as the viewport.
 	 * @return Console scroll pane
@@ -128,29 +128,29 @@ public class Console extends ConsoleCore{
 	private static JScrollPane createScroll(){
 		scrollPane = new JScrollPane();
 		textPane = new JTextPane();
-		
+
 		textPane.setContentType("text/html");
 		textPane.setEditable(false);
 		textPane.setBackground(SystemColor.menu);
 		textPane.setEditorKit(textPane_html_kit);
 		textPane.setDocument(new HTMLDocument());
-		
+
 		scrollPane.setViewportView(textPane);
-		
+
 		return scrollPane;
 	}
-	
+
 	/**
 	 * Insert text as HTML to console text pane
 	 * @param text to be inserted
 	 */
 	public static void insertText(String text, Color color){
-        StyledDocument doc = textPane.getStyledDocument();
+		StyledDocument doc = textPane.getStyledDocument();
 
-        Style style = textPane.addStyle("Colors", null);
-        StyleConstants.setForeground(style, color);
+		Style style = textPane.addStyle("Colors", null);
+		StyleConstants.setForeground(style, color);
 
-        try { doc.insertString(doc.getLength(), text + System.lineSeparator(), style); }
-        catch (BadLocationException e){}
+		try { doc.insertString(doc.getLength(), text + System.lineSeparator(), style); }
+		catch (BadLocationException e){}
 	}
 }

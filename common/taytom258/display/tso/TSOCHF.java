@@ -1,4 +1,4 @@
-package taytom258.show.tso;
+package taytom258.display.tso;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +21,16 @@ import taytom258.windows.main.tsoTab.TSO_CHF_Panel;
  * @author taytom258
  *
  */
-public class ShowCHF extends MainWindow {
+public class TSOCHF extends MainWindow {
 
-	private static String currentText, creatingText, tsoName;
-	private static ArrayList<String> create = new ArrayList<String>();
-	private static File folderExist = null;
-
+	/**
+	 * Display information for text fields and pass information to the sub panels
+	 */
 	public static void display() {
+		
+		
+		
+		
 		tsoName();
 		IOOperations(rootFolder());
 		if (Collection.ccsdChange) {

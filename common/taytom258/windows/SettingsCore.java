@@ -1,8 +1,7 @@
-package taytom258.windows.core;
+package taytom258.windows;
 
 import taytom258.config.Config;
 import taytom258.config.ConfigHandler;
-import taytom258.windows.Settings;
 
 public class SettingsCore extends Settings {
 

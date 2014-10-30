@@ -23,7 +23,6 @@ import javax.swing.text.StyledDocument;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.popups.ContextMenu;
 import taytom258.lib.Strings;
-import taytom258.windows.main.MainWindow;
 
 public class Help extends JDialog {
 

@@ -7,9 +7,9 @@ import taytom258.lib.Reference;
 public class Config {
 
 	/*
-	 * Config 
+	 * Config
 	 */
-	
+
 	public static String chfPath, chfTest, dbPath, repair;
 	public static boolean useChf, autoSelection, debug, error, autoCopy;
 
@@ -20,7 +20,7 @@ public class Config {
 	/*
 	 * Default Config Values
 	 */
-	
+
 	public static final String CONFIG_HEADER = Reference.APPLICATION_NAME + " "+ Reference.APPLICATION_VERSION
 			+ "." + Reference.BUILD_NUMBER;
 	public static final String CONFIG_PATH = Reference.USER_ROOT.toString() + "\\" + Reference.AUTHOR;

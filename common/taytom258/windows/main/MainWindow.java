@@ -42,8 +42,8 @@ public class MainWindow {
 	private JTabbedPane tabGroupMain;
 	private JTabbedPane tabPaneTso;
 	private JTabbedPane tabPaneIer;
-	
-	
+
+
 	/**
 	 * Initialize and show the main window. <br>
 	 * It is not intended behavior to hide this window.
@@ -70,7 +70,7 @@ public class MainWindow {
 		frmMain.getContentPane().setLayout(null);
 		frmMain.setResizable(false);
 		frmMain.getContentPane().add(mainPanel());
-		
+
 		/*
 		 * Create and layout main buttons with actions
 		 */
@@ -96,7 +96,7 @@ public class MainWindow {
 		});
 		btnExit.setBounds(538, 435, 91, 60);
 		frmMain.getContentPane().add(btnExit);
-		
+
 		//TODO remove commit button?
 		btnCommit = new JButton("Commit to DB");
 		btnCommit.addActionListener(new ActionListener() {
@@ -147,19 +147,19 @@ public class MainWindow {
 				TSO.appear();
 			}
 		});
-		
+
 		btnIer = new JButton("IER");
 		btnIer.setBounds(12, 50, 91, 26);
 		panelMain.add(btnIer);
-		
+
 		btnDsr = new JButton("DSR");
 		btnDsr.setBounds(12, 88, 91, 26);
 		panelMain.add(btnDsr);
-		
+
 		btnTsr = new JButton("TSR");
 		btnTsr.setBounds(12, 126, 91, 26);
 		panelMain.add(btnTsr);
-		
+
 		btnExp = new JButton("EXP");
 		btnExp.setBounds(12, 164, 91, 26);
 		panelMain.add(btnExp);
@@ -182,7 +182,7 @@ public class MainWindow {
 		btnTest.setToolTipText("Test");
 		btnTest.setBounds(429, 452, 59, 26);
 		frmMain.getContentPane().add(btnTest);
-		
+
 		/*
 		 * Create and layout help button
 		 */
@@ -196,7 +196,7 @@ public class MainWindow {
 		});
 		btnHelp.setBounds(12, 385, 91, 26);
 		panelMain.add(btnHelp);
-		
+
 		/*
 		 * Create and layout tab panes
 		 */
@@ -211,22 +211,22 @@ public class MainWindow {
 		tabPaneTso = new JTabbedPane(SwingConstants.TOP);
 		tabPaneTso.setToolTipText("TSO Document Tab");
 		tabGroupMain.addTab("TSO", null, tabPaneTso, null);
-		
+
 		tabPaneTso.addTab("CHF", null, new TSO_CHF_Panel(), "CHF Info Tab");
 		tabPaneTso.addTab("FACIT", null, new TSO_Facit_Panel(), "Facit Info Tab");
 		tabPaneTso.addTab("DB", null, new TSO_DB_TabPane(), "Database Preview");
-		
+
 		/*
 		 * Create and add IER tab to main tab group
 		 */
 		tabPaneIer = new JTabbedPane(SwingConstants.TOP);
 		tabPaneIer.setToolTipText("IER Document Tab");
 		tabGroupMain.addTab("IER", null, tabPaneIer, null);
-		
-//		tabPaneIer.addTab("CHF", null, new TSO_CHF_Panel(), "CHF Info Tab");
-//		tabPaneIer.addTab("FACIT", null, new TSO_Facit_Panel(), "Facit Info Tab");
-//		tabPaneIer.addTab("DB", null, new TSO_DB_TabPane(), "Database Preview");
-		
+
+		//		tabPaneIer.addTab("CHF", null, new TSO_CHF_Panel(), "CHF Info Tab");
+		//		tabPaneIer.addTab("FACIT", null, new TSO_Facit_Panel(), "Facit Info Tab");
+		//		tabPaneIer.addTab("DB", null, new TSO_DB_TabPane(), "Database Preview");
+
 		return panelMain;
 
 	}

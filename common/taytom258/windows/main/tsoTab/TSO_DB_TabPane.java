@@ -12,15 +12,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import taytom258.core.util.popups.ContextMenu;
-
 /**
  * Class for TSO DB tab
  * @author taytom258
  *
  */
 public class TSO_DB_TabPane extends JTabbedPane {
-	
+
 	private static final long serialVersionUID = 5832577867024082207L;
 	private JPanel panel_Circuit;
 	protected static JTextField textFieldFullCcsdCircuit;
@@ -84,17 +82,17 @@ public class TSO_DB_TabPane extends JTabbedPane {
 	 * Create tabbed pane and add tabs to it
 	 */
 	public TSO_DB_TabPane() {
-		
+
 		this.addTab("Circuit", null, panelCircuit(), "Circuit Table");
 		this.addTab("TSO", null, panelTso(), "TSO Table");
 	}
-	
+
 	/**
 	 * Create circuit panel inside of tab pane
 	 * @return panel created
 	 */
 	private JPanel panelCircuit(){
-		
+
 		/*
 		 * Create Panel
 		 */
@@ -102,7 +100,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		panel_Circuit.setToolTipText("");
 		panel_Circuit.setBackground(Color.WHITE);
 		panel_Circuit.setLayout(null);
-		
+
 		/*
 		 * Create and layout labels
 		 */
@@ -115,80 +113,80 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		lblTrunkId.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTrunkId.setBounds(12, 40, 55, 16);
 		panel_Circuit.add(lblTrunkId);
-		
+
 		lblFullTsp = new JLabel("Full TSP");
 		lblFullTsp.setBounds(12, 68, 55, 16);
 		panel_Circuit.add(lblFullTsp);
-		
+
 		lblTsp = new JLabel("TSP");
 		lblTsp.setBounds(12, 96, 55, 16);
 		panel_Circuit.add(lblTsp);
-		
+
 		lblToLocation = new JLabel("To");
 		lblToLocation.setToolTipText("To Location");
 		lblToLocation.setBounds(217, 12, 66, 16);
 		panel_Circuit.add(lblToLocation);
-		
+
 		lblFromLocation = new JLabel("From");
 		lblFromLocation.setToolTipText("From Location");
 		lblFromLocation.setBounds(217, 40, 81, 16);
 		panel_Circuit.add(lblFromLocation);
-		
+
 		lblDepartment = new JLabel("Department");
 		lblDepartment.setToolTipText("Requesting Department");
 		lblDepartment.setBounds(12, 294, 67, 16);
 		panel_Circuit.add(lblDepartment);
-		
+
 		lblType = new JLabel("Type");
 		lblType.setToolTipText("Type of Service");
 		lblType.setBounds(217, 70, 55, 16);
 		panel_Circuit.add(lblType);
-		
+
 		lblUse = new JLabel("Use");
 		lblUse.setToolTipText("Circuit Use");
 		lblUse.setBounds(217, 98, 55, 16);
 		panel_Circuit.add(lblUse);
-		
+
 		lblSecurity = new JLabel("Security");
 		lblSecurity.setBounds(12, 124, 55, 16);
 		panel_Circuit.add(lblSecurity);
-		
+
 		lblDataRate = new JLabel("Data Rate");
 		lblDataRate.setBounds(12, 152, 55, 16);
 		panel_Circuit.add(lblDataRate);
-		
+
 		lblFlow = new JLabel("Flow");
 		lblFlow.setToolTipText("Traffic Flow");
 		lblFlow.setBounds(12, 180, 55, 16);
 		panel_Circuit.add(lblFlow);
-		
+
 		lblAvailable = new JLabel("Available");
 		lblAvailable.setToolTipText("Service Avaliability");
 		lblAvailable.setBounds(12, 208, 55, 16);
 		panel_Circuit.add(lblAvailable);
-		
+
 		lblCmo = new JLabel("CMO");
 		lblCmo.setToolTipText("CMO/CCO");
 		lblCmo.setBounds(217, 126, 55, 16);
 		panel_Circuit.add(lblCmo);
-		
+
 		lblCmoDsn = new JLabel("CMO DSN");
 		lblCmoDsn.setBounds(217, 154, 55, 16);
 		panel_Circuit.add(lblCmoDsn);
-		
+
 		lblCmoComm = new JLabel("CMO Comm");
 		lblCmoComm.setBounds(217, 182, 67, 16);
 		panel_Circuit.add(lblCmoComm);
-		
+
 		lblSignaling = new JLabel("Signaling");
 		lblSignaling.setBounds(12, 236, 55, 16);
 		panel_Circuit.add(lblSignaling);
-		
+
 		lblQcc = new JLabel("QCC");
 		lblQcc.setToolTipText("Quality Control Code");
 		lblQcc.setBounds(12, 264, 55, 16);
 		panel_Circuit.add(lblQcc);
-		
+
 		/*
 		 * Create and layout textfields
 		 */
@@ -233,14 +231,14 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		textFieldfrom.setBounds(301, 38, 203, 20);
 		panel_Circuit.add(textFieldfrom);
 		textFieldfrom.setColumns(10);
-		
+
 		textFieldreqDepartment = new JTextField();
 		textFieldreqDepartment.setEditable(false);
 		textFieldreqDepartment.setBackground(Color.WHITE);
 		textFieldreqDepartment.setBounds(96, 292, 403, 20);
 		textFieldreqDepartment.setColumns(10);
 		panel_Circuit.add(textFieldreqDepartment);
-		
+
 		textFieldtype = new JTextField();
 		textFieldtype.setEditable(false);
 		textFieldtype.setBackground(Color.WHITE);
@@ -254,7 +252,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		textFielduse.setBounds(301, 96, 203, 20);
 		textFielduse.setColumns(10);
 		panel_Circuit.add(textFielduse);
-		
+
 		textFieldsecurity = new JTextField();
 		textFieldsecurity.setEditable(false);
 		textFieldsecurity.setBackground(Color.WHITE);
@@ -298,7 +296,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		textFieldcmoDsn.setBounds(301, 152, 203, 20);
 		textFieldcmoDsn.setColumns(10);
 		panel_Circuit.add(textFieldcmoDsn);
-		
+
 		textFieldcmoComm = new JTextField();
 		textFieldcmoComm.setEditable(false);
 		textFieldcmoComm.setBackground(Color.WHITE);
@@ -336,24 +334,24 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		chckbxAndrewsEndpoint.setToolTipText("Are we an endpoint of this circuit?");
 		chckbxAndrewsEndpoint.setBounds(217, 236, 184, 24);
 		panel_Circuit.add(chckbxAndrewsEndpoint);
-		
+
 		return panel_Circuit;
-		
+
 	}
-	
+
 	/**
 	 * Create tso panel inside of tab pane
 	 * @return panel created
 	 */
 	private JPanel panelTso(){
-		
+
 		/*
 		 * Create Panel
 		 */
 		panel_Tso = new JPanel();
 		panel_Tso.setBackground(Color.WHITE);
 		panel_Tso.setLayout(null);
-		
+
 
 		textFieldTsoNum = new JTextField();
 		textFieldTsoNum.setBackground(Color.WHITE);
@@ -388,7 +386,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		textFieldsvcDate.setEditable(false);
 		textFieldsvcDate.setBounds(102, 150, 153, 20);
 		textFieldsvcDate.setColumns(10);
-		panel_Tso.add(textFieldsvcDate);		
+		panel_Tso.add(textFieldsvcDate);
 
 		textFieldreportDate = new JTextField();
 		textFieldreportDate.setBackground(Color.WHITE);
@@ -420,7 +418,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		lblMrc.setToolTipText("Monthly Recurring Cost");
 		lblMrc.setBounds(273, 12, 27, 16);
 		panel_Tso.add(lblMrc);
-		
+
 		lblReportDate = new JLabel("Report Date");
 		lblReportDate.setBounds(12, 124, 67, 16);
 		panel_Tso.add(lblReportDate);
@@ -429,28 +427,28 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		lblNrc.setToolTipText("Non Recurring Cost");
 		lblNrc.setBounds(273, 40, 27, 16);
 		panel_Tso.add(lblNrc);
-		
+
 		lblSvcDate = new JLabel("Svc Date");
 		lblSvcDate.setToolTipText("Service Date");
 		lblSvcDate.setBounds(12, 152, 55, 16);
 		panel_Tso.add(lblSvcDate);
-		
+
 		lblFullCcsd2 = new JLabel("Full CCSD");
 		lblFullCcsd2.setBounds(12, 96, 58, 16);
 		panel_Tso.add(lblFullCcsd2);
-		
+
 		lblAction = new JLabel("Action");
 		lblAction.setBounds(12, 68, 36, 16);
 		panel_Tso.add(lblAction);
-		
+
 		lblTsoSuffix = new JLabel("TSO Suffix");
 		lblTsoSuffix.setBounds(12, 40, 60, 16);
 		panel_Tso.add(lblTsoSuffix);
-		
+
 		lblTsoNumber = new JLabel("TSO Number");
 		lblTsoNumber.setBounds(12, 12, 72, 16);
 		panel_Tso.add(lblTsoNumber);
-		
+
 		/*
 		 * Create and layout checkbox
 		 */
@@ -459,7 +457,7 @@ public class TSO_DB_TabPane extends JTabbedPane {
 		chckbxcrr.setBackground(Color.WHITE);
 		chckbxcrr.setBounds(12, 176, 191, 24);
 		panel_Tso.add(chckbxcrr);
-		
+
 		return panel_Tso;
 
 	}

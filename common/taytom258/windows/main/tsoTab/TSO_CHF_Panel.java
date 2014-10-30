@@ -42,10 +42,10 @@ public class TSO_CHF_Panel extends JPanel {
 	 * Create the panel
 	 */
 	public TSO_CHF_Panel() {
-		
-		this.setToolTipText("");
-		this.setLayout(null);
-		this.setBackground(Color.WHITE);
+
+		setToolTipText("");
+		setLayout(null);
+		setBackground(Color.WHITE);
 
 		label_TsoName = new JLabel("TSO Name");
 		label_TsoName.setBounds(12, 14, 60, 16);
@@ -54,7 +54,7 @@ public class TSO_CHF_Panel extends JPanel {
 		lblRoot = new JLabel(" Root");
 		lblRoot.setBounds(12, 42, 51, 16);
 		this.add(lblRoot);
-		
+
 		JLabel lblLink = new JLabel(" Link");
 		lblLink.setBounds(12, 68, 55, 16);
 		this.add(lblLink);
@@ -95,7 +95,7 @@ public class TSO_CHF_Panel extends JPanel {
 		textField_Link.setBounds(102, 66, 407, 20);
 		textField_Link.setColumns(10);
 		this.add(textField_Link);
-		
+
 		rdbtn_Root = new JRadioButton("Root Exists");
 		rdbtn_Root.setToolTipText("Does the root folder exist?");
 		buttonGroup_1.add(rdbtn_Root);
@@ -113,10 +113,10 @@ public class TSO_CHF_Panel extends JPanel {
 		rdbtn_RootCreated.setBackground(Color.WHITE);
 		rdbtn_RootCreated.setBounds(394, 132, 99, 24);
 		this.add(rdbtn_RootCreated);
-		
+
 		this.add(panelCreating);
 		this.add(panelCurrent);
 	}
-	
+
 
 }

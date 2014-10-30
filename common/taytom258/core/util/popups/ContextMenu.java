@@ -24,7 +24,7 @@ public class ContextMenu {
 
 		return popup;
 	}
-	
+
 	public static JPopupMenu paste() {
 		JMenuItem menuItem = null;
 		JPopupMenu popup = new JPopupMenu();
@@ -35,7 +35,7 @@ public class ContextMenu {
 
 		return popup;
 	}
-	
+
 	public static JPopupMenu cut() {
 		JMenuItem menuItem = null;
 		JPopupMenu popup = new JPopupMenu();
@@ -43,14 +43,14 @@ public class ContextMenu {
 		menuItem = new JMenuItem(new DefaultEditorKit.CutAction());
 		menuItem.setText("Cut");
 		popup.add(menuItem);
-		
+
 		return popup;
 	}
-	
+
 	public static JPopupMenu selectAll() {
 		JMenuItem menuItem = null;
 		JPopupMenu popup = new JPopupMenu();
-		
+
 		new DefaultEditorKit();
 		menuItem = new JMenuItem(DefaultEditorKit.selectAllAction);
 		menuItem.setText("Select All");
@@ -58,7 +58,7 @@ public class ContextMenu {
 
 		return popup;
 	}
-	
+
 	public static JPopupMenu all() {
 		JMenuItem menuItem = null;
 		JPopupMenu popup = new JPopupMenu();
@@ -82,7 +82,7 @@ public class ContextMenu {
 
 		return popup;
 	}
-	
-	
-	
+
+
+
 }

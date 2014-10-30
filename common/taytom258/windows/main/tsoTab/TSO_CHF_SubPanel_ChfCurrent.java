@@ -24,13 +24,13 @@ public class TSO_CHF_SubPanel_ChfCurrent extends JPanel {
 	 * Create the panel
 	 */
 	public TSO_CHF_SubPanel_ChfCurrent() {
-		
-		this.setBackground(Color.WHITE);
-		this.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Current", TitledBorder.LEADING,
+
+		setBackground(Color.WHITE);
+		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Current", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		this.setBounds(7, 164, 133, 191);
-		this.setLayout(null);
-		
+		setLayout(null);
+
 		textPane_ChfCurrent = new JTextPane();
 		textPane_ChfCurrent.setToolTipText("Folders currently in the root folder");
 		textPane_ChfCurrent.setEditable(false);

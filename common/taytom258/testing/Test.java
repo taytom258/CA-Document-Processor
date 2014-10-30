@@ -17,7 +17,7 @@ public class Test {
 	 */
 	public static void run() {
 		//MARK Test code hardpoint
-		
+
 		MassInsert.test();
 	}
 }

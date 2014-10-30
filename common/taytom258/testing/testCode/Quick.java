@@ -165,7 +165,7 @@ public class Quick extends JDialog {
 
 						} else {
 							//TODO uncomment
-//							ShowCHF.show();
+							//							ShowCHF.show();
 							TSOCommit.run();
 
 							File f = new File(MassInsert.root + "\\Auto");
@@ -201,7 +201,7 @@ public class Quick extends JDialog {
 
 						} else {
 							//TODO uncomment
-//							ShowCHF.show();
+							//							ShowCHF.show();
 							TSOCommit.run();
 
 							File f = new File(MassInsert.root + "\\Auto");
@@ -235,7 +235,7 @@ public class Quick extends JDialog {
 
 					} else {
 						//TODO uncomment
-//						ShowCHF.show();
+						//						ShowCHF.show();
 						TSOCommit.run();
 
 						File f = new File(MassInsert.root + "\\Auto");

@@ -25,11 +25,11 @@ public class TSO_CHF_SubPanel_ChfCreating extends JPanel {
 	 */
 	public TSO_CHF_SubPanel_ChfCreating() {
 
-		this.setBackground(Color.WHITE);
-		this.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Created", TitledBorder.LEADING,
+		setBackground(Color.WHITE);
+		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), "Created", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(51, 51, 51)));
 		this.setBounds(376, 164, 133, 191);
-		this.setLayout(null);
+		setLayout(null);
 
 		textPane_ChfCreating = new JTextPane();
 		textPane_ChfCreating.setToolTipText("Folders created inside root folder");

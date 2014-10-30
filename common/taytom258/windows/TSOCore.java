@@ -1,7 +1,6 @@
-package taytom258.windows.core;
+package taytom258.windows;
 
 import taytom258.lib.Collection;
-import taytom258.windows.TSO;
 
 public class TSOCore extends TSO {
 

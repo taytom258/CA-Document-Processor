@@ -19,7 +19,6 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.parsers.TSOParser;
 import taytom258.lib.Collection;
 import taytom258.lib.Strings;
-import taytom258.windows.core.TSOCore;
 import taytom258.windows.main.MainWindow;
 
 public class TSO {
@@ -80,9 +79,9 @@ public class TSO {
 					try {
 						TSOParser.parseTSO(Collection.tsoText);
 						//TODO uncomment
-//						ShowCHF.show();
-//						ShowFacit.display();
-//						ShowDatabase.display();
+						//						ShowCHF.show();
+						//						ShowFacit.display();
+						//						ShowDatabase.display();
 						Collection.runClicked = true;
 					} catch (Exception e1) {
 						e1.printStackTrace();

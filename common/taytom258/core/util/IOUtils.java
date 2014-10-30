@@ -17,8 +17,7 @@ public class IOUtils {
 		out.close();
 	}
 
-	private static void textWriter(String FileName, String Content,
-			boolean NewLine) throws IOException {
+	private static void textWriter(String FileName, String Content, boolean NewLine) throws IOException {
 		FileWriter fstream = new FileWriter(FileName, true);
 		BufferedWriter out = new BufferedWriter(fstream);
 		out.append(Content);
@@ -63,9 +62,8 @@ public class IOUtils {
 		}
 		return true;
 	}
-	
-	public static boolean createUserDir(final String dirName)
-			throws IOException {
+
+	public static boolean createUserDir(String dirName) throws IOException {
 		final File homeDir = Reference.USER_ROOT;
 		final File dir = new File(homeDir, dirName);
 		if (!dir.exists() && !dir.mkdirs()) {

@@ -230,8 +230,8 @@ public class TSOParser {
 			tso.put("Standardized CCSD", tso.get("Alternate CCSD"));
 		} else if (ccsd.length() > 8 && ccsd.indexOf('/') > -1) {
 			Collection.ccsdChange = true;
-			Collection.ccsdList = ccsd.split("/");
-			tso.put("Standardized CCSD", Collection.ccsdList[1]);
+			String[] split = ccsd.split("/");
+			tso.put("Standardized CCSD", split[1]);
 		}
 
 		// Tomlin Request #2
@@ -362,8 +362,7 @@ public class TSOParser {
 				state = s.substring(s.indexOf(" ") + 1, s.indexOf(" ") + 3);
 			}
 
-			Collection.facilities.add(num + ". "
-					+ LoadDB.testGEOLOC(geo, state));
+			Collection.facilities.add(num + ". " + LoadDB.testGEOLOC(geo, state));
 		}
 
 		for (String ele : sec3) {

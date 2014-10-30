@@ -49,7 +49,7 @@ public class DateUtils {
 		all = year + "-" + month + "-" + day + " " + time;
 		return all;
 	}
-	
+
 	private static String MMM_StringtoInt(String month) {
 
 		String x = "0";

@@ -64,15 +64,15 @@ public class TSO_Facit_Panel extends JScrollPane {
 	protected static JTextField textField_Amending;
 	protected static JTextField textField_TrunkID;
 	private JLabel label_TrunkId;
-	
+
 	/**
 	 * Create the panel
 	 */
-	
+
 	public TSO_Facit_Panel() {
-		
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
+
+		setBackground(Color.WHITE);
+		setLayout(null);
 
 		/*
 		 * Create and layout labels
@@ -124,11 +124,11 @@ public class TSO_Facit_Panel extends JScrollPane {
 		label_ReportDate = new JLabel("Report Date");
 		label_ReportDate.setBounds(261, 154, 67, 16);
 		this.add(label_ReportDate);
-		
+
 		label_Amending = new JLabel("Amending");
 		label_Amending.setBounds(261, 68, 57, 16);
 		this.add(label_Amending);
-		
+
 		label_TrunkId = new JLabel("Trunk ID");
 		label_TrunkId.setBounds(12, 40, 47, 16);
 		this.add(label_TrunkId);
@@ -381,7 +381,7 @@ public class TSO_Facit_Panel extends JScrollPane {
 		textField_ReportDate.setBounds(385, 152, 106, 20);
 		textField_ReportDate.setColumns(10);
 		this.add(textField_ReportDate);
-		
+
 		textField_Amending = new JTextField();
 		textField_Amending.addMouseListener(new MouseAdapter() {
 			@Override
@@ -432,7 +432,7 @@ public class TSO_Facit_Panel extends JScrollPane {
 		chckbx_Crr.setBackground(Color.WHITE);
 		chckbx_Crr.setBounds(307, 327, 184, 24);
 		this.add(chckbx_Crr);
-		
+
 		chckbx_IsTrunk = new JCheckBox("Circuit is Trunk");
 		chckbx_IsTrunk.setEnabled(false);
 		chckbx_IsTrunk.setBackground(Color.WHITE);
@@ -467,6 +467,6 @@ public class TSO_Facit_Panel extends JScrollPane {
 		});
 		btnStateToClipboard.setBounds(12, 326, 191, 26);
 		this.add(btnStateToClipboard);
-		
+
 	}
 }

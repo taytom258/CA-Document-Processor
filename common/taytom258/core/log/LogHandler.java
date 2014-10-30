@@ -48,8 +48,7 @@ public class LogHandler extends Handler {
 			e.printStackTrace();
 			LogHelper.severe(e.getMessage());
 		}
-		// Console.getTextArea().setText(console(getFormatter().format(record),
-		// consoleList));
+//		 Console.textPane.setText(console(getFormatter().format(record),consoleList));
 	}
 
 	private static String console(String record, ArrayList<String> array) {

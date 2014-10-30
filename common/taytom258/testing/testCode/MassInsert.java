@@ -11,8 +11,8 @@ import taytom258.core.log.LogHelper;
 public class MassInsert {
 
 	public static int currentNum = 0;
-//	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity"
-//			+ "\\Roles\\Document Tracker\\Document Processor\\TSOs";
+	//	public static String root = "\\\\ASPARAGUS\\Systems Control\\Circuit Actions\\CA Continuity"
+	//			+ "\\Roles\\Document Tracker\\Document Processor\\TSOs";
 	public static String root = "C:\\Java Development\\Work Programs\\Files\\TSOs";
 
 	private static File[] readFolder(File path) {

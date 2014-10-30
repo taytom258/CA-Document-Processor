@@ -1,4 +1,4 @@
-package taytom258.show.tso;
+package taytom258.display.tso;
 
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
@@ -10,7 +10,7 @@ import taytom258.windows.main.tsoTab.TSO_DB_TabPane;
  * @author taytom258
  *
  */
-public class ShowDatabase extends TSO_DB_TabPane {
+public class TSODatabase extends TSO_DB_TabPane {
 
 	private static final long serialVersionUID = -3884967648371445162L;
 

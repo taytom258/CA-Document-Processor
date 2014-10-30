@@ -81,7 +81,7 @@ public class InsertPop extends JDialog {
 		try {
 			TSOParser.parseTSO(text);
 			//TODO uncomment
-//			ShowCHF.show();
+			//			ShowCHF.show();
 			if (Collection.inputNeeded.size() > 0) {
 				String[] temp = Collection.inputNeeded.get(0).split(":");
 				TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
