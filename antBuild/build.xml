@@ -48,6 +48,12 @@
 		<delete file="MANIFEST.MF" quiet="true" />
 	</target>
 	
+	<target name="jenkinsClean">
+		<delete>
+			<fileset dir="${environment.build_location}" includes="**/*.jar"/>
+		</delete>
+	</target>
+	
 	<target name="sign_jar">
 		<signjar jar="${environment.release_location}/${build.app_name}/${build.app_version}/${build.app_name}-${build.app_version}-${build.build_number}.jar"
 			keystore="${private.keystore_location}" alias="${private.keystore_user_alias}"
@@ -98,6 +104,7 @@
 	<target name="build">
 		<!-- Prep for the build -->
 		<antcall target="clean" />
+		<antcall target="jenkinsClean"/>
 		<antcall target="increment_build_number" />
 		<antcall target="prep" />
 		<antcall target="create_manifest_build" />
