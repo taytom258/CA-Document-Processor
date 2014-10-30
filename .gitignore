@@ -16,6 +16,7 @@ local.properties
 .loadpath
 private.properties
 /jenkins
+manifest.mf
 
 # Package Files #
 *.jar
