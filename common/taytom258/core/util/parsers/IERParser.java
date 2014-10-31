@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
 import taytom258.core.util.db.DatabaseUtils;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 
 /**
  * Parse TSO text
@@ -41,7 +41,7 @@ public class IERParser {
 		if (t.equals("") || t.equals(null)) {
 			return null;
 		} // we ain't messin' around here kid
-		Collection.init();
+		TSOCollection.init();
 		DatabaseUtils.init(false);
 		// the TSO object
 		TreeMap<String, String> ier = new TreeMap<String, String>();
@@ -133,22 +133,22 @@ public class IERParser {
 		if (auto) {
 			for (Map.Entry<String, String> entry : ier.entrySet()) {
 				if (entry.getKey().equals("Subject")) {
-					Collection.ierSubject = entry.getValue();
+					TSOCollection.ierSubject = entry.getValue();
 				} else if (entry.getKey().equals("Report Date")) {
-					Collection.ierReportDate = entry.getValue();
+					TSOCollection.ierReportDate = entry.getValue();
 				} else if (entry.getKey().equals("TSO Number")) {
-					Collection.ierTSONum = entry.getValue().replaceAll("/", "");
+					TSOCollection.ierTSONum = entry.getValue().replaceAll("/", "");
 				} else if (entry.getKey().equals("TSR Number")) {
-					Collection.ierTSRNum = entry.getValue();
+					TSOCollection.ierTSRNum = entry.getValue();
 				} else if (entry.getKey().equals("Full CCSD")) {
-					Collection.ierFullCCSD = entry.getValue();
+					TSOCollection.ierFullCCSD = entry.getValue();
 				} else if (entry.getKey().equals("TSO Action")) {
-					Collection.ierTSOAct = entry.getValue();
+					TSOCollection.ierTSOAct = entry.getValue();
 				} else if (entry.getKey().equals("POC Info")) {
-					Collection.ierPOCInfo = entry.getValue();
+					TSOCollection.ierPOCInfo = entry.getValue();
 				}
 			}
-			CircuitStatus.circuitStatusUpdateIER(Collection.ierTSONum);
+			CircuitStatus.circuitStatusUpdateIER(TSOCollection.ierTSONum);
 			LogHelper.info("IER (Parser) Complete");
 		}
 

@@ -4,6 +4,7 @@
 package taytom258.testing;
 
 import taytom258.testing.testCode.MassInsert;
+import taytom258.testing.testCode.TSOChfTest;
 
 /**
  * Quick class as a hardpoint to run testing code
@@ -17,7 +18,7 @@ public class Test {
 	 */
 	public static void run() {
 		//MARK Test code hardpoint
-
-		MassInsert.test();
+		TSOChfTest.test();
+//		MassInsert.test();
 	}
 }

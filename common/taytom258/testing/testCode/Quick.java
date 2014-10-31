@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils;
 import taytom258.core.util.DateUtils;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.lib.Strings;
 
 public class Quick extends JDialog {
@@ -141,13 +141,13 @@ public class Quick extends JDialog {
 					.toString());
 
 			try {
-				Collection.tsoNum = DateUtils.fileDate();
-				Collection.fullCcsd = "00000000";
+				TSOCollection.tsoNum = DateUtils.fileDate();
+				TSOCollection.fullCcsd = "00000000";
 				TSOParser.parseTSO(text);
 				if (tglbtnDvilleBwine.isSelected()) {
-					if (Collection.cmo.equals(Strings.ANDREWS_CMO)) {
+					if (TSOCollection.cmo.equals(Strings.ANDREWS_CMO)) {
 
-						if (Collection.inputNeeded.size() > 0) {
+						if (TSOCollection.inputNeeded.size() > 0) {
 							// String[] temp =
 							// Collection.inputNeeded.get(0).split(":");
 							// TSOPopHelper pop = new TSOPopHelper(temp[1],
@@ -155,7 +155,7 @@ public class Quick extends JDialog {
 							// pop.appear();
 							File f = new File(MassInsert.root + "\\InputNeeded");
 							File txt = new File(f.toString() + "\\"
-									+ Collection.tsoNum + ".txt");
+									+ TSOCollection.tsoNum + ".txt");
 							try {
 								FileUtils.moveFile(list[MassInsert.currentNum],
 										txt);
@@ -170,7 +170,7 @@ public class Quick extends JDialog {
 
 							File f = new File(MassInsert.root + "\\Auto");
 							File txt = new File(f.toString() + "\\"
-									+ Collection.tsoNum + ".txt");
+									+ TSOCollection.tsoNum + ".txt");
 							try {
 								FileUtils.moveFile(list[MassInsert.currentNum],
 										txt);
@@ -181,9 +181,9 @@ public class Quick extends JDialog {
 					}
 					MassInsert.currentNum++;
 				} else if (tglbtnBolling.isSelected()) {
-					if (Collection.cmo.equals(Strings.BOLLING_CMO) || !Collection.location.equals(Strings.LOCATIONS[5])) {
+					if (TSOCollection.cmo.equals(Strings.BOLLING_CMO) || !TSOCollection.location.equals(Strings.LOCATIONS[5])) {
 
-						if (Collection.inputNeeded.size() > 0) {
+						if (TSOCollection.inputNeeded.size() > 0) {
 							// String[] temp =
 							// Collection.inputNeeded.get(0).split(":");
 							// TSOPopHelper pop = new TSOPopHelper(temp[1],
@@ -191,7 +191,7 @@ public class Quick extends JDialog {
 							// pop.appear();
 							File f = new File(MassInsert.root + "\\InputNeeded");
 							File txt = new File(f.toString() + "\\"
-									+ Collection.tsoNum + ".txt");
+									+ TSOCollection.tsoNum + ".txt");
 							try {
 								FileUtils.moveFile(list[MassInsert.currentNum],
 										txt);
@@ -206,7 +206,7 @@ public class Quick extends JDialog {
 
 							File f = new File(MassInsert.root + "\\Auto");
 							File txt = new File(f.toString() + "\\"
-									+ Collection.tsoNum + ".txt");
+									+ TSOCollection.tsoNum + ".txt");
 							try {
 								FileUtils.moveFile(list[MassInsert.currentNum],
 										txt);
@@ -217,7 +217,7 @@ public class Quick extends JDialog {
 					}
 					MassInsert.currentNum++;
 				} else {
-					if (Collection.inputNeeded.size() > 0) {
+					if (TSOCollection.inputNeeded.size() > 0) {
 						// String[] temp =
 						// Collection.inputNeeded.get(0).split(":");
 						// TSOPopHelper pop = new TSOPopHelper(temp[1],
@@ -225,7 +225,7 @@ public class Quick extends JDialog {
 						// pop.appear();
 						File f = new File(MassInsert.root + "\\InputNeeded");
 						File txt = new File(f.toString() + "\\"
-								+ Collection.tsoNum + ".txt");
+								+ TSOCollection.tsoNum + ".txt");
 						try {
 							FileUtils
 							.moveFile(list[MassInsert.currentNum], txt);
@@ -240,7 +240,7 @@ public class Quick extends JDialog {
 
 						File f = new File(MassInsert.root + "\\Auto");
 						File txt = new File(f.toString() + "\\"
-								+ Collection.tsoNum + ".txt");
+								+ TSOCollection.tsoNum + ".txt");
 						try {
 							FileUtils
 							.moveFile(list[MassInsert.currentNum], txt);
@@ -253,7 +253,7 @@ public class Quick extends JDialog {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				File f = new File(MassInsert.root + "\\Error");
-				File txt = new File(f.toString() + "\\" + Collection.tsoNum
+				File txt = new File(f.toString() + "\\" + TSOCollection.tsoNum
 						+ ".txt");
 				try {
 					FileUtils.moveFile(list[MassInsert.currentNum], txt);

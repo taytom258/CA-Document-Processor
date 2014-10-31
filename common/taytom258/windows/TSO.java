@@ -17,7 +17,11 @@ import javax.swing.WindowConstants;
 
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.parsers.TSOParser;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
+import taytom258.display.tso.TSOCHF;
+import taytom258.display.tso.TSODatabase;
+import taytom258.display.tso.TSOFacit;
+import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 import taytom258.windows.main.MainWindow;
 
@@ -73,16 +77,15 @@ public class TSO {
 				TSOCore.save();
 				MainWindow.frmMain.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				frmEnterTso.getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
-				if (Collection.tsoText.equals("")) {
+				if (TSOCollection.tsoText.equals("")) {
 					LogHelper.warning(Strings.FOUND_NOTHING);
 				} else {
 					try {
-						TSOParser.parseTSO(Collection.tsoText);
-						//TODO uncomment
-						//						ShowCHF.show();
-						//						ShowFacit.display();
-						//						ShowDatabase.display();
-						Collection.runClicked = true;
+						TSOParser.parseTSO(TSOCollection.tsoText);
+						TSOCHF.display();
+						TSOFacit.display();
+						TSODatabase.display();
+						Reference.runClicked = true;
 					} catch (Exception e1) {
 						e1.printStackTrace();
 						LogHelper.severe(e1.getClass() + ": " + e1.getMessage());
@@ -109,7 +112,7 @@ public class TSO {
 		text = new JTextArea();
 		text.setLineWrap(true);
 		text.setWrapStyleWord(true);
-		text.setText(Collection.tsoText);
+		text.setText(TSOCollection.tsoText);
 		text.setDropMode(DropMode.INSERT);
 		JScrollPane scroll = new JScrollPane(text);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

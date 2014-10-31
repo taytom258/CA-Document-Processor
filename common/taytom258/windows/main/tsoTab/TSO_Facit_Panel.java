@@ -20,8 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import taytom258.config.Config;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.core.util.popups.ContextMenu;
-import taytom258.lib.Collection;
 
 /**
  * Class for TSO Facit tab
@@ -446,7 +446,7 @@ public class TSO_Facit_Panel extends JScrollPane {
 		btnTextToClipboard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StringSelection ss = new StringSelection(Collection.tsoText);
+				StringSelection ss = new StringSelection(TSOCollection.tsoText);
 				Clipboard clpbrd = Toolkit.getDefaultToolkit()
 						.getSystemClipboard();
 				clpbrd.setContents(ss, null);
@@ -459,7 +459,7 @@ public class TSO_Facit_Panel extends JScrollPane {
 		btnStateToClipboard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StringSelection ss = new StringSelection(Collection.purpose);
+				StringSelection ss = new StringSelection(TSOCollection.purpose);
 				Clipboard clpbrd = Toolkit.getDefaultToolkit()
 						.getSystemClipboard();
 				clpbrd.setContents(ss, null);

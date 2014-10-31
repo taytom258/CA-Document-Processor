@@ -1,7 +1,9 @@
 package taytom258.core.util;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -79,5 +81,33 @@ public class IOUtils {
 			throw new IOException("Unable to create " + dir.getAbsolutePath());
 		}
 		return true;
+	}
+	
+	public static String textReader(String filePath) {
+		BufferedReader br = null;
+		String everything = "";
+		try {
+			br = new BufferedReader(new FileReader(filePath));
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			everything = sb.toString();
+		} catch (Exception e) {
+			LogHelper.severe(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				LogHelper.severe(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		return everything;
 	}
 }

@@ -5,8 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import taytom258.config.Config;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.core.util.popups.NormalPop;
-import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.lib.Strings;
 
@@ -20,7 +20,7 @@ public class LogHelper {
 		logger.addHandler(handler);
 		if (Reference.BUILD_NUMBER.equals("@BUILD_NUMBER@")) {
 			log(Level.WARNING, Strings.DEVELOP_WARN);
-			Collection.develop = true;
+			Reference.develop = true;
 		}
 
 	}

@@ -10,7 +10,8 @@ public final class Strings {
 	public static final String CHF_FOLDER = "CHF Default";
 	public static final String DISCO_PEND = "(Disco Pending)";
 	public static final String ONLY_1539 = "(1539 Only Circuits)";
-	public static final String FOUND_NOTHING = "The program didn't find any information. Please enter a document using the buttons on the left";
+	public static final String FOUND_NOTHING = "The program didn't find any information. Please enter a document using the buttons"
+			+ "on the left";
 	public static final String KEY_FIELD = "Full_CCSD";
 	public static final String CREDITS = "Credits\n"
 			+ "Taylor Tomlin - Lead Programmer\n" + "Special Thanks to\n"
@@ -19,6 +20,7 @@ public final class Strings {
 			+ "You may find all source code at http://goo.gl/iAYF3z\n"
 			+ "Any issues/bugs should be submitted to http://goo.gl/jPB5Lv\n"
 			+ "or emailed to taylortomlin@gmail.com";
+	public static final String NOTSET = "Not Set";
 
 	public static final String PHYSICAL_FACILITY = "Circuit is physical in facility.";
 	public static final String PHYSICAL_ANCS = "Circuit is physical in ANCS.";
@@ -38,8 +40,7 @@ public final class Strings {
 	public static final String DVILLE_CMO = "DVDSNVLL";
 	public static final String BWINE_CMO = "BRANDYWN";
 	public static final String DATE_FORMAT = "ddmmmyyyy";
-	public static final String[] FOLDERS = { "Diagrams", "Miscellaneous",
-		"QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs",
+	public static final String[] FOLDERS = { "Diagrams", "Miscellaneous", "QC Info", "Reports", "SAMs", "T&A", "TSOs", "TSRs",
 		"User Letters", "MISC" };
 	public static final String GEOLOC_TABLE = "Java_GEOLOC";
 	public static final String DEPTCODE_TABLE = "Java_DEPTCODE";
@@ -47,7 +48,6 @@ public final class Strings {
 	public static final String SVCTYPE_TABLE = "Java_SVCTYPE";
 	public static final String ENRCODE_TABLE = "Java_ENRCODE";
 	public static final String NR = "Not Responsible";
-	public static final String[] LOCATIONS = { "Andrews", "Bolling",
-		"Andrews 1539", "Brandywine", "Davidsonville", NR };
+	public static final String[] LOCATIONS = { "Andrews", "Bolling", "Andrews 1539", "Brandywine", "Davidsonville", NR };
 
 }

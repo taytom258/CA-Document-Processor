@@ -3,6 +3,9 @@
  */
 package taytom258.display.tso;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 
 /**
@@ -44,5 +47,30 @@ public class TSOCommon {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Get TSO document name from TSO subject
+	 * @param input TSO Subject
+	 * @return TSO document name
+	 */
+	public static String tsoName(String input) {
+		input = input.trim();
+		String s = "";
+		Pattern p2 = Pattern.compile("\\d{2}");
+		Pattern p3 = Pattern.compile("[\\d{2}][A-Z]");
+		int index = input.indexOf("-");
+		String[] split = input.split("-");
+		Matcher m2 = p2.matcher(split[1]);
+		Matcher m3 = p3.matcher(split[1]);
+		if (m3.find()) {
+			index += 3;
+		} else if (m2.find()) {
+			index += 2;
+		}
+		String pre = input.replace("/", "").substring(0, index);
+		s = pre.trim() + ".txt";
+
+		return s;
 	}
 }

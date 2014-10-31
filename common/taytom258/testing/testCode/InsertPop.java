@@ -29,8 +29,8 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
 import taytom258.core.util.db.TSOCommit;
 import taytom258.core.util.parsers.TSOParser;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.core.util.popups.TSOInputNeededPop;
-import taytom258.lib.Collection;
 
 public class InsertPop extends JDialog {
 
@@ -49,8 +49,8 @@ public class InsertPop extends JDialog {
 	 */
 	public static void appear(File[] list) {
 		try {
-			Collection.tsoNum = DateUtils.fileDate();
-			Collection.fullCcsd = "00000000";
+			TSOCollection.tsoNum = DateUtils.fileDate();
+			TSOCollection.fullCcsd = "00000000";
 			dialog = new InsertPop(list);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -82,8 +82,8 @@ public class InsertPop extends JDialog {
 			TSOParser.parseTSO(text);
 			//TODO uncomment
 			//			ShowCHF.show();
-			if (Collection.inputNeeded.size() > 0) {
-				String[] temp = Collection.inputNeeded.get(0).split(":");
+			if (TSOCollection.inputNeeded.size() > 0) {
+				String[] temp = TSOCollection.inputNeeded.get(0).split(":");
 				TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 				pop.appear();
 			} else {
@@ -103,7 +103,7 @@ public class InsertPop extends JDialog {
 		contentPanel.add(lblTsoNumber);
 
 		txtCCSD = new JTextField();
-		txtCCSD.setText(Collection.fullCcsd.substring(4));
+		txtCCSD.setText(TSOCollection.fullCcsd.substring(4));
 		txtCCSD.setEditable(false);
 		txtCCSD.setBackground(Color.WHITE);
 		txtCCSD.setBounds(102, 61, 308, 20);
@@ -114,7 +114,7 @@ public class InsertPop extends JDialog {
 		clpbrd.setContents(ss, null);
 
 		txtTSONum = new JTextField();
-		txtTSONum.setText(Collection.tsoNum);
+		txtTSONum.setText(TSOCollection.tsoNum);
 		txtTSONum.setEditable(false);
 		txtTSONum.setBackground(Color.WHITE);
 		txtTSONum.setBounds(116, 99, 308, 20);
@@ -145,7 +145,7 @@ public class InsertPop extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						File f = new File(MassInsert.root + "\\Completed");
 						File txt = new File(f.toString() + "\\"
-								+ Collection.tsoNum + ".txt");
+								+ TSOCollection.tsoNum + ".txt");
 						try {
 							FileUtils
 							.moveFile(list[MassInsert.currentNum], txt);
@@ -155,7 +155,7 @@ public class InsertPop extends JDialog {
 						}
 						dialog.dispose();
 						dialog = null;
-						Collection.fullCcsd = null;
+						TSOCollection.fullCcsd = null;
 						MassInsert.currentNum++;
 						if (MassInsert.currentNum != list.length
 								&& !tglbtnQuit.isSelected()) {
@@ -172,7 +172,7 @@ public class InsertPop extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						File f = new File(MassInsert.root + "\\Hold");
 						File txt = new File(f.toString() + "\\"
-								+ Collection.tsoNum + ".txt");
+								+ TSOCollection.tsoNum + ".txt");
 						try {
 							FileUtils
 							.moveFile(list[MassInsert.currentNum], txt);
@@ -182,7 +182,7 @@ public class InsertPop extends JDialog {
 						}
 						dialog.dispose();
 						dialog = null;
-						Collection.fullCcsd = null;
+						TSOCollection.fullCcsd = null;
 						MassInsert.currentNum++;
 						if (MassInsert.currentNum != list.length - 1
 								&& !tglbtnQuit.isSelected()) {
@@ -197,7 +197,7 @@ public class InsertPop extends JDialog {
 						public void actionPerformed(ActionEvent e) {
 							File f = new File(MassInsert.root + "\\Facit");
 							File txt = new File(f.toString() + "\\"
-									+ Collection.tsoNum + ".txt");
+									+ TSOCollection.tsoNum + ".txt");
 							try {
 								FileUtils.moveFile(list[MassInsert.currentNum],
 										txt);
@@ -207,7 +207,7 @@ public class InsertPop extends JDialog {
 							}
 							dialog.dispose();
 							dialog = null;
-							Collection.fullCcsd = null;
+							TSOCollection.fullCcsd = null;
 							MassInsert.currentNum++;
 							;
 							if (MassInsert.currentNum != list.length

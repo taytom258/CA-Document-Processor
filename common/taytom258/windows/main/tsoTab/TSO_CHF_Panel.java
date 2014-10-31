@@ -29,13 +29,13 @@ public class TSO_CHF_Panel extends JPanel {
 	public static JTextField textField_TsoName;
 	private JLabel label_TsoName;
 	private JLabel lblRoot;
-	private JTextField textField_Root;
+	public JTextField textField_Root;
 	private JPanel panelCreating = new TSO_CHF_SubPanel_ChfCreating();
 	private JPanel panelCurrent = new TSO_CHF_SubPanel_ChfCurrent();
 	private JRadioButton rdbtn_Root;
 	private ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JRadioButton rdbtn_RootCreated;
-	private JTextField textField_Link;
+	public JTextField textField_Link;
 	private JPopupMenu popup = ContextMenu.copy();
 
 	/**

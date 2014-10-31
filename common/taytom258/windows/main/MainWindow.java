@@ -14,9 +14,9 @@ import javax.swing.SwingConstants;
 import taytom258.config.Config;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.TSOCommit;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.core.util.popups.NormalPop;
 import taytom258.core.util.popups.TSOInputNeededPop;
-import taytom258.lib.Collection;
 import taytom258.lib.Reference;
 import taytom258.testing.Test;
 import taytom258.windows.Help;
@@ -102,11 +102,11 @@ public class MainWindow {
 		btnCommit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (Collection.runClicked && Collection.inputNeeded.size() > 0) {
-					String[] temp = Collection.inputNeeded.get(0).split(":");
+				if (Reference.runClicked && TSOCollection.inputNeeded.size() > 0) {
+					String[] temp = TSOCollection.inputNeeded.get(0).split(":");
 					TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 					pop.appear();
-				} else if (Collection.runClicked) {
+				} else if (Reference.runClicked) {
 					try {
 						TSOCommit.run();
 					} catch (SQLException e) {

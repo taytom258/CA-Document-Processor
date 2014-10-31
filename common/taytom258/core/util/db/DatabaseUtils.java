@@ -16,7 +16,7 @@ import java.util.Locale;
 import taytom258.config.Config;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.lib.Reference;
 
 public class DatabaseUtils {
@@ -115,14 +115,14 @@ public class DatabaseUtils {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = DateUtils.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(TSOCollection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
 			Date report = format.parse(string);
 
 			ArrayList<String> rs = dbQuery("SELECT ReportDate " + "FROM TSO "
-					+ "WHERE FullCCSD = " + "'" + Collection.fullCcsd + "'");
+					+ "WHERE FullCCSD = " + "'" + TSOCollection.fullCcsd + "'");
 			Collections.sort(rs);
 			for (String element : rs) {
 				String target = element;
@@ -171,14 +171,14 @@ public class DatabaseUtils {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = DateUtils.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(TSOCollection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
 			Date report = format.parse(string);
 
 			ArrayList<String> rs = dbQuery("SELECT ReportDate " + "FROM TSO "
-					+ "WHERE FullCCSD = " + "'" + Collection.fullCcsd + "'");
+					+ "WHERE FullCCSD = " + "'" + TSOCollection.fullCcsd + "'");
 			Collections.sort(rs);
 			for (String element : rs) {
 				String target = element;
@@ -225,14 +225,14 @@ public class DatabaseUtils {
 		try {
 			int update = 0;
 			boolean newer = false;
-			String string = DateUtils.dateConvert(Collection.reportDate,
+			String string = DateUtils.dateConvert(TSOCollection.reportDate,
 					false, true);
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 					Locale.ENGLISH);
 			Date report = format.parse(string);
 
 			ArrayList<String> rs = dbQuery("SELECT ReportDate " + "FROM TSO "
-					+ "WHERE FullCCSD = " + "'" + Collection.fullCcsd + "'");
+					+ "WHERE FullCCSD = " + "'" + TSOCollection.fullCcsd + "'");
 			Collections.sort(rs);
 			for (String element : rs) {
 				String target = element;

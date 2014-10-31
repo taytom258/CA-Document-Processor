@@ -2,7 +2,7 @@ package taytom258.display.tso;
 
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.windows.main.tsoTab.TSO_DB_TabPane;
 
 /**
@@ -43,53 +43,53 @@ public class TSODatabase extends TSO_DB_TabPane {
 	 * Set circuit text fields based on collected information
 	 */
 	private static void textFields_Circuit() {
-		textFieldFullCcsdCircuit.setText(Collection.fullCcsd);
-		textFieldtrunkId.setText(Collection.trunkId);
-		textFieldfullTsp.setText(Collection.fullTsp);
-		textFieldtsp.setText(Collection.tsp);
-		textFieldsecurity.setText(Collection.security);
-		textFieldrate.setText(Collection.dataRate);
-		textFieldflow.setText(Collection.trafficFlow);
-		textFieldavail.setText(Collection.serviceAvail);
-		textFieldsignal.setText(Collection.signaling);
-		textFieldqcc.setText(Collection.qcc);
-		textFieldto.setText(Collection.toLocation);
-		textFieldfrom.setText(Collection.fromLocation);
-		textFieldreqDepartment.setText(Collection.requestingDept);
-		textFieldtype.setText(Collection.serviceType);
-		textFielduse.setText(Collection.circuitUse);
-		textFieldcmo.setText(Collection.cmo);
-		textFieldcmoDsn.setText(Collection.cmoDsn);
-		textFieldcmoComm.setText(Collection.cmoComm);
+		textFieldFullCcsdCircuit.setText(TSOCollection.fullCcsd);
+		textFieldtrunkId.setText(TSOCollection.trunkId);
+		textFieldfullTsp.setText(TSOCollection.fullTsp);
+		textFieldtsp.setText(TSOCollection.tsp);
+		textFieldsecurity.setText(TSOCollection.security);
+		textFieldrate.setText(TSOCollection.dataRate);
+		textFieldflow.setText(TSOCollection.trafficFlow);
+		textFieldavail.setText(TSOCollection.serviceAvail);
+		textFieldsignal.setText(TSOCollection.signaling);
+		textFieldqcc.setText(TSOCollection.qcc);
+		textFieldto.setText(TSOCollection.toLocation);
+		textFieldfrom.setText(TSOCollection.fromLocation);
+		textFieldreqDepartment.setText(TSOCollection.requestingDept);
+		textFieldtype.setText(TSOCollection.serviceType);
+		textFielduse.setText(TSOCollection.circuitUse);
+		textFieldcmo.setText(TSOCollection.cmo);
+		textFieldcmoDsn.setText(TSOCollection.cmoDsn);
+		textFieldcmoComm.setText(TSOCollection.cmoComm);
 	}
 
 	/**
 	 * Set circuit check boxes based on collected information
 	 */
 	private static void checkBoxes_Circuit() {
-		chckbxAndrewsCmo.setSelected(Collection.andrewsCmo);
-		chckbxAndrewsEndpoint.setSelected(Collection.endPoint);
+		chckbxAndrewsCmo.setSelected(TSOCollection.andrewsCmo);
+		chckbxAndrewsEndpoint.setSelected(TSOCollection.endPoint);
 	}
 
 	/**
 	 * Set tso text fields based on collected information
 	 */
 	private static void textFields_Tso() {
-		textFieldTsoNum.setText(Collection.tsoNum);
-		textFieldTsoSuff.setText(Collection.tsoSuffix);
-		textFieldaction.setText(Collection.tsoAction);
-		textFieldFullCcsdTso.setText(Collection.fullCcsd);
-		textFieldsvcDate.setText(DateUtils.dateConvert(Collection.svcDate, false, true));
-		textFieldreportDate.setText(DateUtils.dateConvert(Collection.reportDate, false, true));
-		textFieldMrc.setText(String.valueOf(Collection.mrc));
-		textFieldNrc.setText(String.valueOf(Collection.nrc));
+		textFieldTsoNum.setText(TSOCollection.tsoNum);
+		textFieldTsoSuff.setText(TSOCollection.tsoSuffix);
+		textFieldaction.setText(TSOCollection.action);
+		textFieldFullCcsdTso.setText(TSOCollection.fullCcsd);
+		textFieldsvcDate.setText(DateUtils.dateConvert(TSOCollection.svcDate, false, true));
+		textFieldreportDate.setText(DateUtils.dateConvert(TSOCollection.reportDate, false, true));
+		textFieldMrc.setText(String.valueOf(TSOCollection.mrc));
+		textFieldNrc.setText(String.valueOf(TSOCollection.nrc));
 	}
 
 	/**
 	 * Set tso check boxes based on collected information
 	 */
 	private static void checkBoxes_Tso() {
-		chckbxcrr.setSelected(Collection.crr);
+		chckbxcrr.setSelected(TSOCollection.crr);
 
 	}
 

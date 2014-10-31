@@ -2,7 +2,7 @@ package taytom258.display.tso;
 
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.DateUtils;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.windows.main.tsoTab.TSO_Facit_Panel;
 
 /**
@@ -27,27 +27,27 @@ public class TSOFacit extends TSO_Facit_Panel {
 	 * Display information in text fields based on collected information.
 	 */
 	private static void textFields(){
-		textField_Ccsd.setText(Collection.fullCcsd.substring(4));
-		textField_Tsp.setText(Collection.tsp);
-		textField_Purpose.setText(Collection.fullCcsd.substring(1, 3));
-		textField_Rate.setText(Collection.dataRate);
-		textField_SvcAvailable.setText(Collection.serviceAvail);
-		textField_FullCcsd.setText(Collection.fullCcsd.toUpperCase());
-		textField_Action.setText(Collection.tsoAction);
-		textField_TsoNum.setText(Collection.tsoNum);
-		textField_TsrNum.setText(Collection.tsrNum);
-		textField_TsoSubject.setText(Collection.tsoSubject.toUpperCase());
-		textField_ReportDate.setText(DateUtils.dateConvert(Collection.reportDate, true, false));
-		textField_SvcDate.setText(DateUtils.dateConvert(Collection.svcDate, true, false));
-		textField_Amending.setText(TSOCommon.facitAmending(Collection.tsoSuffix, Collection.tsoAction));
-		textField_TrunkID.setText(Collection.trunkId);
+		textField_Ccsd.setText(TSOCollection.fullCcsd.substring(4));
+		textField_Tsp.setText(TSOCollection.tsp);
+		textField_Purpose.setText(TSOCollection.fullCcsd.substring(1, 3));
+		textField_Rate.setText(TSOCollection.dataRate);
+		textField_SvcAvailable.setText(TSOCollection.serviceAvail);
+		textField_FullCcsd.setText(TSOCollection.fullCcsd.toUpperCase());
+		textField_Action.setText(TSOCollection.action);
+		textField_TsoNum.setText(TSOCollection.tsoNum);
+		textField_TsrNum.setText(TSOCollection.tsrNum);
+		textField_TsoSubject.setText(TSOCollection.tsoSubject.toUpperCase());
+		textField_ReportDate.setText(DateUtils.dateConvert(TSOCollection.reportDate, true, false));
+		textField_SvcDate.setText(DateUtils.dateConvert(TSOCollection.svcDate, true, false));
+		textField_Amending.setText(TSOCommon.facitAmending(TSOCollection.tsoSuffix, TSOCollection.action));
+		textField_TrunkID.setText(TSOCollection.trunkId);
 	}
 	
 	/**
 	 * Display information in check boxes based on collected information.
 	 */
 	private static void checkBoxes(){
-		chckbx_IsTrunk.setSelected(TSOCommon.facitIsTrunk(Collection.trunkId));
-		chckbx_Crr.setSelected(Collection.crr);
+		chckbx_IsTrunk.setSelected(TSOCommon.facitIsTrunk(TSOCollection.trunkId));
+		chckbx_Crr.setSelected(TSOCollection.crr);
 	}	
 }

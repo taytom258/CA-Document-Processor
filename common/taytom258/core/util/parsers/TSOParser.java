@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.DatabaseUtils;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.lib.Strings;
 import taytom258.testing.testCode.IER;
 
@@ -43,7 +43,7 @@ public class TSOParser {
 		if (t.equals("") || t.equals(null)) {
 			return false;
 		} // we ain't messin' around here kid
-		Collection.init();
+		TSOCollection.init();
 		DatabaseUtils.init(false);
 		// the TSO object
 		TreeMap<String, String> tso = new TreeMap<String, String>();
@@ -206,7 +206,7 @@ public class TSOParser {
 							st.indexOf(tso.get(items[i]))
 							+ tso.get(items[i]).length(), st.length());
 				} else {
-					tso.put(items[i], "N/A");
+					tso.put(items[i], Strings.NOTSET);
 					st = st.substring(st.indexOf(bs));
 				}
 			}
@@ -223,13 +223,13 @@ public class TSOParser {
 
 		// Tomlin Request #1
 		String ccsd = tso.get("Full CCSD").trim();
-		Collection.ccsdChange = false;
+		TSOCollection.ccsdChange = false;
 		if (ccsd.length() == 8) {
 			tso.put("Standardized CCSD", ccsd);
 		} else if (ccsd.length() < 8) {
 			tso.put("Standardized CCSD", tso.get("Alternate CCSD"));
 		} else if (ccsd.length() > 8 && ccsd.indexOf('/') > -1) {
-			Collection.ccsdChange = true;
+			TSOCollection.ccsdChange = true;
 			String[] split = ccsd.split("/");
 			tso.put("Standardized CCSD", split[1]);
 		}
@@ -362,7 +362,7 @@ public class TSOParser {
 				state = s.substring(s.indexOf(" ") + 1, s.indexOf(" ") + 3);
 			}
 
-			Collection.facilities.add(num + ". " + LoadDB.testGEOLOC(geo, state));
+			TSOCollection.facilities.add(num + ". " + LoadDB.testGEOLOC(geo, state));
 		}
 
 		for (String ele : sec3) {
@@ -371,55 +371,55 @@ public class TSOParser {
 					|| temp1[0].equals(Strings.BOLLING_CMO)
 					|| temp1[0].equals(Strings.DVILLE_CMO)
 					|| temp1[0].equals(Strings.BWINE_CMO)) {
-				Collection.enrCode.add(temp1[0] + ":"
+				TSOCollection.enrCode.add(temp1[0] + ":"
 						+ temp1[1].substring(3).trim());
 			}
 		}
 
-		for (String element : Collection.enrCode) {
+		for (String element : TSOCollection.enrCode) {
 			String[] temp1 = element.split(":");
 			if (LoadDB.testENRCODE(temp1[1], temp1[0]).length() < 1) {
-				Collection.location = "NOT SET";
-				Collection.inputNeeded.add(element);
+				TSOCollection.location = "NOT SET";
+				TSOCollection.inputNeeded.add(element);
 			} else {
 				String[] sa = LoadDB.testENRCODE(temp1[1], temp1[0]).split(":");
 				if (sa[0].equals(Strings.ANDREWS_CMO)) {
 					for (String element2 : Strings.LOCATIONS) {
 						if (sa[1].equals(element2)) {
-							Collection.location = element2;
+							TSOCollection.location = element2;
 						}
 					}
 				} else if (sa[0].equals(Strings.BOLLING_CMO)
-						&& !Collection.location.equals(Strings.LOCATIONS[0])) {
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[0])) {
 					for (String element2 : Strings.LOCATIONS) {
 						if (sa[1].equals(element2)) {
-							Collection.location = element2;
+							TSOCollection.location = element2;
 						}
 					}
 				} else if (sa[0].equals(Strings.DVILLE_CMO)
-						&& !Collection.location.equals(Strings.LOCATIONS[1])
-						&& !Collection.location.equals(Strings.LOCATIONS[0])) {
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[1])
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[0])) {
 					for (String element2 : Strings.LOCATIONS) {
 						if (sa[1].equals(element2)) {
-							Collection.location = element2;
+							TSOCollection.location = element2;
 						}
 					}
 				} else if (sa[0].equals(Strings.BWINE_CMO)
-						&& !Collection.location.equals(Strings.LOCATIONS[1])
-						&& !Collection.location.equals(Strings.LOCATIONS[0])
-						&& !Collection.location.equals(Strings.LOCATIONS[4])) {
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[1])
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[0])
+						&& !TSOCollection.location.equals(Strings.LOCATIONS[4])) {
 					for (String element2 : Strings.LOCATIONS) {
 						if (sa[1].equals(element2)) {
-							Collection.location = element2;
+							TSOCollection.location = element2;
 						}
 					}
 				}
 
-				if (Collection.location.equals(Strings.LOCATIONS[0])
-						|| Collection.location.equals(Strings.LOCATIONS[1])) {
-					Collection.careq = true;
+				if (TSOCollection.location.equals(Strings.LOCATIONS[0])
+						|| TSOCollection.location.equals(Strings.LOCATIONS[1])) {
+					TSOCollection.careq = true;
 				} else {
-					Collection.careq = false;
+					TSOCollection.careq = false;
 				}
 			}
 		}
@@ -472,11 +472,11 @@ public class TSOParser {
 					mrcf = true;
 				}
 			}
-			Collection.mrc = Double.parseDouble(MRCText);
-			Collection.nrc = Double.parseDouble(NRCText);
+			TSOCollection.mrc = Double.parseDouble(MRCText);
+			TSOCollection.nrc = Double.parseDouble(NRCText);
 		} else {
-			Collection.mrc = zero;
-			Collection.nrc = zero;
+			TSOCollection.mrc = zero;
+			TSOCollection.nrc = zero;
 		}
 
 		// break the full CCSD down
@@ -501,21 +501,21 @@ public class TSOParser {
 			// System.out.println("(" + key + ")" + " : " + value);
 
 			if (key.equals("Standardized CCSD")) {
-				Collection.fullCcsd = value;
+				TSOCollection.fullCcsd = value;
 				String first = value.trim().substring(0, 4);
 				String second = value.trim().substring(4, 8);
-				Collection.chfRootFolder = second + " (" + first + ")";
+				TSOCollection.chfRootFolder = second + " (" + first + ")";
 			} else if (key.equals("Full CCSD") && value.length() == 6) {
-				Collection.trunkId = value;
+				TSOCollection.trunkId = value;
 			} else if (key.equals("Full CCSD") && value.length() != 6) {
-				Collection.trunkId = "N/A";
+				TSOCollection.trunkId = Strings.NOTSET;
 			} else if (key.equals("TSP Number")) {
-				Collection.tsp = value;
+				TSOCollection.tsp = value;
 			} else if (key.equals("TSP")) {
 				if (key.equals("NA")) {
-					Collection.fullTsp = "Not Assigned";
+					TSOCollection.fullTsp = "Not Assigned";
 				} else {
-					Collection.fullTsp = value;
+					TSOCollection.fullTsp = value;
 				}
 			} else if (key.equals("To")) {
 				String tempGEO = "";
@@ -531,68 +531,68 @@ public class TSOParser {
 						.substring(value.indexOf('/') - 2, value.indexOf('/'))
 						.trim().replaceFirst("^0+(?!$)", "");
 				String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
-				Collection.toLocation = temprs;
-				Collection.toCode = value;
+				TSOCollection.toLocation = temprs;
+				TSOCollection.toCode = value;
 			} else if (key.equals("From")) {
 				String tempGEO = value.substring(0, value.indexOf(' ')).trim();
 				String tempState = value
 						.substring(value.indexOf('/') - 2, value.indexOf('/'))
 						.trim().replaceFirst("^0+(?!$)", "");
 				String temprs = LoadDB.testGEOLOC(tempGEO, tempState);
-				Collection.fromLocation = temprs;
-				Collection.fromCode = value;
+				TSOCollection.fromLocation = temprs;
+				TSOCollection.fromCode = value;
 			} else if (key.equals("Requesting Department")) {
-				Collection.requestingDept = value;
+				TSOCollection.requestingDept = value;
 			} else if (key.equals("Type of Service")) {
-				Collection.serviceType = value;
+				TSOCollection.serviceType = value;
 			} else if (key.equals("Circuit Use")) {
-				Collection.circuitUse = value;
+				TSOCollection.circuitUse = value;
 			} else if (key.equals("Security")) {
-				Collection.security = value;
+				TSOCollection.security = value;
 			} else if (key.equals("Data Rate")) {
-				Collection.dataRate = value;
+				TSOCollection.dataRate = value;
 			} else if (key.equals("Traffic Flow")) {
-				Collection.trafficFlow = value;
+				TSOCollection.trafficFlow = value;
 			} else if (key.equals("Term")) {
-				Collection.serviceAvail = value;
+				TSOCollection.serviceAvail = value;
 			} else if (key.equals("We Are CCO")) {
-				Collection.andrewsCmo = Boolean.valueOf(value);
+				TSOCollection.andrewsCmo = Boolean.valueOf(value);
 			} else if (key.equals("CCO or CMO")) {
-				Collection.cmo = value;
+				TSOCollection.cmo = value;
 			} else if (key.equals("Signaling")) {
-				Collection.signaling = value;
+				TSOCollection.signaling = value;
 			} else if (key.equals("Quality Control Code")) {
-				Collection.qcc = value;
+				TSOCollection.qcc = value;
 			} else if (key.equals("We Are Endpoint")) {
-				Collection.endPoint = Boolean.valueOf(value);
-				Collection.isPassthrough = !Collection.endPoint;
+				TSOCollection.endPoint = Boolean.valueOf(value);
+				TSOCollection.passthrough = !TSOCollection.endPoint;
 			} else if (key.equals("TSO Number")) {
-				Collection.tsoNum = value;
+				TSOCollection.tsoNum = value;
 			} else if (key.equals("TSO Suffix")) {
-				Collection.tsoSuffix = value;
+				TSOCollection.tsoSuffix = value;
 			} else if (key.equals("TSO Action")) {
-				Collection.tsoAction = value;
+				TSOCollection.action = value;
 			} else if (key.equals("Expected In Effect Date")) {
-				Collection.svcDate = value;
+				TSOCollection.svcDate = value;
 			} else if (key.equals("Completion Report Required")) {
-				Collection.crr = Boolean.valueOf(value);
+				TSOCollection.crr = Boolean.valueOf(value);
 			} else if (key.equals("Purpose")) {
-				Collection.purpose = value;
+				TSOCollection.purpose = value;
 			} else if (key.equals("Subject")) {
-				Collection.tsoSubject = value;
+				TSOCollection.tsoSubject = value;
 			} else if (key.equals("TSR Number")) {
-				Collection.tsrNum = value;
+				TSOCollection.tsrNum = value;
 			} else if (key.equals("Report Date")) {
-				Collection.reportDate = value;
+				TSOCollection.reportDate = value;
 			} else if (key.equals("CMO Comm")) {
-				Collection.cmoComm = value;
+				TSOCollection.cmoComm = value;
 			} else if (key.equals("CMO DSN")) {
-				Collection.cmoDsn = value;
+				TSOCollection.cmoDsn = value;
 			}
 		}
 		DatabaseUtils.init(true);
 		LogHelper.info("TSO (Parser) Complete");
-		IER.run();
+//		IER.run();
 		return true;
 	}
 }

@@ -21,7 +21,7 @@ import javax.swing.text.StyleConstants;
 import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.DatabaseUtils;
 import taytom258.core.util.db.TSOCommit;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 import taytom258.lib.Strings;
 
 public class TSOInputNeededPop extends JDialog {
@@ -64,16 +64,16 @@ public class TSOInputNeededPop extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					DatabaseUtils.init(false);
 					save();
-					if (Collection.userENRInput.size() != Collection.inputNeeded
+					if (TSOCollection.userENRInput.size() != TSOCollection.inputNeeded
 							.size()) {
-						String[] temp = Collection.inputNeeded.get(
-								Collection.userENRInput.size()).split(":");
+						String[] temp = TSOCollection.inputNeeded.get(
+								TSOCollection.userENRInput.size()).split(":");
 						clear();
 						TSOInputNeededPop pop = new TSOInputNeededPop(temp[1], temp[0]);
 						pop.appear();
-					} else if (Collection.userENRInput.size() == Collection.inputNeeded
+					} else if (TSOCollection.userENRInput.size() == TSOCollection.inputNeeded
 							.size()) {
-						for (String element : Collection.userENRInput) {
+						for (String element : TSOCollection.userENRInput) {
 							String first = element.substring(0,
 									element.indexOf(':'));
 							String second = element.substring(element
@@ -87,13 +87,13 @@ public class TSOInputNeededPop extends JDialog {
 								if (third.equals(Strings.LOCATIONS[i])) {
 									code = i;
 								}
-								if (Collection.location
+								if (TSOCollection.location
 										.equals(Strings.LOCATIONS[i])) {
 									code2 = i;
 								}
 							}
 							if (code2 > code || code2 == -1) {
-								Collection.location = third;
+								TSOCollection.location = third;
 							}
 
 							String sql = "INSERT INTO " + Strings.ENRCODE_TABLE
@@ -168,7 +168,7 @@ public class TSOInputNeededPop extends JDialog {
 	}
 
 	private void save() {
-		Collection.userENRInput.add(textField_locationCode.getText() + ":"
+		TSOCollection.userENRInput.add(textField_locationCode.getText() + ":"
 				+ textField_ENRCode.getText() + ":"
 				+ comboBox_location.getSelectedItem());
 	}

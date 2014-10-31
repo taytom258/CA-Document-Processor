@@ -22,7 +22,7 @@ import taytom258.core.log.LogHelper;
 import taytom258.core.util.db.CircuitStatus;
 import taytom258.core.util.db.DatabaseUtils;
 import taytom258.core.util.parsers.IERParser;
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 
 public class IER {
 
@@ -65,22 +65,22 @@ public class IER {
 				for (Map.Entry<String, String> entry : iers.get(
 						dates.get(keys.last())).entrySet()) {
 					if (entry.getKey().equals("Subject")) {
-						Collection.ierSubject = entry.getValue();
+						TSOCollection.ierSubject = entry.getValue();
 					} else if (entry.getKey().equals("Report Date")) {
-						Collection.ierReportDate = entry.getValue();
+						TSOCollection.ierReportDate = entry.getValue();
 					} else if (entry.getKey().equals("TSO Number")) {
-						Collection.ierTSONum = entry.getValue();
+						TSOCollection.ierTSONum = entry.getValue();
 					} else if (entry.getKey().equals("TSR Number")) {
-						Collection.ierTSRNum = entry.getValue();
+						TSOCollection.ierTSRNum = entry.getValue();
 					} else if (entry.getKey().equals("Full CCSD")) {
-						Collection.ierFullCCSD = entry.getValue();
+						TSOCollection.ierFullCCSD = entry.getValue();
 					} else if (entry.getKey().equals("TSO Action")) {
-						Collection.ierTSOAct = entry.getValue();
+						TSOCollection.ierTSOAct = entry.getValue();
 					} else if (entry.getKey().equals("POC Info")) {
-						Collection.ierPOCInfo = entry.getValue();
+						TSOCollection.ierPOCInfo = entry.getValue();
 					}
 				}
-				CircuitStatus.circuitStatusUpdateIER(Collection.ierTSONum);
+				CircuitStatus.circuitStatusUpdateIER(TSOCollection.ierTSONum);
 			}
 		}
 	}
@@ -88,9 +88,9 @@ public class IER {
 	private static File rootFolder() {
 		File folder = null;
 		if (Config.useChf) {
-			folder = new File(Collection.chfRootFolder + "\\" + "Reports");
+			folder = new File(TSOCollection.chfRootFolder + "\\" + "Reports");
 		} else {
-			folder = new File(Collection.chfRootFolder + "\\" + "Reports");
+			folder = new File(TSOCollection.chfRootFolder + "\\" + "Reports");
 		}
 		return folder;
 	}
@@ -165,7 +165,7 @@ public class IER {
 				String filename = bs + " (" + as + ")";
 				for (File folder : subDirs) {
 					if (folder.toString().contains(filename)) {
-						Collection.chfRootFolder = folder.toString();
+						TSOCollection.chfRootFolder = folder.toString();
 						IER.run();
 					}
 				}

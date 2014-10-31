@@ -1,10 +1,10 @@
 package taytom258.windows;
 
-import taytom258.lib.Collection;
+import taytom258.core.util.parsers.collections.TSOCollection;
 
 public class TSOCore extends TSO {
 
 	public static void save() {
-		Collection.tsoText = getText().getText().trim();
+		TSOCollection.tsoText = getText().getText().trim();
 	}
 }

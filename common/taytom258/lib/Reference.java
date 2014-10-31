@@ -39,5 +39,7 @@ public class Reference {
 	public static final String DB_PASS = "databasePassword";
 
 	// Variables
+	public static boolean develop = false;
+	public static boolean runClicked = false;
 
 }

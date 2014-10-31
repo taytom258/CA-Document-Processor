@@ -20,7 +20,6 @@ import javax.swing.WindowConstants;
 
 import taytom258.config.Config;
 import taytom258.core.log.LogHelper;
-import taytom258.testing.testCode.WorkSaver;
 import taytom258.windows.console.Console;
 
 public class Settings {
@@ -216,30 +215,6 @@ public class Settings {
 		// FIXME Finish auto copy feature?
 		tglbtnAutoCopy.setVisible(false);
 		panel.add(tglbtnAutoCopy);
-
-		if (Config.debug) {
-			JButton btnOffload = new JButton("Offload");
-			btnOffload.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					WorkSaver.offload();
-				}
-			});
-			btnOffload.setBounds(498, 333, 100, 23);
-			panel.add(btnOffload);
-		}
-
-		if (Config.debug) {
-			JButton btnUpload = new JButton("Download");
-			btnUpload.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					WorkSaver.download();
-				}
-			});
-			btnUpload.setBounds(498, 371, 100, 23);
-			panel.add(btnUpload);
-		}
 
 		JButton btnConsole = new JButton("Console");
 		btnConsole.addActionListener(new ActionListener() {
